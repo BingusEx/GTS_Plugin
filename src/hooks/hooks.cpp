@@ -12,6 +12,7 @@
 #include "hooks/character.hpp"
 #include "hooks/Movement.hpp"
 #include "hooks/Pushback.hpp"
+#include "hooks/Renderer.hpp"
 #include "hooks/RaceMenu.hpp"
 #include "hooks/controls.hpp"
 #include "hooks/Stealth.hpp"
@@ -55,6 +56,7 @@ namespace Hooks
 		auto& trampoline = SKSE::GetTrampoline();
 		trampoline.create(512);
 
+		Hook_Renderer::Hook(trampoline);
 		Hook_MainUpdate::Hook(trampoline);
 		Hook_Projectiles::Hook(); // Experimental stuff with scaling arrows and other projectiles. It works but mostly visually.
 		Hook_BGSImpactManager::Hook();
