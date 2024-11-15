@@ -1,4 +1,5 @@
 #pragma once
+
 #include "hooks/hooks.hpp"
 
 using namespace RE;
@@ -7,8 +8,7 @@ using namespace SKSE;
 namespace Hooks {
 	class Hook_Renderer {
 		public:
-			static void Hook(Trampoline& trampoline);
-			void RenderMenus(bool a_render);
+		static void Hook(Trampoline& trampoline);
 
 		private:
 		static WORD RegisterClassA(WNDCLASSA* a_wndClass);

@@ -26,6 +26,7 @@ include(XSEPlugin)
 # #######################################################################################################################
 # # Find dependencies
 # #######################################################################################################################
+find_package(imgui CONFIG REQUIRED)
 find_package(xbyak CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(toml11 CONFIG REQUIRED)
@@ -54,6 +55,7 @@ target_link_libraries(
 	nlohmann_json::nlohmann_json
 	toml11::toml11
 	nlohmann_json::nlohmann_json
+	imgui::imgui
 	cmake_git_version_tracking
 )
 
