@@ -28,6 +28,7 @@ namespace Gts {
 					this->smoothFootPos.target = leftPosLocal;
 
 					this->smoothFootPos.target.z += OFFSET*playerScale;
+					this->smoothFootPos.target.y = 100.0f - (0.15f * Gts::MaxZoom());
 				}
 			}
 		}

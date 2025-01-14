@@ -23,7 +23,7 @@ namespace {
 			threshold = 1.60f;
 		}
 
-		return threshold;
+		return threshold / 2.0f;
 	}
 
 	float Get_size_penalty(Actor* actor) {
@@ -53,9 +53,9 @@ namespace {
 		if (HasSMT(actor)) {
 			return false; // Disallow random groth during Tiny Calamity
 		}
-		if (SizeManager::GetSingleton().BalancedMode() == 2.0f) {
-			MultiplySlider = 1.0f; // Disable effect in Balance Mode, so slider is always 1.0
-		}
+		//if (SizeManager::GetSingleton().BalancedMode() == 2.0f) {
+		//	MultiplySlider = 1.0f; // Disable effect in Balance Mode, so slider is always 1.0
+		//}
 		float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 		int Requirement = static_cast<int>((300 * MultiplySlider * SizeManager::GetSingleton().BalancedMode()) / Gigantism); // Doubles random in Balance Mode
 		Requirement = static_cast<int>(Requirement * Get_size_penalty(actor));
@@ -83,7 +83,7 @@ namespace Gts {
 		static Timer GrowthTimer = Timer(1.0);
 		if (GrowthTimer.ShouldRunFrame()) {
 			for (auto actor: find_actors()) {
-				if (actor && actor->Is3DLoaded()) {
+				if (actor && actor->Is3DLoaded() && actor->GetAlpha() > 0.95f) {
 					if (actor->formID == 0x14 || IsTeammate(actor)) {
 						if (ShouldGrow(actor)) {
 							if (get_target_scale(actor) < get_max_scale(actor)) {
@@ -91,7 +91,7 @@ namespace Gts {
 								float ProgressionMultiplier = Persistent::GetSingleton().progression_multiplier;
 								int random = RandomInt(0, 80);
 								float TotalPower = (100.0f + random)/100.0f;
-								float base_power = ((0.00750f * TotalPower * 25) * ProgressionMultiplier);  // The power of it
+								float base_power = ((0.00350f * TotalPower * 25) * ProgressionMultiplier);  // The power of it
 								float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 
 								if (Runtime::HasPerkTeam(actor, "RandomGrowthAug") && TotalPower >= Get_Breach_Threshold(actor) && !IsGtsBusy(actor)) {

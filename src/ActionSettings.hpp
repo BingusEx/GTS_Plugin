@@ -16,14 +16,14 @@ namespace Gts {
     const float Shrink_To_Nothing_After = 3.0f; // Shrink To Nothing immunity in seconds
     const float SHRINK_TO_NOTHING_SCALE = 0.08f;
 //-----------------------------------------Default Trigger Threshold Values
-    const float Action_Sandwich = 6.0f; // used for sandwich only
+    const float Action_Sandwich = 4.0f; // used for sandwich only
     const float Action_AI_ThighCrush = 4.0f; // Used for AI only
-	const float Action_Crush = 10.0f;
-	const float Action_ButtCrush = 2.0f; // for butt and cleavage crush
-	const float Action_Vore = 8.0f;
-	const float Action_Grab = 8.0f;
-	const float Action_Hug = 0.92f; // for hug grab/drop threshold 
-    const float Action_FingerGrind = 6.0f;
+	const float Action_Crush = 4.0f;
+	const float Action_ButtCrush = 1.5f; // for butt and cleavage crush
+	const float Action_Vore = 4.0f;
+	const float Action_Grab = 4.0f;
+	const float Action_Hug = 0.72f; // for hug grab/drop threshold 
+    const float Action_FingerGrind = 4.0f;
 
 //-----------------------------------------Default Damage Values
 

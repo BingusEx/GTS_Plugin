@@ -300,15 +300,19 @@ namespace Gts {
 		float amount = CalcPower(actor, scale_factor, bonus, false);
 		float target_scale = get_target_scale(actor);
 		float natural_scale = get_natural_scale(actor, true); // get_neutral_scale(actor) 
+		float max_scale = natural_scale;
 
-		if (target_scale < natural_scale) { // NOLINT
-			set_target_scale(actor, natural_scale); // Without GetScale multiplier
-			return false;
-		} else {
-			update_target_scale(actor, -amount, SizeEffectType::kNeutral);
+		if (actor->formID == 0x14 && Runtime::GetFloat("GrowthModeRate") >= 0.002f) {
+			max_scale = Runtime::GetFloat("CurseOfGrowthMaxSize") * (Runtime::GetFloat("ShrinkModeRate") * 10.f);
 		}
-		return true;
+		else if (IsTeammate(actor) && Runtime::GetFloat("GrowthModeRateNPC") >= 0.002f) {
+			max_scale = Runtime::GetFloat("CurseOfGrowthMaxSize") * (Runtime::GetFloat("ShrinkModeRateNPC") * 10.f);
+		}
+
+		set_target_scale(actor, max(natural_scale, max_scale)); // Without GetScale multiplier
+		return false;
 	}
+
 
 	inline void Grow_Ally(Actor* from, Actor* to, float receiver, float caster) {
 		float receive = CalcPower(from, receiver, 0, false);

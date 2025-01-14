@@ -63,8 +63,8 @@ namespace Gts {
 
 			Timer initimer = Timer(3.00);
 
-			Spring smoothScale = Spring(0.30f, 0.50f);
-			Spring3 smoothOffset = Spring3(NiPoint3(0.30f, 0.30f, 0.30f), 0.50f);
+			Spring smoothScale = Spring(0.f, 0.f);
+			Spring3 smoothOffset = Spring3(NiPoint3(0.f, 0.f, 0.f), 0.f);
 			float CameraDelay = 0.0f;
 
 			CameraState* currentState = nullptr;

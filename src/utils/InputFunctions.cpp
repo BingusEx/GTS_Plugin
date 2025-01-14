@@ -30,7 +30,7 @@ using namespace Gts;
 
 namespace {
 	void ReportScaleIntoConsole(Actor* actor, bool enemy) {
-		float hh = HighHeelManager::GetBaseHHOffset(actor)[2]/100;
+		float hh = HighHeelManager::GetBaseHHOffset(actor)[2] / 100;
 		float gigantism = Ench_Aspect_GetPower(actor) * 100;
 		float naturalscale = get_natural_scale(actor, true);
 		float scale = get_visual_scale(actor);
@@ -42,17 +42,29 @@ namespace {
 		if (enemy) {
 			Cprint("{} Bounding Box To Size: {:.2f}, GameScale: {:.2f}", actor->GetDisplayFullName(), BB, game_getactorscale(actor));
 			Cprint("{} Size Difference With the Player: {:.2f}", actor->GetDisplayFullName(), GetSizeDifference(player, actor, SizeType::VisualScale, false, true));
-		} else {
-			Cprint("{} Height: {:.2f} m / {:.2f} ft; Weight: {:.2f} kg / {:.2f} lb;", actor->GetDisplayFullName(), GetActorHeight(actor, true), GetActorHeight(actor, false), GetActorWeight(actor, true), GetActorWeight(actor, false));
+		}
+		else {
+
+			std::string hhstr = fmt::format(" +{:.2f}cm ", hh);
+
+			Cprint("{} {:.2f}m{}({:.2f}/{:.2f}) {:.2f}kg Pow:{:.1f}%",
+				actor->GetDisplayFullName(),
+				GetActorHeight(actor, true),
+				(hh > 0.0 ? hhstr : ""),
+				scale,
+				maxscale,
+				GetActorWeight(actor, true),
+				gigantism);
 		}
 
-		if (maxscale > 250.0f * naturalscale) {
-			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: Infinite; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, BB, gigantism);
-		} else {
-			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: {:.2f}; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, BB, maxscale, gigantism);
+		if (maxscale > 250.0 * naturalscale) {
+			//Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Size Limit: Infinite; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, gigantism);
 		}
-		if (hh > 0.0f) { // if HH is > 0, print HH info
-			Cprint("{} High Heels: {:.2f} (+{:.2f} cm / +{:.2f} ft)", actor->GetDisplayFullName(), hh, hh, hh*3.28f);
+		else {
+			//Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Size Limit: {:.2f}; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, maxscale, gigantism);
+		}
+		if (hh > 0.0) { // if HH is > 0, print HH info
+			//Cprint("{} High Heels: {:.2f} (+{:.2f} cm / +{:.2f} ft)", actor->GetDisplayFullName(), hh, hh, hh*3.28);
 		}
 	}
 	void ReportScale(bool enemy) {

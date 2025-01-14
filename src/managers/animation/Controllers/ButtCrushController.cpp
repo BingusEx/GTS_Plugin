@@ -262,9 +262,6 @@ namespace Gts {
 			return false;
 		}
 
-		if (prey->IsDead()) {
-			return false;
-		}
 		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
 			return false;
 		}

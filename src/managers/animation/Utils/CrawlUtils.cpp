@@ -47,7 +47,7 @@ namespace Gts {
 				scale *= 1.85f;
 			}
 			bool LegacySounds = Persistent::GetSingleton().legacy_sounds; // Determine if we should play old pre 2.00 update sounds
-			if (scale > 1.2f && !actor->AsActorState()->IsSwimming()) {
+			if (scale > 1.0f && !actor->AsActorState()->IsSwimming()) {
 				float movement = FootStepManager::Volume_Multiply_Function(actor, foot_kind);
 				scale *= 0.75f;
 

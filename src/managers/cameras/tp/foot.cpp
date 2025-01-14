@@ -69,7 +69,9 @@ namespace Gts {
 					auto rightPosLocal = transform * (rightFoot->world * NiPoint3());
 					this->smoothFootPos.target = (leftPosLocal + rightPosLocal) / 2.0f;
 
-					this->smoothFootPos.target.z += OFFSET*playerScale;
+					this->smoothFootPos.target.z += OFFSET * playerScale;
+					this->smoothFootPos.target.y = 100.0f - (0.15f * Gts::MaxZoom());
+
 				}
 			}
 		}

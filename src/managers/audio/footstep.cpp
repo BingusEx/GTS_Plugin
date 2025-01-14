@@ -26,7 +26,7 @@ namespace {
 
 	const VolumeParams xlRumble_Params = {.a = 12.0f, .k = 0.50f, .n = 0.5f, .s = 1.0f};
 
-	const VolumeParams Footstep_2_Params = {.a = 1.35f, .k = 1.0f, .n = 0.75f, .s = 1.0f};    // https://www.desmos.com/calculator/6yzmmrg3oi
+	const VolumeParams Footstep_2_Params = {.a = 1.05f, .k = 0.85f, .n = 1.f, .s = 0.9f};    // https://www.desmos.com/calculator/6yzmmrg3oi
 	const VolumeParams Footstep_4_Params = {.a = 3.0f, .k = 1.0f, .n = 1.15f, .s = 1.0f};     // https://www.desmos.com/calculator/ighurmlanl
 	const VolumeParams Footstep_8_Params = {.a = 6.0f, .k = 0.26f, .n = 1.94f, .s = 1.0f};    // https://www.desmos.com/calculator/d3gsgj6ocs
 	const VolumeParams Footstep_12_Params = {.a = 12.0f, .k = 0.27f, .n = 1.9f, .s = 1.0f};   // https://www.desmos.com/calculator/akoyl4cxch
@@ -126,7 +126,7 @@ namespace Gts {
 			bool LegacySounds = Persistent::GetSingleton().legacy_sounds;  // Determine if we should play old pre 2.00 update sounds
 			// ^ Currently forced to true: there's not a lot of sounds yet.
 			bool WearingHighHeels = HighHeelManager::IsWearingHH(actor);
-			if (scale > 1.2f && !actor->AsActorState()->IsSwimming()) {
+			if (scale > 1.0f && !actor->AsActorState()->IsSwimming()) {
 
 				float modifier = Volume_Multiply_Function(actor, impact.kind) * impact.modifier; // Affects the volume only!
 				FootEvent foot_kind = impact.kind;

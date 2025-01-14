@@ -40,7 +40,7 @@ namespace {
 
 	float get_growth_multiplier(Actor* giant) {
 		int growth_roll = static_cast<int>(GetGrowthType(giant));
-		float multiplier = 1.0f;
+		float multiplier = 0.4f;
 
 		if (Runtime::HasPerkTeam(giant, "RandomGrowthTerror")) {
 			multiplier = 1.3f;
@@ -115,7 +115,7 @@ namespace {
 			float elapsed = static_cast<float>(std::clamp(timepassed * animspeed, 0.0, 4.4));
 			float gain = std::clamp(get_growth_formula(giant, elapsed, GrowthType), -0.01f, 1.0f);
 
-			float growth = CalcPower(actor, 0.0080f * growth_mult * gain * animspeed, 0.0f, false);
+			float growth = CalcPower(actor, 0.0020f * growth_mult * gain * animspeed, 0.0f, false);
 
 			if (gain > 0) {
 				override_actor_scale(giant, growth, SizeEffectType::kGrow);

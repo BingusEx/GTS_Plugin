@@ -286,8 +286,13 @@ namespace {
 		if (scale < 1e-5) {
 			return;
 		}
-		float speedmultcalc = GetAnimationSlowdown(actor); // For all other movement types
-		persi_actor_data->anim_speed = speedmultcalc;
+
+		if (Runtime::InFaction(actor, "SexLabAnimatingFaction") && Runtime::InFaction(PlayerCharacter::GetSingleton(), "SexLabAnimatingFaction")) {
+			persi_actor_data->anim_speed = GetAnimationSlowdown(PlayerCharacter::GetSingleton());
+			return;
+		}
+
+		persi_actor_data->anim_speed = GetAnimationSlowdown(actor);  // MS_mult;
 	}
 
 	void update_actor(Actor* actor) {

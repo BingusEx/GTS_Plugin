@@ -265,7 +265,7 @@ namespace Gts {
 				bool& Devoured = Data->Devourment_Devoured;
 				bool& Eaten = Data->Devourment_Eaten;
 				if (!Eaten) { // Stage 1: Health Bar is depleted (actor is dead)
-					DevourmentBonuses(Pred, Prey, false, 0.5f); // Value is multiplier of growth power.
+					//DevourmentBonuses(Pred, Prey, false, 0.5f); // Value is multiplier of growth power.
 					Eaten = true;
 				} else if (Digested && !Devoured) { // Stage 2: actor is fully absorbed 
 					Notify("{} was devoured by {}", Prey->GetDisplayFullName(), Pred->GetDisplayFullName());

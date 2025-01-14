@@ -43,8 +43,8 @@ namespace Gts {
 		// BGSBipedObjectForm::BipedObjectSlot::kRing,					// 36
 		BGSBipedObjectForm::BipedObjectSlot::kFeet,                 // 37
 		BGSBipedObjectForm::BipedObjectSlot::kCalves,               // 38
-		// BGSBipedObjectForm::BipedObjectSlot::kShield,					// 39
-		// BGSBipedObjectForm::BipedObjectSlot::kTail,					// 40
+		BGSBipedObjectForm::BipedObjectSlot::kShield,				// 39
+		//BGSBipedObjectForm::BipedObjectSlot::kTail,						// 40
 		// BGSBipedObjectForm::BipedObjectSlot::kLongHair,				// 41
 		BGSBipedObjectForm::BipedObjectSlot::kCirclet,              // 42
 		BGSBipedObjectForm::BipedObjectSlot::kEars,                 // 43
@@ -54,8 +54,8 @@ namespace Gts {
 		BGSBipedObjectForm::BipedObjectSlot::kModBack,              // 47
 		BGSBipedObjectForm::BipedObjectSlot::kModMisc1,             // 48
 		BGSBipedObjectForm::BipedObjectSlot::kModPelvisPrimary,     // 49
-		// BGSBipedObjectForm::BipedObjectSlot::kDecapitateHead,			// 50
-		// BGSBipedObjectForm::BipedObjectSlot::kDecapitate,				// 51
+		BGSBipedObjectForm::BipedObjectSlot::kDecapitateHead,		// 50
+		BGSBipedObjectForm::BipedObjectSlot::kDecapitate,			// 51
 		BGSBipedObjectForm::BipedObjectSlot::kModPelvisSecondary,   // 52
 		BGSBipedObjectForm::BipedObjectSlot::kModLegRight,			// 53
 		BGSBipedObjectForm::BipedObjectSlot::kModLegLeft,           // 54

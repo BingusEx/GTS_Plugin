@@ -78,6 +78,52 @@ namespace Gts {
 		return 1.0f;
 	}
 
+	void NewMinSize(Actor* actor, float offsetscale = 1.0f) {
+		float CurseOfGrowthmaxSize = Runtime::GetFloat("CurseOfGrowthMaxSize") * offsetscale;
+
+		if (actor->formID == 0x14 && Runtime::GetFloat("GrowthModeRate") >= 0.002f) {
+			CurseOfGrowthmaxSize = CurseOfGrowthmaxSize * (Runtime::GetFloat("ShrinkModeRate") * 10.f);
+		}
+		else if (IsTeammate(actor) && Runtime::GetFloat("GrowthModeRateNPC") >= 0.002f) {
+			CurseOfGrowthmaxSize = CurseOfGrowthmaxSize * (Runtime::GetFloat("ShrinkModeRateNPC") * 10.f);
+		}
+		const float GrowthPower = 100.f * 0.00640f / (RandomFloat(1.f, 20.f) * 4.f);  // Randomized strength of growth
+		static Timer timer = Timer(2.50f * (RandomInt(1, 6)));  // How often it procs
+
+		if (timer.ShouldRunFrame() && get_target_scale(actor) < CurseOfGrowthmaxSize) {
+			set_target_scale(actor, CurseOfGrowthmaxSize);
+			Rumbling::Once("CurseOfGrowth", actor, GrowthPower * 40, 0.10f);
+			Runtime::PlaySoundAtNode("growthSound", actor, GrowthPower * 6, 1.0, "NPC Pelvis [Pelv]");
+			PlayMoanSound(actor, CurseOfGrowthmaxSize / 4);
+			Task_FacialEmotionTask_Moan(actor, 2.0f, "GameMode");
+		}
+	}
+
+	void ShrinkUntil(Actor* actor, float targetScale) {
+		float mult = 1.0f;
+		NewMinSize(actor, 0.82);
+		mult = (actor->formID == 0x14 ? Runtime::GetFloat("ShrinkModeRate") : Runtime::GetFloat("ShrinkModeRateNPC")) * 10.f;
+
+		if (GetCombatState(actor) > 0 || IsGtsBusy(actor)) return;
+		if ((get_visual_scale(actor)) > Runtime::GetFloat("CurseOfGrowthMaxSize") * mult + 0.001f) {
+			static Timer timer2 = Timer(20.00f + clamp(-19.5f, 0.f, ((get_target_scale(actor) - 1) * (-5.0f * RandomFloat(1, 4.5)))));  // How often it procs
+
+			float modAmount = -(0.022f * (RandomFloat(1, 4.5) * get_target_scale(actor)));
+
+			if (timer2.ShouldRunFrame()) {
+				if (targetScale + modAmount < Runtime::GetFloat("CurseOfGrowthMaxSize") * mult) {
+					set_target_scale(actor, Runtime::GetFloat("CurseOfGrowthMaxSize") * mult);
+					Runtime::PlaySoundAtNode_FallOff("shrinkSound", actor, 0.45, 1.0, "NPC Pelvis [Pelv]", 0.16f * targetScale);
+					Runtime::PlaySoundAtNode_FallOff("xlRumble", actor, 0.45, 1.0, "NPC COM [COM ]", 0.16f * targetScale);
+					return;
+				}
+				update_target_scale(actor, modAmount, SizeEffectType::kShrink);
+				Runtime::PlaySoundAtNode_FallOff("shrinkSound", actor, 0.45, 1.0, "NPC Pelvis [Pelv]", 0.16f * targetScale);
+				Runtime::PlaySoundAtNode_FallOff("xlRumble", actor, 0.45, 1.0, "NPC COM [COM ]", 0.16f * targetScale);
+			}
+		}
+	}
+
 	void GameModeManager::ApplyGameMode(Actor* actor, const ChosenGameMode& game_mode, const float& GrowthRate, const float& ShrinkRate)  {
 		auto profiler = Profilers::Profile("Manager: ApplyGameMode");
 		const float EPS = 1e-7f;
@@ -124,6 +170,10 @@ namespace Gts {
 						break;
 					}
 					case ChosenGameMode::Standard: {
+
+						ShrinkUntil(actor,targetScale);
+						break;
+
 						if (actor->IsInCombat()) {
 							float modAmount = Scale * (0.00008f + (GrowthRate * 0.17f)) * 60 * Time::WorldTimeDelta();
 							if (fabs(GrowthRate) < EPS) {
@@ -148,6 +198,10 @@ namespace Gts {
 						break;
 					}
 					case ChosenGameMode::StandardNoShrink: {
+
+						NewMinSize(actor);
+						break;
+
 						if (actor->IsInCombat()) {
 							float modAmount = Scale * (0.00008f + (GrowthRate * 0.17f)) * 60 * Time::WorldTimeDelta();
 							if (fabs(GrowthRate) < EPS) {

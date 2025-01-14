@@ -26,8 +26,16 @@ namespace Gts {
 	template< typename ... Args >
 	void Cprint(std::string_view rt_fmt_str, Args&&... args) {
 		try {
+			RE::DebugNotification(std::vformat(rt_fmt_str, std::make_format_args(args ...)).c_str());
+		}
+		catch (const std::format_error& e) {
+			log::info("Could not format Notification log, check valid format string: {}", e.what());
+		}
+
+		try {
 			ConsoleLog::GetSingleton()->Print("%s", std::vformat(rt_fmt_str, std::make_format_args(args ...)).c_str());
-		} catch (const std::format_error &e) {
+		}
+		catch (const std::format_error& e) {
 			log::info("Could not format console log, check valid format string: {}", e.what());
 		}
 	}

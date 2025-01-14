@@ -81,7 +81,7 @@ namespace {
 		}
 
 		if (!Healing && hp >= maxhp) {
-			AbortHugAnimation(giantref, tinyref);
+			
 			if (giantref->formID == 0x14) {
 				Notify("{} health is full", tinyref->GetDisplayFullName());
 			}
@@ -134,7 +134,6 @@ namespace {
 
 			if (!IsHugHealing(giantref) && (sizedifference >= threshold || sizedifference < Action_Hug)) {
 				SetBeingHeld(tinyref, false);
-				AbortHugAnimation(giantref, tinyref);
 				if (giantref->formID == 0x14) {
 					shake_camera(giantref, 0.50f, 0.15f);
 					Notify("It's difficult to gently hug {}", tinyref->GetDisplayFullName());

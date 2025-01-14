@@ -67,6 +67,15 @@ namespace {
 		.a = 0.0f,  //Default is 0
 	};
 
+	const SoftPotential customSpeed{
+		// https://www.desmos.com/calculator/vyofjrqmrn
+		.k = 3.2f,  // 0.142
+		.n = 0.77f,  // 0.82
+		.s = 1.31f, // 1.90
+		.o = 1.0f,  // 1
+		.a = 0.0f,  // Default is 0
+	};
+
 	const std::vector<std::string> disarm_nodes = {
 		"WeaponDagger",
 		"WeaponAxe",
@@ -2164,8 +2173,13 @@ namespace Gts {
 				float speedmultcalc = soft_core(scale, getspeed);
 				speedmultcalc = std::clamp(speedmultcalc, 0.01f, 1.0f);
 
+				if ((giant->formID == 0x14)) {
+					speedmultcalc = soft_core(scale, getspeed) * 0.85f;
+				}
+
 				return speedmultcalc;
-			} else {
+			} 
+			else {
 				return 1.0f;
 			}
 		}
@@ -3009,7 +3023,7 @@ namespace Gts {
 	}
 
 	void ShrinkUntil(Actor* giant, Actor* tiny, float expected, float halflife, bool animation) {
-		if (HasSMT(giant)) {
+		//if (HasSMT(giant)) {
 			float Adjustment_Gts = GetSizeFromBoundingBox(giant);
 			float Adjustment_Tiny = GetSizeFromBoundingBox(tiny);
 			float predscale = get_visual_scale(giant) * Adjustment_Gts;
@@ -3037,10 +3051,10 @@ namespace Gts {
 				Task_AdjustHalfLifeTask(tiny, halflife, 1.2); // to make them shrink faster
 				AddSMTPenalty(giant, 5.0f * Adjustment_Tiny);
 				set_target_scale(tiny, targetScale);
-				StartCombat(tiny, giant);
+				//StartCombat(tiny, giant);
 				
 			}
-		}
+		//}
 	}
 
 	void DisableCollisions(Actor* actor, TESObjectREFR* otherActor) {

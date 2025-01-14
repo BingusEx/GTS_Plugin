@@ -10,7 +10,7 @@ namespace Gts {
 	NiPoint3 Alt::GetOffset(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("cameraAlternateX"),
-			0, //Alt::ZOffset,
+			Alt::ZOffset,
 			Runtime::GetFloat("cameraAlternateY")
 			);
 	}
@@ -18,7 +18,7 @@ namespace Gts {
 	NiPoint3 Alt::GetCombatOffset(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("combatCameraAlternateX"),
-			0, //Alt::ZOffset,
+			Alt::ZOffset,
 			Runtime::GetFloat("combatCameraAlternateY")
 			);
 	}
@@ -26,7 +26,7 @@ namespace Gts {
 	NiPoint3 Alt::GetOffsetProne(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("proneCameraAlternateX"),
-			0, //Alt::ZOffset,
+			Alt::ZOffset,
 			Runtime::GetFloat("proneCameraAlternateY")
 			);
 	}
@@ -34,7 +34,7 @@ namespace Gts {
 	NiPoint3 Alt::GetCombatOffsetProne(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("proneCombatCameraAlternateX"),
-			0, //Alt::ZOffset,
+			Alt::ZOffset,
 			Runtime::GetFloat("proneCombatCameraAlternateY")
 			);
 	}
@@ -46,6 +46,7 @@ namespace Gts {
 	}
 
 	BoneTarget Alt::GetBoneTarget() {
+		SetZOff(70.0f);
 		auto player = PlayerCharacter::GetSingleton();
 		auto& sizemanager = SizeManager::GetSingleton();
 

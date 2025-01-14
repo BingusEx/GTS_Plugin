@@ -29,6 +29,9 @@ namespace Gts {
 	}
 
 	void DamageAV(Actor* actor, ActorValue av, float amount) {
+		if ((av == ActorValue::kStamina || av == ActorValue::kMagicka || av == ActorValue::kHealth) && actor->formID == 0x14) {
+			return;
+		}
 		if (IsInGodMode(actor) && amount > 0) { // do nothing if TGM is on and value is > 0
 			return;
 		}
