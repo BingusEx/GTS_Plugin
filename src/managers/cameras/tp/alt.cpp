@@ -46,7 +46,7 @@ namespace Gts {
 	}
 
 	BoneTarget Alt::GetBoneTarget() {
-		SetZOff(70.0f);
+		SetZOff(-70.0);
 		auto player = PlayerCharacter::GetSingleton();
 		auto& sizemanager = SizeManager::GetSingleton();
 

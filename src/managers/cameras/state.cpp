@@ -30,7 +30,7 @@ namespace Gts {
 	}
 
 	NiPoint3 CameraState::GetOffset(const NiPoint3& cameraPosLocal) {
-		return NiPoint3(0.0f, 0.0f, 0.0f);
+		return NiPoint3(0.0f, -70.0f, 0.0f);
 	}
 	NiPoint3 CameraState::GetOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetOffset(cameraPosLocal);
@@ -44,7 +44,7 @@ namespace Gts {
 	}
 
 	NiPoint3 CameraState::GetCombatOffset(const NiPoint3& cameraPosLocal) {
-		return NiPoint3(0.0f, 0.0f, 0.0f);
+		return NiPoint3(0.0f, -70.0f, 0.0f);
 	}
 	NiPoint3 CameraState::GetCombatOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetCombatOffset(cameraPosLocal);
@@ -58,7 +58,7 @@ namespace Gts {
 	}
 
 	NiPoint3 CameraState::GetPlayerLocalOffset(const NiPoint3& cameraPosLocal) {
-		return NiPoint3(0.0f, 0.0f, 0.0f);
+		return NiPoint3(0.0f, -70.0f, 0.0f);
 	}
 	NiPoint3 CameraState::GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetPlayerLocalOffset(cameraPosLocal);

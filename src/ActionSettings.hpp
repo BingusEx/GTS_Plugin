@@ -378,5 +378,5 @@ namespace Gts {
     const float ZoomIn_Cam_Butt = 0.8f;
 
     //////////////////
-    const float ZoomIn_LookAt_BothFoot = 0.5f;
+    const float ZoomIn_LookAt_BothFoot = 0.8f;
 }

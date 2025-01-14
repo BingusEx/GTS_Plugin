@@ -65,7 +65,7 @@ namespace {
 
 			float sizedifference = GetSizeDifference(giant, tiny, SizeType::TargetScale, false, true);
 			if (!IsHugHealing(giant) && sizedifference >= GetHugShrinkThreshold(giant)) {
-				AbortHugAnimation(giant, tiny); // Cancel anim if below shrink threshold
+				//AbortHugAnimation(giant, tiny); // Cancel anim if below shrink threshold
 				log::info("Sizediff is > threshold, aborting");
 			} else {
 				AnimationManager::StartAnim("Huggies_Shrink", giant);

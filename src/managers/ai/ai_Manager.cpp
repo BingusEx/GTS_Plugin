@@ -31,9 +31,9 @@ namespace {
 	const float PI = 3.14159f;
 
 	bool CanStompDead(Actor* tiny, float sizedifference) {
-		if (tiny->IsDead() && sizedifference < Action_Crush) {
-			return false;
-		}
+		//if (tiny->IsDead() && sizedifference < Action_Crush) {
+		//	return false;
+		//}
 		return true;
 	}
 

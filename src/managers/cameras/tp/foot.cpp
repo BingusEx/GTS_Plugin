@@ -13,6 +13,29 @@ namespace {
 }
 
 namespace Gts {
+
+
+	NiPoint3 Foot::GetOffset(const NiPoint3& cameraPos) {
+		return NiPoint3(
+			Runtime::GetFloat("cameraX"),
+			-70.f,
+			Runtime::GetFloat("cameraY")
+		);
+	}
+
+	NiPoint3 Foot::GetCombatOffset(const NiPoint3& cameraPos) {
+		return GetOffset(cameraPos);
+	}
+
+	NiPoint3 Foot::GetOffsetProne(const NiPoint3& cameraPos) {
+		return GetOffset(cameraPos);
+	}
+
+	NiPoint3 Foot::GetCombatOffsetProne(const NiPoint3& cameraPos) {
+		return GetOffset(cameraPos);
+	}
+
+
 	void Foot::EnterState() {
 		auto player = GetCameraActor();
 		if (player) {
@@ -70,7 +93,7 @@ namespace Gts {
 					this->smoothFootPos.target = (leftPosLocal + rightPosLocal) / 2.0f;
 
 					this->smoothFootPos.target.z += OFFSET * playerScale;
-					this->smoothFootPos.target.y = 100.0f - (0.15f * Gts::MaxZoom());
+					//this->smoothFootPos.target.y = -100.0f - (0.15f * Gts::MaxZoom());
 
 				}
 			}

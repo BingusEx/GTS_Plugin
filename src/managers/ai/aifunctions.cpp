@@ -142,6 +142,9 @@ namespace Gts {
 	}
 
 	void KillActor(Actor* giant, Actor* tiny, bool silent) {
+
+		if (!tiny || !giant) return;
+
 		DisableEssentialFlag(tiny); // Prevent Essentials from reappearing
 		if (silent) {
 			DisableDeathDialogueTask(tiny);
