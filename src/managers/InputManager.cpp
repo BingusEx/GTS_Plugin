@@ -16,10 +16,12 @@
 #include "utils/av.hpp"
 #include "timer.hpp"
 
+using namespace SKSE;
 using namespace RE;
 using namespace Gts;
 
 namespace {
+
 	std::vector<InputEventData> LoadInputEvents() {
 		const auto data = toml::parse(R"(Data\SKSE\Plugins\GtsInput.toml)");
 		// Toml Example
@@ -40,18 +42,18 @@ namespace {
 				if (newData.HasKeys()) {
 					results.push_back(newData);
 				} 
-				else {
-					log::error("No valid keys found for event {} at line {}", name, table.location().line());
-					PrintMessageBox("GtsInput.toml error: No valid keys found for event {} at line {}. GTS Input won't work because of errors.", name, table.location().line());
-				}
-			} 
-			else if (keys.empty()) {
-				log::warn("Missing keys for {} at line {}", name, table.location().line());
-				PrintMessageBox("GtsInput.toml error: Missing keys for {} at line {}.  GTS Input won't work because of errors.", name, table.location().line());
-			} 
-			else {
-				log::warn("Missing name for [[InputEvent]] at line {}", table.location().line());
-				PrintMessageBox("GtsInput.toml error: Missing name for [[InputEvent]] at line {}. GTS Input won't work because of errors.", table.location().line());
+			// 	else {
+			// 		log::error("No valid keys found for event {} at line {}", name, table.location().line());
+			// 		PrintMessageBox("GtsInput.toml error: No valid keys found for event {} at line {}. GTS Input won't work because of errors.", name, table.location().line());
+			// 	}
+			// } 
+			// else if (keys.empty()) {
+			// 	log::warn("Missing keys for {} at line {}", name, table.location().line());
+			// 	PrintMessageBox("GtsInput.toml error: Missing keys for {} at line {}.  GTS Input won't work because of errors.", name, table.location().line());
+			// } 
+			// else {
+			// 	log::warn("Missing name for [[InputEvent]] at line {}", table.location().line());
+			// 	PrintMessageBox("GtsInput.toml error: Missing name for [[InputEvent]] at line {}. GTS Input won't work because of errors.", table.location().line());
 			}
 		}
 

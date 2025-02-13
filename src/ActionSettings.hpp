@@ -3,7 +3,7 @@
 #include "profiler.hpp"
 
 using namespace std;
-using namespace RE;
+
 using namespace SKSE;
 
 namespace Gts {

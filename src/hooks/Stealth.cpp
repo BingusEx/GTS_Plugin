@@ -7,6 +7,7 @@
 
 using namespace RE;
 using namespace SKSE;
+using namespace Gts;
 
 namespace {
     float modify_detection(float in) {

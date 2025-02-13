@@ -2,7 +2,7 @@
 #include "managers/cameras/state.hpp"
 #include "spring.hpp"
 
-using namespace RE;
+
 
 namespace Gts {
 	class ThirdPersonCameraState : public CameraState {

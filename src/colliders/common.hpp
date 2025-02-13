@@ -1,15 +1,15 @@
 #pragma once
 
-using namespace RE;
+
 
 namespace Gts {
-	COL_LAYER GetCollidesWith(const std::uint32_t& collisionFilterInfo);
-	COL_LAYER GetCollidesWith(const hkpCollidable* collidable);
-	COL_LAYER GetCollidesWith(const hkpWorldObject* entity);
+	RE::COL_LAYER GetCollidesWith(const std::uint32_t& collisionFilterInfo);
+	RE::COL_LAYER GetCollidesWith(const hkpCollidable* collidable);
+	RE::COL_LAYER GetCollidesWith(const hkpWorldObject* entity);
 
-	void SetCollidesWith(std::uint32_t& collisionFilterInfo, const COL_LAYER& newLayer);
-	void SetCollidesWith(hkpCollidable* collidable, const COL_LAYER& newLayer);
-	void SetCollidesWith(hkpWorldObject* entity, const COL_LAYER& newLayer);
+	void SetCollidesWith(std::uint32_t& collisionFilterInfo, const RE::COL_LAYER& newLayer);
+	void SetCollidesWith(hkpCollidable* collidable, const RE::COL_LAYER& newLayer);
+	void SetCollidesWith(hkpWorldObject* entity, const RE::COL_LAYER& newLayer);
 
 	class ColliderData {
 		public:

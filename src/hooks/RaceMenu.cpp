@@ -11,8 +11,10 @@
 
 using namespace RE;
 using namespace SKSE;
+using namespace Gts;
 
 namespace Hooks {
+
     void Hook_RaceMenu::Hook(Trampoline& trampoline) {
         static FunctionHook<void(Actor* actor, TESRace* a_race, bool a_player)>SwitchRaceHook(
             REL::RelocationID(36901, 37925),

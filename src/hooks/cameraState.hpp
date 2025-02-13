@@ -1,11 +1,10 @@
 #pragma once
 #include "hooks/hooks.hpp"
 
-using namespace RE;
-using namespace SKSE;
+namespace Hooks {
 
-namespace Hooks
-{
+	using namespace SKSE;
+	using namespace RE;
 	void HookCameraStates();
 
 	class Hook_CameraState

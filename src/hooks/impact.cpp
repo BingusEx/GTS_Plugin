@@ -4,6 +4,7 @@
 
 
 using namespace RE;
+using namespace Gts;
 
 namespace Hooks
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-using namespace RE;
+
 
 namespace Gts {
 	class CameraState {

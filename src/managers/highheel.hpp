@@ -4,7 +4,7 @@
 #include "spring.hpp"
 // Module that handles high heel
 
-using namespace RE;
+
 
 namespace Gts {
 	struct HHData {

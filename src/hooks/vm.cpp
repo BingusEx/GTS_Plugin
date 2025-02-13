@@ -1,6 +1,7 @@
 #include "hooks/vm.hpp"
 #include "events.hpp"
 
+using namespace SKSE;
 using namespace RE;
 using namespace RE::BSScript;
 using namespace RE::BSScript::Internal;

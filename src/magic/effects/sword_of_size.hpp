@@ -5,7 +5,7 @@
 
 using namespace std;
 using namespace SKSE;
-using namespace RE;
+
 
 namespace Gts {
 	class SwordOfSize : public Magic {

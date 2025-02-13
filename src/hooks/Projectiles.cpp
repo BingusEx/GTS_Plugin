@@ -5,6 +5,7 @@
 
 
 using namespace RE;
+using namespace Gts;
 
 namespace {
 	void ScaleExplosion(Explosion* explosion) {

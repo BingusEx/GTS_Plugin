@@ -1,6 +1,6 @@
 #pragma once
 
-using namespace RE;
+
 using namespace SKSE;
 
 namespace Gts {

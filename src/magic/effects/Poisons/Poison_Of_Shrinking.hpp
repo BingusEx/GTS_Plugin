@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace SKSE;
-using namespace RE;
+
 
 namespace Gts {
 	class Shrink_Poison : public Magic {

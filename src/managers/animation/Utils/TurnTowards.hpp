@@ -2,7 +2,7 @@
 #include "node.hpp"
 
 
-using namespace RE;
+
 
 namespace Gts {
 

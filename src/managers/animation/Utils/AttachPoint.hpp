@@ -11,7 +11,7 @@
 #include "timer.hpp"
 #include "node.hpp"
 
-using namespace RE;
+
 namespace {
 	const std::string_view leftFootLookup = "NPC L Foot [Lft ]";
 	const std::string_view rightFootLookup = "NPC R Foot [Rft ]";

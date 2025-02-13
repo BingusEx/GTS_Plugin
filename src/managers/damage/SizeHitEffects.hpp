@@ -10,7 +10,7 @@
 
 using namespace std;
 using namespace SKSE;
-using namespace RE;
+
 // Module for accurate size-related damage
 
 namespace Gts {

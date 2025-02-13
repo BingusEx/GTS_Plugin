@@ -2,7 +2,7 @@
 #include "managers/cameras/tp/foot.hpp"
 #include "spring.hpp"
 
-using namespace RE;
+
 
 namespace Gts {
 	class FootR : public Foot {

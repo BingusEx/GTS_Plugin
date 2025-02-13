@@ -8,6 +8,7 @@
 
 using namespace RE;
 using namespace SKSE;
+using namespace Gts;
 
 namespace {
 	float affect_by_scale(TESObjectREFR* ref, float original) {

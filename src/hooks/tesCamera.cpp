@@ -1,6 +1,7 @@
 #include "hooks/tesCamera.hpp"
 #include "data/plugin.hpp"
 
+using namespace SKSE;
 using namespace RE;
 using namespace Gts;
 

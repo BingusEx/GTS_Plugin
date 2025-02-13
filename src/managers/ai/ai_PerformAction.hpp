@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace SKSE;
-using namespace RE;
+
 
 namespace Gts {
     void AI_StrongStomp(Actor* pred, Actor* prey, int rng);

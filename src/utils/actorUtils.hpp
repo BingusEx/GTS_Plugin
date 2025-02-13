@@ -2,12 +2,11 @@
 
 #include "events.hpp"
 
-using namespace std;
-using namespace SKSE;
-using namespace RE;
-using namespace Gts;
-
 namespace Gts {
+
+	using namespace std;
+	using namespace SKSE;
+	using namespace RE;
 
 	enum class AnimationCondition {
 		kHugs = 0,
@@ -20,90 +19,90 @@ namespace Gts {
 
 	[[nodiscard]] RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis);
 
-	Actor* GetActorPtr(Actor* actor);
+	RE::Actor* GetActorPtr(RE::Actor* actor);
 
-	Actor* GetActorPtr(Actor& actor);
+	RE::Actor* GetActorPtr(RE::Actor& actor);
 
-	Actor* GetActorPtr(ActorHandle& actor);
+	RE::Actor* GetActorPtr(RE::ActorHandle& actor);
 
-	Actor* GetActorPtr(const ActorHandle& actor);
+	RE::Actor* GetActorPtr(const RE::ActorHandle& actor);
 
-	Actor* GetActorPtr(FormID formId);
+	RE::Actor* GetActorPtr(RE::FormID formId);
 
-	Actor* GetCharContActor(bhkCharacterController* charCont);
+	RE::Actor* GetCharContActor(RE::bhkCharacterController* charCont);
 
-	void Task_AdjustHalfLifeTask(Actor* tiny, float halflife, double revert_after);
+	void Task_AdjustHalfLifeTask(RE::Actor* tiny, float halflife, double revert_after);
 
-	float GetLaunchPower(Actor* giant, float sizeRatio);
+	float GetLaunchPower(RE::Actor* giant, float sizeRatio);
 
-	void StartResetTask(Actor* tiny);
-	void PlayMoanSound(Actor* actor, float volume);
-	void PlayLaughSound(Actor* actor, float volume, int type);
+	void StartResetTask(RE::Actor* tiny);
+	void PlayMoanSound(RE::Actor* actor, float volume);
+	void PlayLaughSound(RE::Actor* actor, float volume, int type);
 
 	// GTS State Bools
 	
 
-	void Potion_SetMightBonus(Actor* giant, float value, bool add);
-	float Potion_GetMightBonus(Actor* giant);
+	void Potion_SetMightBonus(RE::Actor* giant, float value, bool add);
+	float Potion_GetMightBonus(RE::Actor* giant);
 
-	float Potion_GetSizeMultiplier(Actor* giant);
+	float Potion_GetSizeMultiplier(RE::Actor* giant);
 
-	void Potion_SetShrinkResistance(Actor* giant, float value);
-	float Potion_GetShrinkResistance(Actor* giant);
+	void Potion_SetShrinkResistance(RE::Actor* giant, float value);
+	float Potion_GetShrinkResistance(RE::Actor* giant);
 
-	void Potion_SetUnderGrowth(Actor* actor, bool set);
-	bool Potion_IsUnderGrowthPotion(Actor* actor);
+	void Potion_SetUnderGrowth(RE::Actor* actor, bool set);
+	bool Potion_IsUnderGrowthPotion(RE::Actor* actor);
 	
-	bool IsInsect(Actor* actor, bool performcheck);
-	bool IsFemale(Actor* actor, bool check_config = false);
-	bool IsDragon(Actor* actor);
-	bool IsGiant(Actor* actor);
-	bool IsMammoth(Actor* actor);
-	bool IsLiving(Actor* actor);
-	bool IsUndead(Actor* actor, bool PerformCheck);
-	bool WasReanimated(Actor* actor);
-	bool IsFlying(Actor* actor);
-	bool IsHostile(Actor* giant, Actor* tiny);
-	bool CanPerformAnimationOn(Actor* giant, Actor* tiny, bool HugCheck);
-	bool IsEssential(Actor* giant, Actor* actor);
-	bool IsHeadtracking(Actor* giant);
-	bool AnimationsInstalled(Actor* giant);
-	bool IsInGodMode(Actor* giant);
+	bool IsInsect(RE::Actor* actor, bool performcheck);
+	bool IsFemale(RE::Actor* actor, bool check_config = false);
+	bool IsDragon(RE::Actor* actor);
+	bool IsGiant(RE::Actor* actor);
+	bool IsMammoth(RE::Actor* actor);
+	bool IsLiving(RE::Actor* actor);
+	bool IsUndead(RE::Actor* actor, bool PerformCheck);
+	bool WasReanimated(RE::Actor* actor);
+	bool IsFlying(RE::Actor* actor);
+	bool IsHostile(RE::Actor* giant, RE::Actor* tiny);
+	bool CanPerformAnimationOn(RE::Actor* giant, RE::Actor* tiny, bool HugCheck);
+	bool IsEssential(RE::Actor* giant, RE::Actor* actor);
+	bool IsHeadtracking(RE::Actor* giant);
+	bool AnimationsInstalled(RE::Actor* giant);
+	bool IsInGodMode(RE::Actor* giant);
 	bool IsFreeCameraEnabled();
 	bool SizeRaycastEnabled();
 	bool IsDebugEnabled();
-	bool CanDoDamage(Actor* giant, Actor* tiny, bool HoldCheck);
+	bool CanDoDamage(RE::Actor* giant, RE::Actor* tiny, bool HoldCheck);
 
-	void Attachment_SetTargetNode(Actor* giant, AttachToNode Node);
-	AttachToNode Attachment_GetTargetNode(Actor* giant);
+	void Attachment_SetTargetNode(RE::Actor* giant, AttachToNode Node);
+	AttachToNode Attachment_GetTargetNode(RE::Actor* giant);
 
-	void SetBusyFoot(Actor* giant, BusyFoot Foot);
-	BusyFoot GetBusyFoot(Actor* giant);
+	void SetBusyFoot(RE::Actor* giant, BusyFoot Foot);
+	BusyFoot GetBusyFoot(RE::Actor* giant);
 	
-	void ControlAnother(Actor* target, bool reset);
-	Actor* GetPlayerOrControlled();
+	void ControlAnother(RE::Actor* target, bool reset);
+	RE::Actor* GetPlayerOrControlled();
 
-	void RecordSneaking(Actor* actor);
-	void SetSneaking(Actor* actor, bool override_sneak, int enable);
+	void RecordSneaking(RE::Actor* actor);
+	void SetSneaking(RE::Actor* actor, bool override_sneak, int enable);
 
-	void SetWalking(Actor* actor, int enable);
+	void SetWalking(RE::Actor* actor, int enable);
 
 	// Gts Bools end
 
 	// GTS Actor Functions
 	float GetDamageSetting();
-	float GetFallModifier(Actor* giant);
+	float GetFallModifier(RE::Actor* giant);
 
-	std::vector<Actor*> Vore_GetMaxVoreCount(Actor* giant, std::vector<Actor*> actors);
+	std::vector<RE::Actor*> Vore_GetMaxVoreCount(RE::Actor* giant, std::vector<RE::Actor*> actors);
 
-	float Ench_Aspect_GetPower(Actor* giant);
-	float Ench_Hunger_GetPower(Actor* giant);
+	float Ench_Aspect_GetPower(RE::Actor* giant);
+	float Ench_Hunger_GetPower(RE::Actor* giant);
 
-	float Perk_GetSprintShrinkReduction(Actor* actor);
+	float Perk_GetSprintShrinkReduction(RE::Actor* actor);
 
-	float GetDamageResistance(Actor* actor);
-	float GetDamageMultiplier(Actor* actor);
-	float Damage_CalculateSizeDamage(Actor* giant, Actor* tiny);
+	float GetDamageResistance(RE::Actor* actor);
+	float GetDamageMultiplier(RE::Actor* actor);
+	float Damage_CalculateSizeDamage(RE::Actor* giant, RE::Actor* tiny);
 
 	float GetSizeDifference(Actor* giant, Actor* tiny, SizeType Type, bool Check_SMT, bool HH);
 	float GetActorWeight(Actor* giant, bool metric);

@@ -12,7 +12,7 @@
 #include "events.hpp"
 #include "timer.hpp"
 
-using namespace RE;
+
 using namespace Gts;
 
 namespace {

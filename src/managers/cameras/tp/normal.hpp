@@ -1,7 +1,7 @@
 #pragma once
 #include "managers/cameras/tpState.hpp"
 
-using namespace RE;
+
 
 namespace Gts {
 	class Normal : public ThirdPersonCameraState {

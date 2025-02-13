@@ -3,7 +3,7 @@
  *  Hooks for actor equipment blocking
  */
 
-using namespace RE;
+
 using namespace SKSE;
 
 namespace Hooks {

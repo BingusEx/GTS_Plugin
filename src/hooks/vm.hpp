@@ -1,15 +1,16 @@
 #pragma once
 #include "hooks/hooks.hpp"
 
-using namespace RE;
-using namespace SKSE;
 
-using namespace RE;
-using namespace RE::BSScript;
-using namespace RE::BSScript::Internal;
+
 
 namespace Hooks
 {
+	using namespace SKSE;
+	using namespace RE;
+	using namespace RE::BSScript;
+	using namespace RE::BSScript::Internal;
+	
 	class Hook_VM
 	{
 		public:

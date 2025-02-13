@@ -95,6 +95,7 @@
 #include <variant>
 #include <vector>
 #include <version>
+#include <d3d11.h>
 
 #include <RE/Skyrim.h>
 #include <SKSE/SKSE.h>
@@ -103,6 +104,9 @@
 #include <ShlObj_core.h>
 #include <Windows.h>
 #include <Psapi.h>
+#include <tchar.h>
+
+
 #undef cdecl // Workaround for Clang 14 CMake configure error.
 #undef PlaySound //Workarond for winapi define breaking intelisense for Runtimne::PlaySound
 
@@ -121,6 +125,7 @@ namespace util {
 	using SKSE::stl::report_and_fail;
 }
 
+#include "git.h"
 #include "util.hpp"
 #include "data/tasks.hpp"
 

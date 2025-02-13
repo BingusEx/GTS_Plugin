@@ -2,7 +2,7 @@
 
 // #define ENABLED_SHADOW
 
-using namespace RE;
+
 
 namespace Gts {
 	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTracking_MCM Camera_MCM);

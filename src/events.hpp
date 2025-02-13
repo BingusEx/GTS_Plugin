@@ -3,7 +3,7 @@
 #include "profiler.hpp"
 
 using namespace std;
-using namespace RE;
+
 using namespace SKSE;
 
 namespace Gts {
@@ -207,15 +207,15 @@ namespace Gts {
 	};
 
 	struct Impact {
-		Actor* actor;
+		RE::Actor* actor;
 		FootEvent kind;
 		float scale;
 		float modifier;
-		std::vector<NiAVObject*> nodes;
+		std::vector<RE::NiAVObject*> nodes;
 	};
 
 	struct EmotionInfo {
-		Actor* giantess;
+		RE::Actor* giantess;
 		int ph_id;
 		float speed_1;
 		float speed_2;
@@ -224,7 +224,7 @@ namespace Gts {
 	};
 
 	struct VoreInformation {
-		Actor* giantess;
+		RE::Actor* giantess;
 		bool WasLiving;
 		float Scale;
 		float Vore_Power;
@@ -235,33 +235,33 @@ namespace Gts {
 	};
 
 	struct UnderFoot {
-		Actor* giant;
-		Actor* tiny;
+		RE::Actor* giant;
+		RE::Actor* tiny;
 		float force;
 		/// Giant foot that is doing the squishing
-		NiAVObject* foot;
+		RE::NiAVObject* foot;
 		/// Tiny's body parts that are underfoot
-		std::vector<NiAVObject*> bodyParts;
+		std::vector<RE::NiAVObject*> bodyParts;
 		FootEvent footEvent;
 	};
 
 	struct HighheelEquip {
-		Actor* actor;
+		RE::Actor* actor;
 		bool equipping;
 		float hhLength;
-		NiPoint3 hhOffset;
-		TESObjectARMO* shoe;
+		RE::NiPoint3 hhOffset;
+		RE::TESObjectARMO* shoe;
 	};
 
 	struct AddPerkEvent {
-		Actor* actor;
-		BGSPerk* perk;
+		RE::Actor* actor;
+		RE::BGSPerk* perk;
 		std::uint32_t rank;
 	};
 
 	struct RemovePerkEvent {
-		Actor* actor;
-		BGSPerk* perk;
+		RE::Actor* actor;
+		RE::BGSPerk* perk;
 	};
 
 	class EventListener {
@@ -305,19 +305,19 @@ namespace Gts {
 			virtual void DataReady();
 
 			// Called when an actor is reset
-			virtual void ResetActor(Actor* actor);
+			virtual void ResetActor(RE::Actor* actor);
 
 			// Called when an actor has an item equipped
-			virtual void ActorEquip(Actor* actor);
+			virtual void ActorEquip(RE::Actor* actor);
 
 			// Called when Player absorbs dragon soul
 			virtual void DragonSoulAbsorption();
 
 			// Called when an actor has is fully loaded
-			virtual void ActorLoaded(Actor* actor);
+			virtual void ActorLoaded(RE::Actor* actor);
 
 			// Called when a papyrus hit event is fired
-			virtual void HitEvent(const TESHitEvent* evt);
+			virtual void HitEvent(const RE::TESHitEvent* evt);
 
 			// Called when an actor is squashed underfoot
 			virtual void UnderFootEvent(const UnderFoot& evt);
@@ -335,10 +335,10 @@ namespace Gts {
 			virtual void OnRemovePerk(const RemovePerkEvent& evt);
 
 			// Fired when a skyrim menu event occurs
-			virtual void MenuChange(const MenuOpenCloseEvent* menu_event);
+			virtual void MenuChange(const RE::MenuOpenCloseEvent* menu_event);
 
 			// Fired when a actor animation event occurs
-			virtual void ActorAnimEvent(Actor* actor, const std::string_view& tag, const std::string_view& payload);
+			virtual void ActorAnimEvent(RE::Actor* actor, const std::string_view& tag, const std::string_view& payload);
 	};
 
 	class EventDispatcher {
@@ -359,18 +359,18 @@ namespace Gts {
 			static void DoDisabled();
 			static void DoStart();
 			static void DoDataReady();
-			static void DoResetActor(Actor* actor);
-			static void DoActorEquip(Actor* actor);
+			static void DoResetActor(RE::Actor* actor);
+			static void DoActorEquip(RE::Actor* actor);
 			static void DoDragonSoulAbsorption();
-			static void DoActorLoaded(Actor* actor);
-			static void DoHitEvent(const TESHitEvent* evt);
+			static void DoActorLoaded(RE::Actor* actor);
+			static void DoHitEvent(const RE::TESHitEvent* evt);
 			static void DoUnderFootEvent(const UnderFoot& evt);
 			static void DoOnImpact(const Impact& impact);
 			static void DoHighheelEquip(const HighheelEquip& impact);
 			static void DoAddPerk(const AddPerkEvent& evt);
 			static void DoRemovePerk(const RemovePerkEvent& evt);
-			static void DoMenuChange(const MenuOpenCloseEvent* menu_event);
-			static void DoActorAnimEvent(Actor* actor, const BSFixedString& a_tag, const BSFixedString& a_payload);
+			static void DoMenuChange(const RE::MenuOpenCloseEvent* menu_event);
+			static void DoActorAnimEvent(RE::Actor* actor, const RE::BSFixedString& a_tag, const RE::BSFixedString& a_payload);
 		private:
 			[[nodiscard]] static EventDispatcher& GetSingleton();
 			std::vector<EventListener*> listeners;

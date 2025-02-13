@@ -2,7 +2,7 @@
 // Module that finds nodes and node realated data
 using namespace std;
 using namespace SKSE;
-using namespace RE;
+
 
 namespace Gts {
 	std::vector<NiAVObject*> GetAllNodes(Actor* actor);

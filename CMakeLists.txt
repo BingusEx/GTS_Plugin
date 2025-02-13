@@ -60,7 +60,9 @@ source_group(
 ########################################################################################################################
 ## Configure target DLL
 ########################################################################################################################
-find_package(imgui CONFIG REQUIRED)
+
+find_package(Boost REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 find_package(CommonLibSSE CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(toml11 CONFIG REQUIRED)
@@ -69,11 +71,20 @@ find_path(GLUINO_INCLUDE_DIRS "gluino/gluino.h")
 find_path(CLIBUTIL_INCLUDE_DIRS "CLibUtil/string.hpp")
 
 include(FetchContent)
+
 FetchContent_Declare(cmake_git_version_tracking                   
   GIT_REPOSITORY https://github.com/andrew-hardin/cmake-git-version-tracking.git
   GIT_TAG 6c0cb87edd029ddfb403a8e24577c144a03605a6
 )
 FetchContent_MakeAvailable(cmake_git_version_tracking)
+
+FetchContent_Declare(
+  boost_ext_reflect
+  GIT_REPOSITORY https://github.com/qlibs/reflect
+  GIT_SHALLOW ON  # Download the branch without its history
+  GIT_TAG        v1.1.1
+)
+FetchContent_MakeAvailable(boost_ext_reflect)
 
 add_commonlibsse_plugin(${PROJECT_NAME} DECLARATIVE SOURCES ${headers} ${sources})
 add_library("${PROJECT_NAME}::${PROJECT_NAME}" ALIAS "${PROJECT_NAME}")
@@ -86,13 +97,15 @@ target_include_directories(${PROJECT_NAME}
 	${GLM_INCLUDE_DIRS}
 	${GLUINO_INCLUDE_DIRS}
 	${CLIBUTIL_INCLUDE_DIRS}
+	${boost_ext_reflect_SOURCE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
+	Boost::headers
+	spdlog::spdlog
 	toml11::toml11
 	nlohmann_json::nlohmann_json
-	imgui::imgui
 	cmake_git_version_tracking
 )
 

@@ -6,6 +6,10 @@
 #include "utils/actorUtils.hpp"
 #include "data/transient.hpp"
 
+using namespace SKSE;
+using namespace RE;
+using namespace Gts;
+
 namespace {
 
     float GetPushMult(Actor* giant) {
@@ -30,6 +34,7 @@ namespace {
 		return result;
 	}
 }
+
 namespace Hooks
 {
 	void Hook_Pushback::Hook(Trampoline& trampoline) {

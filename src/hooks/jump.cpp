@@ -11,6 +11,7 @@
 
 using namespace RE;
 using namespace SKSE;
+using namespace Gts;
 
 namespace {
 	const float launch_up_radius = 24.0f;

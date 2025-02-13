@@ -6,7 +6,7 @@
 
 #include <ShlObj.h>
 using namespace SKSE;
-using namespace RE;
+
 
 
 namespace Gts {

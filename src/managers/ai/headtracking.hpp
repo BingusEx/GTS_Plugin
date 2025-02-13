@@ -11,7 +11,7 @@
 #include "node.hpp"
 
 using namespace std;
-using namespace RE;
+
 
 namespace Gts {
 
