@@ -13,6 +13,7 @@
 #include "hooks/Movement.hpp"
 #include "hooks/Pushback.hpp"
 #include "hooks/RaceMenu.hpp"
+#include "hooks/renderer.hpp"
 #include "hooks/controls.hpp"
 #include "hooks/Stealth.hpp"
 #include "hooks/impact.hpp"
@@ -25,6 +26,7 @@
 #include "hooks/sink.hpp"
 #include "hooks/jump.hpp"
 #include "hooks/vm.hpp"
+
 
 
 using namespace RE;
@@ -73,6 +75,7 @@ namespace Hooks
 		Hook_Damage::Hook(trampoline);
 		Hook_Pushback::Hook(trampoline);
 		Hook_Input::Hook(trampoline);
+		Hook_Renderer::Hook(trampoline);
 
 		InstallControls();
 		//if (REL::Module::IsSE()) { // Used when something is not RE'd yet for AE

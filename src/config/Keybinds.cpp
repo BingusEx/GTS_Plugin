@@ -142,11 +142,11 @@ bool Keybinds::SaveKeybinds(){
         TomlData["GTSInputEvent"] = InputEvents;
     }
     catch (const toml::exception& e) {
-        // logger::error("TOML Exception when saving InputEvents: {}", e.what());
+        logger::error("TOML Exception when saving InputEvents: {}", e.what());
         return false;
     }
     catch(...){
-        //logger::error("SaveKeybinds() -> Unknown Exception);
+        logger::error("SaveKeybinds() -> Unknown Exception");
         return false;
     }
 
@@ -164,24 +164,24 @@ bool Keybinds::SaveKeybinds(){
             return true;
         }
        
-        //logger::error("Could not open the Input.toml for writing. Settings not saved!");
+        logger::error("Could not open the Input.toml for writing. Settings not saved!");
         return false;
         
     }
     catch(toml::exception e){
-        //logger::error("Could not parse TomlData when trying to save: {}",e.what());
+        logger::error("Could not parse TomlData when trying to save: {}",e.what());
         return false;
     }
     catch(const std::ios_base::failure& e){
-        //logger::error("File System Error: {}",e.what());
+        logger::error("File System Error: {}",e.what());
         return false;
     }
     catch(const std::exception e){
-        //logger::error("SaveKeybinds() -> Misc Exception: {},e.what());
+        logger::error("SaveKeybinds() -> Misc Exception: {}",e.what());
         return false;
     }
     catch(...){
-        //logger::error("SaveKeybinds() -> Unknown Exception));
+        logger::error("SaveKeybinds() -> Unknown Exception");
         return false;
     }
 }

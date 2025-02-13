@@ -16,15 +16,15 @@ bool Config::LoadStructFromTOML(const auto& a_toml, T& a_data) {
         std::lock_guard<std::mutex> lock(_ReadWriteLock);
         auto _Name = std::string(GetStructName(a_data));
         a_data = toml::find_or<T>(a_toml, _Name, T{});
-        //logger::info("Struct: {} Parsed!", _Name);
+        logger::info("Struct: {} Parsed!", _Name);
         return true;
     }
     catch(toml::exception e){
-        //logger::error("Could not parse the toml table into a struct: {}",e.what());
+        logger::error("Could not parse the toml table into a struct: {}",e.what());
         return false;
     }
     catch(...){
-        //logger::error("LoadStructFromTOML() -> Something really bad happened with {} and not even TOML11's Handler caught it", reflect::type_name<T&>(a_data) );
+        logger::error("LoadStructFromTOML() -> Something really bad happened with {} and not even TOML11's Handler caught it", reflect::type_name<T&>(a_data) );
         return false;
     }
 }
@@ -46,15 +46,15 @@ bool Config::UpdateTOMLFromStruct(auto& a_toml, T& a_data) {
 
         // Replace the entire table to remove unused data
         a_toml.as_table()[_StructName] = table;
-        //logger::info("TOML Data for Table {} Has been Replaced",_StructName);
+        logger::info("TOML Data for Table {} Has been Replaced",_StructName);
         return true;
     }
     catch(toml::exception e) {
-        //logger::error("Could not parse the struct into a TOML table table into a struct: {}",e.what());
+        logger::error("Could not parse the struct into a TOML table table into a struct: {}",e.what());
         return false;
     }
     catch(...) {
-        //logger::error("UpdateTOMLFromStruct() -> Something really bad happened with {} and not even TOML11's Handler caught it", reflect::type_name<T&>(a_data) );
+        logger::error("UpdateTOMLFromStruct() -> Something really bad happened with {} and not even TOML11's Handler caught it", reflect::type_name<T&>(a_data) );
         return false;
     }
 }
@@ -71,7 +71,7 @@ bool Config::SaveTOMLToFile(const auto& a_toml, const std::filesystem::path& a_f
 
         //Check if file exists else create it.
         if(!CheckFile(a_file)){
-            //logger::error("Settings file was missing and could not be created");
+            logger::error("Settings file was missing and could not be created");
             return false;
         };
 
@@ -86,24 +86,24 @@ bool Config::SaveTOMLToFile(const auto& a_toml, const std::filesystem::path& a_f
             return true;
         }
        
-        //logger::error("Could not open the settings for writing. Settings not saved!");
+        logger::error("Could not open the settings for writing. Settings not saved!");
         return false;
         
     }
     catch(toml::exception e){
-        //logger::error("Could not parse the toml table when trying to save: {}",e.what());
+        logger::error("Could not parse the toml table when trying to save: {}",e.what());
         return false;
     }
     catch(const std::ios_base::failure& e){
-        //logger::error("Could not parse the toml table when trying to save: {}",e.what());
+        logger::error("Could not parse the toml table when trying to save: {}",e.what());
         return false;
     }
     catch(const std::exception e){
-        //logger::error("SaveTOMLToFile() -> Misc Exception: {},e.what());
+        logger::error("SaveTOMLToFile() -> Misc Exception: {}",e.what());
         return false;
     }
     catch(...){
-        //logger::error("SaveTOMLToFile() -> Unknown Exception));
+        logger::error("SaveTOMLToFile() -> Unknown Exception");
         return false;
     }
 }
@@ -142,12 +142,12 @@ bool Config::LoadSettings() {
 
         //Set TomlData to a clean table. So any loaded settings can still be saved propperly if needed.
         TomlData = toml::ordered_table();
-        // logger::error("Could not parse {}: {}",_ConfigFile, e.what());
+        logger::error("Could not parse {}: {}",_ConfigFile, e.what());
         return false;
 
     }
     catch(...){
-        //logger::error("LoadSettings() -> TOML::Parse Exception Outside of TOML11's Scope);
+        logger::error("LoadSettings() -> TOML::Parse Exception Outside of TOML11's Scope");
         return false;
     }
 
@@ -169,22 +169,22 @@ bool Config::LoadSettings() {
         }
 
         if(!LoadRes){
-            //logger::error("One or more structs could not be deserialized with the fallback init failing too...");
+            logger::error("One or more structs could not be deserialized with the fallback init failing too...");
             //This is where we halt and catch fire as this is a litteral imposibility
             //A bad deserialization should ALWAYS result in a clean struct instance. If this fails something really bad happened.
         }
         return LoadRes;
     }
     catch (const toml::exception& e) {
-        // logger::error("Could not parse {}: {}",_ConfigFile, e.what());
+        logger::error("Could not parse {}: {}",_ConfigFile, e.what());
         return false;
     }
     catch (const std::exception e) {
-        // logger::error("Could not parse {}: {}",_ConfigFile, e.what());
+        logger::error("Could not parse {}: {}",_ConfigFile, e.what());
         return false;
     }
     catch(...){
-        //logger::error("LoadSettings() -> Unknown Exception);
+        logger::error("LoadSettings() -> Unknown Exception");
         return false;
     }
 
@@ -215,24 +215,24 @@ bool Config::SaveSettings() {
         UpdateRes &= UpdateTOMLFromStruct(TomlData, GtsUI);
 
         if(!UpdateRes){
-            //logger::error("One or more structs could not be serialized to TOML, Skipping Disk Write");
+            logger::error("One or more structs could not be serialized to TOML, Skipping Disk Write");
             return false;
         }
         
         const bool SaveRes = SaveTOMLToFile(TomlData,ConfigFile);
 
         if(!SaveRes){
-            //logger::error("Something went wrong when trying to save the TOML to disk... Settings are probably not saved...");
+            logger::error("Something went wrong when trying to save the TOML to disk... Settings are probably not saved...");
         }
 
         return SaveRes;
     } 
     catch (const toml::exception& e) {
-        // logger::error("TOML Exception: Could not update one or more structs: {}",_ConfigFile, e.what());
+        logger::error("TOML Exception: Could not update one or more structs: {}",_ConfigFile, e.what());
         return false;
     }
     catch(...){
-        //logger::error("SaveSettings() -> Unknown Exception);
+        logger::error("SaveSettings() -> Unknown Exception");
         return false;
     }
 }

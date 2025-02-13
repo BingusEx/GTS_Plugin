@@ -13,7 +13,7 @@ namespace GtsUI {
 
         //Consts
         const std::string _ext = ".ttf";
-        const std::string _basePath = "GTSPlugin\\Fonts\\";
+        const std::string _basePath = "Data\\SKSE\\Plugins\\GTSPlugin\\Fonts\\";
 
         const std::string _SkyrimGUI_Light = _basePath +"Futura Condensed Light" + _ext;
         const std::string _SkyrimGUI_Medium = _basePath + "Futura Condensed Medium" + _ext;

@@ -108,7 +108,10 @@
 
 
 #undef cdecl // Workaround for Clang 14 CMake configure error.
-#undef PlaySound //Workarond for winapi define breaking intelisense for Runtimne::PlaySound
+
+//WinAPI Fix
+#undef PlaySound 
+#undef DeleteFile
 
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/msvc_sink.h>

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "toml.hpp"
+#include <toml.hpp>
+#include <magic_enum/magic_enum.hpp>
+
 #include "config/ConfigUtil.hpp"
-#include "magic_enum/magic_enum.hpp"
 #include "SettingsList.hpp"
 
 
@@ -98,8 +99,9 @@ class Config {
     REGISTER_STRUCT_NAME(SettingsUI, "GtsUI");
     REGISTER_STRUCT_NAME(SettingsHidden, "Hidden");
 
-    const std::string _Subfolder = "GTSPlugin"; 
+    const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin"; 
     const std::string _ConfigFile = "Settings.toml";
+    //CURRENTPATH IS THE SKYRIM ROOT FOLDER
     const std::filesystem::path ConfigFile = std::filesystem::current_path() / _Subfolder / _ConfigFile;
 
     toml::basic_value<toml::ordered_type_config> TomlData;
@@ -165,7 +167,7 @@ class Config {
         static std::latch Latch(1);
 
         if (!Initialized.exchange(true)) {
-            //logger::info("Loading TOML Settings in .ctor...")
+            logger::info("Loading TOML Settings in .ctor...");
 
             if(!Instance.LoadSettings()){
                 MessageBoxA(nullptr,"Settings.toml is either invalid or corrupted. Click OK to clear out the settings file and delete the old settings.","Size Matters - GTSPlugin.dll",MB_OK);
@@ -189,7 +191,7 @@ class Config {
             //Explicitly Ignore the [[Nodiscard]]
             std::ignore = Instance.SaveSettings();
 
-            //logger::info(".ctor Load OK")
+            logger::info(".ctor Load OK");
 
             Latch.count_down();
         }

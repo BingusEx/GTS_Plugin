@@ -72,6 +72,7 @@ template<typename Enum>
 }
 
 [[nodiscard]] static inline bool CheckFile(const std::filesystem::path& a_file) {
+    MessageBoxA(nullptr,a_file.string().c_str(),"aaa",MB_OK);
     try {
         // Check if the file exists
         if (std::filesystem::exists(a_file)) {
@@ -83,22 +84,22 @@ template<typename Enum>
             file.exceptions(std::ofstream::failbit);
             if (file) {
                 file.close();
-                //logger::warn("Configuration file did not exist but was successfully created");
+                logger::warn("Configuration file did not exist but was successfully created");
                 return true;
             }
         }
         return false;
     } 
     catch (const std::filesystem::filesystem_error& e) {
-        //logger::error("CheckFile() Filesystem error: {}", e.what());
+        logger::error("CheckFile() Filesystem error: {}", e.what());
         return false;
     } 
     catch (const std::exception& e) {
-        //logger::error("CheckFile() -> Exception: {}", e.what());
+        logger::error("CheckFile() -> Exception: {}", e.what());
         return false;
     }
     catch(...){
-        //logger::error("CheckFile() -> Unknown Exception));
+        logger::error("CheckFile() -> Unknown Exception");
         return false;
     }
 }
@@ -108,22 +109,22 @@ template<typename Enum>
         // Check if the file exists
         if (std::filesystem::exists(a_file)) {
             std::filesystem::remove(a_file);
-            //logger::info("Configuration file was successfully deleted");
+            logger::info("Configuration file was successfully deleted");
             return true;
         }
         return false;
         
     } 
     catch (const std::filesystem::filesystem_error& e) {
-        //logger::error("DeleteFile() Filesystem error: {}", e.what());
+        logger::error("DeleteFile() Filesystem error: {}", e.what());
         return false;
     } 
     catch (const std::exception& e) {
-        //logger::error("DeleteFile() -> Exception: {}", e.what());
+        logger::error("DeleteFile() -> Exception: {}", e.what());
         return false;
     }
     catch(...){
-        //logger::error("DeleteFile() -> Unknown Exception));
+        logger::error("DeleteFile() -> Unknown Exception");
         return false;
     }
 }

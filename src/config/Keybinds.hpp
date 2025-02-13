@@ -21,7 +21,7 @@ namespace Input {
             static std::latch Latch(1);
             
             if (!Initialized.exchange(true)) {
-                //logger::info("Loading TOML Settings in .ctor...")
+                logger::info("Loading TOML Keybinds in .ctor...");
     
                 if(!Instance.LoadKeybinds()){
                     MessageBoxA(nullptr,"Input.toml is either invalid or corrupted. Click OK to clear out the file.\nThis will reset your keybinds.","Size Matters - GTSPlugin.dll",MB_OK);
@@ -45,7 +45,7 @@ namespace Input {
                 //Explicitly Ignore the [[Nodiscard]]
                 std::ignore = Instance.SaveKeybinds();
     
-                //logger::info(".ctor Load OK")
+                logger::info(".ctor Load OK");
     
                 Latch.count_down();
             }
@@ -63,8 +63,9 @@ namespace Input {
         Keybinds(const Keybinds&) = delete;
         Keybinds& operator=(const Keybinds&) = delete;
 
-        const std::string _Subfolder = "GTSPlugin"; 
+        const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin"; 
         const std::string _ConfigFile = "Input.toml";
+        //CURRENTPATH IS THE SKYRIM ROOT FOLDER
         const std::filesystem::path InputFile = std::filesystem::current_path() / _Subfolder / _ConfigFile;
     
         toml::basic_value<toml::ordered_type_config> TomlData;
