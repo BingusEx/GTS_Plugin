@@ -5,7 +5,7 @@ using namespace SKSE;
 
 
 
-namespace Gts {
+namespace GTS {
 	class World {
 		public:
 			static const RE::GMatrix3D& WorldToCamera();

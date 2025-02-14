@@ -19,9 +19,9 @@
 #include <string>
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	 void ShiftAudioFrequency() {
 		auto enable = Persistent::GetSingleton().edit_voice_frequency;
 		if (!enable) {

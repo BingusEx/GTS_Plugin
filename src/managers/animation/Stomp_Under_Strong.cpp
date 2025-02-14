@@ -21,7 +21,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     const std::string_view RNode = "NPC R Foot [Rft ]";
@@ -100,7 +100,7 @@ namespace {
 		UnderStomp_DoEverything(&data.giant, SavedSpeed, false, FootEvent::Left, DamageSource::CrushedLeft, LNode, "HeavyStompL");
 	}
 }
-namespace Gts {
+namespace GTS {
     void AnimationUnderStompStrong::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_UnderStomp_CamOn_StrongR", "UnderStomp", GTS_UnderStomp_CamOn_StrongR);
 		AnimationManager::RegisterEvent("GTS_UnderStomp_CamOn_StrongL", "UnderStomp", GTS_UnderStomp_CamOn_StrongL);

@@ -1,7 +1,7 @@
 #include "ImFontManager.hpp"
 #include "UI/DearImGui/imgui_impl_dx11.h"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void ImFontManager::Init(){
     //Initalzie font data, add any new font defines here.

@@ -8,7 +8,7 @@ using namespace SKSE;
 using namespace RE;
 
 
-namespace Gts {
+namespace GTS {
 	Transient& Transient::GetSingleton() noexcept {
 		static Transient instance;
 		return instance;

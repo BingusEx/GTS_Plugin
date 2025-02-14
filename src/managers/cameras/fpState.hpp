@@ -3,7 +3,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class FirstPersonCameraState : public CameraState {
 		public:
 			virtual void ExitState() override;

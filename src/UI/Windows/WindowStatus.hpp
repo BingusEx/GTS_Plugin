@@ -6,7 +6,7 @@
 
 #include "config/Config.hpp"
 
-namespace GtsUI {
+namespace GTSUI {
 
     class WindowStatus : public ImWindow {
 

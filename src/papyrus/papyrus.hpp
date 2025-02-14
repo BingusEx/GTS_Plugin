@@ -2,6 +2,6 @@
 
 using namespace RE::BSScript;
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus(IVirtualMachine* vm);
 }

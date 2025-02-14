@@ -28,7 +28,7 @@
 #include "managers/Attributes.hpp"
 #include "data/runtime.hpp"
 
-namespace Gts {
+namespace GTS {
 
 	void Magic::OnStart() {
 	}

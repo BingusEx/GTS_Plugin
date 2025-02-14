@@ -5,7 +5,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	struct GrabData {
 		public:
 			GrabData(TESObjectREFR* tiny, float strength);;

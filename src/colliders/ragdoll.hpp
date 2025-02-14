@@ -1,12 +1,10 @@
 #pragma once
 // Takes a ragdoll and extracts its collision objects
-#include "colliders/common.hpp"
+#include "Colliders/Common.hpp"
 
-using namespace std;
-using namespace SKSE;
+namespace GTS {
 
-
-namespace Gts {
+	using namespace RE;
 
 	// Enable/disable collisions fails for current implementation
 	//

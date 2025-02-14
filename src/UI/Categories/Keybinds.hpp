@@ -6,7 +6,7 @@
 #include "config/Keybinds.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
 
-namespace GtsUI {
+namespace GTSUI {
 
     class CategoryKeybinds : public ImCategory {
         public:

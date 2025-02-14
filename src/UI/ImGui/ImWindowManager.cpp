@@ -1,6 +1,6 @@
 #include "ImWindowManager.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 //TODO Move Init to UIManager
 void ImWindowManager::Init(){

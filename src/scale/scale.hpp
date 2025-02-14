@@ -6,7 +6,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	void set_target_scale(Actor& actor, float height);
 	void set_target_scale(Actor* actor, float height);
 	float get_target_scale(Actor& actor);

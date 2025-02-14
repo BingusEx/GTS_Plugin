@@ -3,7 +3,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class FirstPersonCombat : public FirstPersonCameraState {
 		public:
 			virtual float GetScaleOverride(bool IsCrawling) override;

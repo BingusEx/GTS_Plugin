@@ -3,9 +3,9 @@
 #include "data/plugin.hpp"
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	const int loop_threshold = 200;
 
 	void loop_message(NiAVObject* root, std::string_view message) {

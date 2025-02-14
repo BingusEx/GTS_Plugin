@@ -8,9 +8,9 @@
 
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	void CameraState::EnterState() {
 	}
 	void CameraState::ExitState() {

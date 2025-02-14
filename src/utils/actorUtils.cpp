@@ -46,7 +46,7 @@
 #include <string>
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace RE {
 	constexpr REL::Version RUNTIME_SSE_1_6_659(1, 6, 659, 0);
@@ -223,7 +223,7 @@ namespace {
 RE::ExtraDataList::~ExtraDataList() {
 }
 
-namespace Gts {
+namespace GTS {
 	RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis) {
 		float S = sin(angle);
 		float C = cos(angle);

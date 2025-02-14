@@ -8,7 +8,7 @@ namespace {
 	inline static float* g_SGTM = (float*)REL::RelocationID(511883, 388443).address();
 }
 
-namespace Gts {
+namespace GTS {
 	Time& Time::GetSingleton() noexcept {
 		static Time instance;
 		return instance;

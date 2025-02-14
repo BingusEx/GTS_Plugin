@@ -5,7 +5,7 @@
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	class SpringBase {
 		public:
 			virtual void Update(float delta) = 0;

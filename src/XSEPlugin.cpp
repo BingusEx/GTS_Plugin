@@ -23,7 +23,7 @@
 #include "api/APIManager.hpp"
 
 using namespace RE::BSScript;
-using namespace Gts;
+using namespace GTS;
 using namespace SKSE;
 using namespace SKSE::log;
 using namespace SKSE::stl;

@@ -38,7 +38,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void Absorb_GrowInSize(Actor* giant, Actor* tiny, float multiplier) {
@@ -553,7 +553,7 @@ namespace {
     ///===================================================================
 }
 
-namespace Gts
+namespace GTS
 {
 	void Animation_CleavageEvents::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_BS_CamOn", "Cleavage", GTS_BS_CamOn);

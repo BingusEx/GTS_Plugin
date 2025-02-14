@@ -17,7 +17,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	float GetXPModifier(Actor* tiny) {
@@ -30,7 +30,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	ShrinkToNothingManager& ShrinkToNothingManager::GetSingleton() noexcept {
 		static ShrinkToNothingManager instance;
 		return instance;

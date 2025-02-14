@@ -11,7 +11,7 @@ namespace {
 	const float OFFSET = 0.04f * 70.0f; // About 4cm down
 }
 
-namespace Gts {
+namespace GTS {
 	NiPoint3 FootR::GetFootPos() {
 		const std::string_view rightFootLookup = "NPC R Foot [Rft ]";
 		auto player = GetCameraActor();

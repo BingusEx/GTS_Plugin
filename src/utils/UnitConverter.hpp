@@ -2,7 +2,7 @@
 #include "fmt/format.h"
 #include "config/Config.hpp"
 
-namespace Gts {
+namespace GTS {
 
     // const inline double ScaleToHeight(/*RE::Actor* a_Actor*/){
     //     return Scale

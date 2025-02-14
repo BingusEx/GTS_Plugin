@@ -5,7 +5,7 @@
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	float GetMaxAV(Actor* actor, ActorValue av) {
 		auto baseValue = actor->AsActorValueOwner()->GetBaseActorValue(av);

@@ -24,7 +24,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const float anim_fps_speed = 30.0f;
@@ -191,7 +191,7 @@ namespace {
     }
 }
 
-namespace Gts
+namespace GTS
 {
 	void Animation_RandomGrowth::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_RandomGrowth_Start", "RandomGrowth", GTS_RandomGrowth_Start);

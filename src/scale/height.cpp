@@ -3,7 +3,7 @@
 #include "managers/GtsManager.hpp"
 #include "data/transient.hpp"
 
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	float height_to_scale(Actor* actor, float height) {
@@ -30,7 +30,7 @@ namespace {
 
 }
 
-namespace Gts {
+namespace GTS {
 	void set_target_height(Actor* actor, float height) {
 		float scale = height_to_scale(actor, height);
 		set_target_scale(actor, scale);

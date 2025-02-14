@@ -13,7 +13,7 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -97,7 +97,7 @@ namespace {
 		return result;
 	}
 }
-namespace Gts {
+namespace GTS {
 	FootStepManager& FootStepManager::GetSingleton() noexcept {
 		static FootStepManager instance;
 		return instance;

@@ -20,7 +20,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -103,7 +103,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	CrushManager& CrushManager::GetSingleton() noexcept {
 		static CrushManager instance;
 		return instance;

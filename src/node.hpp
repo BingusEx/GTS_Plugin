@@ -4,7 +4,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	std::vector<NiAVObject*> GetAllNodes(Actor* actor);
 	void walk_nodes(Actor* actor);
 	NiAVObject* find_node(Actor* actor, std::string_view node_name, bool first_person = false);

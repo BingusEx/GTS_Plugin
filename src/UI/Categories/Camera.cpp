@@ -2,7 +2,7 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 inline void DrawCameraOffsets(const char* a_title, const char* a_toolip, std::array<float, 3>* a_offsets) {
     ImGui::Spacing();

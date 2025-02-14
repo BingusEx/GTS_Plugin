@@ -2,7 +2,7 @@
 #include "scale/scale.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	void TestActorAttaches() {

@@ -2,7 +2,7 @@
 #include "ImUtil.hpp"
 #include "UI/DearImGui/imgui.h"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 float ImCategoryManager::GetLongestCategory(){
 

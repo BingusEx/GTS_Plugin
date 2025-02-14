@@ -31,7 +31,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	std::string SlowGrow::GetName() {
 		return "SlowGrow";
 	}

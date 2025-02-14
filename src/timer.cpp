@@ -3,7 +3,7 @@
 
 using namespace RE;
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	inline double GetGameTime() {
@@ -14,7 +14,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	Timer::Timer(double delta) : delta(delta) {
 	}
 	bool Timer::ShouldRun() {

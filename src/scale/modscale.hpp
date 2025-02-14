@@ -6,7 +6,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	enum SizeMethod {
 		ModelScale = 0,
 		RootScale = 1,

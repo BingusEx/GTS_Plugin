@@ -78,7 +78,7 @@ namespace {
 	const float DEFAULT_HALF_LIFE = 1.0f;
 }
 
-namespace Gts {
+namespace GTS {
 	Persistent& Persistent::GetSingleton() noexcept {
 		static Persistent instance;
 		return instance;

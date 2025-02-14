@@ -14,7 +14,7 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 namespace {
@@ -60,7 +60,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	TremorManager& TremorManager::GetSingleton() noexcept {
 		static TremorManager instance;
 		return instance;

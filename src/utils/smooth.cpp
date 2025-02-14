@@ -21,7 +21,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	void critically_damped(
 		float& x,
 		float& v,

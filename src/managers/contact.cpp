@@ -10,7 +10,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	// From https://github.com/ersh1/Precision, https://github.com/adamhynek/activeragdoll/ and https://github.com/adamhynek/higgs
@@ -139,7 +139,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	void ContactListener::ContactPointCallback(const hkpContactPointEvent& a_event)
 	{

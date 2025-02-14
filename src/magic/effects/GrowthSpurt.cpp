@@ -78,7 +78,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	std::string GrowthSpurt::GetName() {
 		return "GrowthSpurt";
 	}

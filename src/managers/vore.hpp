@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts
+namespace GTS
 {
 
 	// Represents current vore data for an actor

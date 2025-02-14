@@ -6,7 +6,7 @@
 
 #include "config/Config.hpp"
 
-namespace GtsUI {
+namespace GTSUI {
 
     //Inspired by Community shaders
     class ImStyleManager {

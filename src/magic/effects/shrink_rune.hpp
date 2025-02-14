@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class ShrinkRune : public Magic {
 		public:
 			virtual void OnStart() override;

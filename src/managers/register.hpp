@@ -1,5 +1,5 @@
 #pragma once
 
-namespace Gts {
+namespace GTS {
 	void RegisterManagers();
 }

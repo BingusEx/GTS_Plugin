@@ -2,7 +2,7 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryGeneral::DrawLeft(){
     

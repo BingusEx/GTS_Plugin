@@ -7,7 +7,7 @@
 
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -262,7 +262,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus_scale(IVirtualMachine* vm) {
 		vm->RegisterFunction("SetModelScale", PapyrusClass, SetModelScale);
 		vm->RegisterFunction("GetModelScale", PapyrusClass, GetModelScale);

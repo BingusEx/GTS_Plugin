@@ -24,7 +24,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -135,7 +135,7 @@ namespace {
         InflictBodyDamage(&data.giant);
     }
 }
-namespace Gts {
+namespace GTS {
     void AnimationUnderStompFullBody::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_UnderStomp_Crawl_BodyCamOn", "UnderStompBody", GTS_UnderStomp_Crawl_BodyCamOn);
         AnimationManager::RegisterEvent("GTS_UnderStomp_Crawl_BodyCamOff", "UnderStompBody", GTS_UnderStomp_Crawl_BodyCamOff);

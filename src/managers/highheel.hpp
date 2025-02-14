@@ -6,7 +6,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	struct HHData {
 		Spring multiplier = Spring(1.0f, 0.5f); // Used to smotthly disable/enable the highheels
 		bool wasWearingHh = false;

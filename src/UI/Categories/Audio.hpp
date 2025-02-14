@@ -3,7 +3,7 @@
 #include "UI/ImGUI/ImCategorySplit.hpp"
 #include "config/Config.hpp"
 
-namespace GtsUI{
+namespace GTSUI{
 
     class CategoryAudio: public ImCategorySplit {
         public:

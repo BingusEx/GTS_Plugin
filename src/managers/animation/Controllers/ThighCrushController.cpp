@@ -28,7 +28,7 @@ namespace {
 	const float PI = 3.14159f;
 }
 
-namespace Gts {
+namespace GTS {
 	ThighCrushController& ThighCrushController::GetSingleton() noexcept {
 		static ThighCrushController instance;
 		return instance;

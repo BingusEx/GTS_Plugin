@@ -10,7 +10,7 @@ namespace {
 	const float BASE_OVERRIDE = 1.0f;
 }
 
-namespace Gts {
+namespace GTS {
 	float FirstPersonCombat::GetScaleOverride(bool IsCrawling) {
 		float proneFactor = 1.0f;
 		/*if (IsCrawling) {

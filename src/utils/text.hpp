@@ -3,7 +3,7 @@
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	template< typename ... Args >
 	void Notify(std::string_view rt_fmt_str, Args&&... args) {

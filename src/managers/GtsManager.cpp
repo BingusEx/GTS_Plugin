@@ -40,7 +40,7 @@
 #include <vector>
 #include <string>
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;

@@ -4,7 +4,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	class AllRayCollectorOutput {
 		public:
 			float hitFraction{ 1.0F };

@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class ThirdPersonCameraState : public CameraState {
 		public:
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPos) override;

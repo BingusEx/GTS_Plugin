@@ -12,7 +12,7 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     int GetCrushedCount(Actor* giant) {
@@ -66,7 +66,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
     void PlayCrushSound(Actor* giant, NiAVObject* node, bool only_once, bool StrongSound) {
         // This function supports new Gore sounds: play single/multi crush audio based on how much people we've crushed over single frame
         float giantess_scale = get_visual_scale(giant);

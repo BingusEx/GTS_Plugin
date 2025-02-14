@@ -7,7 +7,7 @@ using namespace std;
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	std::string GetRawName(const void* obj_c) {
 		// Get the meta entry in vftable
 		void* obj = const_cast<void*>(obj_c);

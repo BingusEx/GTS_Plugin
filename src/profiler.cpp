@@ -3,7 +3,7 @@
 #include "data/time.hpp"
 #include <chrono>
 
-namespace Gts {
+namespace GTS {
 	Profiler::Profiler(std::string_view name) : name(std::string(name)) {
 
 	}

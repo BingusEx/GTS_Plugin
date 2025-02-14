@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {    
+namespace GTS {    
 	bool IsStaggered(Actor* tiny);
 	bool IsHandStomping_L(Actor* actor);
 	bool IsHandStomping_H(Actor* actor);

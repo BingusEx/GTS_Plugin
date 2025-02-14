@@ -6,7 +6,7 @@
 #include "UI/ImGui/ImInput.hpp"
 #include "UI/Windows/WindowSettings.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 using namespace Input;
 
 void CategoryKeybinds::Draw(){

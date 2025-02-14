@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class ExplosionManager : public EventListener {
 		public:
 			[[nodiscard]] static ExplosionManager& GetSingleton() noexcept;

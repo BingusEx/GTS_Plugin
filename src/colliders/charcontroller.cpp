@@ -1,11 +1,10 @@
-#include "colliders/charcontroller.hpp"
-#include "colliders/RE.hpp"
+#include "Colliders/CharController.hpp"
+#include "Colliders/RE/RE.hpp"
 
-using namespace std;
-using namespace SKSE;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
+
 	CharContData::CharContData(bhkCharacterController* charCont) {
 		if (!charCont) {
 			return;

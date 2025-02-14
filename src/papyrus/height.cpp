@@ -4,7 +4,7 @@
 
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -55,7 +55,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus_height(IVirtualMachine* vm) {
 		vm->RegisterFunction("SetTargetHeight", PapyrusClass, SetTargetHeight);
 		vm->RegisterFunction("GetTargetHeight", PapyrusClass, GetTargetHeight);

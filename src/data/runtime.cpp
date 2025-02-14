@@ -57,7 +57,7 @@ namespace {
 	};
 }
 
-namespace Gts { 
+namespace GTS { 
 	Runtime& Runtime::GetSingleton() noexcept {
 		static Runtime instance;
 		return instance;

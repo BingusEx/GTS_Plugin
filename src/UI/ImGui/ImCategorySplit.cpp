@@ -2,7 +2,7 @@
 #include "ImUtil.hpp"
 #include "config/Config.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void ImCategorySplit::Draw() {
 

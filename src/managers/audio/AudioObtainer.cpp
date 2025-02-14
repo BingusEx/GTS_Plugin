@@ -11,9 +11,9 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 
 
     float volume_function(float scale, const VolumeParams& params) {

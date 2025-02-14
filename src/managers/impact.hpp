@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class ImpactManager {
 		public:
 			[[nodiscard]] static ImpactManager& GetSingleton() noexcept;

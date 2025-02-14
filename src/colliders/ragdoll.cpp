@@ -5,7 +5,7 @@ using namespace std;
 using namespace SKSE;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 	RagdollData::RagdollData(hkaRagdollInstance* ragdoll) {
 		if (!ragdoll) {
 			return;

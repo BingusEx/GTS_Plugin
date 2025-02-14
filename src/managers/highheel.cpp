@@ -11,7 +11,7 @@
 
 using json = nlohmann::json;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	bool DisableHighHeels(Actor* actor) {
@@ -24,7 +24,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	HighHeelManager& HighHeelManager::GetSingleton() noexcept {
 		static HighHeelManager instance;
 		return instance;

@@ -1,6 +1,6 @@
 #include "Config.hpp"
 
-using namespace Gts;
+using namespace GTS;
 
 const Config& Config::GetSingleton() noexcept {
 	static Config instance;
@@ -21,7 +21,7 @@ const Config& Config::GetSingleton() noexcept {
 	return instance;
 }
 
-namespace Gts {
+namespace GTS {
 	Debug::Debug(const toml::value& data) {
 		std::string logLevel = toml::find_or<std::string>(data, "logLevel", "info");
 		std::string flushLevel = toml::find_or<std::string>(data, "flushLevel", "trace");

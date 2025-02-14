@@ -15,7 +15,7 @@ using namespace std;
 using namespace SKSE;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 
 	RumbleData::RumbleData(float intensity, float duration, float halflife, float shake_duration, bool ignore_scaling, std::string node) :
 		state(RumbleState::RampingUp),

@@ -33,7 +33,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkFoe::GetName() {
 		return "ShrinkFoe";
 	}

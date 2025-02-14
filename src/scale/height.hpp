@@ -6,7 +6,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	void set_target_height(Actor* actor, float height);
 	float get_target_height(Actor* actor);
 	void mod_target_height(Actor* actor, float amt);

@@ -8,7 +8,7 @@ namespace {
 	using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
 }
 
-namespace Gts {
+namespace GTS {
 	inline RE::VMHandle GetHandle(RE::TESForm* a_form)
 	{
 		auto vm = VM::GetSingleton();

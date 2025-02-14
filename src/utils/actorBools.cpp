@@ -12,7 +12,7 @@
 // I'm planning to switch to it later and remove these functions from ActorUtils.cpp
 // delayed because it's hard to see important changes since there's like 100+ file changes when switching to it
 
-namespace Gts {
+namespace GTS {
 	bool IsStaggered(Actor* tiny) {
 		bool staggered = false;
 		if (tiny) {

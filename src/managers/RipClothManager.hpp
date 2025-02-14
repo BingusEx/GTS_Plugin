@@ -1,12 +1,9 @@
 #pragma once
 // Module that handles AttributeValues
-#include "events.hpp"
+#include "Events.hpp"
 
-using namespace std;
-using namespace SKSE;
+namespace GTS {
 
-
-namespace Gts {
 
 	class ClothManager : public EventListener {
 		public:

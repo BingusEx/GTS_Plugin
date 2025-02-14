@@ -2,6 +2,6 @@
 
 using namespace RE::BSScript;
 
-namespace Gts {
+namespace GTS {
 	bool register_total_control(IVirtualMachine* vm);
 }

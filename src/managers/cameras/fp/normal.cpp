@@ -6,7 +6,7 @@
 
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 	float FirstPerson::GetScaleOverride(bool IsCrawling) {
 		float proneFactor = 1.005f;
 		if (IsCrawling) {

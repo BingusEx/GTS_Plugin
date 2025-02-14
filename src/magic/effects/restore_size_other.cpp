@@ -46,7 +46,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	std::string RestoreSizeOther::GetName() {
 		return "RestoreSizeOther";
 	}

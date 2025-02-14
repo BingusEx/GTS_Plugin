@@ -4,7 +4,7 @@
 
 #include <windows.h>
 
-using namespace Gts;
+using namespace GTS;
 
 std::vector<DebugAPILine*> DebugAPI::LinesToDraw;
 

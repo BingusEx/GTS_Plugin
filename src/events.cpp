@@ -7,7 +7,7 @@ using namespace std;
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	// Called on Live (non paused) gameplay
 	void EventListener::Update() {
 	}

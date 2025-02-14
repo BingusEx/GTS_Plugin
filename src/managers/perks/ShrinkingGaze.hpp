@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	/**
 	 * Applies Shrinking Gaze effect
 	 */

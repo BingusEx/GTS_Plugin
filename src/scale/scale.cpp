@@ -8,13 +8,13 @@
 #include "scale/height.hpp"
 #include "timer.hpp"
 
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const float EPS = std::numeric_limits<float>::epsilon();
 }
 
-namespace Gts {
+namespace GTS {
 
 	void set_target_scale(Actor& actor, float scale) {
 		auto actor_data = Persistent::GetSingleton().GetData(&actor);

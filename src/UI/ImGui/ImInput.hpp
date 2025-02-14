@@ -4,7 +4,7 @@
 #include "UI/DearImGui/imgui_impl_dx11.h"
 #include "UI/DearImGui/imgui_impl_win32.h"
 
-namespace GtsUI {
+namespace GTSUI {
 
     #define IM_VK_KEYPAD_ENTER (VK_RETURN + 256)
 

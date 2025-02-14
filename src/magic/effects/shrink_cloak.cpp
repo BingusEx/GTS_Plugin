@@ -15,7 +15,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkCloak::GetName() {
 		return "ShrinkCloak";
 	}

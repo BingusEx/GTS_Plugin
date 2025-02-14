@@ -1,9 +1,9 @@
 #include "rays/allcollector.hpp"
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 
 	void AllRayCollector::AddRayHit(const hkpCdBody& a_body, const hkpShapeRayCastCollectorOutput& a_hitInfo) {
 		AllRayCollectorOutput output;

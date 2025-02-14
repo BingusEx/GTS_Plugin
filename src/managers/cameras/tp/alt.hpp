@@ -3,7 +3,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class Alt : public ThirdPersonCameraState {
 		public:
 			float ZOffset = -1;  // Added Back And Forth Offset

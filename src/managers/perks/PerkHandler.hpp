@@ -11,7 +11,7 @@
 using namespace std;
 
 
-namespace Gts {
+namespace GTS {
 	/**
 	 * The class which manages some perk bonuses
 	 */

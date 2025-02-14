@@ -10,7 +10,7 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 namespace {
@@ -62,7 +62,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	ExplosionManager& ExplosionManager::GetSingleton() noexcept {
 		static ExplosionManager instance;
 		return instance;

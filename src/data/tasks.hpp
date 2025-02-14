@@ -5,7 +5,7 @@
 #include "events.hpp"
 #include "data/time.hpp"
 
-namespace Gts {
+namespace GTS {
 
 	enum class UpdateKind {
 		Main,

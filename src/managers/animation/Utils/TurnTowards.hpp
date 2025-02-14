@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 
 	template<typename U>
 	bool FaceTowardsPoint(U& anyTiny, const NiPoint3& point) {

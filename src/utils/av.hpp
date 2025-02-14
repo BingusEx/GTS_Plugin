@@ -3,7 +3,7 @@
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	float GetMaxAV(Actor* actor, ActorValue av);
 	float GetAV(Actor* actor, ActorValue av);

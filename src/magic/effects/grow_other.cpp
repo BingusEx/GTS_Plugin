@@ -4,7 +4,7 @@
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
 
-namespace Gts {
+namespace GTS {
 	std::string GrowOther::GetName() {
 		return "GrowOther";
 	}

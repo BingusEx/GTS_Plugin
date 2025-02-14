@@ -5,7 +5,7 @@
 #include "UI/Windows/GTSInfo.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryInfo::Draw(){
 

@@ -1,0 +1,16 @@
+#pragma once
+#include "Hooks/Hooks.hpp"
+
+namespace Hooks {
+
+	using namespace RE;
+	using namespace GTS;
+
+	class Hook_TESCamera {
+		public:
+			static void Hook();
+		private:
+			static void Update(TESCamera* a_this);
+			static inline REL::Relocation<decltype(Update)> _Update;
+	};
+}

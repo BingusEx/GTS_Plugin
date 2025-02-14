@@ -22,7 +22,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -269,7 +269,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationStrongStomp::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_StrongStomp_Start", "StrongStomp", GTS_StrongStomp_Start);

@@ -1,15 +1,14 @@
 #pragma once
-// Hooks into skyrim engine
-//
 
-using namespace SKSE;
-#include "hooks/functionhook.hpp"
-#include "hooks/callhook.hpp"
+// Hooks into skyrim engine
+
+#include "Hooks/Detours/FunctionHook.hpp"
+#include "Hooks/Fudge/CallHook.hpp"
+#include "Hooks/Fudge/BranchHook.hpp"
 
 #define RELOCATION_OFFSET(SE, AE) REL::VariantOffset(SE, AE, 0).offset()
 
-namespace Hooks
-{
+namespace Hooks {
 	void InstallControls();
 	void Install();
 }

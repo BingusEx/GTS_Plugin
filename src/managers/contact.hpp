@@ -6,7 +6,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class ContactListener : public hkpContactListener, public hkpWorldPostSimulationListener
 	{
 

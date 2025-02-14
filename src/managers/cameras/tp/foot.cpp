@@ -12,7 +12,7 @@ namespace {
 	const float OFFSET = 0.24f * 70.0f; // About 24cm up
 }
 
-namespace Gts {
+namespace GTS {
 	void Foot::EnterState() {
 		auto player = GetCameraActor();
 		if (player) {

@@ -4,7 +4,7 @@
 
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -70,7 +70,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus_camera(IVirtualMachine* vm) {
 		vm->RegisterFunction("SetEnableCollisionActor", PapyrusClass, SetEnableCollisionActor);
 		vm->RegisterFunction("GetEnableCollisionActor", PapyrusClass, GetEnableCollisionActor);

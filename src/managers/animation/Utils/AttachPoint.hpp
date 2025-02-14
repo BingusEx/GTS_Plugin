@@ -55,7 +55,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	template<typename T, typename U>
 	bool AttachTo_NoForceRagdoll(T& anyGiant, U& anyTiny, NiPoint3 point) {
 		Actor* giant =  GetActorPtr(anyGiant);

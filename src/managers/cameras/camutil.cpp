@@ -14,7 +14,7 @@
 #include "node.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	enum class CameraDataMode {
@@ -231,7 +231,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTracking_MCM Camera_MCM) {
 		if (HasFirstPersonBody()) {

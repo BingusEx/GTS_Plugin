@@ -3,7 +3,7 @@
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	void shake_camera_script(TESObjectREFR* actor, float intensity, float duration);
 	void shake_camera(Actor* actor, float intensity, float duration);

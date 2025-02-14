@@ -1,6 +1,6 @@
 #pragma once
 
-namespace GtsUI {
+namespace GTSUI {
     
     class ImCategory {
         protected:

@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTracking_MCM Camera_MCM);
 
 	float HighHeelOffset();

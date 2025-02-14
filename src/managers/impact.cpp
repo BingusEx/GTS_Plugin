@@ -20,7 +20,7 @@
 
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	bool CanDoImpact(Actor* actor, FootEvent kind) { // This function is needed to prevent sound spam from followers at large sizes
@@ -200,7 +200,7 @@ namespace {
 		}
 	}
 }
-namespace Gts {
+namespace GTS {
 	ImpactManager& ImpactManager::GetSingleton() noexcept {
 		static ImpactManager instance;
 		return instance;

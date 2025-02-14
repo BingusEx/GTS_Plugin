@@ -24,7 +24,7 @@
 #include <random>
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const float MINIMUM_VORE_DISTANCE = 94.0f;
@@ -32,7 +32,7 @@ namespace {
 	const float PI = 3.14159f;
 }
 
-namespace Gts {
+namespace GTS {
 	VoreData::VoreData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {
 	}
 

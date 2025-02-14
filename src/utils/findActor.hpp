@@ -4,7 +4,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	vector<Actor*> find_actors();
 	vector<Actor*> find_actors_high();
 	vector<Actor*> find_actors_middle_high();

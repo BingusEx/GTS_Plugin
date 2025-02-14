@@ -8,7 +8,7 @@
 
 
 
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	struct InitialScales {
@@ -81,7 +81,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	// @ Sermit, do not call Get_Other_Scale, call get_natural_scale instead
 	// get_natural_scale is much faster and safer as it uses the cache
 	//

@@ -14,7 +14,7 @@ namespace {
 	};
 }
 
-namespace Gts {
+namespace GTS {
 	/**
 	 * Find actors in ai manager that are loaded
 	 */

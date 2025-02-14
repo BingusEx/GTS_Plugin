@@ -3,7 +3,7 @@
 
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -26,7 +26,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus_events(IVirtualMachine* vm) {
 		vm->RegisterFunction("RegisterOnFootstep", PapyrusClass, RegisterOnFootstep);
 		vm->RegisterFunction("UnRegisterOnFootstep", PapyrusClass, UnRegisterOnFootstep);

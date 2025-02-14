@@ -1,12 +1,14 @@
-#include "colliders/common.hpp"
-#include "colliders/RE.hpp"
+#include "Colliders/Common.hpp"
+#include "Colliders/RE/RE.hpp"
 
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
+
 	COL_LAYER GetCollidesWith(const std::uint32_t& collisionFilterInfo) {
 		return static_cast<COL_LAYER>(collisionFilterInfo & 0x7F);
 	}
+
 	COL_LAYER GetCollidesWith(const hkpCollidable* collidable) {
 		if (collidable) {
 			return GetCollidesWith(collidable->broadPhaseHandle.collisionFilterInfo);
@@ -14,6 +16,7 @@ namespace Gts {
 			return COL_LAYER::kUnidentified;
 		}
 	}
+
 	COL_LAYER GetCollidesWith(const hkpWorldObject* entity) {
 		if (entity) {
 			auto collidable = entity->GetCollidable();
@@ -28,11 +31,13 @@ namespace Gts {
 		newCollision = newCollision | static_cast<std::uint32_t>(newLayer);
 		collisionFilterInfo = newCollision;
 	}
+
 	void SetCollidesWith(hkpCollidable* collidable, const COL_LAYER& newLayer) {
 		if (collidable) {
 			return SetCollidesWith(collidable->broadPhaseHandle.collisionFilterInfo, newLayer);
 		}
 	}
+
 	void SetCollidesWith(hkpWorldObject* entity, const COL_LAYER& newLayer) {
 		if (entity) {
 			auto collidable = entity->GetCollidableRW();
@@ -47,6 +52,7 @@ namespace Gts {
 			SetMotionType(rb, hkpMotion::MotionType::kCharacter, hkpEntityActivation::kDoActivate, hkpUpdateCollisionFilterOnEntityMode::kFullCheck);
 		}
 	}
+
 	void ColliderData::UpdateCollisionFilter() {
 		for (auto ent: GetRigidBodies()) {
 			if (ent) {
@@ -70,6 +76,7 @@ namespace Gts {
 		}
 		this->rbs.try_emplace(rb, hkRefPtr(rb));
 	}
+
 	void ColliderData::AddPhantom(hkpPhantom* phantom) {
 		if (!phantom) {
 			return;
@@ -93,6 +100,7 @@ namespace Gts {
 		}
 		return entities;
 	}
+	
 	std::vector<hkpPhantom*> ColliderData::GetPhantoms() {
 		std::vector<hkpPhantom*> entities = {};
 		for (auto& [key, ph]: this->phantoms) {

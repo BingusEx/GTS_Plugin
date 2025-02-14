@@ -5,7 +5,7 @@
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkOther::GetName() {
 		return "ShrinkOther";
 	}

@@ -1,7 +1,7 @@
 #pragma once 
-#include "SmoothCamAPI.hpp"
+#include "API/SmoothCamAPI.hpp"
 
-namespace Gts {
+namespace GTS {
 
 	class APIManager {
 		public:

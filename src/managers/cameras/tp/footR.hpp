@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class FootR : public Foot {
 		protected:
 			virtual NiPoint3 GetFootPos() override;

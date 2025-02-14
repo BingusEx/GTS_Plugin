@@ -2,7 +2,7 @@
 
 #include "toml.hpp"
 
-namespace Gts {
+namespace GTS {
 	class Debug {
 		public:
 			Debug() = default;

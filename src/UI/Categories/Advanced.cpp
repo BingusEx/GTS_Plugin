@@ -5,7 +5,7 @@
 #include "UI/ImGui/ImUtil.hpp"
 #include "spdlog/spdlog.h" 
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryAdvanced::DrawLeft(){
 

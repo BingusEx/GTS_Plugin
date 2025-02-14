@@ -24,7 +24,7 @@
 #include <random>
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void BuffAttributes(Actor* giant, float tinyscale) {
@@ -58,7 +58,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
 
 	VoreInformation GetVoreInfo(Actor* giant, Actor* tiny, float growth_mult) {
 		float recorded_scale = Vore::GetSingleton().ReadOriginalScale(tiny);

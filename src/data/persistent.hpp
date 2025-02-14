@@ -1,15 +1,14 @@
 #pragma once
 // Module that holds data that is persistent across saves
 
-#include "events.hpp"
-#include "scale/modscale.hpp"
+#include "Events.hpp"
+#include "Scale/ModScale.hpp"
 
-using namespace std;
-using namespace SKSE;
+namespace GTS {
 
-using namespace Gts;
+	using namespace RE;
+	using namespace SKSE;
 
-namespace Gts {
 	struct ActorData {
 		float native_scale;
 		float visual_scale;
@@ -56,7 +55,7 @@ namespace Gts {
 		float above_scale = 5.0f;
 	};
 
-	class Persistent : public Gts::EventListener {
+	class Persistent : public EventListener {
 		public:
 			virtual std::string DebugName() override;
 			virtual void Reset() override;

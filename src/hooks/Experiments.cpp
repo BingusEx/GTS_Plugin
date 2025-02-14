@@ -12,7 +12,7 @@
 
 using namespace RE;
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 
 
 // Possible hooks that may benefit from scaling: All info for Special Edition (SE)

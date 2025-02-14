@@ -1,6 +1,6 @@
 #include "ImWindow.hpp"    
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 ImVec2 ImWindow::GetAnchorPos(WindowAnchor a_position, ImVec2 a_padding) {
     auto v = ImGui::GetMainViewport();

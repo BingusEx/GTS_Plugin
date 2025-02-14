@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Gts {
+namespace GTS {
 	class Profiler {
 		private:
 			// Type aliases to make accessing nested type easier

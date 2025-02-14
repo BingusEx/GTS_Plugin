@@ -16,7 +16,7 @@
 #include <math.h>
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -532,7 +532,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_papyrus_plugin(IVirtualMachine* vm) {
 		vm->RegisterFunction("GetDistanceToCamera", PapyrusClass, GetDistanceToCamera);
 		vm->RegisterFunction("SetSizeDamageMultiplier", PapyrusClass, SetSizeDamageMultiplier);

@@ -3,7 +3,7 @@
 #include "UI/ImGui/ImUtil.hpp"
 #include "fmt/format.h"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryBalance::DrawLeft(){
     

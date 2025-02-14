@@ -5,7 +5,7 @@
 #include "managers/cameras/camutil.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace  Gts {
 	void FirstPersonCameraState::ExitState() {

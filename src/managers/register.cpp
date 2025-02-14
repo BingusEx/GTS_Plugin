@@ -33,7 +33,7 @@
 #include "magic/magic.hpp"
 #include "events.hpp"
 
-namespace Gts {
+namespace GTS {
 	void RegisterManagers() {
 		EventDispatcher::AddListener(&GameModeManager::GetSingleton()); // Manages Game Modes
 		EventDispatcher::AddListener(&GtsManager::GetSingleton()); // Manages smooth size increase and animation & movement speed

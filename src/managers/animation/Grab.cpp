@@ -33,7 +33,7 @@
 
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 ///GTS_GrabbedTiny MUST BE 1 when we have someone in hands
@@ -433,7 +433,7 @@ namespace {
 
 
 
-namespace Gts {
+namespace GTS {
 
 	void Utils_CrushTask(Actor* giant, Actor* grabbedActor, float bonus, bool do_sound, bool stagger, DamageSource source, QuestStage stage) {
         

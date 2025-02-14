@@ -4,7 +4,7 @@
 #include "ImFontManager.hpp"
 #include "ImStyleManager.hpp"
 
-namespace GtsUI {
+namespace GTSUI {
 
     class ImWindowManager {
 

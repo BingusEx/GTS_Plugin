@@ -6,7 +6,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 //-----------------------------------------Misc
     const float Collision_Distance_Override = 5.75f;
     const float Characters_AssumedCharSize = 1.82f; // We assume that default humanoid height is 1.82m, used in some calculations

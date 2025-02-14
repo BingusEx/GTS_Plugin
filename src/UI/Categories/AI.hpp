@@ -4,7 +4,7 @@
 
 #include "config/Config.hpp"
 
-namespace GtsUI{
+namespace GTSUI{
 
     class CategoryAI: public ImCategorySplit {
         public:

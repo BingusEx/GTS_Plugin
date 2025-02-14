@@ -5,7 +5,7 @@
 using namespace SKSE;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 	std::string ReloadManager::DebugName() {
 		return "ReloadManager";
 	}

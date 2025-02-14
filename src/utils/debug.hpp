@@ -4,7 +4,7 @@ using namespace std;
 
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	std::string GetRawName(const void* obj);
 
 	std::string Vector2Str(const hkVector4& vector);

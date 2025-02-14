@@ -12,7 +12,7 @@
 
 
 using namespace SKSE;
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace RE::BSScript;
 
@@ -247,7 +247,7 @@ namespace {
 
 }
 
-namespace Gts {
+namespace GTS {
 	bool register_total_control(IVirtualMachine* vm) {
 		vm->RegisterFunction("GrowTeammate", PapyrusClass, GrowTeammate);
 		vm->RegisterFunction("ShrinkTeammate", PapyrusClass, ShrinkTeammate);

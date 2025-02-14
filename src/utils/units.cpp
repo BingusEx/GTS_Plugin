@@ -7,7 +7,7 @@ namespace {
 	const float CONVERSION_FACTOR = 70.0f;
 }
 
-namespace Gts {
+namespace GTS {
 	float unit_to_meter(const float& unit) {
 		// Game reports that the height of a slaughterfish is 0.31861934
 		// From inspecting the bounding box of the slaughterfish and applying

@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class TransState : public CameraState {
 		public:
 			virtual float GetScale() override;

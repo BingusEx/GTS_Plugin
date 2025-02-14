@@ -7,7 +7,7 @@
 #include "magic_enum/magic_enum.hpp"
 #include "UI/Windows/GTSInfo.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryInterface::DrawLeft(){
 

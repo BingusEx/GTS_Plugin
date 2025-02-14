@@ -4,7 +4,7 @@ using namespace std;
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 	bool Plugin::Enabled() {
 		return Plugin::GetSingleton().enabled.load();
 	}

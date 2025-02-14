@@ -16,7 +16,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 
 namespace {
@@ -50,7 +50,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	CameraManager& CameraManager::GetSingleton() noexcept {
 		static CameraManager instance;
 		return instance;

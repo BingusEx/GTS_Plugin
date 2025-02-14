@@ -18,7 +18,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	void SpringBase::UpdateValues(float& value, const float& target, float & velocity, const float& halflife, const float& dt) {
 		if (std::isinf(target)) {

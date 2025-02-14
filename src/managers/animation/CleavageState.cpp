@@ -28,7 +28,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 /*
 GTS events:
@@ -197,7 +197,7 @@ namespace {
     }
 }
 
-namespace Gts
+namespace GTS
 {
     void Animation_Cleavage::LaunchCooldownFor(Actor* giant, CooldownSource Source) {
         std::string name = std::format("CDWatcher_{}_{}", giant->formID, Time::WorldTimeElapsed());

@@ -8,7 +8,7 @@
 #include "UI/Windows/WindowStatus.hpp"
 
 
-namespace GtsUI {
+namespace GTSUI {
 
     void UIManager::Init() {
         if (Initialized) {

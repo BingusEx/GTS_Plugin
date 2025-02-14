@@ -30,7 +30,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	inline float TimeScale() {
 		const float BASE_FPS = 60.0f; // Parameters were optimised on this fps
 		return Time::WorldTimeDelta() * BASE_FPS;

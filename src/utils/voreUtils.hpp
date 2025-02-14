@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	const float GetGrowthFormula(float a_giantScale, float a_tinyScale, bool a_devourment);
 
     void VoreMessage_SwallowedAbsorbing(Actor* pred, Actor* prey);

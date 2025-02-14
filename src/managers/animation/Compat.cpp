@@ -27,7 +27,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 /*
 
@@ -189,7 +189,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationCompat::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTScrush_caster", "Compat", GTScrush_caster);

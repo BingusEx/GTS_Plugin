@@ -11,7 +11,7 @@
 
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	float Modify_HalfLife() {
@@ -22,7 +22,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	NiPoint3 ThirdPersonCameraState::GetPlayerLocalOffset(const NiPoint3& cameraPos) {
 		NiPoint3 pos = NiPoint3();
 		auto player = GetCameraActor();

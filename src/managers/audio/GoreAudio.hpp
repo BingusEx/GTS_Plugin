@@ -4,9 +4,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
     void PlayCrushSound(Actor* giant, NiAVObject* node, bool only_once, bool StrongSound);
     void PlayMatchingSound(Actor* giant, NiAVObject* node, bool strong, int crushed, float size) ;
 }

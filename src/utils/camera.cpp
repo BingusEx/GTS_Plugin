@@ -7,7 +7,7 @@
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	void shake_camera_script(TESObjectREFR* actor, float intensity, float duration) { // TESObjectREFR*
 		CallFunction("Game", "ShakeCamera", actor, intensity, duration);

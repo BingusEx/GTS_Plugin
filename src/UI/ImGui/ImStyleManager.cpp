@@ -1,7 +1,7 @@
 #include "ImStyleManager.hpp"
 #include "UI/DearImGui/imgui.h"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void ImStyleManager::InitializeDefaultStyle(ImGuiStyle& style) {
     // Rounding Settings

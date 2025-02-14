@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Gts {
+namespace GTS {
 	class Timer {
 		public:
 			Timer(double delta);

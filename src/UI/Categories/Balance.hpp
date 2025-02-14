@@ -3,7 +3,7 @@
 #include "UI/ImGUI/ImCategorySplit.hpp"
 #include "config/Config.hpp"
 
-namespace GtsUI{
+namespace GTSUI{
 
     class CategoryBalance: public ImCategorySplit {
         public:

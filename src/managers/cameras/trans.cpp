@@ -1,9 +1,9 @@
 #include "managers/cameras/trans.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	TransState::TransState(CameraState* stateA, CameraState* stateB) : stateA(stateA), stateB(stateB) {
 		this->smoothIn.value = 0.0f;
 		this->smoothIn.target = 1.0f;

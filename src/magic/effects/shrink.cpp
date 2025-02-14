@@ -6,7 +6,7 @@
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
 
-namespace Gts {
+namespace GTS {
 	std::string Shrink::GetName() {
 		return "Shrink";
 	}

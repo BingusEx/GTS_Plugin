@@ -67,7 +67,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkRune::GetName() {
 		return "ShrinkRune";
 	}

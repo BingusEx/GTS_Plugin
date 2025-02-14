@@ -27,7 +27,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	std::string SwordOfSize::GetName() {
 		return "SwordOfSize";
 	}

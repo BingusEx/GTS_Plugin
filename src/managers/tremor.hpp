@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class TremorManager : public EventListener {
 		public:
 			[[nodiscard]] static TremorManager& GetSingleton() noexcept;

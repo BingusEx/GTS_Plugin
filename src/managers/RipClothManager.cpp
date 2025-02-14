@@ -14,9 +14,8 @@
 #include "managers/animation/Utils/AnimationUtils.hpp"
 
 using namespace RE;
-using namespace Gts;
 
-namespace Gts {
+namespace GTS {
 
     #define RANDOM_OFFSET RandomFloat(0.01f, rip_randomOffsetMax - 0.01f)
 	static bool RipClothManagerActive;

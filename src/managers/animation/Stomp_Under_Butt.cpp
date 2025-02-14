@@ -23,7 +23,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     const std::string_view RNode = "NPC R Foot [Rft ]";
@@ -201,7 +201,7 @@ namespace {
 		UnderStomp_LegImpacts(&data.giant);
     }
 }
-namespace Gts {
+namespace GTS {
     void AnimationUnderStompButt::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_UnderStomp_ButtCamOn", "UnderStompButt", GTS_UnderStomp_ButtCamOn);
 		AnimationManager::RegisterEvent("GTS_UnderStomp_ButtCamOff", "UnderStompButt", GTS_UnderStomp_ButtCamOff);

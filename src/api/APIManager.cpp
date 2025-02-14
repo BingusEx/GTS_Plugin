@@ -1,10 +1,10 @@
-#include "SmoothCamAPI.hpp"
-#include "APIManager.hpp"
+#include "API/SmoothCamAPI.hpp"
+#include "API/APIManager.hpp"
 
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	APIManager& APIManager::GetSingleton() noexcept {
 		static APIManager instance;

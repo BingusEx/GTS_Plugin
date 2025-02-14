@@ -2,7 +2,7 @@
 
 #include "events.hpp"
 
-namespace Gts {
+namespace GTS {
 
 	using namespace std;
 	using namespace SKSE;

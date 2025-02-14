@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	struct TempActorData {
 		float base_height;
 		float base_volume;

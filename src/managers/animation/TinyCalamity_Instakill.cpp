@@ -23,7 +23,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	void FingerSnap_Execute(Actor* giant, Actor* tiny) {
@@ -282,7 +282,7 @@ namespace {
     }
 }
 
-namespace Gts
+namespace GTS
 {
 	void Animation_TinyCalamity_InstaKill::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_LC_Start", "CalamityIC", GTS_LC_Start); 

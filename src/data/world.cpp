@@ -12,7 +12,7 @@ namespace {
 	inline static float* RawWorldScaleInverse = (float*)RELOCATION_ID(230692, 187407).address();
 }
 
-namespace Gts {
+namespace GTS {
 	const RE::GMatrix3D& World::WorldToCamera() {
 		return *RawWorldToCamMatrix;
 	}

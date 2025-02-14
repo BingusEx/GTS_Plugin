@@ -4,7 +4,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class Foot : public ThirdPersonCameraState {
 		public:
 			virtual void EnterState() override;

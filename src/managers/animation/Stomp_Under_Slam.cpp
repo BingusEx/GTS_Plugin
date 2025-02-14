@@ -23,7 +23,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void GTS_UnderStomp_Crawl_CamOnR(AnimationEventData& data) {
@@ -51,7 +51,7 @@ namespace {
 		ManageCamera(&data.giant, false, CameraTracking::Hand_Left);
 	}
 }
-namespace Gts {
+namespace GTS {
     void AnimationUnderStompSlam::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_UnderStomp_Crawl_CamOnR", "UnderStompSlam", GTS_UnderStomp_Crawl_CamOnR);
         AnimationManager::RegisterEvent("GTS_UnderStomp_Crawl_CamOnL", "UnderStompSlam", GTS_UnderStomp_Crawl_CamOnL);

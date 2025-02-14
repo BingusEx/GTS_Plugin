@@ -4,9 +4,9 @@
 #include "magic_enum/magic_enum.hpp"
 #include "utils/UnitConverter.hpp"
 
-using namespace Gts;
+using namespace GTS;
 
-namespace GtsUI {
+namespace GTSUI {
 
     const enum class GTSInfoFeatures : uint32_t {
         kUnitScale = (1 << 0),
@@ -55,7 +55,7 @@ namespace GtsUI {
 
  
         const std::string sScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";
-        const std::string sReal = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitReal) ? Gts::GetHeight().c_str() : "";
+        const std::string sReal = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitReal) ? GTS::GetHeight().c_str() : "";
         const std::string pText = fmt::format("{}{}",sReal, sScale);
         ImUtil::CenteredProgress(CurrentScale/MaxScale, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : 150.0f ,0.0f), pText.c_str());
         
@@ -64,7 +64,7 @@ namespace GtsUI {
         ImGui::Text("Max Scale: %.2fx", MaxScale);
 
         if(hasFlag(a_featureFlags, GTSInfoFeatures::kShowWeight))
-        ImGui::Text("Weight: %s", Gts::GetWeight().c_str());
+        ImGui::Text("Weight: %s", GTS::GetWeight().c_str());
 
         if(hasFlag(a_featureFlags, GTSInfoFeatures::kShowAspect))
         ImGui::Text("Aspect of GTS: %.0f%%", _aspectOfGTS);

@@ -13,7 +13,7 @@
 #include "timer.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	float Get_Breach_Threshold(Actor* actor) {
@@ -69,7 +69,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	RandomGrowth& RandomGrowth::GetSingleton() noexcept {
 		static RandomGrowth instance;
 		return instance;

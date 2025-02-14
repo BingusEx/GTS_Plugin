@@ -8,7 +8,7 @@
 #include "config/Config.hpp"
 #include "config/Keybinds.hpp"
 
-namespace GtsUI {
+namespace GTSUI {
 
     class WindowSettings : public ImWindow {
 

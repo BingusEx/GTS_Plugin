@@ -2,7 +2,7 @@
 
 
 
-namespace Gts {
+namespace GTS {
 	class CameraState {
 		public:
 			virtual void EnterState();

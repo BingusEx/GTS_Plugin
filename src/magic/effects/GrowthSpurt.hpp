@@ -8,7 +8,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class GrowthSpurt : public Magic {
 		public:
 			virtual void OnUpdate() override;

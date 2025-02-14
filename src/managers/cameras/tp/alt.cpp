@@ -6,7 +6,7 @@
 
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 	NiPoint3 Alt::GetOffset(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("cameraAlternateX"),

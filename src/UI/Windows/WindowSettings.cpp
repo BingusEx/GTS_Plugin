@@ -24,7 +24,7 @@ volatile double rendertime;
 volatile double renderloop;
 volatile double maxtime;
 
-using namespace GtsUI;
+using namespace GTSUI;
 using namespace Input;
 
 

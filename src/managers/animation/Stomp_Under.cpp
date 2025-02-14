@@ -21,7 +21,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     const std::string_view RNode = "NPC R Foot [Rft ]";
@@ -82,7 +82,7 @@ namespace {
 	}
 
 }
-namespace Gts {
+namespace GTS {
 
     static inline float Remap(float x, float in_min, float in_max, float out_min, float out_max) {
         return out_min + (x - in_min) * (out_max - out_min) / (in_max - in_min);

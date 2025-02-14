@@ -3,7 +3,7 @@
 
 #include "UI/ImGui/ImUtil.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 void CategoryAI::DrawLeft(){
 

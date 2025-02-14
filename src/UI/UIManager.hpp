@@ -1,5 +1,5 @@
 #pragma once
-namespace GtsUI {
+namespace GTSUI {
 
 	class UIManager {
 

@@ -2,7 +2,7 @@
 #include "rays/raycast.hpp"
 #include "rays/allcollector.hpp"
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 
 namespace {
@@ -48,7 +48,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	RayResult CastCamRay(glm::vec4 start, glm::vec4 end, float traceHullSize)
 		noexcept {

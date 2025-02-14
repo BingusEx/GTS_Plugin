@@ -8,7 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "data/world.hpp"
 
-using namespace Gts;
+using namespace GTS;
 
 namespace Util {
 
@@ -157,7 +157,7 @@ namespace Util {
 
 using namespace Util;
 
-namespace Gts {
+namespace GTS {
 	inline RE::NiPoint3 Glm2Ni(const glm::vec3 &position) {
 		return RE::NiPoint3(position[0], position[1], position[2]);
 	}
@@ -299,7 +299,7 @@ class DebugAPI
 		static DebugAPILine* GetExistingLine(const glm::vec3& from, const glm::vec3& to, const glm::vec4& color, float lineThickness);
 };
 
-class DebugOverlayMenu : RE::IMenu, public Gts::EventListener
+class DebugOverlayMenu : RE::IMenu, public GTS::EventListener
 {
 	public:
 		static constexpr const char* MENU_PATH = "GTS_Plugin/GTS_overlay_menu";

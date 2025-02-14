@@ -3,7 +3,7 @@
 using namespace SKSE;
 using namespace RE;
 
-namespace Gts {
+namespace GTS {
 	ModEventManager& ModEventManager::GetSingleton() noexcept {
 		static ModEventManager instance;
 

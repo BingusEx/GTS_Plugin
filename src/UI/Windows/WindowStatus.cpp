@@ -9,7 +9,7 @@
 #include "UI/ImGui/ImUtil.hpp"
 #include "config/ConfigUtil.hpp"
 
-using namespace GtsUI;
+using namespace GTSUI;
 
 
 inline void DrawInfo(/*Actor* TargetActor */){

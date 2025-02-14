@@ -2,7 +2,7 @@
 #include <random>
 #include "ClibUtil/rng.hpp"
 
-namespace Gts {
+namespace GTS {
 
 	inline static std::random_device rdevice;
 	//inline static XoshiroCpp::Xoshiro256StarStar generator(rdevice());

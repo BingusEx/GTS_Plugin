@@ -7,7 +7,7 @@
 using namespace RE;
 using namespace SKSE;
 
-namespace Gts {
+namespace GTS {
 
 	bool starts_with(std::string_view arg, std::string_view prefix) {
 		return arg.compare(0, prefix.size(), prefix);
