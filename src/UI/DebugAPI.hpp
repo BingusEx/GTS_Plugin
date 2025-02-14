@@ -1,16 +1,14 @@
 #pragma once
-#include "events.hpp"
+
 #include <glm/ext.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "data/world.hpp"
-
-using namespace GTS;
+#include "Data/World.hpp"
+#include "Events.hpp"
 
 namespace Util {
+
+	using namespace GTS;
 
 	inline glm::vec3 CompMult(const glm::vec3& a, const glm::vec3& b) {
 		return glm::vec3(a[0]*b[0], a[1]*b[1], a[2]*b[2]);

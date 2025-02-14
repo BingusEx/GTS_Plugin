@@ -19,6 +19,8 @@
 
 #include "Config/ConfigUtil.hpp"
 
+#include "Managers/InputManager.hpp"
+
 
 namespace GTS {
 
@@ -64,6 +66,8 @@ namespace GTS {
 	        }
 	    }
 
+		InputManager::GetSingleton().Init();
+
 	    SaveLoadBusy.store(false);
 	}
 
@@ -74,9 +78,10 @@ namespace GTS {
 
 	    Title = "Size Matters - Settings";
 	    Name = "Settings";
-	    Show = true;
+	    Show = false;
+		ConsumeInput = true;
 	    flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoNavInputs;
-
+		
 	    //Add Categories
 	    CatMgr.AddCategory(std::make_shared<CategoryInfo>());
 	    CatMgr.AddCategory(std::make_shared<CategoryGeneral>());

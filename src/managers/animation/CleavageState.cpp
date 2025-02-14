@@ -151,7 +151,7 @@ namespace {
         return false;
     }
 
-    void CleavageEnterEvent(const InputEventData& data) {
+    void CleavageEnterEvent(const ManagedInputEvent& data) {
         Actor* giant = GetPlayerOrControlled();
         Utils_UpdateHighHeelBlend(giant, false);
         PassAnimation("Cleavage_EnterState", false);
@@ -167,30 +167,30 @@ namespace {
             }
         }
     }
-    void CleavageExitEvent(const InputEventData& data) {
+    void CleavageExitEvent(const ManagedInputEvent& data) {
         PassAnimation("Cleavage_ExitState", true);
     }
-    void CleavageLightAttackEvent(const InputEventData& data) {
+    void CleavageLightAttackEvent(const ManagedInputEvent& data) {
         if (PassAnimation("Cleavage_LightAttack", true)) {
             AttemptBreastActionOnTiny("Cleavage_LightAttack_Tiny");
         }
     }
-    void CleavageHeavyAttackEvent(const InputEventData& data) {
+    void CleavageHeavyAttackEvent(const ManagedInputEvent& data) {
         if (PassAnimation("Cleavage_HeavyAttack", true)) {
             AttemptBreastActionOnTiny("Cleavage_HeavyAttack_Tiny");
         }
     }
-    void CleavageSuffocateEvent(const InputEventData& data) {
+    void CleavageSuffocateEvent(const ManagedInputEvent& data) {
         if (AttemptBreastAction("Cleavage_Suffocate", CooldownSource::Action_Breasts_Suffocate, "Suffocation", "Breasts_Suffocate")) {
             AttemptBreastActionOnTiny("Cleavage_Suffocate_Tiny");
         }
     }
-    void CleavageAbsorbEvent(const InputEventData& data) {
+    void CleavageAbsorbEvent(const ManagedInputEvent& data) {
         if (AttemptBreastAction("Cleavage_Absorb", CooldownSource::Action_Breasts_Absorb, "Absorption", "Breasts_Absorb")) {
             AttemptBreastActionOnTiny("Cleavage_Absorb_Tiny");
         }
     }
-    void CleavageVoreEvent(const InputEventData& data) {
+    void CleavageVoreEvent(const ManagedInputEvent& data) {
         if (AttemptBreastAction("Cleavage_Vore", CooldownSource::Action_Breasts_Vore, "Vore", "Breasts_Vore")) {
             AttemptBreastActionOnTiny("Cleavage_Vore_Tiny");
         }

@@ -80,7 +80,7 @@ namespace {
 		}
 	}
 
-	void TotalControlGrowEvent(const InputEventData& data) {
+	void TotalControlGrowEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float scale = get_visual_scale(player);
 			float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
@@ -96,7 +96,7 @@ namespace {
 				Runtime::PlaySoundAtNode("growthSound", player, Volume, 1.0f, "NPC Pelvis [Pelv]");
 			}
 	}
-	void TotalControlShrinkEvent(const InputEventData& data) {
+	void TotalControlShrinkEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float scale = get_visual_scale(player);
 			float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
@@ -117,7 +117,7 @@ namespace {
 				Runtime::PlaySound("shrinkSound", player, Volume, 1.0f);
 			}
 	}
-	void TotalControlGrowOtherEvent(const InputEventData& data) {
+	void TotalControlGrowOtherEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			for (auto actor: find_actors()) {
 				if (!actor) {
@@ -140,7 +140,7 @@ namespace {
 				}
 			}
 	}
-	void TotalControlShrinkOtherEvent(const InputEventData& data) {
+	void TotalControlShrinkOtherEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			for (auto actor: find_actors()) {
 				if (!actor) {
@@ -164,7 +164,7 @@ namespace {
 			}
 	}
 
-	void RapidGrowthEvent(const InputEventData& data) {
+	void RapidGrowthEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float target = get_target_scale(player);
 			float max_scale = get_max_scale(player);// * get_natural_scale(player);
@@ -175,7 +175,7 @@ namespace {
 			}
 			AnimationManager::StartAnim("TriggerGrowth", player);
 	}
-	void RapidShrinkEvent(const InputEventData& data) {
+	void RapidShrinkEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float target = get_target_scale(player);
 			if (target <= Minimum_Actor_Scale) {
@@ -186,7 +186,7 @@ namespace {
 			AnimationManager::StartAnim("TriggerShrink", player);
 	}
 
-	void SizeReserveEvent(const InputEventData& data) {
+	void SizeReserveEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		auto Cache = Persistent::GetSingleton().GetData(player);
 		if (Cache) {
@@ -230,7 +230,7 @@ namespace {
 		}
 	}
 
-	void DisplaySizeReserveEvent(const InputEventData& data) {
+	void DisplaySizeReserveEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		auto Cache = Persistent::GetSingleton().GetData(player);
 		if (Cache) {
@@ -242,15 +242,15 @@ namespace {
 		}
 	}
 
-	void PartyReportEvent(const InputEventData& data) { // Report follower scale into console
+	void PartyReportEvent(const ManagedInputEvent& data) { // Report follower scale into console
 		ReportScale(false);
 	}
 
-	void DebugReportEvent(const InputEventData& data) { // Report enemy scale into console
+	void DebugReportEvent(const ManagedInputEvent& data) { // Report enemy scale into console
 		ReportScale(true);
 	}
 
-	void ShrinkOutburstEvent(const InputEventData& data) {
+	void ShrinkOutburstEvent(const ManagedInputEvent& data) {
 
 		auto player = PlayerCharacter::GetSingleton();
 
@@ -296,7 +296,7 @@ namespace {
 		ShrinkOutburstExplosion(player, false);
 	}
 
-	void ProtectSmallOnesEvent(const InputEventData& data) {
+	void ProtectSmallOnesEvent(const ManagedInputEvent& data) {
 		static Timer ProtectTimer = Timer(5.0);
 		if (ProtectTimer.ShouldRunFrame()) {
 			bool balance = IsInBalanceMode();
@@ -304,17 +304,17 @@ namespace {
 		}
 	}
 
-	void AnimSpeedUpEvent(const InputEventData& data) {
+	void AnimSpeedUpEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(0.045f); // Increase speed and power
 	}
-	void AnimSpeedDownEvent(const InputEventData& data) {
+	void AnimSpeedDownEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(-0.045f); // Decrease speed and power
 	}
-	void AnimMaxSpeedEvent(const InputEventData& data) {
+	void AnimMaxSpeedEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(0.090f); // Strongest attack speed buff
 	}
 
-	void VoreInputEvent(const InputEventData& data) {
+	void VoreInputEvent(const ManagedInputEvent& data) {
 		static Timer voreTimer = Timer(0.25);
 		auto pred = PlayerCharacter::GetSingleton();
 		if (IsGtsBusy(pred)) {
@@ -331,7 +331,7 @@ namespace {
 		}
 	}
 
-	void VoreInputEvent_Follower(const InputEventData& data) {
+	void VoreInputEvent_Follower(const ManagedInputEvent& data) {
 		Actor* player = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(player, FollowerAnimType::Vore);
 	}

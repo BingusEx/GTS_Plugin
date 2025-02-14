@@ -35,7 +35,7 @@ namespace GTS {
         volatile uint8_t ColExpState = 0;
 
         std::unordered_map<std::string, bool> HeaderStateMap = {};
-        //GTSInputEvent Rebinding
+        //InputEvent Rebinding
         std::string VisualKeyString;
         std::vector<std::string> TempKeys = {};
         int RebindIndex = 0;

@@ -266,6 +266,7 @@ namespace GTS {
 	                        RebindIndex = 0;
 	                        TempKeys.clear();
 	                    }
+
 	                    //IsItemHovered References the last control drawn in this case its the Button.
 	                    //If the mouse is hovering the button ignore its left click inputs.
 	                    else if (IsRebinding && !(ImGui::IsItemHovered() && ImGui::IsMouseDown(ImGuiMouseButton_Left))){

@@ -6,7 +6,7 @@ namespace GTS {
 
     #define IM_VK_KEYPAD_ENTER (VK_RETURN + 256)
 
-	static ImGuiKey ImGui_ImplWin32_VirtualKeyToImGuiKey(WPARAM wParam) {
+	static const ImGuiKey VirtualKeyToImGuiKey(WPARAM wParam) {
 
 		switch (wParam) {
 		case VK_TAB:
@@ -246,150 +246,6 @@ namespace GTS {
 		}
 	}
 
-	// This function converts an ImGuiKey to its corresponding Win32 virtual key code.
-	// If no appropriate mapping exists, it returns 0.
-	WPARAM ImGuiKeyToWin32VirtualKey(ImGuiKey key) {
-		switch (key) {
-			// Navigation keys
-			case ImGuiKey_Tab:          return VK_TAB;
-			case ImGuiKey_LeftArrow:    return VK_LEFT;
-			case ImGuiKey_RightArrow:   return VK_RIGHT;
-			case ImGuiKey_UpArrow:      return VK_UP;
-			case ImGuiKey_DownArrow:    return VK_DOWN;
-			case ImGuiKey_PageUp:       return VK_PRIOR;
-			case ImGuiKey_PageDown:     return VK_NEXT;
-			case ImGuiKey_Home:         return VK_HOME;
-			case ImGuiKey_End:          return VK_END;
-			case ImGuiKey_Insert:       return VK_INSERT;
-			case ImGuiKey_Delete:       return VK_DELETE;
-
-			// Editing keys
-			case ImGuiKey_Backspace:    return VK_BACK;
-			case ImGuiKey_Space:        return VK_SPACE;
-			case ImGuiKey_Enter:        return VK_RETURN;
-			case ImGuiKey_Escape:       return VK_ESCAPE;
-
-			// OEM / punctuation keys
-			case ImGuiKey_Apostrophe:   return VK_OEM_7;
-			case ImGuiKey_Comma:        return VK_OEM_COMMA;
-			case ImGuiKey_Minus:        return VK_OEM_MINUS;
-			case ImGuiKey_Period:       return VK_OEM_PERIOD;
-			case ImGuiKey_Slash:        return VK_OEM_2;
-			case ImGuiKey_Semicolon:    return VK_OEM_1;
-			case ImGuiKey_Equal:        return VK_OEM_PLUS;
-			case ImGuiKey_LeftBracket:  return VK_OEM_4;
-			case ImGuiKey_Backslash:    return VK_OEM_5;
-			case ImGuiKey_RightBracket: return VK_OEM_6;
-			case ImGuiKey_GraveAccent:  return VK_OEM_3;
-
-			// Lock keys
-			case ImGuiKey_CapsLock:     return VK_CAPITAL;
-			case ImGuiKey_ScrollLock:   return VK_SCROLL;
-			case ImGuiKey_NumLock:      return VK_NUMLOCK;
-			case ImGuiKey_PrintScreen:  return VK_SNAPSHOT;
-			case ImGuiKey_Pause:        return VK_PAUSE;
-
-			// Keypad keys
-			case ImGuiKey_Keypad0:      return VK_NUMPAD0;
-			case ImGuiKey_Keypad1:      return VK_NUMPAD1;
-			case ImGuiKey_Keypad2:      return VK_NUMPAD2;
-			case ImGuiKey_Keypad3:      return VK_NUMPAD3;
-			case ImGuiKey_Keypad4:      return VK_NUMPAD4;
-			case ImGuiKey_Keypad5:      return VK_NUMPAD5;
-			case ImGuiKey_Keypad6:      return VK_NUMPAD6;
-			case ImGuiKey_Keypad7:      return VK_NUMPAD7;
-			case ImGuiKey_Keypad8:      return VK_NUMPAD8;
-			case ImGuiKey_Keypad9:      return VK_NUMPAD9;
-			case ImGuiKey_KeypadDecimal:return VK_DECIMAL;
-			case ImGuiKey_KeypadDivide: return VK_DIVIDE;
-			case ImGuiKey_KeypadMultiply:return VK_MULTIPLY;
-			case ImGuiKey_KeypadSubtract:return VK_SUBTRACT;
-			case ImGuiKey_KeypadAdd:    return VK_ADD;
-
-			// Modifier keys
-			case ImGuiKey_LeftShift:    return VK_LSHIFT;
-			case ImGuiKey_LeftCtrl:     return VK_LCONTROL;
-			case ImGuiKey_LeftAlt:      return VK_LMENU;
-			case ImGuiKey_LeftSuper:    return VK_LWIN;
-			case ImGuiKey_RightShift:   return VK_RSHIFT;
-			case ImGuiKey_RightCtrl:    return VK_RCONTROL;
-			case ImGuiKey_RightAlt:     return VK_RMENU;
-			case ImGuiKey_RightSuper:   return VK_RWIN;
-			case ImGuiKey_Menu:         return VK_APPS;
-
-			// Alphanumeric keys
-			case ImGuiKey_0:            return '0';
-			case ImGuiKey_1:            return '1';
-			case ImGuiKey_2:            return '2';
-			case ImGuiKey_3:            return '3';
-			case ImGuiKey_4:            return '4';
-			case ImGuiKey_5:            return '5';
-			case ImGuiKey_6:            return '6';
-			case ImGuiKey_7:            return '7';
-			case ImGuiKey_8:            return '8';
-			case ImGuiKey_9:            return '9';
-			case ImGuiKey_A:            return 'A';
-			case ImGuiKey_B:            return 'B';
-			case ImGuiKey_C:            return 'C';
-			case ImGuiKey_D:            return 'D';
-			case ImGuiKey_E:            return 'E';
-			case ImGuiKey_F:            return 'F';
-			case ImGuiKey_G:            return 'G';
-			case ImGuiKey_H:            return 'H';
-			case ImGuiKey_I:            return 'I';
-			case ImGuiKey_J:            return 'J';
-			case ImGuiKey_K:            return 'K';
-			case ImGuiKey_L:            return 'L';
-			case ImGuiKey_M:            return 'M';
-			case ImGuiKey_N:            return 'N';
-			case ImGuiKey_O:            return 'O';
-			case ImGuiKey_P:            return 'P';
-			case ImGuiKey_Q:            return 'Q';
-			case ImGuiKey_R:            return 'R';
-			case ImGuiKey_S:            return 'S';
-			case ImGuiKey_T:            return 'T';
-			case ImGuiKey_U:            return 'U';
-			case ImGuiKey_V:            return 'V';
-			case ImGuiKey_W:            return 'W';
-			case ImGuiKey_X:            return 'X';
-			case ImGuiKey_Y:            return 'Y';
-			case ImGuiKey_Z:            return 'Z';
-
-			// Function keys
-			case ImGuiKey_F1:           return VK_F1;
-			case ImGuiKey_F2:           return VK_F2;
-			case ImGuiKey_F3:           return VK_F3;
-			case ImGuiKey_F4:           return VK_F4;
-			case ImGuiKey_F5:           return VK_F5;
-			case ImGuiKey_F6:           return VK_F6;
-			case ImGuiKey_F7:           return VK_F7;
-			case ImGuiKey_F8:           return VK_F8;
-			case ImGuiKey_F9:           return VK_F9;
-			case ImGuiKey_F10:          return VK_F10;
-			case ImGuiKey_F11:          return VK_F11;
-			case ImGuiKey_F12:          return VK_F12;
-			case ImGuiKey_F13:          return VK_F13;
-			case ImGuiKey_F14:          return VK_F14;
-			case ImGuiKey_F15:          return VK_F15;
-			case ImGuiKey_F16:          return VK_F16;
-			case ImGuiKey_F17:          return VK_F17;
-			case ImGuiKey_F18:          return VK_F18;
-			case ImGuiKey_F19:          return VK_F19;
-			case ImGuiKey_F20:          return VK_F20;
-			case ImGuiKey_F21:          return VK_F21;
-			case ImGuiKey_F22:          return VK_F22;
-			case ImGuiKey_F23:          return VK_F23;
-			case ImGuiKey_F24:          return VK_F24;
-
-			// App keys
-			case ImGuiKey_AppBack:      return VK_BROWSER_BACK;
-			case ImGuiKey_AppForward:   return VK_BROWSER_FORWARD;
-
-			default:
-				return 0;
-		}
-	}
-
 	// This lookup table converts ImGui keys to the string representation of DirectInput keys,
 	// with the "DIK_" prefix removed.
 	//This is intended to be used with the existing way Inputmanager parses keys.
@@ -518,14 +374,151 @@ namespace GTS {
 		{ ImGuiKey_MouseX2,      "MOUSE5" }   // Extra Mouse Button 2 (Forward)
 	};
 
+	static const uint32_t DIKToVK(uint32_t DIK) {
+		switch (DIK) {
+			case DIK_LEFTARROW:
+				return VK_LEFT;
+			case DIK_RIGHTARROW:
+				return VK_RIGHT;
+			case DIK_UPARROW:
+				return VK_UP;
+			case DIK_DOWNARROW:
+				return VK_DOWN;
+			case DIK_DELETE:
+				return VK_DELETE;
+			case DIK_END:
+				return VK_END;
+			case DIK_HOME:
+				return VK_HOME;  // pos1
+			case DIK_PRIOR:
+				return VK_PRIOR;  // page up
+			case DIK_NEXT:
+				return VK_NEXT;  // page down
+			case DIK_INSERT:
+				return VK_INSERT;
+			case DIK_NUMPAD0:
+				return VK_NUMPAD0;
+			case DIK_NUMPAD1:
+				return VK_NUMPAD1;
+			case DIK_NUMPAD2:
+				return VK_NUMPAD2;
+			case DIK_NUMPAD3:
+				return VK_NUMPAD3;
+			case DIK_NUMPAD4:
+				return VK_NUMPAD4;
+			case DIK_NUMPAD5:
+				return VK_NUMPAD5;
+			case DIK_NUMPAD6:
+				return VK_NUMPAD6;
+			case DIK_NUMPAD7:
+				return VK_NUMPAD7;
+			case DIK_NUMPAD8:
+				return VK_NUMPAD8;
+			case DIK_NUMPAD9:
+				return VK_NUMPAD9;
+			case DIK_DECIMAL:
+				return VK_DECIMAL;
+			case DIK_NUMPADENTER:
+				return IM_VK_KEYPAD_ENTER;
+			case DIK_RMENU:
+				return VK_RMENU;  // right alt
+			case DIK_RCONTROL:
+				return VK_RCONTROL;  // right control
+			case DIK_LWIN:
+				return VK_LWIN;  // left win
+			case DIK_RWIN:
+				return VK_RWIN;  // right win
+			case DIK_APPS:
+				return VK_APPS;
+			default:
+				return DIK;
+		}
+	}
+
 	// Helper function: given an ImGuiKey, return the DirectInput key string (or an empty string if not found)
-	std::string GetDIKStringFromImGuiKey(ImGuiKey key)
-	{
+	inline static std::string GetDIKStringFromImGuiKey(ImGuiKey key) {
 		auto it = ImGuiKeyToDIKString.find(key);
 		if (it != ImGuiKeyToDIKString.end())
 			return it->second;
 		return "INVALID";
 	}
+
+	class ImInput {
+
+		private:
+
+		class CharEvent : public RE::InputEvent {
+			public:
+			uint32_t keyCode;
+		};
+
+		struct KeyEvent {
+
+			explicit KeyEvent(const RE::ButtonEvent* a_event) :
+				keyCode(a_event->GetIDCode()),
+				device(a_event->GetDevice()),
+				eventType(a_event->GetEventType()),
+				value(a_event->Value()),
+				heldDownSecs(a_event->HeldDuration()) {}
+
+			explicit KeyEvent(const CharEvent* a_event) :
+				keyCode(a_event->keyCode),
+				device(a_event->GetDevice()),
+				eventType(a_event->GetEventType()) {}
+
+			[[nodiscard]] constexpr bool IsPressed() const noexcept {
+				return value > 0.0F;
+			}
+			[[nodiscard]] constexpr bool IsRepeating() const noexcept {
+				return heldDownSecs > 0.0F;
+			}
+			[[nodiscard]] constexpr bool IsDown() const noexcept {
+				return IsPressed() && (heldDownSecs == 0.0F);
+			}
+			[[nodiscard]] constexpr bool IsHeld() const noexcept {
+				return IsPressed() && IsRepeating();
+			}
+			[[nodiscard]] constexpr bool IsUp() const noexcept {
+				return (value == 0.0F) && IsRepeating();
+			}
+
+			uint32_t keyCode;
+			RE::INPUT_DEVICE device;
+			RE::INPUT_EVENT_TYPE eventType;
+			float value = 0;
+			float heldDownSecs = 0;
+		};
+
+		std::shared_mutex InputMutex;
+
+		std::vector<KeyEvent> KeyEventQueue {};
+
+
+
+		public:
+
+		void ProcessInputEventQueue();
+
+		void OnFocusLost() {
+			std::unique_lock<std::shared_mutex> mutex(InputMutex);
+			KeyEventQueue.clear();
+		}
+
+		void ProcessInputEvents(RE::InputEvent* const* a_events) {
+			for (auto it = *a_events; it; it = it->next) {
+				if (it->GetEventType() != RE::INPUT_EVENT_TYPE::kButton && it->GetEventType() != RE::INPUT_EVENT_TYPE::kChar)  // we do not care about non button or char events
+					continue;
+
+				auto event = it->GetEventType() == RE::INPUT_EVENT_TYPE::kButton ? KeyEvent(static_cast<RE::ButtonEvent*>(it)) : KeyEvent(static_cast<CharEvent*>(it));
+
+				{
+					std::unique_lock<std::shared_mutex> mutex(InputMutex);
+					KeyEventQueue.emplace_back(event);
+				}
+			}
+		}
+
+	};
 
 	// void UIManager::ProcessInputEvents(const RE::GTSInputEvent* const* a_events)
 	// {

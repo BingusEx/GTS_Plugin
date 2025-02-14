@@ -2,12 +2,6 @@
 
 namespace GTS {
 
-    //TODO Move Init to UIManager
-    void ImWindowManager::Init() {
-        FontMgr.Init();
-        StyleMgr.LoadStyle();
-    }
-
     void ImWindowManager::AddWindow(std::unique_ptr<ImWindow> a_window) {
 
         assert(a_window != nullptr);
@@ -25,20 +19,36 @@ namespace GTS {
         logger::info("ImWindowManager::AddWindow {}", windows.back()->Name);
     }
 
-    void ImWindowManager::Draw() {
-        if (HasWindows()) {
+    void ImWindowManager::Update() {
+
+        if (HasWindows()) [[likely]] {
+
+            if (HasInputConsumers()) {
+                auto& io = ImGui::GetIO();
+                io.MouseDrawCursor = true;
+            }
+            else {
+                auto& io = ImGui::GetIO();
+                io.MouseDrawCursor = false;
+                io.ClearInputKeys();
+                io.ClearEventsQueue();
+                io.ClearInputMouse();
+            }
+
             for (const auto& window : windows) {
+
                 if (window->ShouldShow()) {
+
                     ImGui::PushStyleVar(ImGuiStyleVar_Alpha, window->GetAlpha());
                     ImGui::PushFont(ImFontManager::GetFont("text")); //Default font
+
                     volatile bool PushedVars = false;
 
                     if (!window->DrawBG) {
-                        ImGui::PushStyleColor(ImGuiCol_WindowBg, { 0.0f, 0.0f, 0.0f, 0.0f });
-                        PushedVars = true;
+                        ImGui::SetNextWindowBgAlpha(0.f);
                     }
 
-                    ImGui::Begin((window->Name).c_str(), &window->Show, window->flags);
+                    ImGui::Begin(window->Name.c_str(), &window->Show, window->flags);
 
                     window->Draw();
 
@@ -59,6 +69,7 @@ namespace GTS {
                 ImGui::ShowStackToolWindow();
             }
         }
+
     }
 
     //Gets a ptr to the window which fully matches the "Name" var.

@@ -126,24 +126,24 @@ namespace {
 	// ======================================================================================
 	//  Animation Triggers
 	// ======================================================================================
-	void LightKickLeftEvent(const InputEventData& data) {
+	void LightKickLeftEvent(const ManagedInputEvent& data) {
 		PerformKick("SwipeLight_Left", 35.0f, false);
 	}
-	void LightKickRightEvent(const InputEventData& data) {
+	void LightKickRightEvent(const ManagedInputEvent& data) {
 		PerformKick("SwipeLight_Right", 35.0f, false);
 	}
 
-	void HeavyKickLeftEvent(const InputEventData& data) {
+	void HeavyKickLeftEvent(const ManagedInputEvent& data) {
 		PerformKick("SwipeHeavy_Left", 110.0f, true);
 	}
-	void HeavyKickRightEvent(const InputEventData& data) {
+	void HeavyKickRightEvent(const ManagedInputEvent& data) {
 		PerformKick("SwipeHeavy_Right", 110.0f, true);
 	}
 
-	void HeavyKickRightLowEvent(const InputEventData& data) {
+	void HeavyKickRightLowEvent(const ManagedInputEvent& data) {
 		PerformKick("StrongKick_Low_Right", 110.0f, true);
 	}
-	void HeavyKickLeftLowEvent(const InputEventData& data) {
+	void HeavyKickLeftLowEvent(const ManagedInputEvent& data) {
 		PerformKick("StrongKick_Low_Left", 110.0f, true);
 	}
 }

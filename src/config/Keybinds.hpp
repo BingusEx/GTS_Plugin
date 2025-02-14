@@ -61,6 +61,9 @@ namespace GTS {
         void ResetKeybinds();
 
         private:
+
+
+
         Keybinds() = default;
         Keybinds(const Keybinds&) = delete;
         Keybinds& operator=(const Keybinds&) = delete;
@@ -73,5 +76,6 @@ namespace GTS {
     
         toml::basic_value<toml::ordered_type_config> TomlData;
         std::mutex _ReadWriteLock;
+
     };
 }

@@ -10,6 +10,19 @@ namespace Hooks {
 	LRESULT Hook_Renderer::WndProcHandler(HWND a_hwnd, UINT a_msg, WPARAM a_wParam, LPARAM a_lParam) {
 		if (a_msg == WM_KILLFOCUS) {
 
+			auto& UIMgr = UIManager::GetSingleton();
+
+			if (UIMgr.Ready()) {
+
+				UIMgr.OnFocusLost();
+
+				//IO can only be retrieved if a valid imguicontext exists.
+				auto& io = ImGui::GetIO();
+
+				io.ClearInputCharacters();
+				io.ClearInputKeys();
+
+			}
 		}
 		return _WndProcHandler(a_hwnd, a_msg, a_wParam, a_lParam);
 	}

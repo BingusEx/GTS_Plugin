@@ -38,7 +38,7 @@ namespace {
 				"Giantess Mod - Size Matters (GtsPlugin.dll)",
 				MB_OK | MB_ICONERROR | MB_TOPMOST
 			);
-			WinAPI::TerminateProcess(WinAPI::GetCurrentProcess(), EXIT_FAILURE);
+			SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
 			//report_and_fail("Unsuported game version");
 		}
 	}
@@ -107,7 +107,7 @@ namespace {
 				case MessagingInterface::kDataLoaded:  
 				{    
 					EventDispatcher::DoDataReady();
-					InputManager::GetSingleton().DataReady();
+					InputManager::GetSingleton().Init();
 					APIManager::GetSingleton().Register();
 
 					PrintStartupBanner();
@@ -156,7 +156,7 @@ namespace {
 
 			}
 		})) {
-			stl::report_and_fail("Unable to register message listener.");
+			report_and_fail("Unable to register message listener.");
 		}
 	}
 }
@@ -176,7 +176,7 @@ static void InitializePapyrus() {
 	if (GetPapyrusInterface()->Register(GTS::register_papyrus)) {
 		log::info("Papyrus functions bound.");
 	} else {
-		stl::report_and_fail("Failure to register Papyrus bindings.");
+		report_and_fail("Failure to register Papyrus bindings.");
 	}
 }
 
@@ -219,11 +219,18 @@ static void SetLogLevel() {
 	}
 	catch (exception e){
 		log::critical("Could not load config file", e.what());
-		stl::report_and_fail("Could not load config file");
+		report_and_fail("Could not load config file");
 	}
 }
 
 SKSEPluginLoad(const LoadInterface * a_skse){
+
+	//#ifdef _DEBUG
+
+	MessageBoxA(nullptr, "Attach Debugger Now.", "Giantess Mod - Size Matters (GtsPlugin.dll)", MB_OK);
+
+	//#endif
+
 	InitializeLogging();
 	PrintPluginInfo();
 	SetLogLevel();

@@ -28,6 +28,7 @@ namespace GTS {
         Name = "WidgetWindow";
         this->flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoNavInputs;
         AnchorPos = ImWindow::WindowAnchor::kTopRight;
+        ConsumeInput = false;
     }
 
     void WindowStatus::Draw() {

@@ -26,6 +26,7 @@ namespace GTS {
         bool Show = false;
         bool ConsumeInput = false;
         bool DrawBG = true;
+        bool Busy = false;
         
         float FixedScaleMax = 95.0f;                //Max scale for the window
         float FixedScaleMin = 40.0f;                //Min scale for the window

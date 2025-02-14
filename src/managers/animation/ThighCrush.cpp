@@ -354,12 +354,12 @@ namespace {
 		data.stage = 0;
 	}
 
-	void ThighCrushEvent(const InputEventData& data) {
+	void ThighCrushEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		AnimationManager::StartAnim("ThighLoopEnter", player);
 	}
 
-	void ThighCrushKillEvent(const InputEventData& data) {
+	void ThighCrushKillEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (IsGtsBusy(player)) {
 			float WasteStamina = 40.0f;
@@ -376,7 +376,7 @@ namespace {
 		}
 	}
 
-	void ThighCrushSpareEvent(const InputEventData& data) {
+	void ThighCrushSpareEvent(const ManagedInputEvent& data) {
 		if (!IsFreeCameraEnabled()) {
 			auto player = PlayerCharacter::GetSingleton();
 			if (IsGtsBusy(player)) {

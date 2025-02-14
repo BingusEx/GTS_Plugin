@@ -28,7 +28,7 @@
 #include "utils/looting.hpp"
 #include "scale/height.hpp"
 #include "data/runtime.hpp"
-#include "colliders/RE.hpp"
+#include "colliders/RE/RE.hpp"
 #include "rays/raycast.hpp"
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"

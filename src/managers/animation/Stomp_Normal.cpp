@@ -315,14 +315,14 @@ namespace {
 		StopLoopRumble(&data.giant);
 	}
 
-	void RightStompEvent(const InputEventData& data) {
+	void RightStompEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		bool UnderStomp = AnimationUnderStomp::ShouldStompUnder(player);
 		const std::string_view StompType = UnderStomp ? "UnderStompRight" : "StompRight";
 		DoStompOrUnderStomp(player, StompType);
 	}
 
-	void LeftStompEvent(const InputEventData& data) {
+	void LeftStompEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		bool UnderStomp = AnimationUnderStomp::ShouldStompUnder(player);
 		const std::string_view StompType = UnderStomp ? "UnderStompLeft" : "StompLeft";

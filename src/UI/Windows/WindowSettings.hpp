@@ -19,7 +19,7 @@ namespace GTS {
         void Draw() override;
 
         inline bool ShouldShow() override {
-            return true;
+            return this->Show;
         }
 
         inline float GetAlpha() override {

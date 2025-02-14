@@ -1,36 +1,16 @@
 #include "managers/animation/AnimationManager.hpp"
 #include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/HugShrink.hpp"
 #include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
 #include "magic/effects/common.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/explosion.hpp"
-#include "utils/DeathReport.hpp"
-#include "managers/highheel.hpp"
-#include "managers/audio/footstep.hpp"
 #include "utils/actorUtils.hpp"
 #include "utils/looting.hpp"
-#include "managers/Rumble.hpp"
-#include "utils/findActor.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
 #include "data/runtime.hpp"
-#include "spring.hpp"
 #include "scale/scale.hpp"
-#include "colliders/RE.hpp"
-#include "colliders/actor.hpp"
-#include "profiler.hpp"
-#include "timer.hpp"
 #include "node.hpp"
 #include "utils/av.hpp"
-#include "colliders/RE.hpp"
 #include "UI/DebugAPI.hpp"
 #include "rays/raycast.hpp"
-#include <vector>
-#include <string>
+
 
 
 using namespace RE;

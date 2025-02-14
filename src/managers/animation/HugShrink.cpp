@@ -328,7 +328,7 @@ namespace {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	void HugAttemptEvent(const InputEventData& data) {
+	void HugAttemptEvent(const ManagedInputEvent& data) {
 		auto player = GetPlayerOrControlled();
 		auto& Hugging = HugAnimationController::GetSingleton();
 
@@ -338,12 +338,12 @@ namespace {
 		}
 	}
 
-	void HugAttemptEvent_Follower(const InputEventData& data) {
+	void HugAttemptEvent_Follower(const ManagedInputEvent& data) {
 		Actor* player = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(player, FollowerAnimType::Hugs);
 	}
 
-	void HugCrushEvent(const InputEventData& data) {
+	void HugCrushEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		auto huggedActor = HugShrink::GetHuggiesActor(player);
 		if (huggedActor) {
@@ -378,7 +378,7 @@ namespace {
 		}
 	}
 
-	void HugShrinkEvent(const InputEventData& data) {
+	void HugShrinkEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		auto huggedActor = HugShrink::GetHuggiesActor(player);
 		if (huggedActor) {
@@ -395,7 +395,7 @@ namespace {
 		}
 	}
 
-	void HugHealEvent(const InputEventData& data) {
+	void HugHealEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		auto huggedActor = HugShrink::GetHuggiesActor(player);
 
@@ -423,7 +423,7 @@ namespace {
 			}
 		}
 	}
-	void HugReleaseEvent(const InputEventData& data) {
+	void HugReleaseEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		auto huggedActor = HugShrink::GetHuggiesActor(player);
 		if (huggedActor) {

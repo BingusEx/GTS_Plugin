@@ -1,5 +1,6 @@
 #include "Hooks/Skyrim/Input.hpp"
 #include "Managers/InputManager.hpp"
+#include "UI/UIManager.hpp"
 
 using namespace RE;
 using namespace GTS;
@@ -7,12 +8,20 @@ using namespace GTS;
 namespace Hooks {
 
 	void Hook_Input::DispatchEvent(RE::BSTEventSource<RE::InputEvent*>* a_dispatcher, RE::InputEvent** a_events) {
+
 		if (!a_events) {
 			_DispatchEvent(a_dispatcher, a_events);
 			return;
 		}
 
+		if (UIManager::GetSingleton().InputUpdate(a_events)) {
+			constexpr RE::InputEvent* const dummy[] = { nullptr };
+            _DispatchEvent(a_dispatcher, const_cast<RE::InputEvent**>(dummy));
+			return;
+		}
+
 		InputManager::GetSingleton().ProcessEvents(a_events);
+
 		_DispatchEvent(a_dispatcher, a_events);
 
 	}

@@ -1,8 +1,6 @@
 #pragma once
 #include "UI/DebugAPI.hpp"
-#include "data/world.hpp"
-
-#include <windows.h>
+#include "Data/World.hpp"
 
 using namespace GTS;
 

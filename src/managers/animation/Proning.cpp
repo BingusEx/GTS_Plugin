@@ -168,12 +168,12 @@ namespace {
 		giant->SetGraphVariableInt("iIsInSneak", 1);
 	}
 
-	void SBOProneOnEvent(const InputEventData& data) {
+	void SBOProneOnEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		AnimationManager::StartAnim("SBO_ProneOn", player);
 	}
 
-	void SBOProneOffEvent(const InputEventData& data) {
+	void SBOProneOffEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 
 		bool prone = false;
@@ -184,14 +184,14 @@ namespace {
 		}
 	}
 
-	void SBODiveEvent_Standing(const InputEventData& data) {
+	void SBODiveEvent_Standing(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (!player->IsSneaking()) {
 			AnimationManager::StartAnim("SBO_Dive", player);
 		}
 	}
 
-	void SBODiveEvent_Sneak(const InputEventData& data) {
+	void SBODiveEvent_Sneak(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (player->IsSneaking()) {
 			AnimationManager::StartAnim("SBO_Dive", player);

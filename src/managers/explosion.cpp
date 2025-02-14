@@ -2,16 +2,12 @@
 #include "managers/explosion.hpp"
 #include "managers/highheel.hpp"
 #include "utils/actorUtils.hpp"
-#include "managers/impact.hpp"
 #include "data/runtime.hpp"
-#include "scale/scale.hpp"
 #include "rays/raycast.hpp"
+#include "Profiler.hpp"
 
-
-using namespace SKSE;
 using namespace RE;
 using namespace GTS;
-using namespace std;
 
 namespace {
 	void CreateParticle(Actor* actor, NiPoint3 position, float scale) {

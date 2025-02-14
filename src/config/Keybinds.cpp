@@ -24,13 +24,13 @@ namespace GTS {
             return false;
         }
 
-        // Get (or create) the "GTSInputEvent" array from the TOML data.
+        // Get (or create) the "InputEvent" array from the TOML data.
         toml::ordered_array& inputEventArray = [&]() -> auto& {
-            if (TomlData.count("GTSInputEvent") && TomlData["GTSInputEvent"].is_array()) {
-                return TomlData["GTSInputEvent"].as_array();
+            if (TomlData.count("InputEvent") && TomlData["InputEvent"].is_array()) {
+                return TomlData["InputEvent"].as_array();
             }
-            TomlData["GTSInputEvent"] = toml::ordered_array();
-            return TomlData["GTSInputEvent"].as_array();
+            TomlData["InputEvent"] = toml::ordered_array();
+            return TomlData["InputEvent"].as_array();
             }();
 
         // Build a set of valid event names from the default keybinds.
@@ -141,7 +141,7 @@ namespace GTS {
 
         //Try TOML Serialization
         try {
-            TomlData["GTSInputEvent"] = InputEvents;
+            TomlData["InputEvent"] = InputEvents;
         }
         catch (const toml::exception& e) {
             logger::error("TOML Exception when saving InputEvents: {}", e.what());

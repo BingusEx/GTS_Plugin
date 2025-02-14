@@ -339,7 +339,7 @@ namespace {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////E V E N T S
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	void ThighSandwichEnterEvent(const InputEventData& data) {
+	void ThighSandwichEnterEvent(const ManagedInputEvent& data) {
 		auto& Sandwiching = ThighSandwichController::GetSingleton();
 		auto pred = PlayerCharacter::GetSingleton();
 
@@ -354,13 +354,13 @@ namespace {
 		}
 	}
 
-	void ThighSandwichEnterEvent_Follower(const InputEventData& data) {
+	void ThighSandwichEnterEvent_Follower(const ManagedInputEvent& data) {
 		Actor* pred = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(pred, FollowerAnimType::ThighSandwich);
 	}
 
 
-	void ThighSandwichAttackEvent(const InputEventData& data) {
+	void ThighSandwichAttackEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		
 		if (IsGtsBusy(player)) {
@@ -378,7 +378,7 @@ namespace {
 		}
 	}
 
-	void ThighSandwichHeavyAttackEvent(const InputEventData& data) {
+	void ThighSandwichHeavyAttackEvent(const ManagedInputEvent& data) {
 		auto player = GetPlayerOrControlled();
 		if (IsGtsBusy(player)) {
 			float WasteStamina = 35.0f;
@@ -395,7 +395,7 @@ namespace {
 		}
 	}
 
-	void ThighSandwichExitEvent(const InputEventData& data) {
+	void ThighSandwichExitEvent(const ManagedInputEvent& data) {
 		if (!IsFreeCameraEnabled()) {
 			auto player = GetPlayerOrControlled();
 			if (IsGtsBusy(player)) {

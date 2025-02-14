@@ -1,27 +1,65 @@
 #pragma once
+#include "ImGui/ImWindowManager.hpp"
+#include "ImGui/ImInput.hpp"
+#include "Managers/InputManager.hpp"
 
 namespace GTS {
 
-	class UIManager {
+	class UIManager : public ImInput {
 
 		private:
+
+		struct ImGuiUserDAT {
+			struct {
+				float x = 1.f;
+				float y = 1.f;
+			} screenScaleRatio;
+		};
+
+		ImGuiUserDAT ImGuiUserData = {};
 
 		UIManager(const UIManager&) = delete;
 		UIManager& operator=(const UIManager&) = delete;
 
-		bool Initialized = false;
+		std::atomic_bool Initialized = false; 
 		UIManager() = default;
 		~UIManager() = default;
+
+		ImWindowManager& WinMgr = ImWindowManager::GetSingleton();
+		ImFontManager& FontMgr = ImFontManager::GetSingleton();
+		ImStyleManager& StyleMgr = ImStyleManager::GetSingleton();
 
 		public:
 
 		static UIManager& GetSingleton() {
-			static UIManager _Instance;
-			return _Instance;
+			static UIManager Instance;
+			return Instance;
 		}
 
 		void Init();
 		void Render();
+
+		[[nodiscard]] inline bool Ready() const {
+			return Initialized.load();
+		}
+
+		[[nodiscard]] inline bool InputUpdate(RE::InputEvent** a_event) {
+
+			ProcessInputEvents(a_event);
+
+			if (ImWindowManager::GetSingleton().HasInputConsumers()) {  //the menu is open, eat all keypresses
+				return true;
+			}
+
+			OnFocusLost();
+
+
+
+			return false;
+
+		}
+
+		constexpr static inline std::string_view ImGuiINI = "Data\\SKSE\\Plugins\\GTSPlugin\\GTSPluginImGui.ini";
 
 	};
 }

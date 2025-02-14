@@ -7,100 +7,96 @@
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/WindowStatus.hpp"
 
+#include "Managers/InputManager.hpp"
+
 
 namespace GTS {
 
+    void OpenSettings(const ManagedInputEvent& data) {
+        ImWindowManager::GetSingleton().GetWindowByName("Settings")->Show = true;
+    }
+
     void UIManager::Init() {
-        if (Initialized) {
+
+        if (Initialized.load()) {
             return;
         }
 
-        const auto renderManager = RE::BSRenderManager::GetSingleton();
+        const auto RenderManager = RE::BSRenderManager::GetSingleton();
 
-        const auto device = reinterpret_cast<ID3D11Device*>(renderManager->GetRuntimeData().forwarder);
-        const auto context = reinterpret_cast<ID3D11DeviceContext*>(renderManager->GetRuntimeData().context);
-        const auto swapChain = reinterpret_cast<IDXGISwapChain*>(renderManager->GetRuntimeData().swapChain);
+        const auto D3DDevice = reinterpret_cast<ID3D11Device*>(RenderManager->GetRuntimeData().forwarder);
+        const auto D3DContext = reinterpret_cast<ID3D11DeviceContext*>(RenderManager->GetRuntimeData().context);
+        const auto DXGISwapChain = reinterpret_cast<IDXGISwapChain*>(RenderManager->GetRuntimeData().swapChain);
 
-        DXGI_SWAP_CHAIN_DESC sd{};
-        swapChain->GetDesc(&sd);
+        DXGI_SWAP_CHAIN_DESC SwapChainDesc{};
 
-        
-        // RECT rect{};
-        // if (GetClientRect(sd.OutputWindow, &rect) == TRUE) {
-        // 	_userData.screenScaleRatio = { static_cast<float>(sd.BufferDesc.Width) / static_cast<float>(rect.right), static_cast<float>(sd.BufferDesc.Height) / static_cast<float>(rect.bottom) };
-        // }
-        // else {
-        // 	_userData.screenScaleRatio = { 1.0f, 1.0f };
-        // }
+		HRESULT hr = DXGISwapChain->GetDesc(&SwapChainDesc);
+
+		if (FAILED(hr)) {
+		    logger::error("Could Not Get Swapchain, HRESULT: {}", hr);
+		    SKSE::stl::report_and_fail("Could Not Get Swapchain");
+		}
 
         ImGui::CreateContext();
 
         ImGuiIO& io = ImGui::GetIO();
+        io.UserData = &ImGuiUserData;
+        io.IniFilename = ImGuiINI.data();
+        io.DisplaySize = { static_cast<float>(SwapChainDesc.BufferDesc.Width), static_cast<float>(SwapChainDesc.BufferDesc.Height) };
+        io.ConfigNavEscapeClearFocusWindow = false;
 
-        io.DisplaySize = { static_cast<float>(sd.BufferDesc.Width), static_cast<float>(sd.BufferDesc.Height) };
-        io.ConfigWindowsMoveFromTitleBarOnly = true;
-        //io.UserData = &_userData;
-        //io.IniFilename = Settings::imguiIni.data();
-        io.IniFilename = "GtsPluginUI.ini";
+        //Appears to do the exact opposite of what we want...
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        io.ConfigFlags |= ImGuiConfigFlags_NavNoCaptureKeyboard;
 
-        ImGui_ImplWin32_Init(sd.OutputWindow);
-        ImGui_ImplDX11_Init(device, context);
+        RECT rect{};
+        if (GetClientRect(SwapChainDesc.OutputWindow, &rect) == TRUE) {
+            ImGuiUserData.screenScaleRatio = { static_cast<float>(SwapChainDesc.BufferDesc.Width) / static_cast<float>(rect.right), static_cast<float>(SwapChainDesc.BufferDesc.Height) / static_cast<float>(rect.bottom) };
+        }
+        else {
+            ImGuiUserData.screenScaleRatio = { 1.0f, 1.0f };
+        }
 
-        ImWindowManager& WinMgr = ImWindowManager::GetSingleton();
+        ImGui_ImplWin32_Init(SwapChainDesc.OutputWindow);
+        ImGui_ImplDX11_Init(D3DDevice, D3DContext);
 
-        WinMgr.Init();
+        FontMgr.Init();
+    	StyleMgr.LoadStyle();
+
         WinMgr.AddWindow(std::make_unique<WindowSettings>());
         WinMgr.AddWindow(std::make_unique<WindowStatus>());
 
 
-        Initialized = true;
+        Initialized.store(true);
 
-        logger::info("Imgui Init OK");
+        logger::info("ImGui Init OK");
+
+        InputManager::RegisterInputEvent("OpenSettings", OpenSettings);
+
     }
 
     void UIManager::Render() {
-
-        //TODO
-        //Itterate through list of windows to render and render them
-
 
         if (!Initialized) {
             return;
         }
 
-
         ImGui_ImplWin32_NewFrame();
         ImGui_ImplDX11_NewFrame();
-        ImGui::NewFrame();
-        ImWindowManager::GetSingleton().Draw();
 
+        ImGui::NewFrame();
+
+        ImWindowManager::GetSingleton().Update();
 
         ImGui::Render();
+
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-        //ProcessInputEventQueue();
+        ProcessInputEventQueue();
 
-        //bool bShouldDraw = false;
-        //for (const auto& window : _windows) {
-        //	if (window->ShouldDraw()) {
-        //		bShouldDraw = true;
-        //	}
-        
-
-        //if (!bShouldDraw) {
-        //	// early out
-        //	return;
-        //}
-
-
-
-
-
-        //for (const auto& window : _windows) {
-        //	window->TryDraw();
-        //}
     }
+
+
 
 }
 

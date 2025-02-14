@@ -1,35 +1,18 @@
 #pragma once
-#include "data/transient.hpp"
-#include "events.hpp"
-#include "timer.hpp"
-#include "toml.hpp"
 
-using namespace std;
-using namespace SKSE;
+#include "Config/Keybinds.hpp"
 
+namespace GTS {
 
-namespace GTS
-{
 	enum class InputEventState {
 		Idle,
 		Held,
 	};
-	enum class TriggerMode {
-		Once,
-		Release,
-		Continuous,
-	};
 
-	enum class BlockCondition {
-		Never,
-		Default,
-		Force,
-	};
-
-	class InputEventData {
+	class ManagedInputEvent {
 		public:
 			// Construct from toml::table (toml11)
-			InputEventData(const toml::value& data);
+			ManagedInputEvent(const GTSInputEvent& a_event);
 
 			// Return time since it was first pressed
 			float Duration() const;
@@ -54,6 +37,7 @@ namespace GTS
 
 			// Returns if the event is a onup event
 			bool IsOnUp() const;
+
 			std::string GetName() const;
 
 			// Check if this is an On key up event
@@ -62,54 +46,58 @@ namespace GTS
 
 			// Checks if this key is the same as another in terms
 			// of mutaally exclusive triggers
-			bool SameGroup(const InputEventData& other) const;
+			bool SameGroup(const ManagedInputEvent& other) const;
 
 			unordered_set<std::uint32_t> GetKeys();
 
-			BlockCondition ShouldBlock();
+			BlockInputTypes ShouldBlock();
 		private:
-			std::string name = "";
+
+			double startTime = 0.0;
+			bool primed = false; // Used for release events. Once primed, when keys are not pressed we fire
+
+			std::string name;
 			unordered_set<std::uint32_t> keys = {};
 			float minDuration = 0.0f;
-			double startTime = 0.0;
+
 			// If true this event won't fire unles ONLY the keys are pressed for the entire duration
 			bool exclusive = false;
-			TriggerMode trigger = TriggerMode::Once;
+			TriggerType trigger = TriggerType::Once;
 			InputEventState state = InputEventState::Idle;
-			bool primed = false; // Used for release events. Once primed, when keys are not pressed we fire
-			BlockCondition blockinput = BlockCondition::Default;
+			BlockInputTypes blockinput = BlockInputTypes::Automatic;
 	};
 
-	//enum InputEventConditions {
-	//	kValid = 1,
-	//	kInvalid = 2
-	//};
-
 	struct RegisteredInputEvent {
-		std::function<void(const InputEventData&)> callback = nullptr;
+		std::function<void(const ManagedInputEvent&)> callback = nullptr;
 		std::function<bool(void)> condition = nullptr;
 
-		RegisteredInputEvent(std::function<void(const InputEventData&)> callback, std::function<bool(void)> condition) : callback(callback) , condition(condition){
+		RegisteredInputEvent(std::function<void(const ManagedInputEvent&)> callback, std::function<bool(void)> condition) : callback(callback) , condition(condition){
 
 		}
 	};
 
 	using EventResult = RE::BSEventNotifyControl;
 
-	class InputManager
-	{
+	class InputManager {
 		public:
 			[[nodiscard]] static InputManager& GetSingleton() noexcept;
 
 			void ProcessEvents(InputEvent** a_event);
-			bool Ready = false;
+			std::atomic_bool Ready = false;
 
 			std::string DebugName();
-			void DataReady();
 
-			static void RegisterInputEvent(std::string_view name, std::function<void(const InputEventData&)> callback, std::function<bool(void)> condition = nullptr);
+			void Init();
 
+			static void RegisterInputEvent(std::string_view namesv, std::function<void(const ManagedInputEvent&)> callback, std::function<bool(void)> condition = nullptr);
+
+			std::vector<ManagedInputEvent> LoadInputEvents();
+
+			std::mutex LoadLock;
+
+		private:
 			std::unordered_map<std::string, RegisteredInputEvent> registedInputEvents;
-			std::vector<InputEventData> keyTriggers;
+			std::vector<ManagedInputEvent> keyTriggers;
+			std::vector<GTSInputEvent> KeybindsLocalCopy; 
 	};
 }

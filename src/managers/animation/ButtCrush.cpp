@@ -299,7 +299,7 @@ namespace {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	void ButtCrushStartEvent(const InputEventData& data) {
+	void ButtCrushStartEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 
 		
@@ -320,12 +320,12 @@ namespace {
 		}
 	}
 
-	void ButtCrushStartEvent_Follower(const InputEventData& data) {
+	void ButtCrushStartEvent_Follower(const ManagedInputEvent& data) {
 		Actor* player = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(player, FollowerAnimType::ButtCrush);
 	}
 
-	void QuickButtCrushStartEvent(const InputEventData& data) {
+	void QuickButtCrushStartEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (CanDoButtCrush(player, true)) {
 			AnimationManager::StartAnim("ButtCrush_StartFast", player);
@@ -334,7 +334,7 @@ namespace {
 		}
 	}
 
-	void ButtCrushGrowEvent(const InputEventData& data) {
+	void ButtCrushGrowEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 			float GrowthCount = GetGrowthLimit(player);
 			bool CanGrow = ButtCrush_IsAbleToGrow(player, GrowthCount);
@@ -345,7 +345,7 @@ namespace {
 			}
 	}
 
-	void ButtCrushAttackEvent(const InputEventData& data) {
+	void ButtCrushAttackEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		AnimationManager::StartAnim("ButtCrush_Attack", player);
 	}

@@ -107,9 +107,9 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": {
           "type": "STRING",
-          "value": "Debug"
+          "value": "RelWithDebInfo"
         },
-        "CMAKE_CXX_FLAGS_DEBUG": "/Zi /Ob0 /Od /RTC1 /EHa"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHa"
       }
     },
     {

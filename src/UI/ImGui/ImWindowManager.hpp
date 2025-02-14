@@ -22,7 +22,6 @@ namespace GTS {
         bool ShowMetrics = false;
         bool ShowStack = false;
 
-        void Init();
         [[nodiscard]] static inline ImWindowManager& GetSingleton() {
             static ImWindowManager instance;
             return instance;
@@ -31,11 +30,23 @@ namespace GTS {
         [[nodiscard]] ImWindow* GetWindowByName(const std::string& a_name);
         
         [[nodiscard]] inline bool HasWindows(){
-            return windows.size() > 0;
+            return !windows.empty();
+        }
+
+        [[nodiscard]] inline bool HasInputConsumers() {
+            return std::ranges::any_of(windows, [](const auto& window) {
+                return window->Show && window->ConsumeInput;
+            });
+        }
+
+        [[nodiscard]] inline bool HasActiveWindows() {
+            return std::ranges::any_of(windows, [](const auto& window) {
+                return window->Show;
+            });
         }
 
         void AddWindow(std::unique_ptr<ImWindow> a_window);
-        void Draw();
+        void Update();
 
         private:
         ImWindowManager() = default;

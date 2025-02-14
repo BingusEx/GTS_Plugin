@@ -270,7 +270,7 @@ namespace {
 		DrainStamina(&data.giant, "StaminaDrain_CrawlSwipeStrong", "DestructionBasics", false, 10.0f);
 	}
 
-	void LightSwipeLeftEvent(const InputEventData& data) {
+	void LightSwipeLeftEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float WasteStamina = 25.0f * GetWasteMult(player);
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {
@@ -280,7 +280,7 @@ namespace {
 				NotifyWithSound(player, "You're too tired for hand swipe");
 			}
 	}
-	void LightSwipeRightEvent(const InputEventData& data) {
+	void LightSwipeRightEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float WasteStamina = 25.0f * GetWasteMult(player);
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {
@@ -291,7 +291,7 @@ namespace {
 			}
 	}
 
-	void HeavySwipeLeftEvent(const InputEventData& data) {
+	void HeavySwipeLeftEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float WasteStamina = 70.0f * GetWasteMult(player);
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {
@@ -301,7 +301,7 @@ namespace {
 				NotifyWithSound(player, "You're too tired for hand swipe");
 			}
 	}
-	void HeavySwipeRightEvent(const InputEventData& data) {
+	void HeavySwipeRightEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float WasteStamina = 70.0f * GetWasteMult(player);
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {

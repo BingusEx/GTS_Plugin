@@ -240,7 +240,7 @@ namespace {
 
 	/////////////////////////////////////////////////////////// Triggers
 
-	void TrampleLeftEvent(const InputEventData& data) {
+	void TrampleLeftEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		float WasteStamina = 35.0f * GetWasteMult(player);
 
@@ -251,7 +251,7 @@ namespace {
 		}
 	}
 
-	void TrampleRightEvent(const InputEventData& data) {
+	void TrampleRightEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 		float WasteStamina = 35.0f * GetWasteMult(player);
 		if (GetAV(player, ActorValue::kStamina) > WasteStamina) {

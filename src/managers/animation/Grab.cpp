@@ -334,7 +334,7 @@ namespace {
 ///////////////////////////// T R I G G E R S
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void GrabOtherEvent(const InputEventData& data) { // Grab other actor
+	void GrabOtherEvent(const ManagedInputEvent& data) { // Grab other actor
 		auto player = PlayerCharacter::GetSingleton();
 		auto& Grabbing = GrabAnimationController::GetSingleton();
 
@@ -344,12 +344,12 @@ namespace {
 		}
 	}
 
-	void GrabOtherEvent_Follower(const InputEventData& data) { // Force Follower to grab player
+	void GrabOtherEvent_Follower(const ManagedInputEvent& data) { // Force Follower to grab player
 		Actor* player = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(player, FollowerAnimType::Grab);
 	}
 
-	void GrabAttackEvent(const InputEventData& data) { // Attack everyone in your hand
+	void GrabAttackEvent(const ManagedInputEvent& data) { // Attack everyone in your hand
 		Actor* player = GetPlayerOrControlled();
 			float WasteStamina = 20.0f;
 			if (Runtime::HasPerk(player, "DestructionBasics")) {
@@ -362,13 +362,13 @@ namespace {
 			}
 	}
 
-	void GrabVoreEvent(const InputEventData& data) { // Eat everyone in hand
+	void GrabVoreEvent(const ManagedInputEvent& data) { // Eat everyone in hand
 		Actor* player = GetPlayerOrControlled();
 			auto grabbedActor = Grab::GetHeldActor(player);
 			AnimationManager::StartAnim("GrabEatSomeone", player);
 	}
 
-	void GrabThrowEvent(const InputEventData& data) { // Throw everyone away
+	void GrabThrowEvent(const ManagedInputEvent& data) { // Throw everyone away
 		Actor* player = GetPlayerOrControlled();
 			float WasteStamina = 40.0f;
 			if (Runtime::HasPerk(player, "DestructionBasics")) {
@@ -381,7 +381,7 @@ namespace {
 			}
 	}
 
-	void GrabReleaseEvent(const InputEventData& data) {
+	void GrabReleaseEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 
 		auto grabbedActor = Grab::GetHeldActor(player);
@@ -397,11 +397,11 @@ namespace {
 		}
 	}
 
-	void BreastsPutEvent(const InputEventData& data) {
+	void BreastsPutEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		AnimationManager::StartAnim("Breasts_Put", player);
 	}
-	void BreastsRemoveEvent(const InputEventData& data) {
+	void BreastsRemoveEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		AnimationManager::StartAnim("Breasts_Pull", player);
 	}

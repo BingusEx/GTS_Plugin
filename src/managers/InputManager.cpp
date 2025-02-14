@@ -1,126 +1,37 @@
 #include "managers/animation/AnimationManager.hpp"
 #include "managers/damage/CollisionDamage.hpp"
-#include "managers/GtsSizeManager.hpp"
 #include "managers/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
 #include "data/runtime.hpp"
 #include "data/plugin.hpp"
-#include "scale/scale.hpp"
+
 #include "data/time.hpp"
-#include "utils/av.hpp"
-#include "timer.hpp"
+
+#include "Config/Keybinds.hpp"
+
 
 using namespace SKSE;
 using namespace RE;
 using namespace GTS;
 
-namespace {
-
-	std::vector<InputEventData> LoadInputEvents() {
-		const auto data = toml::parse(R"(Data\SKSE\Plugins\GtsInput.toml)");
-		// Toml Example
-		// ```toml
-		// [[InputEvent]]
-		// name = “Stomp”
-		// keys = [“E”, “LeftShift”]
-		// duration = 0.0
-		// blockinput = true
-		// ```
-		const auto aov = toml::find_or<std::vector<toml::value> >(data, "InputEvent", {});
-		std::vector<InputEventData> results;
-		for (const auto& table: aov) {
-			std::string name = toml::find_or<std::string>(table, "name", "");
-			const auto keys = toml::find_or<vector<std::string> >(table, "keys", {});
-			if (name != "" && !keys.empty()) {
-				InputEventData newData(table);
-				if (newData.HasKeys()) {
-					results.push_back(newData);
-				} 
-			// 	else {
-			// 		log::error("No valid keys found for event {} at line {}", name, table.location().line());
-			// 		PrintMessageBox("GtsInput.toml error: No valid keys found for event {} at line {}. GTS Input won't work because of errors.", name, table.location().line());
-			// 	}
-			// } 
-			// else if (keys.empty()) {
-			// 	log::warn("Missing keys for {} at line {}", name, table.location().line());
-			// 	PrintMessageBox("GtsInput.toml error: Missing keys for {} at line {}.  GTS Input won't work because of errors.", name, table.location().line());
-			// } 
-			// else {
-			// 	log::warn("Missing name for [[InputEvent]] at line {}", table.location().line());
-			// 	PrintMessageBox("GtsInput.toml error: Missing name for [[InputEvent]] at line {}. GTS Input won't work because of errors.", table.location().line());
-			}
-		}
-
-		// Sort longest duration first
-		std::sort(results.begin(), results.end(),
-		          [] (InputEventData const& a, InputEventData const& b) {
-			return a.MinDuration() > b.MinDuration();
-		});
-		return results;
-	}
-}
-
 namespace GTS {
 
 	//-----------------
-	// InputEventData
+	// ManagedInputEvent
 	//-----------------
 
-	InputEventData::InputEventData(const toml::value& data) {
-		this->name = toml::find_or<std::string>(data, "name", "");
-		float duration = toml::find_or<float>(data, "duration", 0.0f);
-		this->exclusive = toml::find_or<bool>(data, "exclusive", false);
-		std::string blockInput = toml::find_or<std::string>(data, "blockinput", "default");
-		std::string trigger = toml::find_or<std::string>(data, "trigger", "once");
+	ManagedInputEvent::ManagedInputEvent(const GTSInputEvent& a_event) {
 
-		std::string lower_trigger = str_tolower(trigger);
-		std::string lower_blockInput = str_tolower(blockInput);
-
-		//Trigger Parse
-		if (lower_trigger == "once") {
-			this->trigger = TriggerMode::Once;
-		} 
-		else if (lower_trigger == "release") {
-			this->trigger = TriggerMode::Release;
-		} 
-		else if (
-			lower_trigger ==  "continuous"
-			|| lower_trigger ==  "cont"
-			|| lower_trigger ==  "continue") {
-			this->trigger = TriggerMode::Continuous;
-		} 
-		else {
-			log::warn("Unknown trigger value: {}", lower_trigger);
-			this->trigger = TriggerMode::Once;
-		}
-
-		//blockInput Parse
-		if (lower_blockInput == "default") {
-			this->blockinput = BlockCondition::Default;
-		}
-		else if (lower_blockInput == "force") {
-			this->blockinput = BlockCondition::Force;
-		}
-		else if (lower_blockInput == "never") {
-			this->blockinput = BlockCondition::Never;
-		}
-		else {
-			log::warn("Unknown trigger value: {}", lower_blockInput);
-			this->blockinput = BlockCondition::Default;
-		}
-
-
-
+		this->name = a_event.Event;
+		float duration = a_event.Duration;
+		this->exclusive = a_event.Exclusive;
+		this->trigger = StringToEnum<TriggerType>(a_event.Trigger);
+		this->blockinput = StringToEnum<BlockInputTypes>(a_event.BlockInput);
 		this->minDuration = duration;
 		this->startTime = 0.0;
 		this->keys = {};
-		const auto keys = toml::find_or<vector<std::string> >(data, "keys", {});
+
+		const auto& keys = a_event.Keys;
+
 		for (const auto& key: keys) {
 			std::string upper_key = str_toupper(remove_whitespace(key));
 			if (upper_key != "LEFT" && upper_key != "DIK_LEFT") {
@@ -143,32 +54,32 @@ namespace GTS {
 		}
 	}
 
-	float InputEventData::Duration() const {
+	float ManagedInputEvent::Duration() const {
 		return static_cast<float>(Time::WorldTimeElapsed() - this->startTime);
 	}
 
-	float InputEventData::MinDuration() const {
+	float ManagedInputEvent::MinDuration() const {
 		return this->minDuration;
 	}
 
-	void InputEventData::Reset() {
+	void ManagedInputEvent::Reset() {
 		this->startTime = Time::WorldTimeElapsed();
 		this->state = InputEventState::Idle;
 		this->primed = false;
 	}
 
-	bool InputEventData::IsOnUp() const {
-		return this->trigger == TriggerMode::Release;
+	bool ManagedInputEvent::IsOnUp() const {
+		return this->trigger == TriggerType::Release;
 	}
 
-	bool InputEventData::SameGroup(const InputEventData& other) const {
+	bool ManagedInputEvent::SameGroup(const ManagedInputEvent& other) const {
 		if (this->IsOnUp() && other.IsOnUp()) {
 			return this->keys == other.keys;
 		}
 		return false;
 	}
 
-	bool InputEventData::AllKeysPressed(const std::unordered_set<std::uint32_t>& keys) {
+	bool ManagedInputEvent::AllKeysPressed(const std::unordered_set<std::uint32_t>& keys) {
 		if (this->keys.empty()) {
 			return false;
 		}
@@ -181,7 +92,7 @@ namespace GTS {
 		return true;
 	}
 
-	bool InputEventData::OnlyKeysPressed(const std::unordered_set<std::uint32_t>& keys_in) {
+	bool ManagedInputEvent::OnlyKeysPressed(const std::unordered_set<std::uint32_t>& keys_in) {
 		std::unordered_set<std::uint32_t> keys(keys_in); // Copy
 		for (const auto& key : this->keys) {
 			keys.erase(key);
@@ -189,7 +100,7 @@ namespace GTS {
 		return keys.size() == 0;
 	}
 
-	bool InputEventData::ShouldFire(const std::unordered_set<std::uint32_t>& a_gameInputKeys) {
+	bool ManagedInputEvent::ShouldFire(const std::unordered_set<std::uint32_t>& a_gameInputKeys) {
 		bool shouldFire = false;
 		// Check based on keys and duration
 		if (this->AllKeysPressed(a_gameInputKeys) && (!this->exclusive || this->OnlyKeysPressed(a_gameInputKeys))) {
@@ -217,13 +128,13 @@ namespace GTS {
 					this->state = InputEventState::Held;
 					switch (this->trigger) {
 						// If once or continius start firing now
-						case TriggerMode::Once: {
+						case TriggerType::Once: {
 							return true;
 						}
-						case TriggerMode::Continuous: {
+						case TriggerType::Continuous: {
 							return true;
 						}
-						case TriggerMode::Release: {
+						case TriggerType::Release: {
 							return false;
 						}
 						default: {
@@ -235,14 +146,14 @@ namespace GTS {
 				case InputEventState::Held: {
 					switch (this->trigger) {
 						// If once stop firing
-						case TriggerMode::Once: {
+						case TriggerType::Once: {
 							return false;
 						}
-						case TriggerMode::Continuous: {
+						case TriggerType::Continuous: {
 							// if continous keep firing
 							return true;
 						}
-						case TriggerMode::Release: {
+						case TriggerType::Release: {
 							// For release still do nothing
 							return false;
 						}
@@ -262,7 +173,7 @@ namespace GTS {
 			if (this->primed) {
 				this->primed = false;
 				switch (this->trigger) {
-					case TriggerMode::Release: {
+					case TriggerType::Release: {
 						// For release fire now that we have stopped pressing
 						return true;
 					}
@@ -277,19 +188,19 @@ namespace GTS {
 		}
 	}
 
-	bool InputEventData::HasKeys() const {
+	bool ManagedInputEvent::HasKeys() const {
 		return !this->keys.empty();
 	}
 
-	std::string InputEventData::GetName() const {
+	std::string ManagedInputEvent::GetName() const {
 		return this->name;
 	}
 
-	unordered_set<std::uint32_t> InputEventData::GetKeys() {
+	unordered_set<std::uint32_t> ManagedInputEvent::GetKeys() {
 		return keys;
 	}
 
-	BlockCondition InputEventData::ShouldBlock() {
+	BlockInputTypes ManagedInputEvent::ShouldBlock() {
 		return this->blockinput;
 	}
 
@@ -297,50 +208,71 @@ namespace GTS {
 	// InputManager
 	//-----------------
 
+	std::vector<ManagedInputEvent> InputManager::LoadInputEvents() {
+
+		KeybindsLocalCopy = Keybinds::GetSingleton().InputEvents;
+
+		std::vector<ManagedInputEvent> results;
+
+		for (const auto& GTSInputEvent : KeybindsLocalCopy) {
+
+			ManagedInputEvent newData(GTSInputEvent);
+
+			if (newData.HasKeys()) {
+				results.push_back(newData);
+			}
+
+		}
+
+		// Sort longest duration first
+		ranges::sort(results,[](ManagedInputEvent const& a, ManagedInputEvent const& b) {
+			return a.MinDuration() > b.MinDuration();
+		});
+
+		return results;
+	}
+
 	InputManager& InputManager::GetSingleton() noexcept {
 		static InputManager instance;
 		return instance;
 	}
 
-	void InputManager::RegisterInputEvent(std::string_view namesv, std::function<void(const InputEventData&)> callback, std::function<bool(void)> condition) {
+	void InputManager::RegisterInputEvent(std::string_view namesv, std::function<void(const ManagedInputEvent&)> callback, std::function<bool(void)> condition) {
 		auto& me = InputManager::GetSingleton();
 		std::string name(namesv);
 		me.registedInputEvents.try_emplace(name, callback, condition);
 		log::debug("Registered input event: {}", namesv);
 	}
 
-	void InputManager::DataReady() {
+	void InputManager::Init() {
+
+		Ready.store(false);
+
 		try {
 			InputManager::GetSingleton().keyTriggers = LoadInputEvents();
 		} 
-		catch (toml::exception e) {
-			log::error("Error in parsing GtsInput.toml: {}", e.what());
-			PrintMessageBox("Error in parsing GtsInput.toml: {}. GTS Input won't work, double-check GtsInput.toml for errors", e.what());
+		catch (exception e) {
+			log::error("Error Creating ManagedInputEvents: {}", e.what());
 			return;
 		} 
-		catch (std::runtime_error e) {
-			log::error("Error in opening GtsInput.toml: {}", e.what());
-			PrintMessageBox("Error in opening GtsInput.toml: {}. GTS Input won't work, double-check GtsInput.toml for errors", e.what());
-			return;
-		} 
-		catch (std::exception e) {
-			log::error("Error in GtsInput.toml: {}", e.what());
-			PrintMessageBox("Error in GtsInput.toml: {}. GTS Input won't work, double-check GtsInput.toml for errors", e.what());
-			return;
-		}
 
 		log::info("Loaded {} key bindings", InputManager::GetSingleton().keyTriggers.size());
 		
-		Ready = true;
+		Ready.store(true);
 	}
 
 	void InputManager::ProcessEvents(InputEvent** a_event) {
+
 		std::unordered_set<uint32_t> KeysToBlock = {};
 		std::unordered_set<std::uint32_t> gameInputKeys = {};
 		RE::InputEvent* event = *a_event;
 		RE::InputEvent* prev = nullptr;
 
-		if (Plugin::AnyMenuOpen() || !a_event || !Ready) {
+		if (Plugin::AnyMenuOpen() || !a_event) {
+			return;
+		}
+
+		if (!Ready.load()) {
 			return;
 		}
 
@@ -370,7 +302,7 @@ namespace GTS {
 
 		for (auto& trigger : this->keyTriggers) {
 			// Store triggers in here that have been fired this frame
-			std::vector<InputEventData*> firedTriggers; 
+			std::vector<ManagedInputEvent*> firedTriggers; 
 			auto blockInput = trigger.ShouldBlock();
 
 			//Are all keys pressed for this trigger and are we allowed to selectively block?
@@ -381,7 +313,7 @@ namespace GTS {
 				try {
 					auto& eventData = this->registedInputEvents.at(trigger.GetName());
 
-					if (blockInput == BlockCondition::Force) {
+					if (blockInput == BlockInputTypes::Always) {
 						//If force blocking is set block game input regardless of conditions
 						std::unordered_set<uint32_t> KeysToAdd = std::unordered_set<uint32_t>(trigger.GetKeys());
 						KeysToBlock.insert(KeysToAdd.begin(), KeysToAdd.end());
@@ -402,7 +334,7 @@ namespace GTS {
 							//log::debug("condition is true for {}", trigger.GetName());
 							//Need to make a copy here otherwise insert throws an assertion
 
-							if (blockInput != BlockCondition::Never) {
+							if (blockInput != BlockInputTypes::Never) {
 								std::unordered_set<uint32_t> KeysToAdd = std::unordered_set<uint32_t>(trigger.GetKeys());
 								//log::debug("ShouldBlock is true for {}", trigger.GetName());
 								KeysToBlock.insert(KeysToAdd.begin(), KeysToAdd.end());
@@ -416,7 +348,7 @@ namespace GTS {
 					}
 				}
 
-				catch (std::out_of_range e) {
+				catch (std::out_of_range) {
 					log::warn("Event {} was triggered but there is no event of that name", trigger.GetName());
 					continue;
 				}
@@ -441,9 +373,8 @@ namespace GTS {
 						auto& eventData = this->registedInputEvents.at(trigger.GetName());
 						eventData.callback(trigger);
 					}
-					catch (std::out_of_range e) {
+					catch (std::out_of_range) {
 						log::warn("Event {} was triggered but there is no event of that name", trigger.GetName());
-						continue;
 					}
 				}
 			}
@@ -478,6 +409,7 @@ namespace GTS {
 			event = nextEvent;
 		}
 	}
+
 	std::string InputManager::DebugName() {
 		return "InputManager";
 	}
