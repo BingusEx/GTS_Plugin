@@ -5,9 +5,9 @@
 #include "UI/ImGui/ImStyleManager.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
 
-#include "config/Config.hpp"
+#include "Config/Config.hpp"
 
-namespace GTSUI {
+namespace GTS {
 
     class CategoryInterface : public ImCategorySplit {
         public:

@@ -8,7 +8,7 @@
 #include "config/Config.hpp"
 #include "config/Keybinds.hpp"
 
-namespace GTSUI {
+namespace GTS {
 
     class WindowSettings : public ImWindow {
 
@@ -44,7 +44,7 @@ namespace GTSUI {
         ImStyleManager& StyleMgr = ImStyleManager::GetSingleton();
 
         Config& Settings = Config::GetSingleton();
-        Input::Keybinds& KeyMgr = Input::Keybinds::GetSingleton();
+        Keybinds& KeyMgr = Keybinds::GetSingleton();
         const SettingsHidden& sHidden = Config::GetHidden();
         const WindowConfSettings& sUI= Config::GetUI().SettingsWindow;
         bool Disabled = false;

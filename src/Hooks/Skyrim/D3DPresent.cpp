@@ -3,7 +3,6 @@
 
 using namespace RE;
 using namespace GTS;
-using namespace GTSUI;
 
 namespace Hooks {
 

@@ -4,7 +4,7 @@
 #include "UI/ImGUI/ImCategory.hpp"
 #include "config/Config.hpp"
 
-namespace GTSUI{
+namespace GTS {
 
     class CategoryInfo : public ImCategory {
         public:

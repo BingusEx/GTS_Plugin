@@ -1,12 +1,14 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategorySplit.hpp"
-#include "config/Config.hpp"
+#include "Config/Config.hpp"
 
-namespace GTSUI{
+namespace GTS {
 
     class CategoryGeneral: public ImCategorySplit {
+
         public:
+
         CategoryGeneral(){
             title = "General";
         }

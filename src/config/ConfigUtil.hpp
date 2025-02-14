@@ -75,7 +75,6 @@ namespace GTS {
     }
 
     [[nodiscard]] static inline bool CheckFile(const std::filesystem::path& a_file) {
-        MessageBoxA(nullptr, a_file.string().c_str(), "aaa", MB_OK);
         try {
             // Check if the file exists
             if (std::filesystem::exists(a_file)) {
@@ -90,6 +89,8 @@ namespace GTS {
                 logger::warn("Configuration file did not exist but was successfully created");
                 return true;
             }
+
+        	return false;
 
         }
         catch (const std::filesystem::filesystem_error& e) {

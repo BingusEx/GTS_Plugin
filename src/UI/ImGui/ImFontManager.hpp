@@ -1,19 +1,16 @@
 #pragma once
 
 #include "UI/DearImGui/imgui.h"
-#include "UI/DearImGui/imgui_impl_win32.h"
-#include "UI/DearImGui/imgui_impl_dx11.h"
+#include "Config/Config.hpp"
 
+namespace GTS {
 
-#include "config/Config.hpp"
-
-namespace GTSUI {
     class ImFontManager {
         private:
 
         //Consts
         const std::string _ext = ".ttf";
-        const std::string _basePath = "Data\\SKSE\\Plugins\\GTSPlugin\\Fonts\\";
+        const std::string _basePath = R"(Data\SKSE\Plugins\GTSPlugin\Fonts\)";
 
         const std::string _SkyrimGUI_Light = _basePath +"Futura Condensed Light" + _ext;
         const std::string _SkyrimGUI_Medium = _basePath + "Futura Condensed Medium" + _ext;

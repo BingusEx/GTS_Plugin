@@ -6,13 +6,13 @@
 #include "config/Keybinds.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
 
-namespace GTSUI {
+namespace GTS {
 
     class CategoryKeybinds : public ImCategory {
         public:
         CategoryKeybinds(){
             title = "Keybinds";
-            for(auto& e : Input::DefaultEvents){
+            for(auto& e : DefaultEvents){
                 HeaderStateMap.emplace(e.Event,false);
             }
         }
@@ -21,7 +21,7 @@ namespace GTSUI {
 
         private:
         const Config& Settings = Config::GetSingleton();
-        Input::Keybinds& KeyMgr = Input::Keybinds::GetSingleton();
+        Keybinds& KeyMgr = Keybinds::GetSingleton();
 
         //UI
 
@@ -30,13 +30,13 @@ namespace GTSUI {
 
 
         int Div = 2;
-        std::string SearchRes = "";
+        std::string SearchRes;
         bool HideFiltered = false;
         volatile uint8_t ColExpState = 0;
 
         std::unordered_map<std::string, bool> HeaderStateMap = {};
         //GTSInputEvent Rebinding
-        std::string VisualKeyString = "";
+        std::string VisualKeyString;
         std::vector<std::string> TempKeys = {};
         int RebindIndex = 0;
         int CurEventIndex = 1000;

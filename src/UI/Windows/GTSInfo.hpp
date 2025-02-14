@@ -4,9 +4,7 @@
 #include "magic_enum/magic_enum.hpp"
 #include "utils/UnitConverter.hpp"
 
-using namespace GTS;
-
-namespace GTSUI {
+namespace GTS {
 
     const enum class GTSInfoFeatures : uint32_t {
         kUnitScale = (1 << 0),
@@ -89,6 +87,6 @@ namespace GTSUI {
 }
 
 template <>
-struct magic_enum::customize::enum_range<GtsUI::GTSInfoFeatures> {
+struct magic_enum::customize::enum_range<GTS::GTSInfoFeatures> {
     static constexpr bool is_flags = true;
 };

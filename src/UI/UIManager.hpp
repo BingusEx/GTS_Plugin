@@ -1,5 +1,6 @@
 #pragma once
-namespace GTSUI {
+
+namespace GTS {
 
 	class UIManager {
 
@@ -23,7 +24,4 @@ namespace GTSUI {
 		void Render();
 
 	};
-
-
-
 }

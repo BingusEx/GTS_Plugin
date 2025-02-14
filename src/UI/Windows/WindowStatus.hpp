@@ -1,12 +1,9 @@
 #pragma once
 
 #include "UI/ImGUI/ImWindow.hpp"
-#include "UI/ImGUI/ImFontManager.hpp"
-#include "UI/ImGUI/ImStyleManager.hpp"
+#include "Config/Config.hpp"
 
-#include "config/Config.hpp"
-
-namespace GTSUI {
+namespace GTS {
 
     class WindowStatus : public ImWindow {
 

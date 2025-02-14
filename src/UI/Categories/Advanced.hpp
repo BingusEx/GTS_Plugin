@@ -3,7 +3,7 @@
 #include "UI/ImGUI/ImCategorySplit.hpp"
 #include "config/Config.hpp"
 
-namespace GTSUI{
+namespace GTS {
 
     class CategoryAdvanced: public ImCategorySplit {
         public:

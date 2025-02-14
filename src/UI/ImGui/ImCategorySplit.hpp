@@ -3,7 +3,7 @@
 #include "UI/ImGUI/ImCategory.hpp"
 #include "UI/DearImGui/imgui.h"
 
-namespace GTSUI {
+namespace GTS {
 
     //Interface for a splitter window
     class ImCategorySplit : public ImCategory {

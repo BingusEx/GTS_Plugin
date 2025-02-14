@@ -1,10 +1,9 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategorySplit.hpp"
-
 #include "config/Config.hpp"
 
-namespace GTSUI{
+namespace GTS{
 
     class CategoryAI: public ImCategorySplit {
         public:

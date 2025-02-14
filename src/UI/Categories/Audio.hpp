@@ -1,9 +1,9 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategorySplit.hpp"
-#include "config/Config.hpp"
+#include "Config/Config.hpp"
 
-namespace GTSUI{
+namespace GTS {
 
     class CategoryAudio: public ImCategorySplit {
         public:

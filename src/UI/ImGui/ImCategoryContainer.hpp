@@ -2,7 +2,7 @@
 
 #include "ImCategory.hpp"
 
-namespace GTSUI {
+namespace GTS {
 
  class ImCategoryManager {
 

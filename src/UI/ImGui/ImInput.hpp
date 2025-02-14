@@ -1,10 +1,8 @@
 #pragma once
 
 #include "UI/DearImGui/imgui.h"
-#include "UI/DearImGui/imgui_impl_dx11.h"
-#include "UI/DearImGui/imgui_impl_win32.h"
 
-namespace GTSUI {
+namespace GTS {
 
     #define IM_VK_KEYPAD_ENTER (VK_RETURN + 256)
 
@@ -250,7 +248,6 @@ namespace GTSUI {
 
 	// This function converts an ImGuiKey to its corresponding Win32 virtual key code.
 	// If no appropriate mapping exists, it returns 0.
-
 	WPARAM ImGuiKeyToWin32VirtualKey(ImGuiKey key) {
 		switch (key) {
 			// Navigation keys

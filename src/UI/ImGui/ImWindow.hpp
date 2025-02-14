@@ -1,12 +1,8 @@
 #pragma once
 
 #include "UI/DearImGui/imgui.h"
-#include "UI/DearImGui/imgui_impl_win32.h"
-#include "UI/DearImGui/imgui_impl_dx11.h"
 
-#include "config/Config.hpp"
-
-namespace GTSUI {
+namespace GTS {
 
     class ImWindow {
 
