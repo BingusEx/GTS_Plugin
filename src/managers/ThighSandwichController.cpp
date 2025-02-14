@@ -35,7 +35,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	SandwichingData::SandwichingData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {
 	}
 

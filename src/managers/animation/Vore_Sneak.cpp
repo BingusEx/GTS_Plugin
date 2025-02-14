@@ -23,7 +23,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void GTS_Sneak_Vore_Start(AnimationEventData& data) {
@@ -116,7 +116,7 @@ namespace {
     }
 }
 
-namespace Gts
+namespace GTS
 {
 	void Animation_VoreSneak::RegisterEvents() { 
 		AnimationManager::RegisterEvent("GTS_Sneak_Vore_Start", "SneakVore", GTS_Sneak_Vore_Start);

@@ -56,7 +56,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const std::string_view RNode = "NPC R Foot [Rft ]";
@@ -405,7 +405,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationThighSandwich::RegisterEvents() {
 		InputManager::RegisterInputEvent("ThighSandwichEnter", ThighSandwichEnterEvent, ThighSandwitchCondition_Start);

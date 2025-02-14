@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class EmotionManager : public EventListener {
 		public:
 			[[nodiscard]] static EmotionManager& GetSingleton() noexcept;

@@ -6,7 +6,7 @@
 #include "data/runtime.hpp"
 #include "managers/GtsSizeManager.hpp"
 
-namespace Gts {
+namespace GTS {
 	std::string Gigantism::GetName() {
 		return "Gigantism";
 	}

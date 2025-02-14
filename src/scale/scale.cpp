@@ -1,17 +1,14 @@
 #include "scale/scale.hpp"
 #include "managers/GtsManager.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "utils/actorUtils.hpp"
+
 #include "data/persistent.hpp"
 #include "data/transient.hpp"
 #include "data/runtime.hpp"
-#include "scale/height.hpp"
-#include "timer.hpp"
 
-using namespace GTS;
+#include "Profiler.hpp"
 
 namespace {
-	const float EPS = std::numeric_limits<float>::epsilon();
+	constexpr float EPS = std::numeric_limits<float>::epsilon();
 }
 
 namespace GTS {
@@ -33,6 +30,7 @@ namespace GTS {
 			}
 		}
 	}
+
 	void set_target_scale(Actor* actor, float scale) {
 		if (actor) {
 			Actor& a = *actor;
@@ -88,6 +86,7 @@ namespace GTS {
 			actor_data->max_scale = scale;
 		}
 	}
+
 	void set_max_scale(Actor* actor, float scale) {
 		if (actor) {
 			set_max_scale(*actor, scale);
@@ -101,6 +100,7 @@ namespace GTS {
 		}
 		return 1.0f;
 	}
+
 	float get_max_scale(Actor* actor) {
 		if (actor) {
 			return get_max_scale(*actor);
@@ -114,6 +114,7 @@ namespace GTS {
 			actor_data->max_scale += amt;
 		}
 	}
+
 	void mod_max_scale(Actor* actor, float amt) {
 		if (actor) {
 			mod_max_scale(*actor, amt);
@@ -127,6 +128,7 @@ namespace GTS {
 		}
 		return 1.0f;
 	}
+
 	float get_visual_scale(Actor* actor) {
 		if (actor) {
 			return get_visual_scale(*actor);
@@ -183,6 +185,7 @@ namespace GTS {
 		}
 		return 1.0f;
 	}
+
 	float get_giantess_scale(Actor* actor) {
 		if (actor) {
 			return get_giantess_scale(*actor);

@@ -20,7 +20,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace { 
 	void TriggerHandCollision_Right(Actor* actor, float power, float crush, float pushpower) {
@@ -129,7 +129,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
     
     void Animation_SneakSwipes::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_Sneak_Swipe_On_R", "Sneak", GTS_Sneak_Swipe_On_R);

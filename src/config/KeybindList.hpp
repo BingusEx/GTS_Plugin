@@ -35,7 +35,7 @@ inline bool CheckDuplicateEvent(const std::vector<GTSInputEvent>& items) {
     return false;
 }
 
-namespace Input {
+namespace GTS {
     //----------------------------------------
     // EVENT LIST ----
     //----------------------------------------

@@ -10,7 +10,7 @@
 
 #include "timer.hpp"
 
-namespace Gts {
+namespace GTS {
 	Absorb::Absorb(ActiveEffect* effect) : Magic(effect) {}
 
 	std::string Absorb::GetName() {

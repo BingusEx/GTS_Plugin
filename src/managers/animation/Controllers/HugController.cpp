@@ -97,7 +97,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	HugAnimationController& HugAnimationController::GetSingleton() noexcept {
 		static HugAnimationController instance;
 		return instance;

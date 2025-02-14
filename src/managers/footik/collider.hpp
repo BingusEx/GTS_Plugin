@@ -1,18 +1,11 @@
 #pragma once
 
-#include "events.hpp"
+#include "Events.hpp"
 
-#include <atomic>
-#include "colliders/RE.hpp"
+#include "Colliders/RE/RE.hpp"
 #include "managers/footik/collider_actor_data.hpp"
-#include "events.hpp"
 
-
-using namespace std;
-using namespace SKSE;
-
-
-namespace Gts {
+namespace GTS {
 	/*
 	class ColliderManager : public EventListener {
 		public:

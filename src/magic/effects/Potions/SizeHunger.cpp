@@ -8,7 +8,7 @@
 
 // A potion that amplifies size gain
 
-namespace Gts {
+namespace GTS {
 	std::string SizeHunger::GetName() {
 		return "SizeHunger";
 	}

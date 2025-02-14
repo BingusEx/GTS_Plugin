@@ -1,11 +1,10 @@
-#include "colliders/ragdoll.hpp"
-#include "colliders/common.hpp"
+#include "Colliders/Ragdoll.hpp"
+#include "Colliders/Common.hpp"
 
-using namespace std;
-using namespace SKSE;
 using namespace RE;
 
 namespace GTS {
+
 	RagdollData::RagdollData(hkaRagdollInstance* ragdoll) {
 		if (!ragdoll) {
 			return;

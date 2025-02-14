@@ -6,9 +6,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	float GetCeilingHeight(Actor* giant);
 	float GetMaxRoomScale(Actor* giant);
 

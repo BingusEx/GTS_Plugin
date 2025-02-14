@@ -7,7 +7,7 @@
 
 // A potion that gives size experience
 
-namespace Gts {
+namespace GTS {
 	std::string ExperiencePotion::GetName() {
 		return "ExperiencePotion";
 	}

@@ -8,9 +8,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
     bool TinyCalamity_WrathfulCalamity(Actor* giant);
     
     void TinyCalamity_ShrinkActor(Actor* giant, Actor* tiny, float shrink);

@@ -1,19 +1,16 @@
 #pragma once
-/*
- *  Hooks for jumping
- */
 
 #include "Hooks/Hooks.hpp"
 
+/*
+	Hooks for jumping
+*/
 
-using namespace SKSE;
+namespace Hooks {
 
-namespace Hooks
-{
 	using namespace SKSE;
 	using namespace RE;
-	class Hook_Jumping
-	{
+	class Hook_Jumping {
 		public:
 			static void Hook(Trampoline& trampoline);
 		//private:

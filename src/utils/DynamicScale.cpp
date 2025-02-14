@@ -5,12 +5,12 @@
 #include "scale/scale.hpp"
 #include "rays/raycast.hpp"
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;
 
-namespace Gts {
+namespace GTS {
 	float GetCeilingHeight(Actor* giant) {
 		if (!giant) {
 			return std::numeric_limits<float>::infinity();

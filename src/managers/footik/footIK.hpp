@@ -1,13 +1,10 @@
 #pragma once
+
 // Module that handles FootIK
-#include "managers/footik/footIKSolverData.hpp"
-#include "colliders/RE.hpp"
+#include "Managers/footik/footIKSolverData.hpp"
+#include "Colliders/RE/RE.hpp"
 
-using namespace std;
-using namespace SKSE;
-
-
-namespace Gts {
+namespace GTS {
 	/*
 	class FootIkData {
 		public:

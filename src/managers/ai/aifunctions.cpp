@@ -1,12 +1,6 @@
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "managers/damage/CollisionDamage.hpp"
-#include "managers/audio/footstep.hpp"
 #include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/explosion.hpp"
-#include "utils/papyrusUtils.hpp"
 #include "utils/actorUtils.hpp"
 #include "utils/actorBools.hpp"
 #include "utils/findActor.hpp"
@@ -15,13 +9,15 @@
 #include "utils/random.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "timer.hpp"
-#include "node.hpp"
+
+#include "Profiler.hpp"
+
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
+
 	void DisableEssentialFlag(Actor* actor) {
 		if (actor->IsEssential()) {
 			actor->GetActorRuntimeData().boolFlags.reset(RE::Actor::BOOL_FLAGS::kEssential); // Else they respawn.
@@ -65,7 +61,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	float GetScareThreshold(Actor* giant) {
 		float threshold = 2.5f;

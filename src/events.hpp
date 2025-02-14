@@ -1,11 +1,5 @@
 #pragma once
 
-#include "profiler.hpp"
-
-using namespace std;
-
-using namespace SKSE;
-
 namespace GTS {
 	
 	struct BoneTarget {

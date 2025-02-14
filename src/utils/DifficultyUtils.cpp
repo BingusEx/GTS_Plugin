@@ -6,7 +6,7 @@
 #include <string>
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     const std::vector<const char*> Difficulty_ByPC{
@@ -28,7 +28,7 @@ namespace {
     };
 }
 
-namespace Gts {
+namespace GTS {
     float GetSettingValue(const char* setting) {
 		float modifier = 1.0f;
 		auto GameSetting = GameSettingCollection::GetSingleton();

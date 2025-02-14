@@ -1,8 +1,7 @@
-#include "hooks/magicTarget.hpp"
-#include "data/persistent.hpp"
+#include "Hooks/Skyrim/MagicTarget.hpp"
+#include "Data/Persistent.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace Hooks {

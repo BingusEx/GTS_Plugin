@@ -1,10 +1,10 @@
 #include "utils/MovementForce.hpp"
-#include "utils/actorUtils.hpp"
 #include "data/transient.hpp"
 #include "scale/scale.hpp"
 #include "node.hpp"
+#include "Profiler.hpp"
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;
@@ -12,7 +12,9 @@ using namespace std;
 namespace {
 	NodeMovementType Convert_To_MovementType(DamageSource Source) {
 		NodeMovementType Type = NodeMovementType::Movement_None;
+
 		switch (Source) {
+
 			case DamageSource::HandDropRight:
 			case DamageSource::HandSwipeRight:
 			case DamageSource::HandSlamRight:
@@ -72,7 +74,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	float Get_Bone_Movement_Speed(Actor* giant, NodeMovementType Type) {
 		auto profiler = Profilers::Profile("NodeMovement");
 		NiAVObject* Node = nullptr;

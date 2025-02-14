@@ -13,7 +13,7 @@ using namespace SKSE;
 
 // Module for accurate size-related damage
 
-namespace Gts {
+namespace GTS {
 	class LaunchActor : public EventListener  {
 		public:
 			[[nodiscard]] static LaunchActor& GetSingleton() noexcept;

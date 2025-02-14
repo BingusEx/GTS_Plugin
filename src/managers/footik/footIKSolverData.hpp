@@ -1,12 +1,9 @@
 #pragma once
+
 // Module that handles footsteps
-#include "colliders/RE.hpp"
+#include "Colliders/RE/RE.hpp"
 
-using namespace std;
-using namespace SKSE;
-
-
-namespace Gts {
+namespace GTS {
 	/*
 	class FootIkSolverData {
 		public:

@@ -6,7 +6,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts
+namespace GTS
 {
 	// This data is passed to an animation that is in progress
 	//   It is created when StartAnim is called

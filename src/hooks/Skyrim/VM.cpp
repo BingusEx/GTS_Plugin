@@ -1,14 +1,15 @@
-#include "hooks/vm.hpp"
-#include "events.hpp"
+#include "Hooks/Skyrim/VM.hpp"
+#include "Events.hpp"
 
-using namespace SKSE;
+
 using namespace RE;
 using namespace RE::BSScript;
 using namespace RE::BSScript::Internal;
+
 using namespace GTS;
 
-namespace Hooks
-{
+namespace Hooks {
+
 	// BGSImpactManager
 	void Hook_VM::Hook() {
 		log::info("Hooking VirtualMachine");

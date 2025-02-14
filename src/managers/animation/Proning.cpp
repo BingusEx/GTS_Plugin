@@ -201,7 +201,7 @@ namespace {
 
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationProning::RegisterEvents() {
 		InputManager::RegisterInputEvent("SBO_ToggleProne", SBOProneOnEvent, AlwaysBlock);

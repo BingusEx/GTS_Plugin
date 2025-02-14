@@ -21,7 +21,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	std::string MaxSizePotion::GetName() {
 		return "MaxSizePotion";
 	}

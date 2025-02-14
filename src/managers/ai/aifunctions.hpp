@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	float GetScareThreshold(Actor* giant);
 	void Task_InitHavokTask(Actor* tiny);
 	void SendDeathEvent(Actor* giant, Actor* tiny);

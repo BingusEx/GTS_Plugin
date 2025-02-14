@@ -45,7 +45,7 @@
 #include "data/time.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 namespace {
@@ -58,7 +58,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	AnimationEventData::AnimationEventData(Actor& giant, TESObjectREFR* tiny) : giant(giant), tiny(tiny) {
 	}
 	AnimationEvent::AnimationEvent(std::function<void(AnimationEventData&)> a_callback,  std::string a_group) : callback(a_callback), group(a_group) {
@@ -234,7 +234,7 @@ namespace Gts {
 			return 1.0f;
 		}
 		if (actor) {
-			auto saved_data = Gts::Persistent::GetSingleton().GetData(actor);
+			auto saved_data = GTS::Persistent::GetSingleton().GetData(actor);
 			if (saved_data) {
 				if (saved_data->anim_speed > 0.0f) {
 					speed *= saved_data->anim_speed;

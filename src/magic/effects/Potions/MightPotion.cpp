@@ -8,7 +8,7 @@
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
 
-namespace Gts {
+namespace GTS {
 	std::string MightPotion::GetName() {
 		return "MightPotion";
 	}

@@ -31,7 +31,7 @@
 
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 namespace {
@@ -99,7 +99,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
     void Animation_GrabVore::RegisterEvents() {
         AnimationManager::RegisterEvent("GTSGrab_Eat_Start", "Grabbing", GTSGrab_Eat_Start);
 		AnimationManager::RegisterEvent("GTSGrab_Eat_OpenMouth", "Grabbing", GTSGrab_Eat_OpenMouth);

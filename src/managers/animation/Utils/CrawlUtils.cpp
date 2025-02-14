@@ -37,7 +37,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	void DoCrawlingSounds(Actor* actor, float scale, NiAVObject* node, FootEvent foot_kind) { // Call crawling sounds
 		if (actor) {

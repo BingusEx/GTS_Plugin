@@ -22,7 +22,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void GTS_Sneak_SlamStrong_Raise_Arm_R(AnimationEventData& data) {
@@ -62,7 +62,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
     
     void Animation_SneakSlam_Strong::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_Sneak_SlamStrong_Raise_Arm_R", "Sneak", GTS_Sneak_SlamStrong_Raise_Arm_R);

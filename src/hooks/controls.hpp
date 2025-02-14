@@ -13,9 +13,10 @@
 #include "timer.hpp"
 
 
-using namespace Gts;
+using namespace GTS;
 
 namespace {
+
     bool IsGtsBusy_ForControls(Actor* actor) {
 		bool GTSBusy = false;
 		actor->GetGraphVariableBool("GTS_Busy", GTSBusy);
@@ -80,8 +81,8 @@ namespace {
     }
 }
 
-namespace Hooks
-{   
+namespace Hooks{
+
 	template <class T>
 	class Hook_Controls: public T { // HUGE Credits to Vermunds (SkyrimSoulsRE source code)!
 		

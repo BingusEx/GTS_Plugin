@@ -25,7 +25,7 @@
 #include "timer.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 
 namespace {
@@ -337,7 +337,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void InputFunctions::RegisterEvents() {
 		InputManager::RegisterInputEvent("SizeReserve", SizeReserveEvent, SizeReserveCondition);

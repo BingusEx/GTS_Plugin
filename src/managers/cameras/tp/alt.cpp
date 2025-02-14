@@ -42,7 +42,7 @@ namespace GTS {
 	// fVanityModeMaxDist:Camera Changes The Offset Value We Need So we need to take this value into account;
 	void Alt::SetZOff(float Offset) {
 		// The 0.15 was found through testing different fVanityModeMaxDist values
-		Alt::ZOffset = Offset - (0.15f * Gts::MaxZoom());
+		Alt::ZOffset = Offset - (0.15f * GTS::MaxZoom());
 	}
 
 	BoneTarget Alt::GetBoneTarget() {

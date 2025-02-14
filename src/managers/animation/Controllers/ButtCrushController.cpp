@@ -137,7 +137,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	ButtCrushController& ButtCrushController::GetSingleton() noexcept {
 		static ButtCrushController instance;
 		return instance;

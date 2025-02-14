@@ -1,12 +1,11 @@
 #pragma once
 #include "Hooks/Hooks.hpp"
 
-namespace Hooks
-{
-	using namespace SKSE;
+namespace Hooks {
+
 	using namespace RE;
-	class Hook_hkbBehaviorGraph
-	{
+
+	class Hook_hkbBehaviorGraph {
 		public:
 			static void Hook();
 		private:

@@ -497,7 +497,7 @@ namespace {
 	}
 
 	bool IsJumping(StaticFunctionTag*, Actor* actor) {
-		return Gts::IsJumping(actor);
+		return GTS::IsJumping(actor);
 	}
 
 	bool IsInAir(StaticFunctionTag*, Actor* actor) {

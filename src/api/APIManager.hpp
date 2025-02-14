@@ -7,7 +7,10 @@ namespace GTS {
 		public:
 
 		// Static method to access the singleton instance
-		[[nodiscard]] static APIManager& GetSingleton() noexcept;
+		[[nodiscard]] static inline APIManager& GetSingleton() noexcept {
+			static APIManager instance;
+			return instance;
+		}
 
 		void Register();
 
@@ -32,11 +35,9 @@ namespace GTS {
 			return Smoothcam_HaveCamera;
 		}
 
-
 		private:
 		static inline SmoothCamAPI::IVSmoothCam3* SmoothCam = nullptr;
 		bool Smoothcam_HaveCamera = false;
 		bool Smoothcam_Enable = true;
-		static APIManager* instance;
 	};
 }

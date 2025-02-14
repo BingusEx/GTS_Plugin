@@ -1,6 +1,6 @@
 #pragma once
-#include "toml.hpp"
-#include "config/ConfigUtil.hpp"
+#include <toml.hpp>
+#include "Config/ConfigUtil.hpp"
 #include "magic_enum/magic_enum.hpp"
 
 /* 

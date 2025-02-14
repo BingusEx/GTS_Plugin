@@ -7,7 +7,6 @@
 namespace GTS {
 
 	using namespace RE;
-	using namespace SKSE;
 
 	struct ActorData {
 		float native_scale;

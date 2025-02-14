@@ -1,18 +1,11 @@
-#include "managers/MaxSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
+#include "Managers/MaxSizeManager.hpp"
+#include "Managers/ai/aifunctions.hpp"
+
 #include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
 #include "data/runtime.hpp"
-#include "colliders/RE.hpp"
-#include "rays/raycast.hpp"
 #include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
-#include "utils/debug.hpp"
-#include "utils/av.hpp"
 #include "profiler.hpp"
-#include "events.hpp"
-#include "spring.hpp"
-#include "timer.hpp"
+
 
 namespace {
     float get_endless_height(Actor* actor) {

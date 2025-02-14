@@ -1,30 +1,12 @@
-#include "managers/animation/AnimationManager.hpp"
 #include "managers/damage/CollisionDamage.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "managers/audio/footstep.hpp"
 #include "utils/actorUtils.hpp"
 #include "utils/SurvivalMode.hpp"
-#include "utils/findActor.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
 #include "data/runtime.hpp"
-#include "spring.hpp"
 #include "scale/scale.hpp"
-#include "colliders/RE.hpp"
-#include "colliders/actor.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-#include "utils/av.hpp"
-#include "colliders/RE.hpp"
 
 using namespace RE;
-using namespace Gts;
 
-namespace Gts {
+namespace GTS {
 
 	void SurvivalMode_RemoveAllSpells(Actor* actor, SpellItem* stage0, SpellItem* stage1, SpellItem* stage2, SpellItem* stage3, SpellItem* stage4, SpellItem* stage5) {
 		actor->RemoveSpell(stage0);
@@ -53,13 +35,17 @@ namespace Gts {
 
 		if (currentvalue <= stage1threshold) {
 			Runtime::AddSpell(actor, "Survival_HungerStage1");
-		} else if (currentvalue <= stage2threshold) {
+		}
+		else if (currentvalue <= stage2threshold) {
 			Runtime::AddSpell(actor, "Survival_HungerStage2");
-		} else if (currentvalue <= stage3threshold) {
+		}
+		else if (currentvalue <= stage3threshold) {
 			Runtime::AddSpell(actor, "Survival_HungerStage3");
-		} else if (currentvalue <= stage4threshold) {
+		}
+		else if (currentvalue <= stage4threshold) {
 			Runtime::AddSpell(actor, "Survival_HungerStage4");
-		} else if (currentvalue <= stage5threshold) {
+		}
+		else if (currentvalue <= stage5threshold) {
 			Runtime::AddSpell(actor, "Survival_HungerStage5");
 		}
 	}

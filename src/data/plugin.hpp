@@ -1,12 +1,8 @@
 #pragma once
 // Keeps track of global state like is enabled
-//
-
-using namespace std;
-
-using namespace SKSE;
 
 namespace GTS {
+
 	class Plugin {
 		public:
 			static bool Enabled();

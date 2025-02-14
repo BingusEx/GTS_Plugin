@@ -3,7 +3,7 @@
 #include "utils/random.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const std::string_view lFoot = "NPC L Foot [Lft ]";
@@ -365,7 +365,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 
 	std::string_view GetDeathNodeName(DamageSource cause) {
 		switch (cause) {

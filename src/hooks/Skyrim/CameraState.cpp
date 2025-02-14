@@ -1,6 +1,4 @@
 #include "Hooks/Skyrim/CameraState.hpp"
-#include "Scale/Scale.hpp"
-#include "Node.hpp"
 #include "Events.hpp"
 
 using namespace RE;

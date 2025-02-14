@@ -1,22 +1,10 @@
-#include "utils/ItemDistributor.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "colliders/RE.hpp"
-#include "rays/raycast.hpp"
+#include "Utils/ItemDistributor.hpp"
+#include "Data/Runtime.hpp"
 #include "UI/DebugAPI.hpp"
-#include "utils/av.hpp"
-#include "profiler.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-
-
-#include <vector>
-#include <string>
 
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	// Boss Chests
@@ -85,7 +73,7 @@ namespace {
     };
 }
 
-namespace Gts {
+namespace GTS {
 
     TESContainer* FilterChests(TESForm* form, ChestType type) {
         switch (type) {

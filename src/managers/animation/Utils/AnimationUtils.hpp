@@ -7,9 +7,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	enum class FollowerAnimType {
 		ThighSandwich,
 		ButtCrush,

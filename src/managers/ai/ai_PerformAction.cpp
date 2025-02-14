@@ -113,7 +113,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
     
     void AI_StrongStomp(Actor* pred, Actor* prey, int rng) {
         if (!Persistent::GetSingleton().Stomp_Ai) {

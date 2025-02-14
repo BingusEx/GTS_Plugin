@@ -1,10 +1,11 @@
-#include "hooks/main.hpp"
-#include "managers/Attributes.hpp"
-#include "events.hpp"
-#include "data/time.hpp"
-#include "data/plugin.hpp"
-#include "profiler.hpp"
-#include "timer.hpp"
+#include "Hooks/Skyrim/Main.hpp"
+
+#include "Events.hpp"
+#include "Data/Time.hpp"
+#include "Data/Plugin.hpp"
+#include "Profiler.hpp"
+#include "Timer.hpp"
+
 #include "Config.hpp"
 
 using namespace RE;

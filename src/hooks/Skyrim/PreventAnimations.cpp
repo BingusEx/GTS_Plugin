@@ -1,13 +1,11 @@
-#include "hooks/PreventAnimations.hpp"
-#include "data/transient.hpp"
-#include "hooks/callhook.hpp"
-#include "scale/scale.hpp"
-#include "data/plugin.hpp"
-#include "utils/debug.hpp"
+#include "Hooks/Skyrim/PreventAnimations.hpp"
+#include "Hooks/Hooks.hpp"
 
+#include "Data/Transient.hpp"
+
+#include "Scale/Scale.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace {
@@ -238,9 +236,9 @@ namespace {
 }
 
 namespace Hooks {
+
 	using namespace GTS;
 	using namespace RE;
-	using namespace SKSE;
 
 	void Hook_PreventAnimations::Hook(Trampoline& trampoline) { 
         static FunctionHook<TESIdleForm*(TESIdleForm* a_this, ConditionCheckParams* params, void* unk3)>IdleFormHook (        

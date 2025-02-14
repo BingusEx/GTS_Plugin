@@ -1,17 +1,11 @@
 #pragma once
 #include "Hooks/Hooks.hpp"
 
+namespace Hooks {
 
-using namespace SKSE;
-
-namespace Hooks
-{
-
-	using namespace SKSE;
 	using namespace RE;
 	
-	class Hook_BGSImpactManager
-	{
+	class Hook_BGSImpactManager {
 		public:
 			static void Hook(Trampoline& trampoline);
 			static void Hook();

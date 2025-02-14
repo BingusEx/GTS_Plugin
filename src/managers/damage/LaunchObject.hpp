@@ -13,7 +13,7 @@ using namespace SKSE;
 
 // Module for accurate size-related damage
 
-namespace Gts {
+namespace GTS {
         float GetLaunchPower_Object(float sizeRatio, bool Launch);
         
         void PushObjectsUpwards(Actor* giant, std::vector<NiPoint3> footPoints, float maxFootDistance, float power, bool IsFoot);

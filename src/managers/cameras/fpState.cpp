@@ -1,13 +1,12 @@
-#include "managers/cameras/fpState.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/persistent.hpp"
-#include "managers/cameras/camutil.hpp"
+#include "Managers/Cameras/fpState.hpp"
+
+#include "Data/Persistent.hpp"
+#include "Managers/cameras/camutil.hpp"
 
 using namespace RE;
-using namespace GTS;
 
-namespace  Gts {
+namespace GTS {
+
 	void FirstPersonCameraState::ExitState() {
 		// Reset the override
 		auto player = GetCameraActor();
@@ -25,6 +24,7 @@ namespace  Gts {
 	bool FirstPersonCameraState::PermitManualEdit() {
 		return false;
 	}
+
 	bool FirstPersonCameraState::PermitTransition() {
 		return false;
 	}

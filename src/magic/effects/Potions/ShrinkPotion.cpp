@@ -8,7 +8,7 @@
 #include "timer.hpp"
 
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkPotion::GetName() {
 		return "ShrinkPotion";
 	}

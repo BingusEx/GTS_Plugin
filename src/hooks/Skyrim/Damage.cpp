@@ -1,22 +1,18 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/OverkillManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "utils/DifficultyUtils.hpp"
-#include "managers/hitmanager.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "hooks/damage.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-#include "events.hpp"
-#include "timer.hpp"
+#include "Data/persistent.hpp"
+#include "Data/runtime.hpp"
+#include "Data/Time.hpp"
+#include "Data/transient.hpp"
+#include "Events.hpp"
+#include "Hooks/Detours/FunctionHook.hpp"
+#include "Hooks/Skyrim/Damage.hpp"
+#include "Managers/animation/Grab.hpp"
+#include "Managers/animation/HugShrink.hpp"
+#include "Managers/animation/Utils/CooldownManager.hpp"
+#include "Managers/damage/SizeHitEffects.hpp"
+#include "Managers/OverkillManager.hpp"
+#include "Scale/Scale.hpp"
+#include "Utils/actorUtils.hpp"
+#include "Utils/DifficultyUtils.hpp"
 
 
 using namespace RE;
@@ -276,7 +272,7 @@ namespace Hooks {
 	
 	void Hook_Damage::Hook(Trampoline& trampoline) {
 
-    // SE(5D6300)
+		// SE(5D6300)
 		static FunctionHook<void(Actor* a_this, float dmg, Actor* aggressor, uintptr_t maybe_hitdata, TESObjectREFR* damageSrc)> SkyrimTakeDamage(
 			RELOCATION_ID(36345, 37335),
 			[](auto* a_this, auto dmg, auto* aggressor, uintptr_t maybe_hitdata, auto* damageSrc) { // Universal damage function before Difficulty damage

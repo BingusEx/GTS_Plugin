@@ -6,6 +6,8 @@
 
 #include "node.hpp"
 
+#include "profiler.hpp"
+
 
 
 using namespace GTS;

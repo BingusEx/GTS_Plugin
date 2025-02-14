@@ -11,7 +11,7 @@
 #include "timer.hpp"
 
 
-namespace Gts {
+namespace GTS {
 	std::string Shrink_Poison::GetName() {
 		return "Shrink_Poison";
 	}

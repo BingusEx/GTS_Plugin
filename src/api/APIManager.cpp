@@ -6,11 +6,6 @@ using namespace SKSE;
 
 namespace GTS {
 
-	APIManager& APIManager::GetSingleton() noexcept {
-		static APIManager instance;
-		return instance;
-	}
-
 	void APIManager::Register() {
 		logger::info("Registering Smoothcam API");
 

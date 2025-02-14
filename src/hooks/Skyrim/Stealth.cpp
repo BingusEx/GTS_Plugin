@@ -1,12 +1,10 @@
-#include "utils/actorUtils.hpp"
-#include "hooks/callhook.hpp"
-#include "hooks/Stealth.hpp"
-#include "scale/scale.hpp"
-#include "utils/debug.hpp"
+#include "Hooks/Skyrim/Stealth.hpp"
+#include "Hooks/Hooks.hpp"
 
+#include "Utils/ActorUtils.hpp"
+#include "Scale/Scale.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace {

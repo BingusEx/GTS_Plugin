@@ -29,7 +29,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void ScareEnemies(Actor* giant)  {
@@ -99,7 +99,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
     bool TinyCalamity_WrathfulCalamity(Actor* giant) {
         bool perform = false;
         if (Runtime::HasPerkTeam(giant, "WrathfulCalamity") && HasSMT(giant) && !giant->IsSneaking()) {

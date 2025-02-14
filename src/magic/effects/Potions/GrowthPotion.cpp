@@ -25,7 +25,7 @@ namespace {
 
 }
 
-namespace Gts {
+namespace GTS {
 	std::string GrowthPotion::GetName() {
 		return "GrowthPotion";
 	}

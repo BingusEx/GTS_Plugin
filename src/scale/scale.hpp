@@ -7,15 +7,15 @@ using namespace std;
 using namespace SKSE;
 
 namespace GTS {
-	void set_target_scale(Actor& actor, float height);
-	void set_target_scale(Actor* actor, float height);
+	void set_target_scale(Actor& actor, float scale);
+	void set_target_scale(Actor* actor, float scale);
 	float get_target_scale(Actor& actor);
 	float get_target_scale(Actor* actor);
 	void mod_target_scale(Actor& actor, float amt);
 	void mod_target_scale(Actor* actor, float amt);
 
-	void set_max_scale(Actor& actor, float height);
-	void set_max_scale(Actor* actor, float height);
+	void set_max_scale(Actor& actor, float scale);
+	void set_max_scale(Actor* actor, float scale);
 	float get_max_scale(Actor& actor);
 	float get_max_scale(Actor* actor);
 	void mod_max_scale(Actor& actor, float amt);

@@ -57,7 +57,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	GrabAnimationController& GrabAnimationController::GetSingleton() noexcept {
 		static GrabAnimationController instance;
 		return instance;

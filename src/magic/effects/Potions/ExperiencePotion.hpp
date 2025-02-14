@@ -7,7 +7,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class ExperiencePotion : public Magic {
 		public:
 			using Magic::Magic;

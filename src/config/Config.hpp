@@ -3,8 +3,8 @@
 #include <toml.hpp>
 #include <magic_enum/magic_enum.hpp>
 
-#include "config/ConfigUtil.hpp"
-#include "SettingsList.hpp"
+#include "Config/ConfigUtil.hpp"
+#include "Config/SettingsList.hpp"
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -61,26 +61,28 @@ enum class GameMode {
     kSizeLocked //<-------------- Combines both
 };
 
-class Config {
+namespace GTS {
 
-    private:
+    class Config {
 
-    //Create structs with default values.
-    //These act as sane defaults in case new data is loaded or the toml itself is corrupted.
-    SettingsGeneral General = {};
-    SettingsAdvanced Advanced = {};
-    SettingsAI AI = {};
-    SettingsAudio Audio = {};
-    SettingsBalance Balance = {};
-    SettingsCamera Camera = {};
-    SettingsGameplay Gameplay {};
-    SettingsUI GtsUI = {};
-    SettingsHidden Hidden = {};
+        private:
 
-    template <typename T>
-    constexpr std::string_view GetStructName(const T&) {
-        return reflect::type_name<T>();
-    }
+        //Create structs with default values.
+        //These act as sane defaults in case new data is loaded or the toml itself is corrupted.
+        SettingsGeneral General = {};
+        SettingsAdvanced Advanced = {};
+        SettingsAI AI = {};
+        SettingsAudio Audio = {};
+        SettingsBalance Balance = {};
+        SettingsCamera Camera = {};
+        SettingsGameplay Gameplay{};
+        SettingsUI GtsUI = {};
+        SettingsHidden Hidden = {};
+
+        template <typename T>
+        constexpr std::string_view GetStructName(const T&) {
+            return reflect::type_name<T>();
+        }
 
     #define REGISTER_STRUCT_NAME(TYPE, NAME)                        \
     template <>                                                     \
@@ -88,122 +90,124 @@ class Config {
         return NAME;                                                \
     }
 
-    //Too much effort to make a parser for it, So Define the names here.
-    REGISTER_STRUCT_NAME(SettingsGeneral, "General");
-    REGISTER_STRUCT_NAME(SettingsAdvanced, "Advanced");
-    REGISTER_STRUCT_NAME(SettingsAI, "AI");
-    REGISTER_STRUCT_NAME(SettingsAudio, "Audio");
-    REGISTER_STRUCT_NAME(SettingsBalance, "Balance");
-    REGISTER_STRUCT_NAME(SettingsCamera, "Camera");
-    REGISTER_STRUCT_NAME(SettingsGameplay, "Gameplay");
-    REGISTER_STRUCT_NAME(SettingsUI, "GtsUI");
-    REGISTER_STRUCT_NAME(SettingsHidden, "Hidden");
+        //Too much effort to make a parser for it, So Define the names here.
+        REGISTER_STRUCT_NAME(SettingsGeneral, "General");
+        REGISTER_STRUCT_NAME(SettingsAdvanced, "Advanced");
+        REGISTER_STRUCT_NAME(SettingsAI, "AI");
+        REGISTER_STRUCT_NAME(SettingsAudio, "Audio");
+        REGISTER_STRUCT_NAME(SettingsBalance, "Balance");
+        REGISTER_STRUCT_NAME(SettingsCamera, "Camera");
+        REGISTER_STRUCT_NAME(SettingsGameplay, "Gameplay");
+        REGISTER_STRUCT_NAME(SettingsUI, "GtsUI");
+        REGISTER_STRUCT_NAME(SettingsHidden, "Hidden");
 
-    const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin"; 
-    const std::string _ConfigFile = "Settings.toml";
-    //CURRENTPATH IS THE SKYRIM ROOT FOLDER
-    const std::filesystem::path ConfigFile = std::filesystem::current_path() / _Subfolder / _ConfigFile;
+        const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin";
+        const std::string _ConfigFile = "Settings.toml";
 
-    toml::basic_value<toml::ordered_type_config> TomlData;
-    std::mutex _ReadWriteLock;
+        //Currentpath Resolves to the Skyrim root folder where the .exe is.
+        const std::filesystem::path ConfigFile = std::filesystem::current_path() / _Subfolder / _ConfigFile;
 
-    Config() = default;
-    Config(const Config&) = delete;
-    Config& operator=(const Config&) = delete;
+        toml::basic_value<toml::ordered_type_config> TomlData;
+        std::mutex _ReadWriteLock;
 
-    template<typename T>
-    [[nodiscard]] bool LoadStructFromTOML(const auto& a_toml, T& a_data);
+        Config() = default;
+        Config(const Config&) = delete;
+        Config& operator=(const Config&) = delete;
 
-    template<typename T>
-    [[nodiscard]] bool UpdateTOMLFromStruct(auto& a_toml, T& a_data);
+        template<typename T>
+        [[nodiscard]] bool LoadStructFromTOML(const auto& a_toml, T& a_data);
 
-    [[nodiscard]] bool SaveTOMLToFile(const auto& a_toml, const std::filesystem::path& a_file);
+        template<typename T>
+        [[nodiscard]] bool UpdateTOMLFromStruct(auto& a_toml, T& a_data);
 
-    public: 
-    
-    //Static Accessors (Helpers)
+        [[nodiscard]] bool SaveTOMLToFile(const auto& a_toml, const std::filesystem::path& a_file);
 
-    [[nodiscard]] static inline SettingsGeneral& GetGeneral(){
-        return GetSingleton().General;
-    }
+        public:
 
-    [[nodiscard]] static inline SettingsAdvanced& GetAdvanced(){
+        //Static Accessors (Helpers)
 
-        return GetSingleton().Advanced;
-    }
-
-    [[nodiscard]] static inline SettingsAI& GetAI(){
-        return GetSingleton().AI;
-    }
-
-    [[nodiscard]] static inline SettingsAudio& GetAudio(){
-        return GetSingleton().Audio;
-    }
-
-    [[nodiscard]] static inline SettingsBalance& GetBalance(){
-        return GetSingleton().Balance;
-    }
-
-    [[nodiscard]] static inline SettingsCamera& GetCamera(){
-        return GetSingleton().Camera;
-    }
-
-    [[nodiscard]] static inline SettingsGameplay& GetGameplay(){
-        return GetSingleton().Gameplay;
-    }
-
-    [[nodiscard]] static inline SettingsUI& GetUI(){
-        return GetSingleton().GtsUI;
-    }
-
-    [[nodiscard]] static inline SettingsHidden& GetHidden(){
-        return GetSingleton().Hidden;
-    }
-
-    [[nodiscard]] static inline Config& GetSingleton() {
-        static Config Instance;
-
-        static std::atomic_bool Initialized;
-        static std::latch Latch(1);
-
-        if (!Initialized.exchange(true)) {
-            logger::info("Loading TOML Settings in .ctor...");
-
-            if(!Instance.LoadSettings()){
-                MessageBoxA(nullptr,"Settings.toml is either invalid or corrupted. Click OK to clear out the settings file and delete the old settings.","Size Matters - GTSPlugin.dll",MB_OK);
-        
-                Instance.ResetToDefaults();
-                
-                //Delete the config file
-                if(!DeleteFile(Instance.ConfigFile)){
-                    MessageBoxA(nullptr,"Could not delete Settings.toml\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                    TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
-                }
-                
-                //Recreate the config file and start with a fresh table.
-                if(!CheckFile(Instance.ConfigFile)){
-                    MessageBoxA(nullptr,"Could not create a blank Settings.toml file.\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                    TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
-                }
-            }
-
-            //Incase the File is empty/missing newly added data...
-            //Explicitly Ignore the [[Nodiscard]]
-            std::ignore = Instance.SaveSettings();
-
-            logger::info(".ctor Load OK");
-
-            Latch.count_down();
+        [[nodiscard]] static inline SettingsGeneral& GetGeneral() {
+            return GetSingleton().General;
         }
-        Latch.wait();
 
-        return Instance;
-    }
+        [[nodiscard]] static inline SettingsAdvanced& GetAdvanced() {
 
-    [[nodiscard]] bool LoadSettings();
+            return GetSingleton().Advanced;
+        }
 
-    [[nodiscard]] bool SaveSettings();
+        [[nodiscard]] static inline SettingsAI& GetAI() {
+            return GetSingleton().AI;
+        }
 
-    void ResetToDefaults();
+        [[nodiscard]] static inline SettingsAudio& GetAudio() {
+            return GetSingleton().Audio;
+        }
 
-};
+        [[nodiscard]] static inline SettingsBalance& GetBalance() {
+            return GetSingleton().Balance;
+        }
+
+        [[nodiscard]] static inline SettingsCamera& GetCamera() {
+            return GetSingleton().Camera;
+        }
+
+        [[nodiscard]] static inline SettingsGameplay& GetGameplay() {
+            return GetSingleton().Gameplay;
+        }
+
+        [[nodiscard]] static inline SettingsUI& GetUI() {
+            return GetSingleton().GtsUI;
+        }
+
+        [[nodiscard]] static inline SettingsHidden& GetHidden() {
+            return GetSingleton().Hidden;
+        }
+
+        [[nodiscard]] static inline Config& GetSingleton() {
+            static Config Instance;
+
+            static std::atomic_bool Initialized;
+            static std::latch Latch(1);
+
+            if (!Initialized.exchange(true)) {
+                logger::info("Loading TOML Settings in .ctor...");
+
+                if (!Instance.LoadSettings()) {
+                    MessageBoxA(nullptr, "Settings.toml is either invalid or corrupted. Click OK to clear out the settings file and delete the old settings.", "Size Matters - GTSPlugin.dll", MB_OK);
+
+                    Instance.ResetToDefaults();
+
+                    //Delete the config file
+                    if (!DeleteFile(Instance.ConfigFile)) {
+                        MessageBoxA(nullptr, "Could not delete Settings.toml\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
+                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                    }
+
+                    //Recreate the config file and start with a fresh table.
+                    if (!CheckFile(Instance.ConfigFile)) {
+                        MessageBoxA(nullptr, "Could not create a blank Settings.toml file.\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
+                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                    }
+                }
+
+                //Incase the File is empty/missing newly added data...
+                //Explicitly Ignore the [[Nodiscard]]
+                std::ignore = Instance.SaveSettings();
+
+                logger::info(".ctor Load OK");
+
+                Latch.count_down();
+            }
+            Latch.wait();
+
+            return Instance;
+        }
+
+        [[nodiscard]] bool LoadSettings();
+
+        [[nodiscard]] bool SaveSettings();
+
+        void ResetToDefaults();
+
+    };
+}

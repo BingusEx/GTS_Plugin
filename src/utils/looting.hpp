@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 	NiPoint3 GetContainerSpawnLocation(Actor* giant, Actor* tiny);
 	void TransferInventory(Actor* from, Actor* to, const float scale, bool keepOwnership, bool removeQuestItems, DamageSource Cause, bool reset);
 	void TransferInventory_Normal(Actor* giant, Actor* tiny, bool removeQuestItems);

@@ -16,7 +16,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void PlayGoreEffects(Actor* tiny, Actor* giant) {
@@ -40,7 +40,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
 	OverkillManager& OverkillManager::GetSingleton() noexcept {
 		static OverkillManager instance;
 		return instance;

@@ -13,7 +13,7 @@
 #include <random>
 
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace REL;
 using namespace SKSE;
@@ -121,7 +121,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
 
     CooldownManager& CooldownManager::GetSingleton() noexcept {
 		static CooldownManager instance;

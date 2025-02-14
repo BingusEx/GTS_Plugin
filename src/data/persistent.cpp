@@ -1,16 +1,15 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
+
 #include "managers/GtsSizeManager.hpp"
 #include "utils/ItemDistributor.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "scale/modscale.hpp"
-#include "data/plugin.hpp"
-
 
 using namespace SKSE;
 using namespace RE;
 
 namespace {
+
 	inline const auto ActorDataRecord = _byteswap_ulong('ACTD');
 	inline const auto ScaleMethodRecord = _byteswap_ulong('SCMD');
 	inline const auto HighHeelCorrectionRecord = _byteswap_ulong('HHCO');
@@ -74,11 +73,12 @@ namespace {
 	//
 
 
-	const float DEFAULT_MAX_SCALE = 65535.0f;
-	const float DEFAULT_HALF_LIFE = 1.0f;
+	constexpr float DEFAULT_MAX_SCALE = 65535.0f;
+	constexpr float DEFAULT_HALF_LIFE = 1.0f;
 }
 
 namespace GTS {
+
 	Persistent& Persistent::GetSingleton() noexcept {
 		static Persistent instance;
 		return instance;
@@ -99,8 +99,8 @@ namespace GTS {
     // that are already in memory it won't reload
     // their nif scales otherwise
     for (auto actor: find_actors()) {
-      ResetToInitScale(actor);
-    }
+	      ResetToInitScale(actor);
+	    }
 	}
 
 	void Persistent::OnRevert(SerializationInterface*) {

@@ -21,7 +21,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -313,7 +313,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationCrawling::RegisterEvents() {
 

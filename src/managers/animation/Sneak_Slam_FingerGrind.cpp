@@ -20,7 +20,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     const std::string_view Rfinger = "NPC R Finger12 [RF12]";
@@ -139,7 +139,7 @@ namespace {
 
 }
 
-namespace Gts {
+namespace GTS {
     void Animation_SneakSlam_FingerGrind::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_Sneak_FingerGrind_CameraOn_R", "Sneak", GTS_Sneak_FingerGrind_CameraOn_R);
         AnimationManager::RegisterEvent("GTS_Sneak_FingerGrind_CameraOn_L", "Sneak", GTS_Sneak_FingerGrind_CameraOn_L);

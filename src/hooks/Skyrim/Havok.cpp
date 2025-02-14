@@ -1,8 +1,9 @@
+#include "Hooks/Skyrim/Havok.hpp"
+
 #include "managers/OverkillManager.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/transient.hpp"
 #include "ActionSettings.hpp"
-#include "hooks/havok.hpp"
 #include "scale/scale.hpp"
 #include "events.hpp"
 

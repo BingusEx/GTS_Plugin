@@ -1,5 +1,5 @@
-#include "hooks/Input.hpp"
-#include "managers/InputManager.hpp"
+#include "Hooks/Skyrim/Input.hpp"
+#include "Managers/InputManager.hpp"
 
 using namespace RE;
 using namespace GTS;

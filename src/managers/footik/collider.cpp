@@ -1,20 +1,20 @@
-#include "managers/footik/collider.hpp"
-#include "managers/GtsManager.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+//#include "managers/footik/collider.hpp"
+//#include "managers/GtsManager.hpp"
+//#include "data/runtime.hpp"
+//#include "scale/scale.hpp"
+//#include "data/time.hpp"
+//
+//#include "Colliders/RE/RE.hpp"
+//
+//#include "util.hpp"
 
-#include "colliders/RE.hpp"
 
-#include "util.hpp"
+//using namespace SKSE;
+//using namespace RE;
+//using namespace REL;
+//using namespace GTS;
 
-
-using namespace SKSE;
-using namespace RE;
-using namespace REL;
-using namespace Gts;
-
-namespace Gts {
+namespace GTS {
 	/*
 	ColliderManager& ColliderManager::GetSingleton() noexcept {
 		static ColliderManager instance;

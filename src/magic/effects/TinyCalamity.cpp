@@ -49,7 +49,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	std::string TinyCalamity::GetName() {
 		return "TinyCalamity";

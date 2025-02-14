@@ -1,13 +1,8 @@
-#include "utils/actorUtils.hpp"
-#include "hooks/callhook.hpp"
-#include "data/transient.hpp"
-#include "hooks/Movement.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
+#include "Hooks/Skyrim/Movement.hpp"
+#include "Hooks/Hooks.hpp"
+#include "Scale/Scale.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace {

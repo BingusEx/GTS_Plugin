@@ -2,7 +2,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts
+namespace GTS
 {
 	class Animation_TinyCalamity : public EventListener {
 		public:

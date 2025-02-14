@@ -1,10 +1,4 @@
 #include "Hooks/Skyrim/ActorRotation.hpp"
-#include "Data/Transient.hpp"
-#include "Hooks/FuDGE/callhook.hpp"
-#include "Scale/Scale.hpp"
-#include "Data/Plugin.hpp"
-#include "Utils/Debug.hpp"
-
 
 using namespace RE;
 

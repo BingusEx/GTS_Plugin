@@ -17,7 +17,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	std::string ShrinkResistPotion::GetName() {
 		return "ShrinkResistPotion";
 	}

@@ -1,10 +1,9 @@
 #include "data/plugin.hpp"
 
-using namespace std;
 using namespace RE;
-using namespace SKSE;
 
 namespace GTS {
+
 	bool Plugin::Enabled() {
 		return Plugin::GetSingleton().enabled.load();
 	}
@@ -20,6 +19,7 @@ namespace GTS {
 
 		return Plugin::GetSingleton().ingame.load();
 	}
+
 	void Plugin::SetInGame(bool value) {
 		Plugin::GetSingleton().ingame.store(value);
 	}
@@ -92,6 +92,7 @@ namespace GTS {
 	bool Plugin::OnMainThread() {
 		return Plugin::GetSingleton().onmainthread.load();
 	}
+
 	void Plugin::SetOnMainThread(bool value) {
 		Plugin::GetSingleton().onmainthread.store(value);
 	}

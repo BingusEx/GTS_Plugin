@@ -27,7 +27,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 /*
    GTS_BoobCrush_Smile_On
@@ -344,7 +344,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {	
 
 	AnimationBoobCrush& AnimationBoobCrush::GetSingleton() noexcept {

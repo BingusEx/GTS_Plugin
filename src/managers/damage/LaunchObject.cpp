@@ -28,7 +28,7 @@
 #include <vector>
 #include <string>
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;
@@ -95,7 +95,7 @@ namespace {
 
 
 
-namespace Gts {
+namespace GTS {
     float GetLaunchPower_Object(float sizeRatio, bool Launch) {
 		// https://www.desmos.com/calculator/wh0vwgljfl
 		if (Launch) {

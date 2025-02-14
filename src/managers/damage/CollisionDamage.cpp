@@ -34,7 +34,7 @@
 #include <string>
 
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;
@@ -171,7 +171,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 
 	CollisionDamage& CollisionDamage::GetSingleton() noexcept {
 		static CollisionDamage instance;

@@ -1,5 +1,7 @@
+#include "Hooks/Skyrim/hkbBehaviorGraph.hpp"
+
 #include "managers/animation/AnimationManager.hpp"
-#include "hooks/hkbBehaviorGraph.hpp"
+
 #include "utils/actorUtils.hpp"
 #include "data/transient.hpp"
 #include "data/runtime.hpp"

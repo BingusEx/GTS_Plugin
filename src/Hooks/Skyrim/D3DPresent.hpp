@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Hooks/Hooks.hpp"
-
-using namespace RE;
-using namespace SKSE;
-
 namespace Hooks {
+
+	using namespace RE;
+	using namespace SKSE;
+
 	class Hook_Renderer {
 		public:
 		static void Hook(Trampoline& trampoline);
@@ -23,4 +22,5 @@ namespace Hooks {
 		static void Present(uint32_t a1);
 		static inline REL::Relocation<decltype(Present)> _Present;
 	};
+
 }

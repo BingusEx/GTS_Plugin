@@ -26,7 +26,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 // Butt Crush alternative for sneaking
 // Has Knee and Butt crush
@@ -189,7 +189,7 @@ namespace {
 	void GTS_EnableHH(AnimationEventData& data) {data.stage = 2; data.HHspeed = 1.0f; data.disableHH = false;}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationSneakCrush::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTS_SneakCrush_Knee_CamOn", "SneakCrush", GTS_SneakCrush_Knee_CamOn);

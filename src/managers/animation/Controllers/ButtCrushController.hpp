@@ -8,7 +8,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 
 	class ButtCrushController : public EventListener  {
 		public:

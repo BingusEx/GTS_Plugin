@@ -22,7 +22,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 
 //                Sorted by order and timings
@@ -326,7 +326,7 @@ namespace {
 }
 
 
-namespace Gts
+namespace GTS
 {
 	void Animation_VoreStanding::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTSvore_attachactor_AnimObject_A", "Vore", GTSvore_attachactor_AnimObject_A);

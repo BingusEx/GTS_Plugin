@@ -54,7 +54,7 @@ namespace {
 	}
 
 	void InitializeLogging() {
-		auto path = Gts::log_directory();
+		auto path = GTS::log_directory();
 
 		if (!path) {
 			report_and_fail("Unable to lookup SKSE logs directory.");
@@ -173,7 +173,7 @@ static void InitializeSerialization() {
 
 static void InitializePapyrus() {
 	log::trace("Initializing Papyrus binding...");
-	if (GetPapyrusInterface()->Register(Gts::register_papyrus)) {
+	if (GetPapyrusInterface()->Register(GTS::register_papyrus)) {
 		log::info("Papyrus functions bound.");
 	} else {
 		stl::report_and_fail("Failure to register Papyrus bindings.");
@@ -211,7 +211,7 @@ static void PrintPluginInfo() {
 static void SetLogLevel() {
 	try {
 		log::info("Getting Logger Config...");
-		const auto& debugConfig = Gts::Config::GetSingleton().GetDebug();
+		const auto& debugConfig = GTS::Config::GetSingleton().GetDebug();
 		log::info("Config Loaded");
 
 		spdlog::set_level(debugConfig.GetLogLevel());

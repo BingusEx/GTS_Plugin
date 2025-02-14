@@ -8,7 +8,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
     void AI_StrongStomp(Actor* pred, Actor* prey, int rng);
     void AI_LightStomp(Actor* pred, Actor* prey, int rng);
     void AI_Tramples(Actor* pred, int rng);

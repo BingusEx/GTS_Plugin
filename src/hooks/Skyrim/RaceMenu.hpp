@@ -3,15 +3,9 @@
  *  Hooks on various GetScale calls
  */
 
-#include "Hooks/Hooks.hpp"
+namespace Hooks {
 
-
-using namespace SKSE;
-
-namespace Hooks
-{
-	class Hook_RaceMenu
-	{
+	class Hook_RaceMenu {
 		public:
 			static void Hook(Trampoline& trampoline);
 	};

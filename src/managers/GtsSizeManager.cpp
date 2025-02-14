@@ -18,7 +18,7 @@
 #include <random>
 
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace REL;
 using namespace SKSE;
@@ -65,7 +65,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	SizeManager& SizeManager::GetSingleton() noexcept {
 		static SizeManager instance;
 		return instance;

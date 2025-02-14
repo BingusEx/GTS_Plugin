@@ -1,13 +1,10 @@
-#include "hooks/Experiments.hpp"
-#include "utils/actorUtils.hpp"
-#include "hooks/callhook.hpp"
-#include "data/transient.hpp"
-#include "scale/modscale.hpp"
-#include "data/runtime.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Hooks/Experiments.hpp"
 
+#include "Data/Transient.hpp"
+#include "Data/Runtime.hpp"
 
+#include "Utils/ActorUtils.hpp"
+#include "Scale/scale.hpp"
 
 
 using namespace RE;
@@ -44,6 +41,9 @@ using namespace GTS;
 //      ^ 50179
 
 namespace {
+
+	/*
+
 	float affect_by_scale(TESObjectREFR* ref, float original) {
 		Actor* giant = skyrim_cast<Actor*>(ref);
 		if (giant) {
@@ -52,6 +52,7 @@ namespace {
 		}
 		return original;
 	}
+
 	float camera_getplayersize() {
 		auto player = PlayerCharacter::GetSingleton();
 		if (player) {
@@ -130,11 +131,13 @@ namespace {
 			log::info("Expected offset: {}", Vector2Str(offset_expected));
 		}
 	}
+	*/
 }
 
 
 
 namespace Hooks {
+
 	void Hook_Experiments::PatchShaking() { 
 		/*log::info("Attempting the patch");
 		constexpr REL::ID ShakeCamera_GetOffset_SE(32275); // 1404f5420 - 1404f54b5: 0x95

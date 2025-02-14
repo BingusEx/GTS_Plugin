@@ -5,9 +5,9 @@
 using namespace std;
 using namespace SKSE;
 
-using namespace Gts;
+using namespace GTS;
 
-namespace Gts {
+namespace GTS {
 
 	void DoCrawlingSounds(Actor* actor, float scale, NiAVObject* node, FootEvent foot_kind);
 

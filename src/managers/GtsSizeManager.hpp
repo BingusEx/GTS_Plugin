@@ -6,7 +6,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	struct SizeManagerData {
 		float AspectOfGiantess = 0.0f;
 

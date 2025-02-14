@@ -22,7 +22,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 	const std::string_view RNode = "NPC R Foot [Rft ]";
@@ -191,7 +191,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationFootGrind::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTSstomp_FootGrindL_Enter", "Stomp", GTSstomp_FootGrindL_Enter);

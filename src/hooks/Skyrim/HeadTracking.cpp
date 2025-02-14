@@ -1,4 +1,5 @@
-#include "hooks/headTracking.hpp"
+#include "Hooks/Skyrim/HeadTracking.hpp"
+
 #include "utils/actorUtils.hpp"
 #include "utils/actorBools.hpp"
 #include "scale/modscale.hpp"

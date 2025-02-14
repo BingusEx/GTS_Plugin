@@ -9,7 +9,7 @@
 
 // #define DETOUR_DEBUG 1
 #define DETOURS_INTERNAL
-#include "hooks/Detours/detours.h"
+#include "hooks/Detours/detours.hpp"
 #include <stddef.h>
 
 #if DETOURS_VERSION != 0x4c0c1   // 0xMAJORcMINORcPATCH

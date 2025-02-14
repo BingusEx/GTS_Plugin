@@ -32,7 +32,7 @@
 
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 
@@ -163,7 +163,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
     void HugHeal::RegisterEvents() {
         AnimationManager::RegisterEvent("GTS_Hug_Heal", "Hugs", GTS_Hug_Heal);
 		AnimationManager::RegisterEvent("GTS_Hug_Release", "Hugs", GTS_Hug_Release);

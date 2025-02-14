@@ -1,40 +1,42 @@
-#include "hooks/PreventAnimations.hpp"
-#include "hooks/ActorEquipManager.hpp"
-#include "hooks/hkbBehaviorGraph.hpp"
-#include "hooks/playerCharacter.hpp"
-#include "hooks/actorRotation.hpp"
-#include "hooks/headTracking.hpp"
-#include "hooks/playerCamera.hpp"
-#include "hooks/magicTarget.hpp"
-#include "hooks/Experiments.hpp"
-#include "hooks/Projectiles.hpp"
-#include "hooks/cameraState.hpp"
-#include "hooks/character.hpp"
-#include "hooks/Movement.hpp"
-#include "hooks/Pushback.hpp"
-#include "hooks/RaceMenu.hpp"
-#include "hooks/renderer.hpp"
-#include "hooks/controls.hpp"
-#include "hooks/Stealth.hpp"
-#include "hooks/impact.hpp"
-#include "hooks/damage.hpp"
-#include "hooks/actor.hpp"
-#include "hooks/Input.hpp"
-#include "hooks/hooks.hpp"
-#include "hooks/havok.hpp"
-#include "hooks/main.hpp"
-#include "hooks/sink.hpp"
-#include "hooks/jump.hpp"
-#include "hooks/vm.hpp"
+#include "Hooks/Hooks.hpp"
 
+#include "Hooks/Skyrim/PreventAnimations.hpp"
+#include "Hooks/Skyrim/ActorEquipManager.hpp"
+#include "Hooks/Skyrim/hkbBehaviorGraph.hpp"
+#include "Hooks/Skyrim/PlayerCharacter.hpp"
+#include "Hooks/Skyrim/ActorRotation.hpp"
+#include "Hooks/Skyrim/HeadTracking.hpp"
+#include "Hooks/Skyrim/PlayerCamera.hpp"
+#include "Hooks/Skyrim/MagicTarget.hpp"
+#include "Hooks/Skyrim/Projectiles.hpp"
+#include "Hooks/Skyrim/CameraState.hpp"
+#include "Hooks/Skyrim/Character.hpp"
+#include "Hooks/Skyrim/Movement.hpp"
+#include "Hooks/Skyrim/Pushback.hpp"
+#include "Hooks/Skyrim/RaceMenu.hpp"
+#include "Hooks/Skyrim/Stealth.hpp"
+#include "Hooks/Skyrim/Impact.hpp"
+#include "Hooks/Skyrim/Damage.hpp"
+#include "Hooks/Skyrim/Actor.hpp"
+#include "Hooks/Skyrim/Input.hpp"
+#include "Hooks/Skyrim/Havok.hpp"
+#include "Hooks/Skyrim/Main.hpp"
+#include "Hooks/Skyrim/Sink.hpp"
+#include "Hooks/Skyrim/Jump.hpp"
+#include "Hooks/Skyrim/VM.hpp"
 
+#include "Hooks/Skyrim/D3DPresent.hpp"
+#include "Hooks/Controls.hpp"
+#include "Hooks/Experiments.hpp"
 
 using namespace RE;
 
 namespace Hooks
 {
 	void InstallControls() {
+
 		log::info("Applying Control Hooks...");
+
 		Hook_Controls<ActivateHandler>::Hook(REL::Relocation<std::uintptr_t>(RE::VTABLE_ActivateHandler[0]));
 		/*Hook_Controls<AttackBlockHandler>::Hook(REL::Relocation<std::uintptr_t>(RE::VTABLE_AttackBlockHandler[0]));
 		Hook_Controls<AutoMoveHandler>::Hook(REL::Relocation<std::uintptr_t>(RE::VTABLE_AutoMoveHandler[0]));
@@ -56,6 +58,7 @@ namespace Hooks
 		log::info("Gts applying hooks...");
 
 		auto& trampoline = SKSE::GetTrampoline();
+
 		trampoline.create(512);
 
 		Hook_MainUpdate::Hook(trampoline);

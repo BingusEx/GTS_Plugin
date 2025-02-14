@@ -36,7 +36,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 
 namespace {
@@ -64,7 +64,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	const std::string_view leftFootLookup = "NPC L Foot [Lft ]";
 	const std::string_view rightFootLookup = "NPC R Foot [Rft ]";

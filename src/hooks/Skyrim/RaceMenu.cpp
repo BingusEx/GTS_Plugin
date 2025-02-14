@@ -1,16 +1,9 @@
+#include "Hooks/Skyrim/RaceMenu.hpp"
+#include "Hooks/Hooks.hpp"
 
-#include "utils/actorUtils.hpp"
-#include "hooks/RaceMenu.hpp"
-#include "hooks/callhook.hpp"
-#include "data/transient.hpp"
-#include "scale/modscale.hpp"
-#include "data/runtime.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
+#include "Scale/ModScale.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace Hooks {

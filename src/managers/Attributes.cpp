@@ -15,7 +15,7 @@
 using namespace SKSE;
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 
 // TODO move away from polling
 
@@ -102,7 +102,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	AttributeManager& AttributeManager::GetSingleton() noexcept {
 		static AttributeManager instance;
 		return instance;

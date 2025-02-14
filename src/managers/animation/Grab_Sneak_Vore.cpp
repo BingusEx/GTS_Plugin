@@ -23,7 +23,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
     void GTS_GrabSneak_Start(AnimationEventData& data) { // Register Tiny for Vore
@@ -68,7 +68,7 @@ namespace {
     // Rest is handled inside Vore_Sneak (some events are re-used)
 }
 
-namespace Gts {
+namespace GTS {
     void Animation_GrabSneak_Vore::RegisterEvents() { 
 		AnimationManager::RegisterEvent("GTS_GrabSneak_Start", "SneakVore", GTS_GrabSneak_Start);
         AnimationManager::RegisterEvent("GTS_GrabSneak_Eat", "SneakVore", GTS_GrabSneak_Eat);

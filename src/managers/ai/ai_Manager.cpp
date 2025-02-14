@@ -99,7 +99,7 @@ namespace {
 }
 
 
-namespace Gts {
+namespace GTS {
 	AiData::AiData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {
 	}
 

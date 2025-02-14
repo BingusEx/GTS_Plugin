@@ -34,7 +34,7 @@
 
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -102,7 +102,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	NiPoint3 GetContainerSpawnLocation(Actor* giant, Actor* tiny) {
 		bool success_first = false;
 		bool success_second = false;

@@ -18,7 +18,7 @@
 #include "node.hpp"
 
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 namespace {
 	float GetPushPower(float sizeRatio) {
 		// https://www.desmos.com/calculator/wh0vwgljfl
@@ -33,7 +33,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	HitManager& HitManager::GetSingleton() noexcept {
 		static HitManager instance;
 		return instance;

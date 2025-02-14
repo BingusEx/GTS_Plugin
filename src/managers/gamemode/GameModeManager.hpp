@@ -12,7 +12,7 @@
 using namespace std;
 
 
-namespace Gts {
+namespace GTS {
 	enum class BalanceModeInfo {
 		SizeGain_Penalty,
 		ShrinkRate_Base,

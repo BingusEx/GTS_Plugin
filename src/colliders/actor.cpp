@@ -1,4 +1,4 @@
-#include "colliders/actor.hpp"
+#include "Colliders/Actor.hpp"
 
 using namespace SKSE;
 using namespace RE;

@@ -26,7 +26,7 @@
 
 
 
-using namespace Gts;
+using namespace GTS;
 using namespace RE;
 using namespace SKSE;
 using namespace std;
@@ -230,7 +230,7 @@ namespace {
 	}*/
 }
 
-namespace Gts {
+namespace GTS {
 
 	Headtracking& Headtracking::GetSingleton() noexcept {
 		static Headtracking instance;

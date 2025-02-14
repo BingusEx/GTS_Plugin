@@ -6,7 +6,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts
+namespace GTS
 {
 	class Animation_SneakSlam_FingerGrind {
 		public:

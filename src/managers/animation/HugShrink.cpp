@@ -35,7 +35,7 @@
 
 using namespace RE;
 using namespace REL;
-using namespace Gts;
+using namespace GTS;
 using namespace std;
 
 
@@ -443,7 +443,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 	HugShrink& HugShrink::GetSingleton() noexcept {
 		static HugShrink instance;
 		return instance;

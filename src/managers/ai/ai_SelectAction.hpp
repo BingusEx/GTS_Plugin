@@ -8,7 +8,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
     void AI_TryAction(Actor* actor);
     void AI_DoStomp_Kick_ButtCrush(Actor* pred);
     void AI_DoSandwich(Actor* pred);

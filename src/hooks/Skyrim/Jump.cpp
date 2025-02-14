@@ -1,22 +1,19 @@
+#include "Hooks/Skyrim/Jump.hpp"
+
 #include "managers/damage/LaunchObject.hpp"
-#include "managers/Attributes.hpp"
 #include "utils/actorUtils.hpp"
 #include "managers/Rumble.hpp"
 #include "ActionSettings.hpp"
 #include "scale/modscale.hpp"
-#include "hooks/callhook.hpp"
 #include "scale/scale.hpp"
-#include "data/plugin.hpp"
-#include "hooks/jump.hpp"
 
 using namespace RE;
-using namespace SKSE;
 using namespace GTS;
 
 namespace {
-	
-	const float launch_up_radius = 24.0f;
-	const float default_gravity = 1.0f;
+
+	constexpr float launch_up_radius = 24.0f;
+	constexpr float default_gravity = 1.0f;
 
 	void UpdateGravity(Actor* actor, const float size) {
 		auto Controller = actor->GetCharController();

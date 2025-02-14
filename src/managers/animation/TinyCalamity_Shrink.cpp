@@ -19,7 +19,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 // Spawns Rune on the hand and then we shrink a tiny that we've found.
 // AnimObjectR
@@ -149,7 +149,7 @@ namespace {
     }
 }
 
-namespace Gts
+namespace GTS
 {
     Animation_TinyCalamity& Animation_TinyCalamity::GetSingleton() noexcept {
 		static Animation_TinyCalamity instance;

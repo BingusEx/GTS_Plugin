@@ -111,7 +111,7 @@ namespace {
     }
 }
 
-namespace Gts {
+namespace GTS {
 
 	void AI_TryAction(Actor* actor) {
 		float scale = std::clamp(get_visual_scale(actor), 1.0f, 6.0f);

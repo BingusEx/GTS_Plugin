@@ -1,6 +1,6 @@
 #pragma once
 /*
- *  Hooks for actor equipment blocking
+ Hooks for actor equipment blocking
  */
 
 namespace Hooks {

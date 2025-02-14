@@ -1,13 +1,15 @@
 #pragma once
-#include "config/ConfigUtil.hpp"
-#include "toml.hpp"
-#include "KeybindList.hpp"
+
+#include <toml.hpp>
+
+#include "Config/ConfigUtil.hpp"
+#include "Config/KeybindList.hpp"
 
 //---------------
 // INPUT EVENT
 //---------------
 
-namespace Input {
+namespace GTS {
 
     class Keybinds {
         public:
@@ -65,7 +67,8 @@ namespace Input {
 
         const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin"; 
         const std::string _ConfigFile = "Input.toml";
-        //CURRENTPATH IS THE SKYRIM ROOT FOLDER
+
+        //Currentpath Resolves to the Skyrim root folder where the .exe is.
         const std::filesystem::path InputFile = std::filesystem::current_path() / _Subfolder / _ConfigFile;
     
         toml::basic_value<toml::ordered_type_config> TomlData;

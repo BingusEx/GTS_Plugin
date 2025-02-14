@@ -1,14 +1,13 @@
 #include "managers/animation/AnimationManager.hpp"
 #include "managers/damage/SizeHitEffects.hpp"
-#include "hooks/character.hpp"
-#include "managers/hitmanager.hpp"
+#include "Hooks/Skyrim/Character.hpp"
 #include "managers/Attributes.hpp"
 #include "data/runtime.hpp"
 #include "data/persistent.hpp"
 #include "data/plugin.hpp"
 #include "events.hpp"
 #include "scale/scale.hpp"
-#include "timer.hpp"
+
 
 using namespace RE;
 using namespace GTS;
@@ -31,6 +30,7 @@ namespace {
 		}
 		return new_speed;
 	}
+
 }
 
 namespace Hooks {
@@ -178,6 +178,7 @@ namespace Hooks {
 		}
 		return bound;
 	}
+
 	NiPoint3 Hook_Character::GetBoundMin(Character* a_this) {
 		auto bound = _GetBoundMin(a_this);
 		if (a_this) {

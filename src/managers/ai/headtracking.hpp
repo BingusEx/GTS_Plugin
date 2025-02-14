@@ -13,7 +13,7 @@
 using namespace std;
 
 
-namespace Gts {
+namespace GTS {
 
 	struct HeadtrackingData {
 		Spring spineSmooth = Spring(0.0f, 0.70f);

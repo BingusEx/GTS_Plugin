@@ -1,15 +1,10 @@
 #pragma once
-#include "Hooks/Hooks.hpp"
 
+namespace Hooks {
 
-
-
-namespace Hooks
-{
-	using namespace SKSE;
 	using namespace RE;
-	class Hook_PlayerCamera
-	{
+
+	class Hook_PlayerCamera {
 		public:
 			static void Hook();
 		private:

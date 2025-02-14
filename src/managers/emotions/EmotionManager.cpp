@@ -158,7 +158,7 @@ namespace {
 	}
 }
 
-namespace Gts {
+namespace GTS {
 
 	EmotionManager& EmotionManager::GetSingleton() noexcept {
 		static EmotionManager instance;

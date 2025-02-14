@@ -1,11 +1,7 @@
 #pragma once
 
-#include "Hooks/Hooks.hpp"
-
-
-using namespace SKSE;
-
 namespace Hooks {
+
 	class Hook_Input{
 		public:
 		static void Hook(Trampoline& trampoline);

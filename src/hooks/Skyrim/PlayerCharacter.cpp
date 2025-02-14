@@ -1,13 +1,15 @@
+#include "Hooks/Skyrim/PlayerCharacter.hpp"
+
 #include "managers/damage/SizeHitEffects.hpp"
-#include "hooks/playerCharacter.hpp"
+
 #include "managers/Attributes.hpp"
 #include "data/runtime.hpp"
 #include "data/persistent.hpp"
-#include "data/transient.hpp"
+
 #include "data/plugin.hpp"
 #include "events.hpp"
 #include "scale/scale.hpp"
-#include "timer.hpp"
+
 #include "utils/debug.hpp"
 
 using namespace RE;
@@ -142,6 +144,7 @@ namespace Hooks {
 		}
 		return bound;
 	}
+
 	NiPoint3 Hook_PlayerCharacter::GetBoundMin(PlayerCharacter* a_this) {
 		auto bound = _GetBoundMin(a_this);
 		if (a_this) {

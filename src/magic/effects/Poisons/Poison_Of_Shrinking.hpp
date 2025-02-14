@@ -8,7 +8,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 	class Shrink_Poison : public Magic {
 		public:
 			using Magic::Magic;

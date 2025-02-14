@@ -24,7 +24,7 @@
 using namespace std;
 using namespace SKSE;
 using namespace RE;
-using namespace Gts;
+using namespace GTS;
 
 namespace {
 
@@ -97,7 +97,7 @@ namespace {
 	}
 }
 
-namespace Gts
+namespace GTS
 {
 	void AnimationShrink::RegisterEvents() {
 		AnimationManager::RegisterEvent("GTSShrink_Enter", "Shrink", GTSShrink_Enter);

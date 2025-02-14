@@ -6,7 +6,7 @@ using namespace std;
 using namespace SKSE;
 
 
-namespace Gts {
+namespace GTS {
 
     enum class CooldownSource {
         Damage_Launch,
@@ -77,7 +77,7 @@ namespace Gts {
     double GetRemainingCooldown(Actor* giant, CooldownSource source);
     bool IsActionOnCooldown(Actor* giant, CooldownSource source);
 
-    class CooldownManager : public Gts::EventListener {
+    class CooldownManager : public GTS::EventListener {
 		public:
 			[[nodiscard]] static CooldownManager& GetSingleton() noexcept;
 			virtual std::string DebugName() override;

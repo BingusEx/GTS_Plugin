@@ -1,8 +1,7 @@
-#include "hooks/Projectiles.hpp"
-#include "utils/camera.hpp"
-#include "scale/scale.hpp"
+#include "Hooks/Skyrim/Projectiles.hpp"
 
-
+#include "Utils/Camera.hpp"
+#include "Scale/Scale.hpp"
 
 using namespace RE;
 using namespace GTS;
@@ -56,7 +55,8 @@ namespace {
 				log::info("3d1: fp");
 				node = projectile->Get3D1(true);
 			}
-		} if (!node) {
+		}
+		if (!node) {
 			node = projectile->Get3D();
 		} 
 		if (node) {
@@ -100,9 +100,9 @@ namespace {
 namespace Hooks
 {
 	void Hook_Projectiles::Hook() {
-		///
-		///  IT IS DISABLED INSIDE HOOKS CPP!
-		///
+		
+		// IT IS DISABLED INSIDE HOOKS CPP!
+
         REL::Relocation<std::uintptr_t> ProjectileVtbl{ RE::VTABLE_Projectile[0] };				// 167C888
 		REL::Relocation<std::uintptr_t> ArrowProjectileVtbl{ RE::VTABLE_ArrowProjectile[0] };			// 1676318
 		REL::Relocation<std::uintptr_t> MissileProjectileVtbl{ RE::VTABLE_MissileProjectile[0] };		// 167AE78

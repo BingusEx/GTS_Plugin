@@ -1,10 +1,10 @@
-#include "hooks/Pushback.hpp"
-#include "hooks/callhook.hpp"
-#include "scale/scale.hpp"
-#include "data/plugin.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/transient.hpp"
+#include "Hooks/Skyrim/Pushback.hpp"
+#include "Hooks/Hooks.hpp"
+
+#include "Scale/Scale.hpp"
+#include "Utils/ActorUtils.hpp"
+#include "Data/Transient.hpp"
+#include "profiler.hpp"
 
 using namespace SKSE;
 using namespace RE;

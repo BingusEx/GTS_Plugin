@@ -1,11 +1,9 @@
-#include "hooks/playerCamera.hpp"
-#include "data/plugin.hpp"
+#include "Hooks/Skyrim/PlayerCamera.hpp"
 
 using namespace RE;
-using namespace GTS;
 
-namespace Hooks
-{
+namespace Hooks {
+
 	// BGSImpactManager
 	void Hook_PlayerCamera::Hook() {
 		log::info("Hooking PlayerCamera");
