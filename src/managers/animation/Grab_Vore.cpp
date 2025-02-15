@@ -10,7 +10,7 @@
 #include "managers/GtsSizeManager.hpp"
 #include "managers/ai/aifunctions.hpp"
 #include "managers/CrushManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/Attributes.hpp"
 #include "utils/actorUtils.hpp"
@@ -18,14 +18,14 @@
 #include "managers/tremor.hpp"
 #include "managers/Rumble.hpp"
 #include "data/transient.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "managers/vore.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "events.hpp"
-#include "timer.hpp"
-#include "node.hpp"
+
+
+
 
 #include <random>
 

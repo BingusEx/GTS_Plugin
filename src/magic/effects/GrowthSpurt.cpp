@@ -5,8 +5,8 @@
 #include "magic/effects/common.hpp"
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
-#include "ActionSettings.hpp"
-#include "timer.hpp"
+#include "Constants.hpp"
+
 #include "managers/Rumble.hpp"
 
 namespace {

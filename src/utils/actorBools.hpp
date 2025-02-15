@@ -1,13 +1,9 @@
 #pragma once
 
-#include "events.hpp"
+namespace GTS {
 
-using namespace std;
-using namespace SKSE;
+	using namespace RE;
 
-using namespace GTS;
-
-namespace GTS {    
 	bool IsStaggered(Actor* tiny);
 	bool IsHandStomping_L(Actor* actor);
 	bool IsHandStomping_H(Actor* actor);

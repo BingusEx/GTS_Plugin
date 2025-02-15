@@ -1,7 +1,5 @@
 #pragma once
 
-#include "events.hpp"
-
 namespace GTS {
 
 	using namespace std;

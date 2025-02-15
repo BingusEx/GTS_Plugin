@@ -1,14 +1,12 @@
 #pragma once
+
 // Module that holds data that is loaded at runtime
 // This includes various forms
-#include "events.hpp"
-#include "toml.hpp"
-
-using namespace std;
-using namespace SKSE;
-
 
 namespace GTS {
+
+	using namespace RE;
+
 	struct SoundData {
 		BGSSoundDescriptorForm* data;
 	};

@@ -6,19 +6,19 @@
 #include "managers/damage/LaunchActor.hpp"
 #include "managers/audio/footstep.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "Utils/InputConditions.hpp"
 #include "managers/explosion.hpp"
 #include "utils/actorUtils.hpp"
 #include "managers/Rumble.hpp"
 #include "managers/tremor.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/height.hpp"
 #include "scale/scale.hpp"
 
-#include "node.hpp"
+
 
 using namespace std;
 using namespace SKSE;

@@ -12,7 +12,7 @@
 #include "managers/ai/aifunctions.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "managers/animation/Grab.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "managers/explosion.hpp"
 #include "utils/actorUtils.hpp"
@@ -22,9 +22,9 @@
 #include "utils/random.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "spring.hpp"
-#include "node.hpp"
+
+
+
 namespace {
     const std::vector<std::string_view> light_kicks = {
         "SwipeLight_Left",                  // 0

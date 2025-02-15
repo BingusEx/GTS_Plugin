@@ -8,7 +8,7 @@
 #include "managers/perks/PerkHandler.hpp"
 #include "managers/animation/Grab.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/ai/headtracking.hpp"
 #include "managers/ai/ai_Manager.hpp"
 #include "managers/CrushManager.hpp"
@@ -31,7 +31,7 @@
 #include "managers/vore.hpp"
 #include "utils/DynamicScale.hpp"
 #include "magic/magic.hpp"
-#include "events.hpp"
+
 
 namespace GTS {
 	void RegisterManagers() {

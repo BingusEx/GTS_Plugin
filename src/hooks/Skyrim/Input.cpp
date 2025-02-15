@@ -1,5 +1,5 @@
 #include "Hooks/Skyrim/Input.hpp"
-#include "Managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "UI/UIManager.hpp"
 
 using namespace RE;

@@ -8,7 +8,7 @@
 #include "managers/ai/aifunctions.hpp"
 #include "managers/animation/Grab.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "managers/explosion.hpp"
 #include "managers/audio/footstep.hpp"
@@ -17,11 +17,11 @@
 #include "data/persistent.hpp"
 #include "managers/Rumble.hpp"
 #include "managers/tremor.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "node.hpp"
+
 
 using namespace std;
 using namespace SKSE;

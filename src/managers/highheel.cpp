@@ -1,12 +1,12 @@
 #include "managers/highheel.hpp"
 #include "data/runtime.hpp"
-#include "node.hpp"
+
 #include "scale/modscale.hpp"
 #include "managers/GtsManager.hpp"
 #include "data/persistent.hpp"
 #include "scale/scale.hpp"
 #include "managers/animation/AnimationManager.hpp"
-#include "profiler.hpp"
+
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;

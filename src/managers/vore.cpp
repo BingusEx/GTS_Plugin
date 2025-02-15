@@ -3,7 +3,7 @@
 #include "managers/perks/PerkHandler.hpp"
 #include "managers/ai/aifunctions.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "magic/effects/common.hpp"
 #include "utils/SurvivalMode.hpp"
 #include "utils/actorUtils.hpp"
@@ -12,14 +12,14 @@
 #include "data/persistent.hpp"
 #include "data/transient.hpp"
 #include "scale/modscale.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "utils/looting.hpp"
 #include "managers/vore.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "timer.hpp"
-#include "node.hpp"
+
+
+
 #include <cmath>
 #include <random>
 

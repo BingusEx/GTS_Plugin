@@ -5,7 +5,7 @@
 #include "managers/damage/LaunchActor.hpp"
 #include "managers/animation/Growth.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/explosion.hpp"
@@ -17,8 +17,8 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "timer.hpp"
-#include "node.hpp"
+
+
 
 using namespace std;
 using namespace SKSE;

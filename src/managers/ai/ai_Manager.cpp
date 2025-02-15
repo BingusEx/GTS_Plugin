@@ -7,7 +7,7 @@
 #include "managers/ai/ai_SelectAction.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "managers/ai/ai_Manager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "managers/explosion.hpp"
 #include "managers/audio/footstep.hpp"
@@ -15,14 +15,14 @@
 #include "managers/tremor.hpp"
 #include "managers/Rumble.hpp"
 #include "data/persistent.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "managers/vore.hpp"
 #include "utils/random.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "spring.hpp"
-#include "node.hpp"
+
+
+
 
 namespace {
 	const float MINIMUM_STOMP_DISTANCE = 50.0f;

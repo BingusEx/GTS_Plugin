@@ -1,8 +1,8 @@
 #pragma once
 // Module that handles the Camera
-#include "events.hpp"
-#include "spring.hpp"
-#include "timer.hpp"
+
+
+
 
 #include "managers/cameras/state.hpp"
 #include "managers/cameras/trans.hpp"

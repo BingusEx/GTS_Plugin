@@ -23,27 +23,19 @@
 #include "managers/Rumble.hpp"
 #include "utils/findActor.hpp"
 #include "data/persistent.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/transient.hpp"
-#include "utils/looting.hpp"
 #include "scale/height.hpp"
 #include "data/runtime.hpp"
 #include "colliders/RE/RE.hpp"
+
+#include "config/Config.hpp"
+
 #include "rays/raycast.hpp"
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
-#include "utils/debug.hpp"
 #include "utils/av.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "events.hpp"
-#include "spring.hpp"
-#include "timer.hpp"
 
-#include "node.hpp"
-
-#include <vector>
-#include <string>
 
 using namespace RE;
 using namespace GTS;
@@ -480,9 +472,8 @@ namespace GTS {
 	bool IsFemale(Actor* actor, bool check_config) {
 		if (check_config) {
 			auto profiler = Profilers::Profile("ActorUtils: FemaleCheck");
-			auto config = Config::GetSingleton().GetUtilBools();
-			bool Ignore_Female_Rules = config.GetFemaleOverride();
-			if (Ignore_Female_Rules) {
+
+			if (Config::GetGeneral().bEnableMales) {
 				return true;
 			}
 		}

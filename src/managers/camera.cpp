@@ -1,5 +1,5 @@
 #include "managers/cameras/camutil.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "utils/InputConditions.hpp"
 #include "managers/highheel.hpp"
 #include "utils/actorUtils.hpp"
@@ -8,10 +8,6 @@
 #include "api/APIManager.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "data/time.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "node.hpp"
 
 using namespace SKSE;
 using namespace RE;
@@ -20,6 +16,7 @@ using namespace GTS;
 
 
 namespace {
+
 	void HorizontalResetEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		camera.ResetLeftRight();

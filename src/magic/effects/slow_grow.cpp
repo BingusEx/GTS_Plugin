@@ -3,11 +3,11 @@
 #include "magic/effects/common.hpp"
 #include "utils/actorUtils.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
-#include "timer.hpp"
+
 
 namespace {
 	bool PerformMoanAndParticle(Actor* caster) {

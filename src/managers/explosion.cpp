@@ -4,7 +4,7 @@
 #include "utils/actorUtils.hpp"
 #include "data/runtime.hpp"
 #include "rays/raycast.hpp"
-#include "Profiler.hpp"
+
 
 using namespace RE;
 using namespace GTS;

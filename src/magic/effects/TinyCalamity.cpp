@@ -10,7 +10,7 @@
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "node.hpp"
+
 
 namespace {
 	float GetSMTBonus(Actor* actor) {

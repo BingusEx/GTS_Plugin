@@ -2,7 +2,7 @@
 #include "managers/GtsSizeManager.hpp"
 #include "data/transient.hpp"
 #include "data/runtime.hpp"
-#include "node.hpp"
+
 #include <vector>
 #include <string>
 

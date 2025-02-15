@@ -1,45 +1,74 @@
 #include "managers/animation/Utils/CooldownManager.hpp"
-#include "hooks/Experiments.hpp"
 
-#include "Config.hpp"
 #include "hooks/hooks.hpp"
 #include "papyrus/papyrus.hpp"
 #include "data/plugin.hpp"
 
-#include "events.hpp"
+
 #include "managers/register.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "UI/DebugAPI.hpp"
 #include "data/runtime.hpp"
 #include "data/persistent.hpp"
 #include "data/transient.hpp"
-#include "spring.hpp"
 
-#include <stddef.h>
-#include <thread>
-#include "git.h"
 
-#include "skselog.hpp"
-#include "api/APIManager.hpp"
+#include "Config/Config.hpp"
+#include "API/APIManager.hpp"
+
+
 
 using namespace RE::BSScript;
 using namespace GTS;
 using namespace SKSE;
-using namespace SKSE::log;
-using namespace SKSE::stl;
 
 namespace {
 
+	// This function allocates a new console, redirects the standard streams,
+	// and enables ANSI escape sequences for colored output.
+	void AllocateConsole() {
+
+		// Allocate a new console for the calling process.
+		if (!AllocConsole()) {
+			std::cerr << "Failed to allocate console!" << '\n';
+			return;
+		}
+
+		// Redirect unbuffered STDOUT to the console.
+		FILE* fpOut = nullptr;
+		if (freopen_s(&fpOut, "CONOUT$", "w", stdout) != 0) {
+			std::cerr << "Failed to redirect stdout!" << '\n';
+		}
+
+		// Redirect unbuffered STDIN to the console.
+		FILE* fpIn = nullptr;
+		if (freopen_s(&fpIn, "CONIN$", "r", stdin) != 0) {
+			std::cerr << "Failed to redirect stdin!" << '\n';
+		}
+
+		// Redirect unbuffered STDERR to the console.
+		FILE* fpErr = nullptr;
+		if (freopen_s(&fpErr, "CONOUT$", "w", stderr) != 0) {
+			std::cerr << "Failed to redirect stderr!" << '\n';
+		}
+
+
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		// Enable ANSI escape sequences for colored output (requires Windows 10+).
+		DWORD mode = 0;
+		if (GetConsoleMode(hConsole, &mode)) {
+			mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+			SetConsoleMode(hConsole, mode);
+		}
+
+		// Synchronize the C++ standard streams with the C standard streams.
+		std::ios::sync_with_stdio();
+		
+	}
+
 	void VersionCheck(const LoadInterface* a_skse) {
 		if (a_skse->RuntimeVersion() < SKSE::RUNTIME_SSE_1_5_80 || REL::Module::IsVR()) {
-			MessageBoxA(
-				nullptr,
-				"This mod does not support Skyrim VR or versions of Skyrim older than 1.5.80.",
-				"Giantess Mod - Size Matters (GtsPlugin.dll)",
-				MB_OK | MB_ICONERROR | MB_TOPMOST
-			);
-			SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
-			//report_and_fail("Unsuported game version");
+			ReportAndExit("This mod does not support Skyrim VR or versions of Skyrim older than 1.5.80.");
 		}
 	}
 
@@ -57,7 +86,7 @@ namespace {
 		auto path = GTS::log_directory();
 
 		if (!path) {
-			report_and_fail("Unable to lookup SKSE logs directory.");
+			ReportAndExit("Unable to lookup SKSE logs directory.");
 		}
 		*path /= PluginDeclaration::GetSingleton()->GetName();
 		*path += L".log";
@@ -67,13 +96,27 @@ namespace {
 		if (IsDebuggerPresent()) {
 			log = std::make_shared <spdlog::logger>(
 				"Global", std::make_shared <spdlog::sinks::msvc_sink_mt>());
-		} else {
-			log = std::make_shared <spdlog::logger>(
-				"Global", std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true));
+
+			log->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
+		}
+		else {
+
+			#ifdef GTSDEBUG
+				auto file_sink = std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true);
+				file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
+
+				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>(spdlog::color_mode::always);
+				console_sink->set_pattern("[GTS] [%l] [%s:%#] %v");
+
+				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", { console_sink, file_sink }));
+			#else
+				log = std::make_shared <spdlog::logger>("Global", std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true));
+				log->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
+			#endif
+
 		}
 
 		spdlog::set_default_logger(std::move(log));
-		spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e][%t][%l] [%s:%#] %v");
 		spdlog::set_level(spdlog::level::level_enum::trace);
 		spdlog::flush_on(spdlog::level::level_enum::trace);
 
@@ -156,7 +199,7 @@ namespace {
 
 			}
 		})) {
-			report_and_fail("Unable to register message listener.");
+			ReportAndExit("Unable to register message listener.");
 		}
 	}
 }
@@ -176,7 +219,7 @@ static void InitializePapyrus() {
 	if (GetPapyrusInterface()->Register(GTS::register_papyrus)) {
 		log::info("Papyrus functions bound.");
 	} else {
-		report_and_fail("Failure to register Papyrus bindings.");
+		ReportAndExit("Failure to register Papyrus bindings.");
 	}
 }
 
@@ -209,27 +252,38 @@ static void PrintPluginInfo() {
 }
 
 static void SetLogLevel() {
+
 	try {
 		log::info("Getting Logger Config...");
-		const auto& debugConfig = GTS::Config::GetSingleton().GetDebug();
-		log::info("Config Loaded");
+		const auto& debugConfig = Config::GetAdvanced();
+		log::info("Config Loaded from settings struct: Print: {} Flush: {}",debugConfig.sLogLevel, debugConfig.sFlushLevel);
 
-		spdlog::set_level(debugConfig.GetLogLevel());
-		spdlog::flush_on(debugConfig.GetFlushLevel());
+		spdlog::set_level(spdlog::level::from_str(debugConfig.sLogLevel));
+		spdlog::flush_on(spdlog::level::from_str(debugConfig.sFlushLevel));
 	}
-	catch (exception e){
-		log::critical("Could not load config file", e.what());
-		report_and_fail("Could not load config file");
+	catch (exception& e){
+		logger::critical("Could not load spdlog settings from config struct", e.what());
+		ReportAndExit("Could not load spdlog settings from config struct");
 	}
 }
 
 SKSEPluginLoad(const LoadInterface * a_skse){
 
-	//#ifdef _DEBUG
+	//This hack is needed because debug builds of commonlib combletly shit the bed during trampoline hooks
+	//Destination pointers for write call and write branch suddenly forget to add offsets to skyrims base image address.
+	//Why??? who tf knows why...
+	//So we instead build with the relwithdebinfo preset when using the debug and debug-eha presets, but pass all debug flags to the compiler when doing so...
+	//This results in this dll being built with full debug options but commonlib and other libraries being built as release...
+	//I mean is this good? No. But does it finnaly allow us to propperly debug this dll? Yes.
 
-	MessageBoxA(nullptr, "Attach Debugger Now.", "Giantess Mod - Size Matters (GtsPlugin.dll)", MB_OK);
+	//If you see a 32+ mb dll being built there's a 100% chance it will ctd at the first hook.
+	//"Normal" debug dlls should be around 21-23mb as of 15-02-2025
 
-	//#endif
+	#ifdef GTSDEBUG
+		AllocateConsole();
+		ReportInfo("GTSplugin debug build, Attach the debugger and press OK.");
+		std::cout << "GTSPlugin Debug Build" << '\n';
+	#endif
 
 	InitializeLogging();
 	PrintPluginInfo();

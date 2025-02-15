@@ -26,20 +26,26 @@ namespace GTS {
                 logger::info("Loading TOML Keybinds in .ctor...");
     
                 if(!Instance.LoadKeybinds()){
-                    MessageBoxA(nullptr,"Input.toml is either invalid or corrupted. Click OK to clear out the file.\nThis will reset your keybinds.","Size Matters - GTSPlugin.dll",MB_OK);
+                    ReportInfo("Input.toml is either invalid or corrupted.\n"
+								  "Click OK to clear out the file.\n"
+								  "This will reset your keybinds.");
             
                     Instance.ResetKeybinds();
                     
                     //Delete the config file
                     if(!DeleteFile(Instance.InputFile)){
-                        MessageBoxA(nullptr,"Could not delete Input.toml\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                        ReportAndExit("Could not delete Input.toml\n"
+									  "Check GTSPlugin.log for more info.\n"
+									  "The game will now close."
+                        );
                     }
                     
                     //Recreate the config file and start with a fresh table.
                     if(!CheckFile(Instance.InputFile)){
-                        MessageBoxA(nullptr,"Could not create a blank Input.toml file.\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                        ReportAndExit("Could not create a blank Input.toml file.\n"
+									  "Check GTSPlugin.log for more info.\n"
+									  "The game will now close."
+                        );
                     }
                 }
     

@@ -2,7 +2,7 @@
 #include "magic/effects/Potions/EssencePotion.hpp"
 #include "magic/effects/common.hpp"
 #include "data/persistent.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"

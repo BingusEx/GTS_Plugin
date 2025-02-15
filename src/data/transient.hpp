@@ -1,14 +1,12 @@
 #pragma once
 // Module that holds data that is not persistent across saves
-#include "events.hpp"
-#include "spring.hpp"
-
-using namespace std;
-using namespace SKSE;
-
 
 namespace GTS {
+
+	using namespace RE;
+
 	struct TempActorData {
+
 		float base_height;
 		float base_volume;
 		float char_weight;

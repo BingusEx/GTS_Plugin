@@ -16,11 +16,11 @@
 #include "managers/animation/Compat.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "managers/CrushManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "magic/effects/common.hpp"
 #include "utils/actorUtils.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 

@@ -1,5 +1,5 @@
 #include "magic/magic.hpp"
-#include "Config.hpp"
+
 #include "magic/effects/common.hpp"
 #include "magic/effects/absorb_effect.hpp"
 #include "magic/effects/GrowthSpurt.hpp"
@@ -25,8 +25,7 @@
 #include "magic/effects/Poisons/Poison_Of_Shrinking.hpp"
 #include "magic/effects/Potions/ShrinkResistPotion.hpp"
 #include "magic/effects/Potions/ShrinkPotion.hpp"
-#include "managers/Attributes.hpp"
-#include "data/runtime.hpp"
+
 
 namespace GTS {
 

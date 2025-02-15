@@ -1,8 +1,6 @@
 #pragma once
 
 #include "UI/DearImGui/imgui.h"
-#include "UI/DearImGui/imgui_impl_win32.h"
-#include "UI/DearImGui/imgui_impl_dx11.h"
 #include "UI/DearImGui/imgui_internal.h"
 
 #include "magic_enum/magic_enum.hpp"
@@ -43,6 +41,8 @@ namespace ImUtil {
         ImGuiContext* ctx = ImGui::GetCurrentContext();
         return ctx && ctx->WithinFrameScope;
     }
+
+    static void RenderDropShadow(ImTextureID tex_id, float size, ImU8 opacity);
 
     inline void SeperatorH(){
         ImGui::Spacing();

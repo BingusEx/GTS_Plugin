@@ -1,14 +1,11 @@
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "Config.hpp"
-#include "rays/raycast.hpp"
-#include "node.hpp"
+#include "Rays/raycast.hpp"
+#include <toml.hpp>
 
 using namespace SKSE;
 using namespace RE;
 
-
 namespace {
+
 	template <class T>
 	T* find_form(std::string_view lookup_id) {
 		// From https://github.com/Exit-9B/MCM-Helper/blob/a39b292909923a75dbe79dc02eeda161763b312e/src/FormUtil.cpp
@@ -25,6 +22,7 @@ namespace {
 	}
 
 	struct RuntimeConfig {
+
 		std::unordered_map<std::string, std::string> sounds;
 		std::unordered_map<std::string, std::string> spellEffects;
 		std::unordered_map<std::string, std::string> spells;
@@ -40,6 +38,7 @@ namespace {
 		std::unordered_map<std::string, std::string> levelitems;
 
 		RuntimeConfig(const toml::value& data) {
+
 			this->sounds = toml::find_or(data, "sounds", std::unordered_map<std::string, std::string>());
 			this->spellEffects = toml::find_or(data, "spellEffects", std::unordered_map<std::string, std::string>());
 			this->spells = toml::find_or(data, "spells", std::unordered_map<std::string, std::string>());
@@ -53,6 +52,7 @@ namespace {
 			this->keywords = toml::find_or(data, "keywords", std::unordered_map<std::string, std::string>());
 			this->containers = toml::find_or(data, "containers", std::unordered_map<std::string, std::string>());
 			this->levelitems = toml::find_or(data, "levelitems", std::unordered_map<std::string, std::string>());
+
 		}
 	};
 }

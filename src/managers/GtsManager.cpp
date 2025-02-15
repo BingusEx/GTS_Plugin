@@ -11,34 +11,21 @@
 #include "managers/MaxSizeManager.hpp"
 #include "managers/animation/Grab.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/GtsManager.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/hitmanager.hpp"
-#include "utils/MovementForce.hpp"
 #include "utils/DynamicScale.hpp"
-#include "managers/highheel.hpp"
 #include "utils/actorUtils.hpp"
 #include "utils/actorBools.hpp"
 #include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
 #include "scale/modscale.hpp"
 #include "data/transient.hpp"
-#include "ActionSettings.hpp"
-#include "rays/raycast.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "utils/camera.hpp"
-#include "utils/debug.hpp"
 #include "UI/DebugAPI.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-#include <vector>
-#include <string>
 
 using namespace GTS;
 using namespace RE;
@@ -46,6 +33,7 @@ using namespace SKSE;
 using namespace std;
 
 namespace {
+
 	const float ini_adjustment = 1000000; //1 million units distance
 
 	void FixEmotionsRange() { // Makes facial emotions always enabled at any size

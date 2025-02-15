@@ -8,8 +8,8 @@
 #include "data/persistent.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "timer.hpp"
+
+
 
 
 using namespace SKSE;

@@ -1,6 +1,6 @@
 #include "utils/actorUtils.hpp"
 #include "utils/av.hpp"
-#include "profiler.hpp"
+
 
 using namespace RE;
 using namespace SKSE;

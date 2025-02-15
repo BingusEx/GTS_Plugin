@@ -1,11 +1,3 @@
-#include "Managers/footik/collider_actor_data.hpp"
-#include "utils/actorUtils.hpp"
-#include "scale/scale.hpp"
-#include "Colliders/RE/RE.hpp"
-#include "data/world.hpp"
-#include "node.hpp"
-#include "util.hpp"
-
 //using namespace std;
 //using namespace SKSE;
 //using namespace RE;

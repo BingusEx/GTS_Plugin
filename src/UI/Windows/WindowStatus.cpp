@@ -6,6 +6,7 @@
 
 //categories
 #include "Config/ConfigUtil.hpp"
+#include "Data/Plugin.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
 
 namespace GTS {

@@ -1,5 +1,6 @@
 #pragma once
 
+
 struct GTSInputEvent {
     std::string Event;                      //Event Name
     std::vector<std::string> Keys;          //List Of Dinput key names Minus "DIK_ preffix"
@@ -44,15 +45,29 @@ namespace GTS {
     inline const std::vector<GTSInputEvent> DefaultEvents = [](){
         const std::vector<GTSInputEvent> DefaultVec = {
 
+
+            //Example
+
+            //{
+            //    .Event = "Event",
+            //    .Keys = {"A", "B"},
+            //    .Exclusive = false,
+            //    .Duration = 1.0f,
+            //    .Trigger = "Once",
+            //    .BlockInput = "Automatic",
+            //    .Disabled = false,
+            //},
+
+
             //=======================================================
-            //================ GtsUI
+            //================ U I
             //=======================================================
 
             {
                 .Event = "OpenSettings",
                 .Keys = {"LSHIFT", "F1"},
                 .Trigger = "Once",
-                .BlockInput = "Never"
+                .BlockInput = "Always"
             },
 
             //========================================================
@@ -567,8 +582,9 @@ namespace GTS {
         };
 
         if(CheckDuplicateEvent(DefaultVec)){
-            MessageBoxA(nullptr,"No duplicate event names in DefaultEvents pls :(\nThe GtsUI can't handle it.","KeybindList.hpp",MB_OK);
-            TerminateProcess(GetCurrentProcess(), EXIT_SUCCESS);
+            ReportAndExit("KeybindList.hpp\n"
+                "InputEvents with duplicate event names are not allowed.");
+
         }
 
         return DefaultVec;

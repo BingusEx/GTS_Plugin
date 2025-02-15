@@ -1,7 +1,7 @@
 #pragma once
 #include "ImGui/ImWindowManager.hpp"
 #include "ImGui/ImInput.hpp"
-#include "Managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 
 namespace GTS {
 

@@ -3,12 +3,12 @@
 #include "managers/OverkillManager.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/transient.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "scale/scale.hpp"
-#include "events.hpp"
 
-#include "managers/contact.hpp"
+
 #include "data/runtime.hpp"
+#include "Data/Tasks.hpp"
 
 using namespace RE;
 using namespace SKSE;

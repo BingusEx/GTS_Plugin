@@ -1,7 +1,7 @@
 #include "managers/cameras/camutil.hpp"
 #include "managers/cameras/tp/alt.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 
 using namespace RE;

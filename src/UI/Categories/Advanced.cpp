@@ -21,18 +21,21 @@ namespace GTS {
                              "Sidenote: I've never actually seen this do anything... No extra info is flushed out. I guess we always immediatly empty the log buffer...";
 
             if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
+
                 ImUtil::CheckBox("Enable Profiling",&Settings.bProfile, T0);
                 ImUtil::CheckBox("Allocate Console",&Settings.bAllocConsole, T1);
                 ImUtil::CheckBox("Show Debug Overlay",&Settings.bShowOverlay,T2);
 
                 if (ImUtil::ComboEx<spdlog::level::level_enum>("Log Level", Settings.sLogLevel,T3,false,true)) {
-                    //TODO Call spdlog function to immediately Change the values
-               }
+                    spdlog::set_level(spdlog::level::from_str(Settings.sLogLevel));
+				}
 
-               if (ImUtil::ComboEx<spdlog::level::level_enum>("Flush Level", Settings.sFlushLevel,T4,false,true)) {
-                   //TODO Call spdlog function to immediately Change the values
-              }
+				if (ImUtil::ComboEx<spdlog::level::level_enum>("Flush Level", Settings.sFlushLevel,T4,false,true)) {
+                   spdlog::flush_on(spdlog::level::from_str(Settings.sFlushLevel));
+				}
+
               ImGui::Spacing();
+
 			}
 
         }
@@ -83,8 +86,8 @@ namespace GTS {
 
         }
 
-        if (ImUtil::Button("Quit", "Close the program\nTODO: Remove this later", false, 1.0f)) {
-            TerminateProcess(GetCurrentProcess(), EXIT_SUCCESS);
+        if (ImUtil::Button("Quit", "This will immediatly close the game.", false, 1.0f)) {
+            SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
         }
 
     }

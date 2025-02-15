@@ -6,7 +6,7 @@
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
-#include "timer.hpp"
+
 #include "managers/Rumble.hpp"
 
 namespace {

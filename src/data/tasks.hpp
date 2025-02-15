@@ -1,10 +1,9 @@
+#pragma once
+
+#include "Data/Time.hpp"
+
 // A task runs every frame
 //  until it returns false
-
-
-#include "events.hpp"
-#include "data/time.hpp"
-
 namespace GTS {
 
 	enum class UpdateKind {

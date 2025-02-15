@@ -31,8 +31,6 @@ namespace GTS {
 
 				uint32_t key = DIKToVK(event.keyCode);
 
-				logger::debug("VK Keycode", event.keyCode, key);
-
 				if (key == event.keyCode) {
 					key = MapVirtualKeyEx(event.keyCode, MAPVK_VSC_TO_VK_EX, GetKeyboardLayout(0));
 				}

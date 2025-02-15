@@ -1,7 +1,7 @@
 #pragma once
 // Module that handles footsteps
 
-#include "events.hpp"
+
 
 using namespace std;
 using namespace SKSE;

@@ -6,8 +6,8 @@
 #include "data/persistent.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "node.hpp"
+
+
 
 using namespace SKSE;
 using namespace RE;

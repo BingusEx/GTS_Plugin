@@ -5,7 +5,7 @@
 #include "managers/damage/CollisionDamage.hpp"
 #include "managers/damage/TinyCalamity.hpp"
 #include "managers/perks/PerkHandler.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/Attributes.hpp"
@@ -13,7 +13,7 @@
 #include "managers/highheel.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/transient.hpp"
 #include "utils/looting.hpp"
 #include "managers/vore.hpp"
@@ -22,9 +22,9 @@
 #include "UI/DebugAPI.hpp"
 
 
-#include "profiler.hpp"
 
-#include "node.hpp"
+
+
 
 using namespace std;
 using namespace SKSE;

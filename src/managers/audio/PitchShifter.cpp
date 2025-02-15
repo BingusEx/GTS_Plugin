@@ -1,22 +1,14 @@
 
 #include "managers/audio/PitchShifter.hpp"
+
+#include "config/Config.hpp"
+
 #include "data/persistent.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
 #include "utils/debug.hpp"
 #include "utils/av.hpp"
-#include "profiler.hpp"
-#include "events.hpp"
-#include "spring.hpp"
-#include "timer.hpp"
-
-#include "Config.hpp"
-
-#include "node.hpp"
-
-#include <vector>
-#include <string>
 
 using namespace RE;
 using namespace GTS;
@@ -39,21 +31,11 @@ namespace GTS {
 							auto Audio_3 = high->soundHandles[2];
 
 							float scale = get_visual_scale(tiny) / get_natural_scale(tiny, false) / game_getactorscale(tiny);
-
 							float volume = std::clamp(scale + 0.5f, 0.35f, 1.0f);
-
 							float size = (scale * 0.20f) + 0.8f;
 							float frequence = (1.0f / size) / (1.0f * size);
-
-							
-
-							auto config = Config::GetSingleton().GetVoice();
-							float config_param = config.GetVoiceFrequency();
-
-							float freq_high = 1.0f / std::clamp(config_param, 1.0f, 10.0f);
-
+							float freq_high = 1.0f / std::clamp(Config::GetAudio().fMaxVoiceFrequency, 1.0f, 10.0f);
 							float freq_low = 1.5f;
-
 							float freq = std::clamp(frequence, freq_high, freq_low);
 							// < 1  = deep voice, below 0.5 = audio bugs out, not recommended
 							// > 1 = mouse-like voice, not recommended to go above 1.5	

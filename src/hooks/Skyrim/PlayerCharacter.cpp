@@ -7,7 +7,7 @@
 #include "data/persistent.hpp"
 
 #include "data/plugin.hpp"
-#include "events.hpp"
+
 #include "scale/scale.hpp"
 
 #include "utils/debug.hpp"

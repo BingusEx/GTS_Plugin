@@ -1,28 +1,16 @@
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "managers/animation/Utils/AnimationUtils.hpp"
 #include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
 #include "managers/damage/SizeHitEffects.hpp"
 #include "managers/animation/HugShrink.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "managers/animation/Grab.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
-#include "managers/hitmanager.hpp"
-#include "managers/Attributes.hpp"
 #include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
 #include "managers/Rumble.hpp"
-#include "data/transient.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "events.hpp"
-#include "Config.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-#include <vector>
-#include <string>
 
 using namespace GTS;
 using namespace RE;

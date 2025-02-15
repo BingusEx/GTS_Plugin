@@ -3,18 +3,34 @@
 #include "UI/DearImGui/imgui_impl_win32.h"
 #include "UIManager.hpp"
 
+#include "Data/Plugin.hpp"
+
+#include "ImGui/ImUtil.hpp"
+
 #include "UI/ImGui/ImWindowManager.hpp"
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/WindowStatus.hpp"
 
-#include "Managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 
+
+
+
+namespace {
+
+    void OpenSettings(const GTS::ManagedInputEvent& data) {
+
+        if (!GTS::Plugin::Ready()) {
+            return;
+        }
+
+        GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")->Show = true;
+        GTS::UIManager::GetSingleton().OnFocusLost();
+    }
+
+}
 
 namespace GTS {
-
-    void OpenSettings(const ManagedInputEvent& data) {
-        ImWindowManager::GetSingleton().GetWindowByName("Settings")->Show = true;
-    }
 
     void UIManager::Init() {
 
@@ -33,8 +49,8 @@ namespace GTS {
 		HRESULT hr = DXGISwapChain->GetDesc(&SwapChainDesc);
 
 		if (FAILED(hr)) {
-		    logger::error("Could Not Get Swapchain, HRESULT: {}", hr);
-		    SKSE::stl::report_and_fail("Could Not Get Swapchain");
+		    logger::error("Could not get the swapchain, HRESULT: {}", hr);
+            ReportAndExit("Could not get the swapchain, HRESULT: {}");
 		}
 
         ImGui::CreateContext();
@@ -47,14 +63,22 @@ namespace GTS {
 
         //Appears to do the exact opposite of what we want...
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        
+        //Keyboard nav is too buggy if using borderless mode...
         io.ConfigFlags |= ImGuiConfigFlags_NavNoCaptureKeyboard;
 
         RECT rect{};
         if (GetClientRect(SwapChainDesc.OutputWindow, &rect) == TRUE) {
-            ImGuiUserData.screenScaleRatio = { static_cast<float>(SwapChainDesc.BufferDesc.Width) / static_cast<float>(rect.right), static_cast<float>(SwapChainDesc.BufferDesc.Height) / static_cast<float>(rect.bottom) };
+            ImGuiUserData.screenScaleRatio = {
+            	.x = static_cast<float>(SwapChainDesc.BufferDesc.Width) / static_cast<float>(rect.right),
+            	.y = static_cast<float>(SwapChainDesc.BufferDesc.Height) / static_cast<float>(rect.bottom)
+            };
         }
         else {
-            ImGuiUserData.screenScaleRatio = { 1.0f, 1.0f };
+            ImGuiUserData.screenScaleRatio = {
+            	.x= 1.0f,
+            	.y= 1.0f
+            };
         }
 
         ImGui_ImplWin32_Init(SwapChainDesc.OutputWindow);
@@ -66,7 +90,6 @@ namespace GTS {
         WinMgr.AddWindow(std::make_unique<WindowSettings>());
         WinMgr.AddWindow(std::make_unique<WindowStatus>());
 
-
         Initialized.store(true);
 
         logger::info("ImGui Init OK");
@@ -76,8 +99,15 @@ namespace GTS {
     }
 
     void UIManager::Render() {
+        std::ignore = Profilers::Profile("UIManager::Render");
 
         if (!Initialized) {
+            return;
+        }
+
+        ProcessInputEventQueue();
+
+        if (!Plugin::Ready()) {
             return;
         }
 
@@ -92,12 +122,7 @@ namespace GTS {
 
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-        ProcessInputEventQueue();
-
     }
-
-
-
 }
 
 

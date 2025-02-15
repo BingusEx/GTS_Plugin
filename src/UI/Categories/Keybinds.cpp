@@ -187,22 +187,29 @@ namespace GTS {
 	            }
 
 	            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.7f);
-	            ImUtil::CheckBox("Disabled", &Event.Disabled,T0);
+
+				const bool IsSettings = Event.Event == "OpenSettings";
+
+				if (!IsSettings) {
+					ImUtil::CheckBox("Disabled", &Event.Disabled, T0);
+				}
 	            
 	            //If Disabled: Don't draw at all.
 	            if(!Event.Disabled){
 
 	                {   //-- Basic Controls
+						//We don't want users breaking the settings menu...
+						if (!IsSettings) {
+							ImGui::BeginDisabled(IsRebinding);
+							ImUtil::CheckBox("Exclusive", &Event.Exclusive, T1);
+							ImUtil::ComboEx<TriggerType>("Trigger Type", Event.Trigger, T2);
+							ImUtil::ComboEx<BlockInputTypes>("Block Input", Event.BlockInput, T3);
 
-	                    ImGui::BeginDisabled(IsRebinding);
-	                    ImUtil::CheckBox("Exclusive", &Event.Exclusive, T1);
-	                    ImUtil::ComboEx<TriggerType>("Trigger Type",Event.Trigger, T2);
-	                    ImUtil::ComboEx<BlockInputTypes>("Block Input",Event.BlockInput, T3);
-
-	                    ImGui::InputFloat("Trigger After",&Event.Duration,0.1f,0.01f,"%.2f Seconds");
-	                    ImUtil::Tooltip(T4);
-	                    Event.Duration = std::clamp(Event.Duration,0.0f,10.0f);
-	                    ImGui::EndDisabled();
+							ImGui::InputFloat("Trigger After", &Event.Duration, 0.1f, 0.01f, "%.2f Seconds");
+							ImUtil::Tooltip(T4);
+							Event.Duration = std::clamp(Event.Duration, 0.0f, 10.0f);
+							ImGui::EndDisabled();
+						}
 	                }
 
 	                

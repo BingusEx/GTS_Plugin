@@ -1,7 +1,7 @@
 #pragma once
 // Module that handles crushing others
-#include "events.hpp"
-#include "timer.hpp"
+
+
 
 using namespace std;
 using namespace SKSE;

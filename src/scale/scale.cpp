@@ -5,7 +5,7 @@
 #include "data/transient.hpp"
 #include "data/runtime.hpp"
 
-#include "Profiler.hpp"
+
 
 namespace {
 	constexpr float EPS = std::numeric_limits<float>::epsilon();

@@ -1,7 +1,6 @@
 #pragma once
 // Module that holds data that is persistent across saves
 
-#include "Events.hpp"
 #include "Scale/ModScale.hpp"
 
 namespace GTS {

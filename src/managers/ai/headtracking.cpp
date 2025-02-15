@@ -1,29 +1,9 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/gamemode/GameModeManager.hpp"
-#include "magic/effects/TinyCalamity.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/RipClothManager.hpp"
-#include "managers/ai/headtracking.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/InputManager.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/hitmanager.hpp"
-#include "managers/highheel.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "utils/debug.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-#include <vector>
-#include <string>
 
+#include "managers/gamemode/GameModeManager.hpp"
+#include "managers/ai/headtracking.hpp"
+#include "Managers/Input/InputManager.hpp"
+
+#include "scale/scale.hpp"
 
 
 using namespace GTS;

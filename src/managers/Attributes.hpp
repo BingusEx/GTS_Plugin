@@ -1,6 +1,6 @@
 #pragma once
 // Module that handles AttributeValues
-#include "events.hpp"
+
 
 using namespace std;
 using namespace SKSE;

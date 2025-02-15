@@ -1,6 +1,6 @@
 #include "utils/findActor.hpp"
 #include "utils/actorUtils.hpp"
-#include "profiler.hpp"
+
 
 using namespace std;
 using namespace RE;

@@ -1,12 +1,11 @@
 #pragma once
+
 // Handles the various methods of scaling an actor
 
-
-using namespace std;
-
-using namespace SKSE;
-
 namespace GTS {
+
+	using namespace RE;
+
 	enum SizeMethod {
 		ModelScale = 0,
 		RootScale = 1,

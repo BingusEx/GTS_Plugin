@@ -2,7 +2,7 @@
 // Module that handles footsteps
 
 #include "managers/impact.hpp"
-#include "events.hpp"
+
 
 using namespace std;
 using namespace SKSE;

@@ -5,6 +5,7 @@
 
 #include "Config/ConfigUtil.hpp"
 #include "Config/SettingsList.hpp"
+#include "Utils/MessageboxUtil.hpp"
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -84,11 +85,11 @@ namespace GTS {
             return reflect::type_name<T>();
         }
 
-    #define REGISTER_STRUCT_NAME(TYPE, NAME)                        \
-    template <>                                                     \
-    constexpr std::string_view GetStructName<TYPE>(const TYPE&) {   \
-        return NAME;                                                \
-    }
+	    #define REGISTER_STRUCT_NAME(TYPE, NAME)                        \
+	    template <>                                                     \
+	    constexpr std::string_view GetStructName<TYPE>(const TYPE&) {   \
+			return NAME;                                                \
+		}
 
         //Too much effort to make a parser for it, So Define the names here.
         REGISTER_STRUCT_NAME(SettingsGeneral, "General");
@@ -173,20 +174,27 @@ namespace GTS {
                 logger::info("Loading TOML Settings in .ctor...");
 
                 if (!Instance.LoadSettings()) {
-                    MessageBoxA(nullptr, "Settings.toml is either invalid or corrupted. Click OK to clear out the settings file and delete the old settings.", "Size Matters - GTSPlugin.dll", MB_OK);
+                    ReportInfo("Settings.toml is either invalid or corrupted.\n"
+							   "Click OK to clear out the settings file.\n"
+							   "This will reset the mod's settings."
+                    );
 
                     Instance.ResetToDefaults();
 
                     //Delete the config file
                     if (!DeleteFile(Instance.ConfigFile)) {
-                        MessageBoxA(nullptr, "Could not delete Settings.toml\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                        ReportAndExit("Could not delete Settings.toml\n"
+									  "Check GTSPlugin.log for more info.\n"
+									  "The game will now close."
+                        );
                     }
 
                     //Recreate the config file and start with a fresh table.
                     if (!CheckFile(Instance.ConfigFile)) {
-                        MessageBoxA(nullptr, "Could not create a blank Settings.toml file.\nCheck GTSPlugin.log for more info.\nThe game will now close.", "Size Matters - GTSPlugin.dll", MB_OK);
-                        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
+                        ReportAndExit("Could not create a blank Settings.toml file.\n"
+                                      "Check GTSPlugin.log for more info.\n"
+                                      "The game will now close."
+                        );
                     }
                 }
 

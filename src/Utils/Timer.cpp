@@ -1,5 +1,5 @@
-#include "timer.hpp"
-#include "data/time.hpp"
+#include "Timer.hpp"
+#include "Data/Time.hpp"
 
 using namespace RE;
 using namespace SKSE;

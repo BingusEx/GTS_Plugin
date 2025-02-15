@@ -1,12 +1,6 @@
 #pragma once
+#include "utils/spring.hpp"
 // Module that handles Rumble
-#include "events.hpp"
-#include "timer.hpp"
-#include "spring.hpp"
-
-using namespace std;
-using namespace SKSE;
-
 
 namespace GTS {
 

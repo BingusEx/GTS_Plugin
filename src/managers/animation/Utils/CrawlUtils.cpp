@@ -11,7 +11,7 @@
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "rays/raycast.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"

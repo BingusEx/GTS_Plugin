@@ -2,9 +2,11 @@
 #include "Data/runtime.hpp"
 #include "Data/Time.hpp"
 #include "Data/transient.hpp"
-#include "Events.hpp"
 #include "Hooks/Detours/FunctionHook.hpp"
 #include "Hooks/Skyrim/Damage.hpp"
+
+#include "data/tasks.hpp"
+
 #include "Managers/animation/Grab.hpp"
 #include "Managers/animation/HugShrink.hpp"
 #include "Managers/animation/Utils/CooldownManager.hpp"

@@ -3,15 +3,15 @@
 #include "managers/cameras/state.hpp"
 #include "managers/camera.hpp"
 #include "managers/highheel.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "api/APIManager.hpp"
 #include "scale/modscale.hpp"
 #include "rays/raycast.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
-#include "events.hpp"
-#include "node.hpp"
+
+
 
 using namespace RE;
 using namespace GTS;

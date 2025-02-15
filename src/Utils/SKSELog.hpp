@@ -1,23 +1,18 @@
 #pragma once
-#include "SKSE/Logger.h"
-
-#include "RE/V/VirtualMachine.h"
-#include "SKSE/API.h"
 
 #include <ShlObj.h>
-using namespace SKSE;
-
-
 
 namespace GTS {
 
-	std::optional<std::filesystem::path> log_directory() {
+	using namespace SKSE;
+
+	static inline std::optional<std::filesystem::path> log_directory() {
 		wchar_t* buffer{ nullptr };
 		const auto result = ::SHGetKnownFolderPath(::FOLDERID_Documents, ::KNOWN_FOLDER_FLAG::KF_FLAG_DEFAULT, nullptr, std::addressof(buffer));
 		std::unique_ptr<wchar_t[], decltype(&::CoTaskMemFree)> knownPath(buffer, ::CoTaskMemFree);
 
 		if (!knownPath || result != 0) {
-			SKSE::stl::report_and_fail("failed to get known folder path"sv);
+			ReportAndExit("Something went wrong when trying to find the Skyrim Documents folder");
 			return std::nullopt;
 		}
 

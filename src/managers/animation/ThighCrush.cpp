@@ -24,16 +24,16 @@
 #include "managers/audio/footstep.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "utils/InputConditions.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/explosion.hpp"
 #include "managers/tremor.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "node.hpp"
+
 
 using namespace std;
 using namespace SKSE;

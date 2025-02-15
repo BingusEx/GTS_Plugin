@@ -19,7 +19,7 @@
 
 #include "Config/ConfigUtil.hpp"
 
-#include "Managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 
 
 namespace GTS {
@@ -248,12 +248,14 @@ namespace GTS {
 	        ImUtil::SeperatorV();
 	        
 	        //Reset
-	        //TODO: I wonder if this also messes with the struct data. I mean it does. But does it have any effect?
 	        if(ImUtil::Button(Lables[2], "Load the default values.\nThis does not delete any previous saved changes unless you explicitly overwrite them by saving.", buttonstate, 1.3f)){
 	            Settings.ResetToDefaults();
 	            KeyMgr.ResetKeybinds();
 	            StyleMgr.LoadStyle();
 	            FontMgr.RebuildFonts();
+				spdlog::set_level(spdlog::level::from_str(Config::GetAdvanced().sLogLevel));
+				spdlog::flush_on(spdlog::level::from_str(Config::GetAdvanced().sFlushLevel));
+				logger::info("All Mod Settings Reset");
 	        }
 	    }
 	    ImGui::EndDisabled();

@@ -166,11 +166,11 @@ namespace GTS {
                 return true;
             }
 
-            logger::error("Could not open the Input.toml for writing. Settings not saved!");
+            logger::error("Could not open Input.toml for writing. Settings not saved!");
             return false;
 
         }
-        catch (toml::exception e) {
+        catch (toml::exception& e) {
             logger::error("Could not parse TomlData when trying to save: {}", e.what());
             return false;
         }
@@ -178,7 +178,7 @@ namespace GTS {
             logger::error("File System Error: {}", e.what());
             return false;
         }
-        catch (const std::exception e) {
+        catch (const std::exception& e) {
             logger::error("SaveKeybinds() -> Misc Exception: {}", e.what());
             return false;
         }

@@ -8,7 +8,7 @@
 #include "scale/scale.hpp"
 
 
-#include "timer.hpp"
+
 
 namespace GTS {
 	Absorb::Absorb(ActiveEffect* effect) : Magic(effect) {}

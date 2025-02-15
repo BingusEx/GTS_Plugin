@@ -1,12 +1,7 @@
 #include "Hooks/Skyrim/Main.hpp"
-
-#include "Events.hpp"
+#include "Config/Config.hpp"
 #include "Data/Time.hpp"
 #include "Data/Plugin.hpp"
-#include "Profiler.hpp"
-#include "Timer.hpp"
-
-#include "Config.hpp"
 
 using namespace RE;
 using namespace SKSE;
@@ -85,7 +80,7 @@ namespace Hooks {
 		}
 		Plugin::SetOnMainThread(false);
 
-		if (Config::GetSingleton().GetDebug().ShouldProfile()) {
+		if (Config::GetAdvanced().bProfile) {
 			static Timer timer = Timer(5.0);
 			if (timer.ShouldRun()) {
 				Profilers::Report();

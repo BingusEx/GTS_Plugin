@@ -1,8 +1,4 @@
-#include "scale/modscale.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "spring.hpp"
-#include "node.hpp"
+#include "Data/Transient.hpp"
 
 using namespace SKSE;
 using namespace RE;

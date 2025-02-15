@@ -8,7 +8,7 @@
 #include "data/runtime.hpp"
 #include "magic/effects/common.hpp"
 #include "utils/actorUtils.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 
 
 using namespace SKSE;

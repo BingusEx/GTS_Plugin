@@ -3,7 +3,7 @@
 #include "managers/damage/LaunchObject.hpp"
 #include "utils/actorUtils.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "scale/modscale.hpp"
 #include "scale/scale.hpp"
 

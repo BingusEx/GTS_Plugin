@@ -118,42 +118,53 @@ target_precompile_headers(${PROJECT_NAME}
 # # Automatic deployment
 # #######################################################################################################################
 
-# Automatic deployment to FOMOD directory.
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(BUILD_NAME "Debug")
+# Extract the last component of the binary directory (which we assume is something like "build-debug", "build-release", etc.)
+get_filename_component(BUILD_FOLDER "${CMAKE_BINARY_DIR}" NAME)
+
+# Use a regular expression to extract the suffix after the hyphen.
+# For example, if BUILD_FOLDER is "build-debug", then BUILD_NAME becomes "Debug"
+string(REGEX MATCH "[-]([A-Za-z0-9_]+)$" _match "${BUILD_FOLDER}")
+if(_match)
+  # Remove the hyphen to get a clean build name (e.g. "Debug")
+  string(REGEX REPLACE "[-]" "" BUILD_NAME "${_match}")
+  # Optionally, capitalize the first letter if needed.
 else()
-    set(BUILD_NAME "Release")
+  # Fallback in case the regex doesn't match.
+  set(BUILD_NAME "${CMAKE_BUILD_TYPE}")
 endif()
 
+message(STATUS "Automatic deployment build name: ${BUILD_NAME}")
+
+# Use BUILD_NAME in the install and deployment paths
 install(DIRECTORY DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Papyrus${BUILD_NAME}/")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
-		
+  COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
-		
-if(${CMAKE_BUILD_TYPE} STREQUAL Debug OR ${CMAKE_BUILD_TYPE} STREQUAL RelWithDebInfo OR ${CMAKE_BUILD_TYPE} STREQUAL Release)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+  COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+
+# Copy the PDB if available for these configurations
+if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
 endif()
 
 file(GLOB_RECURSE OUTPUT_DLLS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.dll")
 file(GLOB_RECURSE OUTPUT_PDBS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.pdb")
 
 set_property(TARGET ${PROJECT_NAME}
-        APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${OUTPUT_DLLS}")
+  APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${OUTPUT_DLLS}")
 set_property(TARGET ${PROJECT_NAME}
-        APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${OUTPUT_PDBS}")
+  APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${OUTPUT_PDBS}")
 
-#Also Copy the PDB and dll to the directory defined by this var
-#so i don't have to remember to ctrl c ctrl v all the time
-if (DEFINED ENV{GTSPLUGIN_COPY_DIR})
-	if(${CMAKE_BUILD_TYPE} STREQUAL Debug OR ${CMAKE_BUILD_TYPE} STREQUAL RelWithDebInfo OR ${CMAKE_BUILD_TYPE} STREQUAL Release)
-		add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
-		add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
-	endif()
+# Also copy the PDB and dll to the directory defined by the GTSPLUGIN_COPY_DIR environment variable,
+# if it is defined.
+if(DEFINED ENV{GTSPLUGIN_COPY_DIR})
+  if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo|Release")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
+  endif()
 endif()
-

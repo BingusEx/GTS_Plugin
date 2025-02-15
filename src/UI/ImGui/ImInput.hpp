@@ -447,7 +447,7 @@ namespace GTS {
 
 		private:
 
-		class CharEvent : public RE::InputEvent {
+		class CharEvent final : public RE::InputEvent {
 			public:
 			uint32_t keyCode;
 		};
@@ -492,8 +492,6 @@ namespace GTS {
 		std::shared_mutex InputMutex;
 
 		std::vector<KeyEvent> KeyEventQueue {};
-
-
 
 		public:
 

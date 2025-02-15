@@ -1,6 +1,4 @@
 #pragma once
-#include "events.hpp"
-#include <functional>
 
 using namespace std;
 using namespace SKSE;

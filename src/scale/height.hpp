@@ -1,12 +1,10 @@
 #pragma once
 // Handles the various methods of scaling an actor
 
-
-using namespace std;
-
-using namespace SKSE;
-
 namespace GTS {
+
+	using namespace RE;
+
 	void set_target_height(Actor* actor, float height);
 	float get_target_height(Actor* actor);
 	void mod_target_height(Actor* actor, float amt);

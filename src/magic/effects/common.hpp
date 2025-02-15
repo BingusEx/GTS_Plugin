@@ -6,7 +6,7 @@
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "data/transient.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/height.hpp"
 #include "scale/scale.hpp"
@@ -14,8 +14,8 @@
 
 #include "utils/random.hpp"
 
-#include "events.hpp"
-#include "node.hpp"
+
+
 // Module that handles various magic effects
 
 namespace {

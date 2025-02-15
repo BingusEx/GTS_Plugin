@@ -6,8 +6,8 @@
 
 #include <RE/Skyrim.h>
 
-#include "events.hpp"
-#include "node.hpp"
+
+
 
 using namespace std;
 

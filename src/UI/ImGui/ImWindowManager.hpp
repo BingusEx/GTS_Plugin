@@ -27,7 +27,7 @@ namespace GTS {
             return instance;
         }
 
-        [[nodiscard]] ImWindow* GetWindowByName(const std::string& a_name);
+        [[nodiscard]] ImWindow* GetWindowByName(const std::string& a_name) const;
         
         [[nodiscard]] inline bool HasWindows(){
             return !windows.empty();

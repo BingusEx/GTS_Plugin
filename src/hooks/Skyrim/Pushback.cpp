@@ -4,7 +4,7 @@
 #include "Scale/Scale.hpp"
 #include "Utils/ActorUtils.hpp"
 #include "Data/Transient.hpp"
-#include "profiler.hpp"
+
 
 using namespace SKSE;
 using namespace RE;

@@ -1,7 +1,7 @@
 #pragma once
 // Module that handles AttributeAdjustment
-#include "events.hpp"
-#include "spring.hpp"
+
+
 
 using namespace std;
 using namespace SKSE;

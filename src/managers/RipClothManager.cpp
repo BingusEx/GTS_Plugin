@@ -1,15 +1,15 @@
 #include "managers/RipClothManager.hpp"
 
 #include "managers/GtsSizeManager.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "managers/GtsManager.hpp"
 #include "magic/effects/common.hpp"
 #include "scale/scale.hpp"
 #include "data/persistent.hpp"
 #include "data/runtime.hpp"
 #include "data/time.hpp"
-#include "timer.hpp"
-#include "timer.hpp"
+
+
 #include "managers/Rumble.hpp"
 #include "managers/animation/Utils/AnimationUtils.hpp"
 

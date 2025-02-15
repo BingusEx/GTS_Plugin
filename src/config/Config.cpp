@@ -17,7 +17,7 @@ namespace GTS {
             logger::info("Struct: {} Parsed!", _Name);
             return true;
         }
-        catch (toml::exception e) {
+        catch (toml::exception& e) {
             logger::error("Could not parse the toml table into a struct: {}", e.what());
             return false;
         }
@@ -47,7 +47,7 @@ namespace GTS {
             logger::info("TOML Data for Table {} Has been Replaced", _StructName);
             return true;
         }
-        catch (toml::exception e) {
+        catch (toml::exception& e) {
             logger::error("Could not parse the struct into a TOML table table into a struct: {}", e.what());
             return false;
         }
@@ -87,7 +87,7 @@ namespace GTS {
             return false;
 
         }
-        catch (toml::exception e) {
+        catch (toml::exception& e) {
             logger::error("Could not parse the toml table when trying to save: {}", e.what());
             return false;
         }
@@ -95,7 +95,7 @@ namespace GTS {
             logger::error("Could not parse the toml table when trying to save: {}", e.what());
             return false;
         }
-        catch (const std::exception e) {
+        catch (const std::exception& e) {
             logger::error("SaveTOMLToFile() -> Misc Exception: {}", e.what());
             return false;
         }
@@ -176,7 +176,7 @@ namespace GTS {
             logger::error("Could not parse {}: {}", _ConfigFile, e.what());
             return false;
         }
-        catch (const std::exception e) {
+        catch (const std::exception& e) {
             logger::error("Could not parse {}: {}", _ConfigFile, e.what());
             return false;
         }

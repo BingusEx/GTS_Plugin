@@ -1,6 +1,6 @@
 #pragma once
 
-#include "events.hpp"
+
 #include "managers/animation/Utils/AttachPoint.hpp"
 #include "managers/animation/Utils/TurnTowards.hpp"
 

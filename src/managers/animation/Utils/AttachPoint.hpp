@@ -8,8 +8,8 @@
 #include "RE/N/NiPoint3.h"
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
-#include "timer.hpp"
-#include "node.hpp"
+
+
 
 
 namespace {

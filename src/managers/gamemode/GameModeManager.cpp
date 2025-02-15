@@ -1,26 +1,14 @@
 #include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
 #include "managers/gamemode/GameModeManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "magic/effects/TinyCalamity.hpp"
-#include "managers/RipClothManager.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "managers/Rumble.hpp"
-#include "data/transient.hpp"
 #include "utils/random.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "utils/debug.hpp"
 #include "data/time.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "timer.hpp"
-#include "node.hpp"
-#include <vector>
-#include <string>
 
 using namespace GTS;
 using namespace RE;

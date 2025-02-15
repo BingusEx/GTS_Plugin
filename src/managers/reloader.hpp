@@ -1,6 +1,6 @@
 #pragma once
 // Module that handles various reload events
-#include "events.hpp"
+
 
 using namespace std;
 using namespace SKSE;

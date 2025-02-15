@@ -4,7 +4,7 @@
 #include "managers/ThighSandwichController.hpp"
 #include "managers/audio/footstep.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/explosion.hpp"
@@ -12,13 +12,13 @@
 #include "data/persistent.hpp"
 #include "managers/tremor.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
-#include "events.hpp"
-#include "spring.hpp"
-#include "node.hpp"
+
+
+
 
 
 namespace {

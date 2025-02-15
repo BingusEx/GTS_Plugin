@@ -3,7 +3,7 @@
 #include "managers/emotions/EmotionManager.hpp"
 #include "managers/audio/footstep.hpp"
 #include "managers/GtsSizeManager.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/explosion.hpp"
@@ -12,9 +12,9 @@
 #include "data/transient.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "spring.hpp"
-#include "node.hpp"
+
+
+
 
 namespace {
 

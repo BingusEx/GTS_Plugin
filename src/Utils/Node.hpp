@@ -1,10 +1,9 @@
 #pragma once
-// Module that finds nodes and node realated data
-using namespace std;
-using namespace SKSE;
-
 
 namespace GTS {
+
+	using namespace RE;
+
 	std::vector<NiAVObject*> GetAllNodes(Actor* actor);
 	void walk_nodes(Actor* actor);
 	NiAVObject* find_node(Actor* actor, std::string_view node_name, bool first_person = false);

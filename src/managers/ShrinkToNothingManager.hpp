@@ -1,7 +1,7 @@
 #pragma once
 // Module that handles shrinking to nothing
-#include "events.hpp"
-#include "timer.hpp"
+
+
 
 using namespace std;
 using namespace SKSE;

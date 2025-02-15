@@ -1,5 +1,7 @@
 #include "ImWindowManager.hpp"
 
+#include "ImUtil.hpp"
+
 namespace GTS {
 
     void ImWindowManager::AddWindow(std::unique_ptr<ImWindow> a_window) {
@@ -21,7 +23,7 @@ namespace GTS {
 
     void ImWindowManager::Update() {
 
-        if (HasWindows()) [[likely]] {
+		if (HasWindows()) [[likely]] {
 
             if (HasInputConsumers()) {
                 auto& io = ImGui::GetIO();
@@ -35,7 +37,20 @@ namespace GTS {
                 io.ClearInputMouse();
             }
 
+            if (ShowMetrics) {
+                ImGui::ShowMetricsWindow();
+            }
+
+            else if (ShowStack) {
+                ImGui::ShowStackToolWindow();
+            }
+
+            if (Plugin::AnyMenuOpen()) {
+                return;
+            }
+
             for (const auto& window : windows) {
+
 
                 if (window->ShouldShow()) {
 
@@ -49,7 +64,6 @@ namespace GTS {
                     }
 
                     ImGui::Begin(window->Name.c_str(), &window->Show, window->flags);
-
                     window->Draw();
 
                     if (PushedVars) {
@@ -61,26 +75,19 @@ namespace GTS {
                     ImGui::PopFont();
                 }
             }
-
-            if (ShowMetrics) {
-                ImGui::ShowMetricsWindow();
-            }
-            else if (ShowStack) {
-                ImGui::ShowStackToolWindow();
-            }
         }
-
     }
 
     //Gets a ptr to the window which fully matches the "Name" var.
     //Name var gets set in the ctor of the child window, otherwise its "Default"
     //If 2 Or more default windows exist only the earliest one will be returned
-    ImWindow* ImWindowManager::GetWindowByName(const std::string& a_name) {
+    ImWindow* ImWindowManager::GetWindowByName(const std::string& a_name) const {
         for (const auto& window : windows) {
             if (window->Name == a_name) {
                 return window.get();
             }
         }
+        logger::error("ImWindowManager::GetWindowByName Name: {} does not exist, i hope you have nullptr checks...", a_name);
         return nullptr;
     }
 }

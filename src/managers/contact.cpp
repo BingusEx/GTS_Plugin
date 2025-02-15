@@ -5,7 +5,7 @@
 #include "managers/highheel.hpp"
 #include "scale/scale.hpp"
 #include "scale/modscale.hpp"
-#include "profiler.hpp"
+
 
 using namespace SKSE;
 using namespace RE;

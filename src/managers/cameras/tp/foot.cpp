@@ -1,10 +1,10 @@
 #include "managers/cameras/tp/foot.hpp"
 #include "managers/cameras/camutil.hpp"
 #include "managers/highheel.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
-#include "node.hpp"
+
 
 using namespace RE;
 

@@ -7,7 +7,7 @@
 #include "Data/Plugin.hpp"
 #include "Data/Runtime.hpp"
 #include "Scale/Scale.hpp"
-#include "Events.hpp"
+
 
 using namespace RE;
 using namespace GTS;

@@ -1,12 +1,10 @@
 #pragma once
 // Handles the various methods of scaling an actor
 
-
-using namespace std;
-
-using namespace SKSE;
-
 namespace GTS {
+
+	using namespace RE;
+
 	void set_target_scale(Actor& actor, float scale);
 	void set_target_scale(Actor* actor, float scale);
 	float get_target_scale(Actor& actor);

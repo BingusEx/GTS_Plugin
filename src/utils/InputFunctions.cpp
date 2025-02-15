@@ -5,7 +5,7 @@
 #include "managers/animation/Grab.hpp"
 #include "managers/GtsSizeManager.hpp"
 #include "Utils/InputConditions.hpp"
-#include "managers/InputManager.hpp"
+#include "Managers/Input/InputManager.hpp"
 #include "managers/CrushManager.hpp"
 #include "magic/effects/common.hpp"
 #include "utils/InputFunctions.hpp"
@@ -14,7 +14,7 @@
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/transient.hpp"
 #include "managers/vore.hpp"
 #include "data/runtime.hpp"
@@ -22,7 +22,7 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 #include "utils/av.hpp"
-#include "timer.hpp"
+
 
 using namespace RE;
 using namespace GTS;

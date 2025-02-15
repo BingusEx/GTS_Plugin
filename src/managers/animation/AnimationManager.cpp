@@ -200,7 +200,7 @@ namespace GTS {
 			for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(actor)) {
 				Speed *= data.HHspeed;
 			}
-		} catch (std::out_of_range e) {
+		} catch (std::out_of_range& e) {
 		}
 		return Speed;
 	}
@@ -211,7 +211,7 @@ namespace GTS {
 			for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(actor)) {
 				totalSpeed *= data.animSpeed;
 			}
-		} catch (std::out_of_range e) {
+		} catch (std::out_of_range& e) {
 		}
 		return totalSpeed;
 	}
@@ -225,7 +225,7 @@ namespace GTS {
 				}
 				data.animSpeed = std::clamp(data.animSpeed, 0.33f, 3.0f);
 			}
-		} catch (std::out_of_range e) {}
+		} catch (std::out_of_range& e) {}
 	}
 
 	float AnimationManager::GetAnimSpeed(Actor* actor) {
@@ -247,7 +247,7 @@ namespace GTS {
 					totalSpeed *= data.animSpeed;
 				}
 				speed *= totalSpeed;
-			} catch (std::out_of_range e) {
+			} catch (std::out_of_range& e) {
 			}
 		}
 		return speed;
@@ -366,7 +366,7 @@ namespace GTS {
 					actorData.erase(group);
 				}
 			}
-		} catch (std::out_of_range e) {}
+		} catch (std::out_of_range& e) {}
 	}
 
 	// Get the current stage of an animation group
@@ -374,7 +374,7 @@ namespace GTS {
 		try {
 			auto& me = AnimationManager::GetSingleton();
 			return me.data.at(&actor).at(std::string(group)).stage;
-		} catch (std::out_of_range e) {
+		} catch (std::out_of_range& e) {
 			return 0;
 		}
 	}
@@ -397,7 +397,7 @@ namespace GTS {
 				}
 			}
 			return false;
-		} catch (std::out_of_range e) {
+		} catch (std::out_of_range& e) {
 			return false;
 		}
 	}

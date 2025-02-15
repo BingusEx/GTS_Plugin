@@ -4,10 +4,15 @@
 #include "utils/actorBools.hpp"
 #include "scale/modscale.hpp"
 #include "scale/scale.hpp"
-#include "node.hpp"
+
+
+#include "Data/Time.hpp"
+#include "Data/Tasks.hpp"
+
 
 using namespace RE;
 using namespace SKSE;
+using namespace GTS;
 
 
 namespace {

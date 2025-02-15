@@ -1,16 +1,7 @@
-#include "managers/GtsSizeManager.hpp"
-#include "managers/highheel.hpp"
-#include "data/persistent.hpp"
 #include "managers/tremor.hpp"
-#include "managers/impact.hpp"
 #include "managers/Rumble.hpp"
-#include "ActionSettings.hpp"
+#include "Constants.hpp"
 #include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "profiler.hpp"
-#include "Config.hpp"
-#include "node.hpp"
-
 
 using namespace SKSE;
 using namespace RE;

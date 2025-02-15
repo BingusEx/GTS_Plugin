@@ -25,7 +25,7 @@ namespace GTS {
 	}
 
 	bool Plugin::Ready() {
-		if (Plugin::InGame()) {
+		if (InGame()) {
 			// We are not loading or in the mainmenu
 			auto player_char = RE::PlayerCharacter::GetSingleton();
 			if (player_char) {
@@ -39,7 +39,7 @@ namespace GTS {
 	}
 
 	bool Plugin::Live() {
-		if (Plugin::Ready()) {
+		if (Ready()) {
 			auto ui = RE::UI::GetSingleton();
 			if (!ui->GameIsPaused() || ui->GetMenu("RaceSex Menu")) {
 				// Not paused
@@ -51,7 +51,6 @@ namespace GTS {
 
 	bool Plugin::AnyMenuOpen() {
 
-		//There's no better way to do this :(
 		//Static const means the list doesnt get recreated Each call. So no perf impact here.
 		static const std::vector<std::string_view> Menus = {
 			RE::CraftingMenu::MENU_NAME,
