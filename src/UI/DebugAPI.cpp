@@ -590,7 +590,7 @@ void DebugOverlayMenu::Init() {
 	});
 	this->inited = true;
 
-	log::info("Gts: initialize scale forms");
+	log::info("Init Scaleform");
 }
 
 DebugOverlayMenu& DebugOverlayMenu::GetSingleton() noexcept {
@@ -604,16 +604,16 @@ std::string DebugOverlayMenu::DebugName() {
 
 void DebugOverlayMenu::DataReady()
 {
-	log::info("Gts: registering DebugOverlayMenu...");
+	log::info("Registering DebugOverlayMenu...");
 
 	auto ui = RE::UI::GetSingleton();
 	if (ui) {
 		ui->Register(MENU_NAME, Creator);
 		DebugOverlayMenu::Start();
 
-		log::info("Gts: successfully registered DebugOverlayMenu");
+		log::info("Successfully registered DebugOverlayMenu");
 	} else {
-		log::error("Gts: failed to register DebugOverlayMenu");
+		log::error("Failed to register DebugOverlayMenu");
 	}
 }
 
@@ -623,7 +623,7 @@ void DebugOverlayMenu::Start()
 	if (msgQ) {
 		msgQ->AddMessage(MENU_NAME, RE::UI_MESSAGE_TYPE::kShow, nullptr);
 	} else {
-		log::warn("Gts: failed to show DebugOverlayMenu");
+		log::warn("Could not show DebugOverlayMenu");
 	}
 }
 
@@ -638,7 +638,7 @@ void DebugOverlayMenu::Unload()
 	if (msgQ) {
 		msgQ->AddMessage(MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
 	} else {
-		log::warn("Gts: failed to hide DebugOverlayMenu");
+		log::warn("Could not hide DebugOverlayMenu");
 	}
 }
 
@@ -688,7 +688,7 @@ void DebugOverlayMenu::MenuChange(const MenuOpenCloseEvent* a_event) {
 		mName == RE::MessageBoxMenu::MENU_NAME ||
 		mName == RE::TweenMenu::MENU_NAME || // tab menu
 		mName == RE::MainMenu::MENU_NAME ||
-		mName == "CustomMenu") { // papyrus custom menues go here
+		mName == "CustomMenu") { // papyrus custom menus go here
 		if (a_event->opening) {
 			DebugOverlayMenu::Hide(mName.c_str());
 		} else {

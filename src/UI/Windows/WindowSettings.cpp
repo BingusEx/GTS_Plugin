@@ -20,6 +20,7 @@
 #include "Config/ConfigUtil.hpp"
 
 #include "Managers/Input/InputManager.hpp"
+#include "Version.hpp"
 
 
 namespace GTS {
@@ -30,7 +31,7 @@ namespace GTS {
 	//sadly i cant use atomic types or volatiles in the structs themselves.
 	void WindowSettings::AsyncLoad(){
 
-	    //TODO Set Plugin::Live to false for this duration...
+		Plugin::Live();
 
 	    if(!Settings.LoadSettings()){
 	        ErrorString = "Could Not Load Settings! Check GTSPlugin.log for more info";
@@ -45,7 +46,7 @@ namespace GTS {
 	        }
 	    }
 
-	    //TODO InputManager Re-init;
+	    
 	    StyleMgr.LoadStyle();
 	    FontMgr.RebuildFonts();
 	    SaveLoadBusy.store(false);
@@ -209,8 +210,8 @@ namespace GTS {
 	    {   //Footer - Mod Info
 
 	        ImGui::PushFont(ImFontManager::GetFont("subscript"));
-	        //TODO Grab the version string from the project
-	        ImGui::TextColored(ImUtil::ColorSubscript,"GTSPlugin v2.0.0\nBuild Date: %s %s\nGit SHA1: %s", __DATE__, __TIME__,(git::AnyUncommittedChanges() ? "Custom" : git::CommitSHA1().c_str()));
+			const std::string FooterMessage = fmt::format("GTSPlugin {}\nBuild Date: {} {}\nGit SHA1 {}", PluginVersion, __DATE__, __TIME__, git::AnyUncommittedChanges() ? "Unreleased" : git::CommitSHA1().c_str());
+	        ImGui::TextColored(ImUtil::ColorSubscript, FooterMessage.c_str());
 	        ImGui::PopFont();
 	    }
 

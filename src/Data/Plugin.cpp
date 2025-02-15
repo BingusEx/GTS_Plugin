@@ -41,7 +41,7 @@ namespace GTS {
 	bool Plugin::Live() {
 		if (Ready()) {
 			auto ui = RE::UI::GetSingleton();
-			if (!ui->GameIsPaused() || ui->GetMenu("RaceSex Menu")) {
+			if (!ui->GameIsPaused() || ui->GetMenu(RaceSexMenu::MENU_NAME)) {
 				// Not paused
 				return true;
 			}
@@ -71,7 +71,8 @@ namespace GTS {
 			RE::StatsMenu::MENU_NAME,
 			RE::TrainingMenu::MENU_NAME,
 			RE::TutorialMenu::MENU_NAME,
-			RE::TweenMenu::MENU_NAME
+			RE::TweenMenu::MENU_NAME,
+			"CustomMenu"s // Apparently papyrus scripts use this?
 		};
 
 		if (Plugin::Ready()) {

@@ -13,6 +13,7 @@
 
 #include "Config/Config.hpp"
 #include "API/APIManager.hpp"
+#include "Version.hpp"
 
 using namespace RE::BSScript;
 
@@ -67,7 +68,7 @@ namespace {
 	}
 
 	void PrintStartupBanner() {
-		Cprint("[GTSPlugin.dll]: [ Giantess Mod v2.0.1.1 was succesfully initialized. Waiting for New Game/Save Load. ]");
+		Cprint("[GTSPlugin.dll]: [ Giantess Mod {} was succesfully initialized. Waiting for New Game/Save Load. ]", PluginVersion);
 		Cprint("[GTSPlugin.dll]: Dll Build Date: {} {}", __DATE__, __TIME__);
 		Cprint("[GTSPlugin.dll]: Git Info:");
 		Cprint("\t -- Commit: {}", git_CommitSubject());
@@ -233,7 +234,7 @@ static void InitializeEventSystem() {
 
 static void PrintPluginInfo() {
 
-	logger::info("SKSEPluginLoad... ");
+	logger::info("GTSPlugin {}", PluginVersion);
 	logger::info("Dll Build Date: {} {}", __DATE__, __TIME__);
 
 	std::string git_commit = fmt::format("\t -- Commit: {}", git_CommitSubject());
