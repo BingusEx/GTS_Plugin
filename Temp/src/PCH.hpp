@@ -140,7 +140,7 @@ namespace logger = SKSE::log;
 //Own Includes
 
 #include "Constants.hpp"
-#include "Debug/Profiler.hpp"
+#include "Profiler/Profiler.hpp"
 #include "Events/Events.hpp"
 #include "Utils/Utils.hpp"
 #include "Data/Data.hpp"
