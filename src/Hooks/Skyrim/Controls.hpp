@@ -7,7 +7,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
     inline bool IsGtsBusy_ForControls(Actor* actor) {
 		bool GTSBusy = false;
@@ -76,7 +76,7 @@ namespace GTS {
 
 namespace Hooks {
 
-	using namespace RE;
+	
 	using namespace GTS;
 
 	template <class T>

@@ -2,8 +2,8 @@
 
 namespace Hooks {
 
-	using namespace SKSE;
-	using namespace RE;
+	
+	
 	void HookCameraStates();
 
 	class Hook_CameraState

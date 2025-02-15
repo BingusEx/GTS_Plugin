@@ -4,7 +4,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	// Enable/disable collisions fails for current implementation
 	//

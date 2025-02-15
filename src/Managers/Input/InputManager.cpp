@@ -5,7 +5,7 @@
 #include "Data/plugin.hpp"
 #include "Config/Keybinds.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

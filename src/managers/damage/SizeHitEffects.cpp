@@ -13,9 +13,9 @@
 #include "scale/scale.hpp"
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
 	void Prevent_Stagger(Actor* attacker, Actor* receiver) {

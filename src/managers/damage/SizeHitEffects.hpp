@@ -8,8 +8,8 @@
 
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 // Module for accurate size-related damage
 

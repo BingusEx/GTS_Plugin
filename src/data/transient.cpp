@@ -1,7 +1,7 @@
 #include "Data/Transient.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 
 namespace GTS {

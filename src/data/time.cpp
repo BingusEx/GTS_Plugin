@@ -1,7 +1,7 @@
 #include "data/time.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace {
 	inline static float* g_delta_time = (float*)REL::RelocationID(523660, 410199).address();

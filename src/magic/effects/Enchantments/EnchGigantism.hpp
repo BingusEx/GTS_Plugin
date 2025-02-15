@@ -3,8 +3,8 @@
 // Module that tracks Gigantism MGF
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

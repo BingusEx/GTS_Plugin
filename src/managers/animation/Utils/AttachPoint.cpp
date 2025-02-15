@@ -1,7 +1,7 @@
 #include "managers/animation/Utils/AttachPoint.hpp"
 #include "scale/scale.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

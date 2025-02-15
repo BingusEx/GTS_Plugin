@@ -29,10 +29,10 @@
 
 #include <random>
 
-using namespace RE;
+
 using namespace REL;
 using namespace GTS;
-using namespace std;
+
 
 namespace {
     void GTSGrab_Eat_Start(AnimationEventData& data) {

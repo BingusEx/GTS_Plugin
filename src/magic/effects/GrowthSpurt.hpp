@@ -4,8 +4,8 @@
 // Module that handles Growth Spurt
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

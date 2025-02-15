@@ -2,9 +2,9 @@
 
 namespace GTS {
 
-	using namespace std;
-	using namespace SKSE;
-	using namespace RE;
+	
+	
+	
 
 	enum class AnimationCondition {
 		kHugs = 0,

@@ -3,8 +3,8 @@
 // Module that handles Size Potion
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

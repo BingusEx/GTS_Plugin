@@ -5,8 +5,8 @@
 #include "data/persistent.hpp"
 #include "scale/modscale.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace {
 

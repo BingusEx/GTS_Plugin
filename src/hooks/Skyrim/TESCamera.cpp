@@ -1,8 +1,8 @@
 #include "Hooks/Skyrim/TESCamera.hpp"
 #include "Data/Plugin.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 using namespace GTS;
 
 namespace Hooks {

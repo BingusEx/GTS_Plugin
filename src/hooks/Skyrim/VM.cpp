@@ -2,7 +2,7 @@
 
 
 
-using namespace RE;
+
 using namespace RE::BSScript;
 using namespace RE::BSScript::Internal;
 

@@ -6,9 +6,9 @@
 #include "rays/raycast.hpp"
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace GTS {
 	float GetCeilingHeight(Actor* giant) {

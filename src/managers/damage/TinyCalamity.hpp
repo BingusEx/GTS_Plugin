@@ -6,7 +6,7 @@
 
 namespace GTS {
 
-    using namespace RE;
+    
 
     bool TinyCalamity_WrathfulCalamity(Actor* giant);
     

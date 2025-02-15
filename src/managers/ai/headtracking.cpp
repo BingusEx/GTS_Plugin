@@ -7,9 +7,9 @@
 
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
 	const float REDUCTION_FACTOR = 0.44f;

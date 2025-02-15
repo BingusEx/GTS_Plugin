@@ -1,7 +1,7 @@
 #pragma once
 
 
-using namespace SKSE;
+
 
 namespace GTS {
 	float unit_to_meter(const float& unit);

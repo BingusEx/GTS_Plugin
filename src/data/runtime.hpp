@@ -5,7 +5,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	struct SoundData {
 		BGSSoundDescriptorForm* data;

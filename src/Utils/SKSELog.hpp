@@ -4,7 +4,7 @@
 
 namespace GTS {
 
-	using namespace SKSE;
+	
 
 	static inline std::optional<std::filesystem::path> log_directory() {
 		wchar_t* buffer{ nullptr };

@@ -2,7 +2,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	std::vector<NiAVObject*> GetAllNodes(Actor* actor);
 	void walk_nodes(Actor* actor);

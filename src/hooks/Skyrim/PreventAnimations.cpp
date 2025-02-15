@@ -5,7 +5,7 @@
 
 #include "Scale/Scale.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {
@@ -238,7 +238,7 @@ namespace {
 namespace Hooks {
 
 	using namespace GTS;
-	using namespace RE;
+	
 
 	void Hook_PreventAnimations::Hook(Trampoline& trampoline) { 
         static FunctionHook<TESIdleForm*(TESIdleForm* a_this, ConditionCheckParams* params, void* unk3)>IdleFormHook (        

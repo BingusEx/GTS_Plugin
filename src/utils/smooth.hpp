@@ -1,7 +1,7 @@
 #pragma once
 
 
-using namespace SKSE;
+
 
 namespace GTS {
 	void critically_damped(

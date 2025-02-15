@@ -4,9 +4,9 @@
 #include <regex>
 #include "glm/glm.hpp"
 
-using namespace std;
 
-using namespace SKSE;
+
+
 
 namespace GTS {
 

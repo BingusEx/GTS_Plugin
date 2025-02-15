@@ -4,7 +4,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	enum SizeMethod {
 		ModelScale = 0,

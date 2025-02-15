@@ -1,6 +1,6 @@
 #include "data/plugin.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

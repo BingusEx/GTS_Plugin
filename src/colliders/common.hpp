@@ -4,7 +4,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	RE::COL_LAYER GetCollidesWith(const std::uint32_t& collisionFilterInfo);
 	RE::COL_LAYER GetCollidesWith(const hkpCollidable* collidable);

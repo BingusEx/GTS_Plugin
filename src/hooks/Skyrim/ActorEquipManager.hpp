@@ -5,7 +5,7 @@
 
 namespace Hooks {
 
-	using namespace SKSE;
+	
 
 	class Hook_ActorEquipManager {
 

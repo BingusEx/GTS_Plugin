@@ -4,7 +4,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	class CharContData : public ColliderData {
 		public:

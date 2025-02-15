@@ -6,7 +6,7 @@
 #include "rays/raycast.hpp"
 
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

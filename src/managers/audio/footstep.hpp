@@ -4,8 +4,8 @@
 #include "managers/impact.hpp"
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

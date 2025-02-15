@@ -122,13 +122,15 @@ using namespace std::literals;
 using namespace REL::literals;
 
 namespace GTS {
-	using namespace RE;
+	using namespace std;
 	using namespace SKSE;
+	using namespace RE;
 }
 
-namespace {
-	using namespace RE;
+namespace Hooks {
+	using namespace std;
 	using namespace SKSE;
+	using namespace RE;
 }
 
 namespace logger = SKSE::log;

@@ -3,9 +3,9 @@
 #include <ehdata.h>
 #include <rttidata.h>
 
-using namespace std;
-using namespace RE;
-using namespace SKSE;
+
+
+
 
 namespace GTS {
 	std::string GetRawName(const void* obj_c) {

@@ -10,7 +10,7 @@
 #include "utils/debug.hpp"
 #include "utils/av.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace GTS {

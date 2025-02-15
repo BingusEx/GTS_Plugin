@@ -3,7 +3,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	void set_target_height(Actor* actor, float height);
 	float get_target_height(Actor* actor);

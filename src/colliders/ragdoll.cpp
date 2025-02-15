@@ -1,7 +1,7 @@
 #include "Colliders/Ragdoll.hpp"
 #include "Colliders/Common.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

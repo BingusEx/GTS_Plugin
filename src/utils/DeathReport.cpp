@@ -2,7 +2,7 @@
 #include "managers/highheel.hpp"
 #include "utils/random.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

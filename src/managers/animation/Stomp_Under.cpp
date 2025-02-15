@@ -18,9 +18,9 @@
 #include "scale/scale.hpp"
 
 
-using namespace std;
-using namespace SKSE;
-using namespace RE;
+
+
+
 using namespace GTS;
 
 namespace {

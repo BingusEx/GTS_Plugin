@@ -3,7 +3,7 @@
 #include "managers/GtsSizeManager.hpp"
 #include "data/runtime.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 	NiPoint3 Normal::GetOffset(const NiPoint3& cameraPos) {

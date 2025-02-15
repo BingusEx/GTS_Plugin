@@ -2,8 +2,8 @@
 // Module that handles AttributeAdjustment
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

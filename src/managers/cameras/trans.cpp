@@ -1,6 +1,6 @@
 #include "managers/cameras/trans.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace GTS {

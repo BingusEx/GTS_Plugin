@@ -3,7 +3,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	struct TempActorData {
 

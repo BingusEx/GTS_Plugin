@@ -6,7 +6,7 @@
 #include "Hooks/Hooks.hpp"
 
 
-using namespace SKSE;
+
 
 namespace Hooks
 {

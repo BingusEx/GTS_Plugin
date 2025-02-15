@@ -15,7 +15,7 @@
 #include "data/tasks.hpp"
 
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

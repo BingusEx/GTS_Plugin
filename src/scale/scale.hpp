@@ -3,7 +3,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	void set_target_scale(Actor& actor, float scale);
 	void set_target_scale(Actor* actor, float scale);

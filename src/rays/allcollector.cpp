@@ -1,7 +1,7 @@
 #include "rays/allcollector.hpp"
 
 using namespace GTS;
-using namespace RE;
+
 
 namespace GTS {
 

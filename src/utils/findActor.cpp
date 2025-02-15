@@ -1,24 +1,16 @@
 #include "utils/findActor.hpp"
 #include "utils/actorUtils.hpp"
 
-
-using namespace std;
-using namespace RE;
-using namespace SKSE;
-
-namespace {
-	class FindActorData {
-		public:
-			/// Actors that have been done recently;
-			unordered_set<FormID> previousActors;
-	};
-}
-
 namespace GTS {
 	/**
 	 * Find actors in ai manager that are loaded
 	 */
 
+	class FindActorData {
+		public:
+		/// Actors that have been done recently;
+		unordered_set<FormID> previousActors;
+	};
 
 	/*vector<Actor*> find_actors() {
 	        auto profiler = Profilers::Profile("Other: Find Actors");

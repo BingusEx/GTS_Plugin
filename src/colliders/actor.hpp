@@ -6,7 +6,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	class ActorCollisionData : public ColliderData {
 		public:

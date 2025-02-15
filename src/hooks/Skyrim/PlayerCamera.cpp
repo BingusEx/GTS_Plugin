@@ -1,6 +1,6 @@
 #include "Hooks/Skyrim/PlayerCamera.hpp"
 
-using namespace RE;
+
 
 namespace Hooks {
 

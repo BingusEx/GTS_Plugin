@@ -2,8 +2,8 @@
 
 namespace Hooks {
 
-	using namespace RE;
-	using namespace SKSE;
+	
+	
 
 	class Hook_Renderer {
 		public:

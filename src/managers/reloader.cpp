@@ -2,8 +2,8 @@
 #include "managers/reloader.hpp"
 
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace GTS {
 	std::string ReloadManager::DebugName() {

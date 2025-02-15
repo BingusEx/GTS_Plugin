@@ -4,7 +4,7 @@
 
 namespace Hooks {	
 
-	using namespace SKSE;
+	
 
 	class Hook_Pushback {
 		public:

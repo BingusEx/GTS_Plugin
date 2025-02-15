@@ -2,7 +2,7 @@
 #include <regex>
 #include "data/plugin.hpp"
 
-using namespace SKSE;
+
 using namespace GTS;
 
 namespace GTS {

@@ -13,7 +13,7 @@
 #include "managers/Rumble.hpp"
 #include "managers/animation/Utils/AnimationUtils.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

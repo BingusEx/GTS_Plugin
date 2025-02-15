@@ -2,9 +2,9 @@
 #include "managers/modevent.hpp"
 
 
-using namespace SKSE;
+
 using namespace GTS;
-using namespace RE;
+
 using namespace RE::BSScript;
 
 namespace {

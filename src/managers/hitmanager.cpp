@@ -17,7 +17,7 @@
 
 
 
-using namespace RE;
+
 using namespace GTS;
 namespace {
 	float GetPushPower(float sizeRatio) {

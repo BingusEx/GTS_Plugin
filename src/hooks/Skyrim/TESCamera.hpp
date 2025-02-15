@@ -3,7 +3,7 @@
 
 namespace Hooks {
 
-	using namespace RE;
+	
 	using namespace GTS;
 
 	class Hook_TESCamera {

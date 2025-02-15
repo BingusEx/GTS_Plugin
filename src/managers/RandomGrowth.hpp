@@ -2,8 +2,8 @@
 // Module that handles AttributeValues
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

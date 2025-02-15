@@ -17,8 +17,8 @@
 
 namespace GTS {
 
-	using namespace RE;
-	using namespace SKSE;
+	
+	
 
 	//---------------------
 	// ButtCrush

@@ -23,7 +23,7 @@
 #include <cmath>
 #include <random>
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

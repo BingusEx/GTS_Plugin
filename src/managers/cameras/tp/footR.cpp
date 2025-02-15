@@ -5,7 +5,7 @@
 #include "scale/scale.hpp"
 
 
-using namespace RE;
+
 
 namespace {
 	const float OFFSET = 0.04f * 70.0f; // About 4cm down

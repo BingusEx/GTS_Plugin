@@ -13,9 +13,9 @@
 #include <string>
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
     void ShrinkByOverTime(Actor* tiny, float over_time, float by) {

@@ -2,7 +2,7 @@
 
 namespace GTS {
 
-	using namespace RE;
+	
 
 	bool IsStaggered(Actor* tiny);
 	bool IsHandStomping_L(Actor* actor);

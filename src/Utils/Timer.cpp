@@ -1,8 +1,8 @@
 #include "Timer.hpp"
 #include "Data/Time.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 namespace {

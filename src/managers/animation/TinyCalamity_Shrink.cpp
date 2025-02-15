@@ -16,9 +16,9 @@
 #include "scale/scale.hpp"
 #include "rays/raycast.hpp"
 
-using namespace std;
-using namespace SKSE;
-using namespace RE;
+
+
+
 using namespace GTS;
 
 // Spawns Rune on the hand and then we shrink a tiny that we've found.

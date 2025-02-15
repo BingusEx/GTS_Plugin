@@ -12,7 +12,7 @@
 #include "data/time.hpp"
 
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

@@ -1,7 +1,7 @@
 #pragma once
 
 
-using namespace SKSE;
+
 
 namespace {
 	using VM = RE::BSScript::Internal::VirtualMachine;

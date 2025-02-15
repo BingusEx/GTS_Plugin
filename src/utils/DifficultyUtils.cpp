@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

@@ -2,8 +2,8 @@
 
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 using namespace GTS;
 

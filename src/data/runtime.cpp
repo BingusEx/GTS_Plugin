@@ -1,8 +1,8 @@
 #include "Rays/raycast.hpp"
 #include <toml.hpp>
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace {
 

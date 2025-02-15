@@ -3,8 +3,8 @@
 
 #include <string>
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS

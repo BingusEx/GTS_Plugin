@@ -10,7 +10,7 @@
 #include "UI/DebugAPI.hpp"
 
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

@@ -4,7 +4,7 @@
 #include "Constants.hpp"
 #include "data/runtime.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 	NiPoint3 Alt::GetOffset(const NiPoint3& cameraPos) {

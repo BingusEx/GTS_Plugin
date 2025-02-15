@@ -3,7 +3,7 @@
 //
 
 
-using namespace SKSE;
+
 
 namespace GTS {
 	class SpringBase {

@@ -2,8 +2,8 @@
 // Module that handles various reload events
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

@@ -3,8 +3,8 @@
 // Module that handles footsteps
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

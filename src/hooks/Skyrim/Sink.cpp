@@ -1,8 +1,8 @@
 #include "Hooks/Skyrim/Sink.hpp"
 #include "Scale/Scale.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 namespace Hooks {

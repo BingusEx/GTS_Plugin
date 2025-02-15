@@ -4,8 +4,8 @@
 #include <string>
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace GTS {
 

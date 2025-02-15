@@ -4,8 +4,8 @@
 #include "data/runtime.hpp"
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

@@ -1,8 +1,8 @@
 #include "API/SmoothCamAPI.hpp"
 #include "API/APIManager.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace GTS {
 

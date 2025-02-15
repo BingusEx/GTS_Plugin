@@ -30,10 +30,10 @@
 
 #include <random>
 
-using namespace RE;
+
 using namespace REL;
 using namespace GTS;
-using namespace std;
+
 namespace {
 
     const std::string_view RNode = "NPC R Foot [Rft ]";

@@ -1,7 +1,7 @@
 #include "utils/units.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace {
 	const float CONVERSION_FACTOR = 70.0f;

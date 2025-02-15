@@ -3,8 +3,8 @@
 // This includes various forms
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

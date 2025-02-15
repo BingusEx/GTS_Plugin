@@ -3,10 +3,10 @@
 #include "Constants.hpp"
 #include "data/runtime.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 using namespace GTS;
-using namespace std;
+
 
 namespace {
 	enum Formula {

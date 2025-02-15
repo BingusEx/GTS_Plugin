@@ -4,8 +4,8 @@
 // Module that handles slow growth
 
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

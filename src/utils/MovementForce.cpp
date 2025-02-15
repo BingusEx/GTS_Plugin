@@ -5,9 +5,9 @@
 
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
 	NodeMovementType Convert_To_MovementType(DamageSource Source) {

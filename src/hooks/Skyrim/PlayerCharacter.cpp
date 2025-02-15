@@ -12,7 +12,7 @@
 
 #include "utils/debug.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace Hooks {

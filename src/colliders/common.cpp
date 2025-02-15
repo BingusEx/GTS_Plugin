@@ -1,7 +1,7 @@
 #include "Colliders/Common.hpp"
 #include "Colliders/RE/RE.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

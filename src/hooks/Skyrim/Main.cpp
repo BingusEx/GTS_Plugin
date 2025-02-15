@@ -3,8 +3,8 @@
 #include "Data/Time.hpp"
 #include "Data/Plugin.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 namespace {

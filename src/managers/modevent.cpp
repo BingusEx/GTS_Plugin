@@ -1,7 +1,7 @@
 #include "managers/modevent.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace GTS {
 	ModEventManager& ModEventManager::GetSingleton() noexcept {

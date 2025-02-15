@@ -15,9 +15,9 @@
 #include <iomanip>
 #include <math.h>
 
-using namespace SKSE;
+
 using namespace GTS;
-using namespace RE;
+
 using namespace RE::BSScript;
 
 namespace {

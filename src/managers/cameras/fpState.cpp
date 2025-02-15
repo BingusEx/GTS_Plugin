@@ -3,7 +3,7 @@
 #include "Data/Persistent.hpp"
 #include "Managers/cameras/camutil.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

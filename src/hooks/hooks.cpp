@@ -29,7 +29,7 @@
 #include "Hooks/Skyrim/Controls.hpp"
 #include "Hooks/Experiments.hpp"
 
-using namespace RE;
+
 
 namespace Hooks
 {

@@ -3,7 +3,7 @@
 #include "rays/allcollector.hpp"
 
 using namespace GTS;
-using namespace RE;
+
 
 namespace {
 	void CastRayImpl(TESObjectREFR* ref, const NiPoint3& in_origin, const NiPoint3& direction, const float& unit_length, AllRayCollector* collector) {

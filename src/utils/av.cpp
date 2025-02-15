@@ -2,8 +2,8 @@
 #include "utils/av.hpp"
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace GTS {
 

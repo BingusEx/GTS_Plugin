@@ -44,9 +44,9 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
-using namespace RE;
+
 using namespace GTS;
-using namespace std;
+
 
 namespace {
 	bool IsInRaceMenu() {

@@ -7,9 +7,9 @@
 #include <string>
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
     float Perk_Acceleration_GetBonus(Actor* giant) {

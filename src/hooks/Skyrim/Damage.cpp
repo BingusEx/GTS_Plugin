@@ -17,8 +17,8 @@
 #include "Utils/DifficultyUtils.hpp"
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace {
 

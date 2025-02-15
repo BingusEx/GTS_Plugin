@@ -3,7 +3,7 @@
 
 #include "Scale/ModScale.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace Hooks {

@@ -7,8 +7,8 @@
 #include "data/runtime.hpp"
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 namespace {

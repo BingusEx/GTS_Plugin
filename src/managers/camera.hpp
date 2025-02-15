@@ -16,8 +16,8 @@
 #include "managers/cameras/fp/combat.hpp"
 #include "managers/cameras/fp/loot.hpp"
 
-using namespace std;
-using namespace SKSE;
+
+
 
 
 namespace GTS {

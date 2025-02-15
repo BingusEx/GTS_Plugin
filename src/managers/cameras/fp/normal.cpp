@@ -4,7 +4,7 @@
 #include "scale/scale.hpp"
 #include "scale/height.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 	float FirstPerson::GetScaleOverride(bool IsCrawling) {

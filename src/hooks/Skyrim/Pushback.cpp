@@ -6,8 +6,8 @@
 #include "Data/Transient.hpp"
 
 
-using namespace SKSE;
-using namespace RE;
+
+
 using namespace GTS;
 
 namespace {

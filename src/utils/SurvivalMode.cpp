@@ -4,7 +4,7 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

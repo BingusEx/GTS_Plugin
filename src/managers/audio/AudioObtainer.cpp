@@ -9,8 +9,8 @@
 
 
 
-using namespace SKSE;
-using namespace RE;
+
+
 using namespace GTS;
 
 namespace GTS {

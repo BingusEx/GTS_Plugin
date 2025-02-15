@@ -20,7 +20,7 @@
 
 using namespace RE::BSScript;
 using namespace GTS;
-using namespace SKSE;
+
 
 namespace {
 

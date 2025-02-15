@@ -1,6 +1,6 @@
 #include "Managers/Input/ManagedInputEvent.hpp"
 
-using namespace RE;
+
 
 namespace GTS {
 

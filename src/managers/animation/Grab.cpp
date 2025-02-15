@@ -31,10 +31,10 @@
 
 #include <random>
 
-using namespace RE;
+
 using namespace REL;
 using namespace GTS;
-using namespace std;
+
 
 ///GTS_GrabbedTiny MUST BE 1 when we have someone in hands
 

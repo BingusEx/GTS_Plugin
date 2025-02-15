@@ -3,9 +3,9 @@
 #include "managers/cameras/camutil.hpp"
 
 
-using namespace SKSE;
+
 using namespace GTS;
-using namespace RE;
+
 using namespace RE::BSScript;
 
 namespace {

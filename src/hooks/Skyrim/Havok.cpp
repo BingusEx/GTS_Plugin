@@ -10,8 +10,8 @@
 #include "data/runtime.hpp"
 #include "Data/Tasks.hpp"
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 namespace {

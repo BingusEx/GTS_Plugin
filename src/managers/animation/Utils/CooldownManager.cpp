@@ -14,9 +14,9 @@
 
 
 using namespace GTS;
-using namespace RE;
+
 using namespace REL;
-using namespace SKSE;
+
 
 
 namespace {

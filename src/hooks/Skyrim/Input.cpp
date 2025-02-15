@@ -2,7 +2,7 @@
 #include "Managers/Input/InputManager.hpp"
 #include "UI/UIManager.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace Hooks {

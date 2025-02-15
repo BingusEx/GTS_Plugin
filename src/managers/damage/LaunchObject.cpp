@@ -11,9 +11,9 @@
 #include "data/time.hpp"
 
 using namespace GTS;
-using namespace RE;
-using namespace SKSE;
-using namespace std;
+
+
+
 
 namespace {
 	void Break_Object(TESObjectREFR* ref, float damage, float giant_size, bool smt) {

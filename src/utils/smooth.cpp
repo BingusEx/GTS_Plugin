@@ -1,8 +1,8 @@
 #include "utils/smooth.hpp"
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 
 namespace {
 	// Spring code from https://theorangeduck.com/page/spring-roll-call

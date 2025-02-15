@@ -2,7 +2,7 @@
 #include "Hooks/Hooks.hpp"
 #include "Scale/Scale.hpp"
 
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

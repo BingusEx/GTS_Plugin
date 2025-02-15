@@ -1,7 +1,7 @@
 #include "Colliders/Actor.hpp"
 
-using namespace SKSE;
-using namespace RE;
+
+
 
 namespace GTS {
 	

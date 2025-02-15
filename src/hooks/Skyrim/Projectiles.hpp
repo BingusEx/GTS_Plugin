@@ -3,7 +3,7 @@
 
 namespace Hooks {
 
-	using namespace RE;
+	
 
 	class Hook_Projectiles {
 		public:

@@ -1,6 +1,6 @@
 #include "Hooks/Skyrim/ActorRotation.hpp"
 
-using namespace RE;
+
 
 namespace Hooks { // This hook is commented out inside hooks.cpp
 

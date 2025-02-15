@@ -1,8 +1,8 @@
 #pragma once
 
-using namespace std;
 
-using namespace SKSE;
+
+
 
 namespace GTS {
 	std::string GetRawName(const void* obj);

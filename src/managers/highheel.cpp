@@ -10,7 +10,7 @@
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
-using namespace RE;
+
 using namespace GTS;
 
 namespace {

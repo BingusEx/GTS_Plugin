@@ -7,8 +7,8 @@
 #include "Scale/scale.hpp"
 
 
-using namespace RE;
-using namespace SKSE;
+
+
 using namespace GTS;
 
 
