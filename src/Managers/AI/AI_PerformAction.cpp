@@ -23,9 +23,10 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
-
+using namespace GTS;
 
 namespace {
+
     const std::vector<std::string_view> light_kicks = {
         "SwipeLight_Left",                  // 0
         "SwipeLight_Right",                 // 1

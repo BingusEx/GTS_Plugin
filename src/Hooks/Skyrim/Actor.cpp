@@ -9,7 +9,6 @@
 #include "Scale/Scale.hpp"
 
 
-
 using namespace GTS;
 
 namespace {

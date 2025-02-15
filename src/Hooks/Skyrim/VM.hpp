@@ -4,15 +4,9 @@
 
 
 
-namespace Hooks
-{
+namespace Hooks {
 	
-	
-	using namespace RE::BSScript;
-	using namespace RE::BSScript::Internal;
-	
-	class Hook_VM
-	{
+	class Hook_VM {
 		public:
 			static void Hook();
 		private:

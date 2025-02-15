@@ -1,7 +1,5 @@
 #pragma once
 
-using namespace RE::BSScript;
-
 namespace GTS {
-	bool register_papyrus_camera(IVirtualMachine* vm);
+	bool register_papyrus_camera(BSScript::IVirtualMachine* vm);
 }

@@ -1,13 +1,7 @@
 #pragma once
 
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
+
     enum class ChestType {
 		BossChest,
 		NormalChest,

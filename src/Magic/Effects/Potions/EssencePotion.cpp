@@ -1,15 +1,15 @@
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "magic/effects/Potions/EssencePotion.hpp"
 #include "magic/effects/common.hpp"
-#include "data/persistent.hpp"
 #include "Constants.hpp"
 #include "data/runtime.hpp"
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
 
-// A potion that PERMANENTLY increases max possible size
+using namespace GTS;
 
 namespace {
+
     void shake_screen_do_moan(Actor* giant, float power) {
 		if (power >= 0.07f) {
 			bool Blocked = IsActionOnCooldown(giant, CooldownSource::Emotion_Moan);

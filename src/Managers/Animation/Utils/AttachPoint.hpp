@@ -9,19 +9,9 @@
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
 
+namespace GTS {
 
-
-
-namespace {
-	const std::string_view leftFootLookup = "NPC L Foot [Lft ]";
-	const std::string_view rightFootLookup = "NPC R Foot [Rft ]";
-	const std::string_view leftCalfLookup = "NPC L Calf [LClf]";
-	const std::string_view rightCalfLookup = "NPC R Calf [RClf]";
-	const std::string_view leftToeLookup = "AnimObjectB";
-	const std::string_view rightToeLookup = "AnimObjectB";
-	const std::string_view bodyLookup = "NPC Spine1 [Spn1]";
-
-	NiPoint3 CastRayDownwards_from(Actor* giant, std::string_view node) {
+	static NiPoint3 CastRayDownwards_from(Actor* giant, std::string_view node) {
 		bool success = false;
 		auto object = find_node(giant, node);
 		if (object) {
@@ -39,7 +29,7 @@ namespace {
 		return NiPoint3(0.0f, 0.0f, 0.0f);
 	}
 
-	NiPoint3 CastRayDownwards(Actor* tiny) {
+	static NiPoint3 CastRayDownwards(Actor* tiny) {
 		bool success = false;
 		NiPoint3 ray_start = tiny->GetPosition();
 		ray_start.z += 90.0f; // overrize .z with tiny .z + 90, so ray starts from above a bit
@@ -53,9 +43,7 @@ namespace {
 		}
 		return tiny->GetPosition();
 	}
-}
 
-namespace GTS {
 	template<typename T, typename U>
 	bool AttachTo_NoForceRagdoll(T& anyGiant, U& anyTiny, NiPoint3 point) {
 		Actor* giant =  GetActorPtr(anyGiant);
@@ -148,6 +136,15 @@ namespace GTS {
 
 	template<typename T, typename U>
 	NiPoint3 AttachToUnderFoot(T& anyGiant, U& anyTiny, bool right_leg) {
+
+		constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
+		constexpr std::string_view rightFootLookup = "NPC R Foot [Rft ]";
+		constexpr std::string_view leftCalfLookup = "NPC L Calf [LClf]";
+		constexpr std::string_view rightCalfLookup = "NPC R Calf [RClf]";
+		constexpr std::string_view leftToeLookup = "AnimObjectB";
+		constexpr std::string_view rightToeLookup = "AnimObjectB";
+		//constexpr std::string_view bodyLookup = "NPC Spine1 [Spn1]";
+
 		Actor* giant = GetActorPtr(anyGiant);
 		if (!giant) {
 			return NiPoint3(0,0,0);

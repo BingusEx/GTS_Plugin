@@ -18,16 +18,13 @@
 #include "utils/looting.hpp"
 #include "managers/vore.hpp"
 #include "data/runtime.hpp"
+
+#include "managers/GtsSizeManager.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Animation/Utils/TurnTowards.hpp"
+
 #include "scale/scale.hpp"
 #include "UI/DebugAPI.hpp"
-
-
-
-
-
-
-
-
 
 using namespace GTS;
 

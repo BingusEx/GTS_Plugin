@@ -9,7 +9,10 @@
 
 #include "managers/Rumble.hpp"
 
+using namespace GTS;
+
 namespace {
+
 	void Task_RestoreSizeTask(Actor* caster, bool dual_casted) {
 
 		float Power = 0.00120f;

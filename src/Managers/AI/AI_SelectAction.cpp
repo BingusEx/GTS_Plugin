@@ -24,9 +24,10 @@
 #include "scale/scale.hpp"
 
 
-
+using namespace GTS;
 
 namespace {
+
 	void RecordSneakingState(Actor* giant, Actor* tiny) {
 		bool Crawling = IsCrawling(giant);
 		bool Sneaking = giant->IsSneaking();

@@ -1,10 +1,4 @@
-
-
-
-
-
-
-using namespace GTS;
+#pragma once
 
 namespace GTS {
     void ShiftAudioFrequency();

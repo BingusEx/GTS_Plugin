@@ -9,14 +9,10 @@
 
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
-namespace {
-
-}
-
 namespace GTS {
+
 	bool register_papyrus(IVirtualMachine* vm) {
 		register_papyrus_plugin(vm);
 		register_papyrus_scale(vm);
@@ -26,4 +22,5 @@ namespace GTS {
 		register_total_control(vm);
 		return true;
 	}
+
 }

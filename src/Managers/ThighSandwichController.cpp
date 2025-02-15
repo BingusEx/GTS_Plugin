@@ -18,7 +18,7 @@
 #include "data/time.hpp"
 
 
-
+using namespace GTS;
 
 
 namespace {

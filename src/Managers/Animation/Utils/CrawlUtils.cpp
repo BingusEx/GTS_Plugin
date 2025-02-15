@@ -16,8 +16,10 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
+using namespace GTS;
 
 namespace {
+
 	void SpawnCrawlParticle(Actor* actor, float scale, NiPoint3 position) {
 		SpawnParticle(actor, 4.60f, "GTS/Effects/Footstep.nif", NiMatrix3(), position, scale * 1.8f, 7, nullptr);
 	}

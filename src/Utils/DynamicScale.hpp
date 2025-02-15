@@ -1,14 +1,7 @@
 #pragma once
 
-
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
+
 	float GetCeilingHeight(Actor* giant);
 	float GetMaxRoomScale(Actor* giant);
 

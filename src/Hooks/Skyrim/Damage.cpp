@@ -1,26 +1,16 @@
-#include "Data/persistent.hpp"
-#include "Data/runtime.hpp"
-#include "Data/Time.hpp"
-#include "Data/transient.hpp"
 #include "Hooks/Detours/FunctionHook.hpp"
 #include "Hooks/Skyrim/Damage.hpp"
 
-#include "data/tasks.hpp"
-
 #include "Managers/animation/Grab.hpp"
-#include "Managers/animation/HugShrink.hpp"
-#include "Managers/animation/Utils/CooldownManager.hpp"
+#include "managers/animation/HugShrink.hpp"
+#include "managers/animation/Utils/CooldownManager.hpp"
 #include "Managers/damage/SizeHitEffects.hpp"
-#include "Managers/OverkillManager.hpp"
-#include "Scale/Scale.hpp"
-#include "Utils/actorUtils.hpp"
+
 #include "Utils/DifficultyUtils.hpp"
 
+#include "Managers/OverkillManager.hpp"
 
-
-
-
-namespace {
+namespace GTS {
 
 	void CameraFOVTask_TP(Actor* actor, PlayerCamera* camera, TempActorData* data, bool AllowEdits) {
 		std::string name = std::format("CheatDeath_TP_{}", actor->formID);

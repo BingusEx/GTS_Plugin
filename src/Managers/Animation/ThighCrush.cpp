@@ -32,6 +32,9 @@
 #include "managers/Rumble.hpp"
 #include "Constants.hpp"
 #include "data/runtime.hpp"
+
+#include "Managers/AI/AIFunctions.hpp"
+
 #include "scale/scale.hpp"
 
 

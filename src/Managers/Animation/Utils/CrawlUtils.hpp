@@ -1,12 +1,5 @@
 #pragma once
 
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
 
 	void DoCrawlingSounds(Actor* actor, float scale, NiAVObject* node, FootEvent foot_kind);

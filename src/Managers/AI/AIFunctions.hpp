@@ -1,13 +1,7 @@
 #pragma once
 
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
+
 	float GetScareThreshold(Actor* giant);
 	void Task_InitHavokTask(Actor* tiny);
 	void SendDeathEvent(Actor* giant, Actor* tiny);

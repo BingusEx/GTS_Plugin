@@ -4,15 +4,14 @@
 #include "magic/effects/common.hpp"
 #include "managers/GtsManager.hpp"
 #include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
-
-
 #include "data/tasks.hpp"
 
+using namespace GTS;
 
 namespace {
+
 	void Task_RestoreSizeTask(Actor* caster, Actor* target, bool dual_casted) {
 
 		float Power = 0.00120f;

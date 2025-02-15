@@ -22,9 +22,7 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
-
-
-
+#include "Managers/AI/AIFunctions.hpp"
 
 
 using namespace GTS;

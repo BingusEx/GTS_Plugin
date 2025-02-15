@@ -1,7 +1,5 @@
 #pragma once
 
-using namespace RE::BSScript;
-
 namespace GTS {
-	bool register_total_control(IVirtualMachine* vm);
+	bool register_total_control(BSScript::IVirtualMachine* vm);
 }

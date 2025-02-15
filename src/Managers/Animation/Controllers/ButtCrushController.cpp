@@ -20,9 +20,7 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
-
-
-
+using namespace GTS;
 
 namespace {
 

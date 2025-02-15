@@ -1,16 +1,16 @@
-#include "managers/animation/AnimationManager.hpp"
+
 #include "managers/animation/Utils/CrawlUtils.hpp"
 #include "managers/gamemode/GameModeManager.hpp"
 #include "managers/damage/CollisionDamage.hpp"
 #include "managers/damage/TinyCalamity.hpp"
 #include "managers/audio/PitchShifter.hpp"
-#include "magic/effects/TinyCalamity.hpp"
+
 #include "managers/cameras/camutil.hpp"
-#include "managers/ai/headtracking.hpp"
+
 #include "managers/RipClothManager.hpp"
 #include "managers/MaxSizeManager.hpp"
 #include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
+
 #include "Managers/Input/InputManager.hpp"
 #include "magic/effects/common.hpp"
 #include "managers/GtsManager.hpp"
@@ -21,6 +21,9 @@
 #include "scale/modscale.hpp"
 #include "data/transient.hpp"
 #include "Constants.hpp"
+
+#include "AI/AIFunctions.hpp"
+
 #include "data/runtime.hpp"
 #include "utils/camera.hpp"
 #include "UI/DebugAPI.hpp"
@@ -29,12 +32,8 @@
 
 using namespace GTS;
 
-
-
-
 namespace {
-
-	const float ini_adjustment = 1000000; //1 million units distance
+	constexpr float ini_adjustment = 1000000; //1 million units distance
 
 	void FixEmotionsRange() { // Makes facial emotions always enabled at any size
 		EnsureINIFloat("fTalkingDistance:LOD", ini_adjustment);
@@ -336,7 +335,6 @@ void GtsManager::Update() {
 
 	for (auto actor: find_actors()) {
 		if (actor) {
-			auto& sizemanager = SizeManager::GetSingleton();
 
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
 				ClothManager::GetSingleton().CheckClothingRip(actor);

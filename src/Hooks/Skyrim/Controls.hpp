@@ -76,9 +76,6 @@ namespace GTS {
 
 namespace Hooks {
 
-	
-	using namespace GTS;
-
 	template <class T>
 	class Hook_Controls: public T { // HUGE Credits to Vermunds (SkyrimSoulsRE source code)!
 		

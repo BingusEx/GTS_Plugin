@@ -26,15 +26,7 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
-
-
-
-#include <random>
-
-
-using namespace REL;
 using namespace GTS;
-
 
 ///GTS_GrabbedTiny MUST BE 1 when we have someone in hands
 

@@ -10,6 +10,8 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
+using namespace GTS;
+
 namespace {
 	// Currently this magic is unused
 

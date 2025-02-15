@@ -8,7 +8,10 @@
 
 #include "managers/Rumble.hpp"
 
+using namespace GTS;
+
 namespace {
+
 	void PlayGrowthAudio(Actor* giant, bool checkTimer) {
 		if (checkTimer) {
 			

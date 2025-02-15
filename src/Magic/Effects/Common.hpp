@@ -1,8 +1,6 @@
 #pragma once
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "managers/ShrinkToNothingManager.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
 #include "utils/actorUtils.hpp"
 #include "data/persistent.hpp"
 #include "data/transient.hpp"
@@ -12,25 +10,20 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
-#include "utils/random.hpp"
+namespace GTS {
 
+	// Module that handles various magic effects
 
-
-// Module that handles various magic effects
-
-namespace {
-	const float MASTER_POWER = 2.0f;
-
-	std::string GetAllyEssentialText(bool Teammate) {
+	static inline std::string GetAllyEssentialText(const bool Teammate) {
 		return Teammate ? "teammate" : "essential";
 	}
 
-	const char* GetIconPath(bool Teammate) {
+	static const char* GetIconPath(bool Teammate) {
 		return Teammate ? "GTS/UI/Icon_Teammate.nif" : "GTS/UI/Icon_Essential.nif";
 	}
-}
 
-namespace GTS {
+	constexpr float MASTER_POWER = 2.0f;
+
 	inline float TimeScale() {
 		const float BASE_FPS = 60.0f; // Parameters were optimised on this fps
 		return Time::WorldTimeDelta() * BASE_FPS;

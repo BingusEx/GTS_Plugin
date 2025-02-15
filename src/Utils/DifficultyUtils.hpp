@@ -1,16 +1,8 @@
 #pragma once
 
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
 
-    enum class Difficulty : std::int32_t
-	{
+    enum class Difficulty : std::int32_t {
 		Novice = 0,
 		Apprentice = 1,
 		Adept = 2,

@@ -5,11 +5,12 @@
 #include "magic/effects/common.hpp"
 #include "scale/scale.hpp"
 #include "data/runtime.hpp"
-#include "Constants.hpp"
-
 #include "managers/Rumble.hpp"
 
+using namespace GTS;
+
 namespace {
+
 	void PlayShrinkAudio(Actor* actor, bool timer_1, bool timer_2, float power) {
 		float scale = get_visual_scale(actor);
 		float falloff = 0.18f * scale;
@@ -79,6 +80,7 @@ namespace {
 }
 
 namespace GTS {
+
 	std::string GrowthSpurt::GetName() {
 		return "GrowthSpurt";
 	}

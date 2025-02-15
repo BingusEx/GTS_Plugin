@@ -17,6 +17,7 @@
 
 #include <random>
 
+#include "GtsSizeManager.hpp"
 
 
 using namespace REL;

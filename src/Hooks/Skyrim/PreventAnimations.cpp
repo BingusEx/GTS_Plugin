@@ -9,73 +9,72 @@
 using namespace GTS;
 
 namespace {
-	
-    const float KillMove_Threshold_High = 2.00f; // If GTS/Tiny size ratio is > than 2 times = disallow killmove on Tiny
-    const float KillMove_Threshold_Low = 0.75f; // If Tiny/GTS size ratio is < than 0.75 = disallow killmove on GTS
+	constexpr float KillMove_Threshold_High = 2.00f; // If GTS/Tiny size ratio is > than 2 times = disallow killmove on Tiny
+	constexpr float KillMove_Threshold_Low = 0.75f; // If Tiny/GTS size ratio is < than 0.75 = disallow killmove on GTS
 
 	// Actions that we want to prevent
-	const auto DefaultSheathe = 			0x46BB2;
-	const auto JumpRoot =					0x88302;
-	const auto NonMountedDraw = 			0x1000992;
-	const auto NonMountedForceEquip = 		0x1000993;
-	const auto JumpStandingStart =        	0x884A2;   // 558242
-	const auto JumpDirectionalStart =       0x884A3;   // 558243
+	constexpr auto DefaultSheathe = 			0x46BB2;
+	constexpr auto JumpRoot =					0x88302;
+	constexpr auto NonMountedDraw = 			0x1000992;
+	constexpr auto NonMountedForceEquip = 		0x1000993;
+	constexpr auto JumpStandingStart =        	0x884A2;   // 558242
+	constexpr auto JumpDirectionalStart =       0x884A3;   // 558243
 
-	const auto JumpFall =                   0xA791D;   // 686365 
-	const auto FallRoot =                   0xA790E;   // 686350 // The "falling down" anim
+	constexpr auto JumpFall =                   0xA791D;   // 686365 
+	constexpr auto FallRoot =                   0xA790E;   // 686350 // The "falling down" anim
 
 	// Killmoves that we want to prevent
-	const auto KillMoveFrontSideRoot =      0x24CD4;
-	const auto KillMoveDragonToNPC =        0xC1F20;
-	const auto KillMoveRootDragonFlight =   0xC9A1B;
-	const auto KillMoveBackSideRoot =       0xE8458;
-	const auto KillMoveFrontSideRoot00 =    0x100e8B;
-	const auto KillMoveBackSideRoot00 =     0x100F16;
+	constexpr auto KillMoveFrontSideRoot =      0x24CD4;
+	constexpr auto KillMoveDragonToNPC =        0xC1F20;
+	constexpr auto KillMoveRootDragonFlight =   0xC9A1B;
+	constexpr auto KillMoveBackSideRoot =       0xE8458;
+	constexpr auto KillMoveFrontSideRoot00 =    0x100e8B;
+	constexpr auto KillMoveBackSideRoot00 =     0x100F16;
 
 	// Attacks that we want to prevent
 
-	const auto MountedDraw = 16779659;
-	const auto DrawMagic = 561168;
-	const auto DefaultDrawWeapon = 561169;
+	constexpr auto MountedDraw = 16779659;
+	constexpr auto DrawMagic = 561168;
+	constexpr auto DefaultDrawWeapon = 561169;
 	//const auto NonMountedDraw = 16779666;
-	const auto DrawSheathRoot = 78512;
+	constexpr auto DrawSheathRoot = 78512;
 
 	// Magic
-	const auto CastDualMagic = 220049;
-	const auto AttackMagicLeftRoot = 116570;
-	const auto AttackMagicRightRoot = 116321;
+	constexpr auto CastDualMagic = 220049;
+	constexpr auto AttackMagicLeftRoot = 116570;
+	constexpr auto AttackMagicRightRoot = 116321;
 
 
 	// Left Hand
-	const auto BowLeftAttack = 619835;
-	const auto LeftHandAttack = 765123;
-	const auto AttackLeftRoot = 78358;
-	const auto LeftAttackRelease = 16779651;
-	const auto ReleaseLeftRoot = 78940;
+	constexpr auto BowLeftAttack = 619835;
+	constexpr auto LeftHandAttack = 765123;
+	constexpr auto AttackLeftRoot = 78358;
+	constexpr auto LeftAttackRelease = 16779651;
+	constexpr auto ReleaseLeftRoot = 78940;
 	// Normal attack
-	const auto NormalAttack = 78357;
+	constexpr auto NormalAttack = 78357;
 
 	// Right Hand
-	const auto AttackRightRoot = 78353;
-	const auto RightAttackRelease = 83292;
-	const auto ReleaseRightRoot = 78943;
+	constexpr auto AttackRightRoot = 78353;
+	constexpr auto RightAttackRelease = 83292;
+	constexpr auto ReleaseRightRoot = 78943;
 	// Power attacks
-	const auto PowerAttack = 951382;
-	const auto PowerBash = 951378;
-	const auto PowerAttackRoot = 78724;
+	constexpr auto PowerAttack = 951382;
+	constexpr auto PowerBash = 951378;
+	constexpr auto PowerAttackRoot = 78724;
 	// Sprint
-	const auto SprintStart = 1069299;
-	const auto SprintRootStart =            0x03B4A8;
-	const auto SprintRootStop = 78362;
+	constexpr auto SprintStart = 1069299;
+	constexpr auto SprintRootStart =            0x03B4A8;
+	constexpr auto SprintRootStop = 78362;
 	// Turn
 
-	const auto NPCTurnToWalk =  	0x02EDE6;
-	const auto NPCTurnInPlace = 	0x02EDBC;
-	const auto NPCPathStartRoot = 	0x02EDBA;
+	constexpr auto NPCTurnToWalk =  	0x02EDE6;
+	constexpr auto NPCTurnInPlace = 	0x02EDBC;
+	constexpr auto NPCPathStartRoot = 	0x02EDBA;
 
 	// Blocking
-	const auto BlockHit = 80631;
-	const auto BlockHitRoot = 80630;
+	constexpr auto BlockHit = 80631;
+	constexpr auto BlockHitRoot = 80630;
 
 	bool ShouldBlockFalling(Actor* actor) {
 		bool block = false;
@@ -236,9 +235,6 @@ namespace {
 }
 
 namespace Hooks {
-
-	using namespace GTS;
-	
 
 	void Hook_PreventAnimations::Hook(Trampoline& trampoline) { 
         static FunctionHook<TESIdleForm*(TESIdleForm* a_this, ConditionCheckParams* params, void* unk3)>IdleFormHook (        

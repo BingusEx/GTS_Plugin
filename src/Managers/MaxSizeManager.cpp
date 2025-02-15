@@ -5,9 +5,10 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
-
+using namespace GTS;
 
 namespace {
+
     float get_endless_height(Actor* actor) {
 		float endless = 0.0f;
 		if (Runtime::HasPerk(actor, "ColossalGrowth")) {

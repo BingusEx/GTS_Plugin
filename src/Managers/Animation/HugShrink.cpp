@@ -2,42 +2,21 @@
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "managers/animation/Utils/AnimationUtils.hpp"
 #include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
 #include "managers/damage/SizeHitEffects.hpp"
 #include "managers/animation/HugShrink.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "colliders/charcontroller.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
 #include "Managers/Input/InputManager.hpp"
 #include "Utils/InputConditions.hpp"
 #include "magic/effects/common.hpp"
 #include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
 #include "managers/Rumble.hpp"
-#include "utils/voreUtils.hpp"
 #include "Constants.hpp"
-#include "data/transient.hpp"
 #include "managers/vore.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"
+#include "Managers/Animation/Utils/TurnTowards.hpp"
 
-
-
-
-
-#include <random>
-
-
-using namespace REL;
 using namespace GTS;
-
-
 
 namespace {
 	bool CanHugCrush(Actor* giant, Actor* huggedActor) {

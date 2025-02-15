@@ -21,10 +21,10 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
-
-
+using namespace GTS;
 
 namespace {
+
 	const float MINIMUM_STOMP_DISTANCE = 50.0f;
 	const float MINIMUM_STOMP_SCALE_RATIO = 1.5f;
 	const float STOMP_ANGLE = 50;

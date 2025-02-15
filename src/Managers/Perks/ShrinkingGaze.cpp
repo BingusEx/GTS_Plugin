@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 
+#include "Managers/AI/AIFunctions.hpp"
+
 using namespace GTS;
 
 

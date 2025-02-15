@@ -15,6 +15,8 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 
+using namespace GTS;
+
 namespace {
 
     const std::vector<std::string_view> BODY_NODES = {

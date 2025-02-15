@@ -19,6 +19,7 @@
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "rays/raycast.hpp"
+#include "Managers/Animation/Utils/TurnTowards.hpp"
 
 
 

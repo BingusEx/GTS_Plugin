@@ -1,12 +1,5 @@
 #pragma once
 
-
-
-
-
-
-using namespace GTS;
-
 namespace GTS {
 	const float GetGrowthFormula(float a_giantScale, float a_tinyScale, bool a_devourment);
 

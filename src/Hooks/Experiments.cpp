@@ -6,9 +6,6 @@
 #include "Utils/ActorUtils.hpp"
 #include "Scale/scale.hpp"
 
-
-
-
 using namespace GTS;
 
 

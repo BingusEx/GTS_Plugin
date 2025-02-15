@@ -13,7 +13,8 @@
 */
 
 /*
-namespace {
+namespace GTS {
+
 	static inline std::array<int, 12> _offsets4_15{
 		0xBA0B0,  // GetNodeOverrideInt  140718186930352 - 140718186168320 = 762.032 = B A0B0
 		0xB9FD0,  // GetNodeOverrideFloat 140718186930128 - 140718186168320 = 761.808 = B 9FD0

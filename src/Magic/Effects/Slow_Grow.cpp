@@ -8,8 +8,10 @@
 #include "magic/magic.hpp"
 #include "scale/scale.hpp"
 
+using namespace GTS;
 
 namespace {
+
 	bool PerformMoanAndParticle(Actor* caster) {
 		if (caster && IsFemale(caster) && !IsActionOnCooldown(caster, CooldownSource::Emotion_Moan)) {
 			for (auto Foot: {"NPC L Foot [Lft ]", "NPC R Foot [Rft ]"}) {

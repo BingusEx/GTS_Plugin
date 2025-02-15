@@ -1,10 +1,4 @@
-
-
-
-
-
-
-using namespace GTS;
+#pragma once
 
 namespace GTS {
     void PlayCrushSound(Actor* giant, NiAVObject* node, bool only_once, bool StrongSound);

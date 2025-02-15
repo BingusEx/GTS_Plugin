@@ -10,7 +10,10 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
+using namespace GTS;
+
 namespace {
+
 	void ResetMovementSlowdown(Actor* tiny) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {

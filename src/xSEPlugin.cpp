@@ -15,7 +15,12 @@
 #include "API/APIManager.hpp"
 #include "Version.hpp"
 
+
+using namespace SKSE;
+using namespace RE;
 using namespace RE::BSScript;
+using namespace GTS;
+
 
 namespace {
 

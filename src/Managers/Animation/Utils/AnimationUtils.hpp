@@ -1,15 +1,9 @@
 #pragma once
 
-
 #include "managers/animation/Utils/AttachPoint.hpp"
-#include "managers/animation/Utils/TurnTowards.hpp"
-
-
-
-
-using namespace GTS;
 
 namespace GTS {
+
 	enum class FollowerAnimType {
 		ThighSandwich,
 		ButtCrush,

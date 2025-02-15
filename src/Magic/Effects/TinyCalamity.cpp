@@ -11,8 +11,10 @@
 #include "scale/scale.hpp"
 #include "data/time.hpp"
 
+using namespace GTS;
 
 namespace {
+
 	float GetSMTBonus(Actor* actor) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {

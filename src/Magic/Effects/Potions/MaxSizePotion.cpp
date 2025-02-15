@@ -11,13 +11,17 @@
 
 // A potion that TEMPORARILY increases max possible size
 
+using namespace GTS;
+
 namespace {
+
 	void TempBonusMaxSize_Modify(Actor* giant, float value) {
 		auto saved_data = Transient::GetSingleton().GetData(giant);
 		if (saved_data) {
 			saved_data->potion_max_size += value;
 		}
 	}
+
 }
 
 

@@ -1,23 +1,17 @@
 #pragma once
 
+namespace GTS {
 
-
-
-namespace {
 	using VM = RE::BSScript::Internal::VirtualMachine;
 	using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
-}
 
-namespace GTS {
-	inline RE::VMHandle GetHandle(RE::TESForm* a_form)
-	{
+	inline RE::VMHandle GetHandle(RE::TESForm* a_form) {
 		auto vm = VM::GetSingleton();
 		auto policy = vm->GetObjectHandlePolicy();
 		return policy->GetHandleForObject(a_form->GetFormType(), a_form);
 	}
 
-	inline ObjectPtr GetObjectPtr(RE::TESForm* a_form, const char* a_class, bool a_create)
-	{
+	inline ObjectPtr GetObjectPtr(RE::TESForm* a_form, const char* a_class, bool a_create) {
 		auto vm = VM::GetSingleton();
 		auto handle = GetHandle(a_form);
 

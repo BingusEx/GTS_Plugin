@@ -121,9 +121,16 @@
 using namespace std::literals;
 using namespace REL::literals;
 
+
+
 namespace GTS {
 	using namespace std;
 	using namespace SKSE;
+	using namespace RE;
+}
+
+namespace DebugUtil {
+	using namespace GTS;
 	using namespace RE;
 }
 
@@ -131,7 +138,12 @@ namespace Hooks {
 	using namespace std;
 	using namespace SKSE;
 	using namespace RE;
+	using namespace RE::BSScript;
+	using namespace RE::BSScript::Internal;
+	using namespace GTS;
 }
+
+
 
 namespace logger = SKSE::log;
 

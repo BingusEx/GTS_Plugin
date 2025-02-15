@@ -3,9 +3,6 @@
 
 namespace Hooks {
 
-	
-	using namespace GTS;
-
 	class Hook_TESCamera {
 		public:
 			static void Hook();
