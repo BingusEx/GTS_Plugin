@@ -95,6 +95,7 @@
 #include <variant>
 #include <vector>
 #include <version>
+#include <d3d11.h>
 
 #include <RE/Skyrim.h>
 #include <SKSE/SKSE.h>
@@ -103,11 +104,16 @@
 #include <ShlObj_core.h>
 #include <Windows.h>
 #include <Psapi.h>
-#undef cdecl // Workaround for Clang 14 CMake configure error.
-#undef PlaySound //Workarond for winapi define breaking intelisense for Runtimne::PlaySound
+#include <tchar.h>
 
-#include <spdlog/sinks/basic_file_sink.h>
+//WinAPI Fix
+#undef PlaySound 
+#undef DeleteFile
+
+// For console sink
 #include <spdlog/sinks/msvc_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>  
 
 // Compatible declarations with other sample projects.
 #define DLLEXPORT __declspec(dllexport)
@@ -115,12 +121,29 @@
 using namespace std::literals;
 using namespace REL::literals;
 
-namespace logger = SKSE::log;
-
-namespace util {
-	using SKSE::stl::report_and_fail;
+namespace GTS {
+	using namespace std;
+	using namespace SKSE;
+	using namespace RE;
 }
 
-#include "util.hpp"
-#include "data/tasks.hpp"
+namespace Hooks {
+	using namespace std;
+	using namespace SKSE;
+	using namespace RE;
+}
 
+namespace logger = SKSE::log;
+
+#include "git.h"
+
+//Own Includes
+
+#include "Constants.hpp"
+#include "Profiler/Profiler.hpp"
+#include "Events/Events.hpp"
+#include "Utils/Utils.hpp"
+#include "Data/Data.hpp"
+#include "Scale/Scale.hpp"
+#include "Scale/ModScale.hpp"
+#include "Scale/Height.hpp"

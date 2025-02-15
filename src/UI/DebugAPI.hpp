@@ -1,16 +1,14 @@
 #pragma once
-#include "events.hpp"
+
 #include <glm/ext.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "data/world.hpp"
+#include "Data/World.hpp"
 
-using namespace Gts;
 
 namespace Util {
+
+	using namespace GTS;
 
 	inline glm::vec3 CompMult(const glm::vec3& a, const glm::vec3& b) {
 		return glm::vec3(a[0]*b[0], a[1]*b[1], a[2]*b[2]);
@@ -157,7 +155,7 @@ namespace Util {
 
 using namespace Util;
 
-namespace Gts {
+namespace GTS {
 	inline RE::NiPoint3 Glm2Ni(const glm::vec3 &position) {
 		return RE::NiPoint3(position[0], position[1], position[2]);
 	}
@@ -299,7 +297,7 @@ class DebugAPI
 		static DebugAPILine* GetExistingLine(const glm::vec3& from, const glm::vec3& to, const glm::vec4& color, float lineThickness);
 };
 
-class DebugOverlayMenu : RE::IMenu, public Gts::EventListener
+class DebugOverlayMenu : RE::IMenu, public GTS::EventListener
 {
 	public:
 		static constexpr const char* MENU_PATH = "GTS_Plugin/GTS_overlay_menu";

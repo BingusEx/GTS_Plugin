@@ -1,10 +1,8 @@
 #pragma once
 #include "UI/DebugAPI.hpp"
-#include "data/world.hpp"
+#include "Data/World.hpp"
 
-#include <windows.h>
-
-using namespace Gts;
+using namespace GTS;
 
 std::vector<DebugAPILine*> DebugAPI::LinesToDraw;
 
