@@ -19,6 +19,7 @@ namespace GTS {
 	    }
 
 	    ImUtil_Unique {
+
 	        if(ImGui::CollapsingHeader("UI Settings",ImUtil::HeaderFlags)){
 
 	            const char* T0 = "Adjust the scale of all elements and fonts.";
@@ -63,8 +64,8 @@ namespace GTS {
 	                ImUtil::ComboEx<ImWindow::WindowAnchor>("Anchor", Settings.SettingsWindow.sAnchor, T2);
 	                ImGui::BeginDisabled(Settings.SettingsWindow.sAnchor == "kCenter");
 	                {
-	                    ImUtil::SliderF("Offset (Left/Right)", &Settings.SettingsWindow.f2Offset[0], 0.0f, 700.0f, T3,"%.1f");
-	                    ImUtil::SliderF("Offset (Up/Down)", &Settings.SettingsWindow.f2Offset[1], 0.0f, 700.0f, T4,"%.1f");
+	                    ImUtil::SliderF("Offset (Left/Right)", &Settings.SettingsWindow.f2Offset.at(0), 0.0f, 1280.f, T3,"%.1f");
+	                    ImUtil::SliderF("Offset (Up/Down)", &Settings.SettingsWindow.f2Offset.at(1), 0.0f, 720.0f, T4,"%.1f");
 	                }
 	                ImGui::EndDisabled();
 	            }
@@ -102,8 +103,8 @@ namespace GTS {
 	                ImUtil::ComboEx<ImWindow::WindowAnchor>("Anchor", Settings.StatusWindow.sAnchor, T3);
 	                ImGui::BeginDisabled(Settings.StatusWindow.sAnchor == "kCenter");
 	                {
-	                    ImUtil::SliderF("Offset (Left/Right)", &Settings.StatusWindow.f2Offset[0], 0.0f, 700.0f, T4,"%.1f%");
-	                    ImUtil::SliderF("Offset (Up/Down)", &Settings.StatusWindow.f2Offset[1], 0.0f, 700.0f, T5,"%.1f%");
+	                    ImUtil::SliderF("Offset (Left/Right)", &Settings.StatusWindow.f2Offset.at(0), 0.0f, 1280.0f, T4, "%.1f%");
+	                    ImUtil::SliderF("Offset (Up/Down)", &Settings.StatusWindow.f2Offset.at(1), 0.0f, 720.0f, T5,"%.1f%");
 	                }
 	                ImGui::EndDisabled();
 	            }

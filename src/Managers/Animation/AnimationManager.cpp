@@ -275,6 +275,7 @@ namespace GTS {
 		AnimationManager::StartAnim(trigger, giant, nullptr);
 
 	}
+
 	void AnimationManager::StartAnim( std::string_view trigger, Actor* giant) {
 		if (giant) {
 			AnimationManager::StartAnim(trigger, *giant);
@@ -283,6 +284,7 @@ namespace GTS {
 	}
 
 	void AnimationManager::StartAnim(std::string_view trigger, Actor& giant, TESObjectREFR* tiny) {
+
 		if (giant.formID == 0x14) {
 			if (IsFirstPerson() || IsInRaceMenu()) { 
 				//Time::WorldTimeElapsed() > 1.0
@@ -292,6 +294,11 @@ namespace GTS {
 				return; // Don't start animations in FP, it's not supported.
 			}
 		}
+
+		if (IsTransitioning(&giant)) {
+			return;
+		}
+
 		try {
 			auto& me = AnimationManager::GetSingleton();
 			// Find the behavior for this trigger exit on catch if not
@@ -314,6 +321,7 @@ namespace GTS {
 			return;
 		}
 	}
+
 	void AnimationManager::StartAnim(std::string_view trigger, Actor* giant, TESObjectREFR* tiny) {
 		if (giant) {
 			AnimationManager::StartAnim(trigger, *giant, tiny);

@@ -98,24 +98,24 @@ namespace GTS {
     const inline std::string GetFormatedWeight(RE::Actor* a_Actor){
         std::string displayUnits = Config::GetUI().sDisplayUnits;
         if (displayUnits == "kImperial") 
-            return FormatImperialWeight(KiloToPound(GetActorWeight(a_Actor)));
+            return FormatImperialWeight(KiloToPound(GetActorGTSWeight(a_Actor)));
 
         else if (displayUnits == "kMammoth") 
-            return FormatMammothWeight(KiloToMammoth(GetActorWeight(a_Actor)));
+            return FormatMammothWeight(KiloToMammoth(GetActorGTSWeight(a_Actor)));
         
         else
-            return FormatMetricWeight(GetActorWeight(a_Actor));
+            return FormatMetricWeight(GetActorGTSWeight(a_Actor));
     }
 
     const inline std::string GetFormatedHeight(RE::Actor* a_Actor){
         std::string displayUnits = Config::GetUI().sDisplayUnits;
         if (displayUnits == "kImperial") 
-            return FormatImperialHeight(MetersToFeet(GetActorHeight(a_Actor)));
+            return FormatImperialHeight(MetersToFeet(GetActorGTSHeight(a_Actor)));
 
         else if (displayUnits == "kMammoth") 
-            return FormatMammothHeight(MetersToMammoth(GetActorHeight(a_Actor)));
+            return FormatMammothHeight(MetersToMammoth(GetActorGTSHeight(a_Actor)));
         
         else
-            return FormatMetricHeight(GetActorHeight(a_Actor));
+            return FormatMetricHeight(GetActorGTSHeight(a_Actor));
     }
 }

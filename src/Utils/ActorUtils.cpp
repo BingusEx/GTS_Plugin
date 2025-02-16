@@ -867,7 +867,8 @@ namespace GTS {
 	}
 
 	//Returns Metric KG
-	float GetActorWeight(Actor* giant) {
+	float GetActorGTSWeight(Actor* giant) {
+
 		if (!giant) return 1.0f;
 
 		float HHOffset = HighHeelManager::GetBaseHHOffset(giant)[2] / 100;
@@ -875,12 +876,13 @@ namespace GTS {
 		const uint8_t SMT = HasSMT(giant) ? 6 : 1;
 		float TotalScale = Scale + (HHOffset * 0.10f * Scale);
 		const float ActorWeight = giant->GetWeight();
-		constexpr float BaseWeight = 50.0f; //KG at 0 weight
-		return BaseWeight * ((1.0f + ActorWeight / 100.f) * static_cast<float>(std::pow(TotalScale, 3))) * SMT;
+		constexpr float BaseWeight = 55.0f; //KG at 0 weight
+		return BaseWeight * ((1.0f + ActorWeight / 115.f) * static_cast<float>(std::pow(TotalScale, 3))) * SMT;
 	}
 
 	//Returns Metric Meters
-	float GetActorHeight(Actor* giant) {
+	float GetActorGTSHeight(Actor* giant) {
+
 		if (!giant) return 1.0f;
 
 		float hh = HighHeelManager::GetBaseHHOffset(giant)[2] / 100;

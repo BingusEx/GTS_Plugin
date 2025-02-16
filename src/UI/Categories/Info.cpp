@@ -11,13 +11,17 @@ namespace GTS {
 
         //Get Curr Follower Count;
 
+        ImGui::BeginChild("InfoWrapper",ImGui::GetContentRegionAvail());
+
         auto FollowerList = FindTeammates();
 
         const int TempFollowerCount = static_cast<int>(FollowerList.size());
 
-        const float DivWidth = (ImGui::GetContentRegionAvail().x / (TempFollowerCount + 1)) - (ImGui::GetStyle().CellPadding.x + ImGui::GetStyle().FramePadding.x + ImGui::GetStyle().WindowPadding.x);
+        const int FollowerDiv = TempFollowerCount < 5 ? TempFollowerCount : 4;
 
-        ImGui::BeginChild("PlayerInfo", { DivWidth,0 }, true, true);
+        const float DivWidth = (ImGui::GetContentRegionAvail().x / (FollowerDiv + 1u)) - (ImGui::GetStyle().CellPadding.x + ImGui::GetStyle().FramePadding.x + ImGui::GetStyle().WindowPadding.x);
+
+        ImGui::BeginChild("PlayerInfo", { DivWidth,0 }, ImGuiChildFlags_AutoResizeY);
         {
             auto Player = RE::PlayerCharacter::GetSingleton();
 
@@ -44,6 +48,12 @@ namespace GTS {
 
         if (TempFollowerCount == 0) return;
 
+        //Sort by scale
+        ranges::sort(FollowerList, [](Actor* a, Actor* b) {
+            return get_visual_scale(a) > get_visual_scale(b);
+        });
+
+
         for (auto Follower : FollowerList) {
 
             if (!Follower)
@@ -55,8 +65,17 @@ namespace GTS {
 
             const std::string Name = Follower->GetName();
 
+            //Derive a unique Id From the actors pointer
+			ImGuiID ActPtrUID = reinterpret_cast<std::uintptr_t>(Follower);
+
             ImUtil::SeperatorV();
-            ImGui::BeginChild(Name.c_str(), { DivWidth,0 });
+
+            // Check if the next child will fit in the available space
+            if (ImGui::GetContentRegionAvail().x < DivWidth) {
+                ImGui::NewLine();
+            }
+
+            ImGui::BeginChild(ActPtrUID, { DivWidth, 0 }, ImGuiChildFlags_AutoResizeY);
 
             ImGui::PushFont(ImFontManager::GetFont("widgettitle"));
             ImGui::Text(str_toupper(Name).c_str());
@@ -67,7 +86,11 @@ namespace GTS {
             ImGui::PopFont();
             ImGui::EndChild();
         }
+
+        ImGui::EndChild();
     }
+
+
 }
 
 

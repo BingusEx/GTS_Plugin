@@ -165,6 +165,7 @@ namespace {
 		auto& sandwichdata = ThighSandwichController::GetSingleton().GetSandwichingData(&data.giant);
 		sandwichdata.EnableSuffocate(false);
 	}
+
 	void GTSSandwich_MoveBody_start(AnimationEventData& data) {
 		auto& sandwichdata = ThighSandwichController::GetSingleton().GetSandwichingData(&data.giant);
 		for (auto tiny: sandwichdata.GetActors()) {
@@ -175,18 +176,22 @@ namespace {
 		}
 		StartBodyRumble("BodyRumble", data.giant, 0.5f, 0.25f);
 	}
+
 	void GTSSandwich_EnableRune(AnimationEventData& data) {
 		auto& sandwichdata = ThighSandwichController::GetSingleton().GetSandwichingData(&data.giant);
 		auto& sizemanager = SizeManager::GetSingleton();
 		ManageCamera(&data.giant, true, CameraTracking::Thigh_Sandwich); // Focus camera on AnimObjectA
 		sandwichdata.EnableRuneTask(&data.giant, false); // Start Growing the Rune
 	}
+
 	void GTSSandwich_SitStart(AnimationEventData& data) {
-		DrainStamina(&data.giant, "StaminaDrain_Sandwich_Idle", "KillerThighs", true, 0.25f);
+		//DrainStamina(&data.giant, "StaminaDrain_Sandwich_Idle", "KillerThighs", true, 0.25f);
 	}
+
 	void GTSSandwich_MoveBody_end(AnimationEventData& data) {
 		StopBodyRumble("BodyRumble", data.giant);
 	}
+
 	void GTSSandwich_MoveLL_start(AnimationEventData& data) {
 		data.stage = 1;
 		data.canEditAnimSpeed = true;

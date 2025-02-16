@@ -96,8 +96,8 @@ namespace GTS {
 	float Damage_CalculateSizeDamage(RE::Actor* giant, RE::Actor* tiny);
 
 	float GetSizeDifference(Actor* giant, Actor* tiny, SizeType Type, bool Check_SMT, bool HH);
-	float GetActorWeight(Actor* giant);
-	float GetActorHeight(Actor* giant);
+	float GetActorGTSWeight(Actor* giant);
+	float GetActorGTSHeight(Actor* giant);
 	float GetSizeFromBoundingBox(Actor* tiny);
 	float GetRoomStateScale(Actor* giant);
 	float GetProneAdjustment();
