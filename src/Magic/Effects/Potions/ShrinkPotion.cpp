@@ -1,14 +1,9 @@
-#include "magic/effects/Potions/ShrinkPotion.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-
-
+#include "Magic/Effects/Potions/ShrinkPotion.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Rumble.hpp"
 
 namespace GTS {
+
 	std::string ShrinkPotion::GetName() {
 		return "ShrinkPotion";
 	}
@@ -30,7 +25,7 @@ namespace GTS {
 	}
 
 	void ShrinkPotion::OnUpdate() {
-		const float BASE_POWER = 0.000480f;
+		constexpr float BASE_POWER = 0.000480f;
 
 		auto caster = GetCaster();
 		if (!caster) {
@@ -49,6 +44,5 @@ namespace GTS {
 		}
 	}
 
-	void ShrinkPotion::OnFinish() {
-	}
+	void ShrinkPotion::OnFinish() {}
 }

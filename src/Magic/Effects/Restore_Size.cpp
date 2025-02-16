@@ -1,14 +1,9 @@
 
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "magic/effects/restore_size.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+#include "Common.hpp"
+#include "restore_size.hpp"
 
 #include "managers/Rumble.hpp"
-
+#include "managers/animation/Utils/CooldownManager.hpp"
 using namespace GTS;
 
 namespace {

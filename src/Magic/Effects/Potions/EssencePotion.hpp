@@ -1,13 +1,11 @@
 #pragma once
-#include "magic/magic.hpp"
+
+#include "Magic/Magic.hpp"
+
 // Module that handles Size Potion
 
-
-
-
-
-
 namespace GTS {
+
 	class EssencePotion : public Magic {
 		public:
 			using Magic::Magic;

@@ -1,14 +1,9 @@
 #pragma once
-#include "magic/magic.hpp"
 
-// Module that handles footsteps
-
-
-
-
-
+#include "Magic/Magic.hpp"
 
 namespace GTS {
+
 	class ShrinkPotion : public Magic {
 		public:
 			using Magic::Magic;

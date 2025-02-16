@@ -1,13 +1,10 @@
-#include "magic/effects/Potions/ExperiencePotion.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
+#include "Magic/Effects/Potions/ExperiencePotion.hpp"
+#include "Magic/Effects/Common.hpp"
 
-// A potion that gives size experience
+// A Potion that gives size experience
 
 namespace GTS {
+
 	std::string ExperiencePotion::GetName() {
 		return "ExperiencePotion";
 	}

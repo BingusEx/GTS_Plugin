@@ -1,18 +1,12 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/shrink_rune.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+
+#include "Magic/Effects/Common.hpp"
+#include "Magic/Effects/Shrink_Rune.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 using namespace GTS;
 
 namespace {
+
 	// Currently this magic is unused
 
 	void ShrinkByOverTime(Actor* tiny, float over_time, float by) {
@@ -102,8 +96,7 @@ namespace GTS {
 		}
 	}
 
-	void ShrinkRune::OnUpdate() {
-	}
+	void ShrinkRune::OnUpdate() {}
 
 	void ShrinkRune::OnFinish() {
 		auto caster = GetCaster();

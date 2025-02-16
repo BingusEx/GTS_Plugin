@@ -1,14 +1,11 @@
-#include "magic/effects/Potions/SizeHunger.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Magic/Effects/Potions/SizeHunger.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
 // A potion that amplifies size gain
 
 namespace GTS {
+
 	std::string SizeHunger::GetName() {
 		return "SizeHunger";
 	}

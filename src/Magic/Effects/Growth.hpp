@@ -1,11 +1,6 @@
 #pragma once
-#include "magic/magic.hpp"
-// Module that handles footsteps
 
-
-
-
-
+#include "Magic/Magic.hpp"
 
 namespace GTS {
 	class Growth : public Magic {

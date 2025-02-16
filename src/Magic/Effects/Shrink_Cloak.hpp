@@ -1,13 +1,10 @@
 #pragma once
-#include "magic/magic.hpp"
+#include "Magic/Magic.hpp"
+
 // Module that handles footsteps
 
-
-
-
-
-
 namespace GTS {
+
 	class ShrinkCloak : public Magic {
 		public:
 			virtual void OnStart() override;

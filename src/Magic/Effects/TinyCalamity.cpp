@@ -1,15 +1,6 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/perks/ShrinkingGaze.hpp"
-#include "magic/effects/TinyCalamity.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "UI/DebugAPI.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Magic/Effects/TinyCalamity.hpp"
+#include "Managers/Rumble.hpp"
+#include "Managers/Perks/ShrinkingGaze.hpp"
 
 using namespace GTS;
 

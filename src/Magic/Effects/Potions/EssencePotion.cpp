@@ -1,10 +1,6 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "magic/effects/Potions/EssencePotion.hpp"
-#include "magic/effects/common.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
+#include "Magic/Effects/Potions/EssencePotion.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
 using namespace GTS;
 

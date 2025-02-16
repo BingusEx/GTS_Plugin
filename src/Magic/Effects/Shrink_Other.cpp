@@ -1,21 +1,20 @@
-#include "magic/effects/shrink_other.hpp"
-#include "magic/effects/common.hpp"
-#include "Constants.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+
+#include "Magic/Effects/Common.hpp"
+#include "Magic/Effects/Shrink_Other.hpp"
 
 namespace GTS {
+
 	std::string ShrinkOther::GetName() {
 		return "ShrinkOther";
 	}
 
 	void ShrinkOther::OnUpdate() {
-		const float BASE_POWER = 0.00180f;
-		const float CRUSH_BONUS = 0.00180f;
-		const float GROWTH_AMOUNT_BONUS = 1.4f;
-		const float DUAL_CAST_BONUS = 2.0f;
-		const float SCALE_FACTOR = 0.5f;
+
+		constexpr float BASE_POWER = 0.00180f;
+		constexpr float CRUSH_BONUS = 0.00180f;
+		constexpr float GROWTH_AMOUNT_BONUS = 1.4f;
+		constexpr float DUAL_CAST_BONUS = 2.0f;
+		constexpr float SCALE_FACTOR = 0.5f;
 
 		auto caster = GetCaster();
 		if (!caster) {

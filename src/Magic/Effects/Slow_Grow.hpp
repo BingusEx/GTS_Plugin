@@ -1,12 +1,8 @@
 #pragma once
-#include "magic/magic.hpp"
+
+#include "Magic/Magic.hpp"
 
 // Module that handles slow growth
-
-
-
-
-
 
 namespace GTS {
 	class SlowGrow : public Magic {

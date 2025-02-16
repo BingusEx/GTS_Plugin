@@ -1,18 +1,11 @@
-#include "magic/effects/Potions/MightPotion.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
+#include "Magic/Effects/Potions/MightPotion.hpp"
+#include "Magic/Effects/Common.hpp"
 
 namespace GTS {
+
 	std::string MightPotion::GetName() {
 		return "MightPotion";
 	}
-
 
 	MightPotion::MightPotion(ActiveEffect* effect) : Magic(effect) {
 

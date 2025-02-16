@@ -1,12 +1,8 @@
-#include "magic/effects/Enchantments/EnchGigantism.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Magic/Effects/Enchantments/EnchGigantism.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
 namespace GTS {
+
 	std::string Gigantism::GetName() {
 		return "Gigantism";
 	}

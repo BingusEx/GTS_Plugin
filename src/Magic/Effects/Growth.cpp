@@ -1,19 +1,16 @@
-#include "magic/effects/growth.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+#include "Magic/Effects/Growth.hpp"
+#include "Common.hpp"
 
 namespace GTS {
+
 	std::string Growth::GetName() {
 		return "Growth";
 	}
 
 	void Growth::OnUpdate() {
-		const float BASE_POWER = 0.00150f;
-		const float DUAL_CAST_BONUS = 2.0f;
 
+		constexpr float BASE_POWER = 0.00150f;
+		constexpr float DUAL_CAST_BONUS = 2.0f;
 
 		auto caster = GetCaster();
 		if (!caster) {

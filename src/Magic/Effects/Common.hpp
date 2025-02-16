@@ -1,14 +1,7 @@
 #pragma once
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/height.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+
+#include "Managers/ShrinkToNothingManager.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
 namespace GTS {
 
@@ -25,7 +18,7 @@ namespace GTS {
 	constexpr float MASTER_POWER = 2.0f;
 
 	inline float TimeScale() {
-		const float BASE_FPS = 60.0f; // Parameters were optimised on this fps
+		constexpr float BASE_FPS = 60.0f; // Parameters were optimised on this fps
 		return Time::WorldTimeDelta() * BASE_FPS;
 	}
 
@@ -44,7 +37,9 @@ namespace GTS {
 		if (tiny->formID == 0x14) { // always allow with player
 			return false;
 		}
+
 		bool essential = IsEssential(giant, tiny);
+
 		if (essential) {
 			bool teammate = !IsHostile(giant, tiny) && IsTeammate(tiny) && Persistent::GetSingleton().FollowerProtection;
 			bool OnCooldown = IsActionOnCooldown(tiny, CooldownSource::Misc_ShrinkParticle_Animation);
@@ -109,15 +104,19 @@ namespace GTS {
 		if (IsUndead(tiny, false) && !IsLiving(tiny)) {
 			if (CanBendLifeless(giant)) {
 				reduction *= 0.31f;
-			} else {
+			}
+			else {
 				reduction *= 0.22f;
 			}
-		} else if (IsGiant(tiny)) {
+		}
+		else if (IsGiant(tiny)) {
 			reduction *= 0.75f;
-		} else if (IsMechanical(tiny)) {
+		}
+		else if (IsMechanical(tiny)) {
 			if (CanBendLifeless(giant)) {
 				reduction *= 0.12f;
-			} else {
+			}
+			else {
 				reduction *= 0.0f;
 			}
 		}

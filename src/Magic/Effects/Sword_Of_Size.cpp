@@ -1,11 +1,9 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/sword_of_size.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+#include "Magic/Effects/Sword_Of_Size.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 namespace {
+
 	float GetShrinkModifier(float value) {
 		// https://www.desmos.com/calculator/ygoxbe7hjg
 		float k = 0.9f;

@@ -1,13 +1,11 @@
 #pragma once
-#include "magic/magic.hpp"
-// Module that tracks Gigantism MGF
 
+#include "Magic/Magic.hpp"
 
-
-
-
+// Module that tracks Gigantism MGEF
 
 namespace GTS {
+
 	class Gigantism : public Magic {
 		public:
 			using Magic::Magic;

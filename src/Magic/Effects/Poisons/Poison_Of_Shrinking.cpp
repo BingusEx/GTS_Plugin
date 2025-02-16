@@ -1,17 +1,10 @@
-#include "magic/effects/Poisons/Poison_Of_Shrinking.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
 
-
-
+#include "Magic/Effects/Poisons/Poison_Of_Shrinking.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Rumble.hpp"
 
 namespace GTS {
+
 	std::string Shrink_Poison::GetName() {
 		return "Shrink_Poison";
 	}
@@ -33,7 +26,8 @@ namespace GTS {
 	}
 
 	void Shrink_Poison::OnUpdate() {
-		const float BASE_POWER = 0.004000f;
+
+		constexpr float BASE_POWER = 0.004000f;
 
 		auto caster = GetCaster();
 		if (!caster) {

@@ -1,14 +1,8 @@
 #pragma once
 // Module that handles footsteps
 
-#include "data/runtime.hpp"
-
-
-
-
-
-
 namespace GTS {
+
 	template <class T>
 	T* find_form(std::string_view lookup_id) {
 		// From https://github.com/Exit-9B/MCM-Helper/blob/a39b292909923a75dbe79dc02eeda161763b312e/src/FormUtil.cpp
@@ -54,6 +48,7 @@ namespace GTS {
 			}
 
 		private:
+
 			enum State {
 				Init,
 				Start,
@@ -61,6 +56,7 @@ namespace GTS {
 				Finish,
 				CleanUp,
 			};
+
 			State state = State::Init;
 			Actor* target = nullptr;
 			Actor* caster = nullptr;
@@ -81,6 +77,7 @@ namespace GTS {
 		public:
 			virtual Magic* MakeNew(ActiveEffect* effect)  const override;
 	};
+
 	template<class MagicCls>
 	Magic* MagicFactory<MagicCls>::MakeNew(ActiveEffect* effect) const {
 		if (effect) {
@@ -108,7 +105,6 @@ namespace GTS {
 				auto magic = Runtime::GetMagicEffect(tag);
 				if (magic) {
 					this->factories.try_emplace(magic,new MagicFactory<MagicCls>());
-					return;
 				}
 			}
 

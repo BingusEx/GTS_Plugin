@@ -38,7 +38,7 @@ namespace GTS {
 		float stolen_stamin;
 
 		ActorData();
-		ActorData(Actor* actor);
+		explicit ActorData(Actor* actor);
 	};
 
 	struct CameraCollisions {
@@ -65,8 +65,6 @@ namespace GTS {
 			ActorData* GetActorData(Actor* actor);
 			ActorData* GetData(TESObjectREFR* refr);
 			ActorData* GetData(TESObjectREFR& refr);
-
-
 
 			bool highheel_correction = true;
 			bool highheel_furniture = false;
@@ -110,7 +108,7 @@ namespace GTS {
 			float experience_mult = 1.0f;
 			float progression_multiplier = 0.55f;
 
-			////Quest Progression
+			//// ---- Quest Progression
 			float HugStealCount = 0.0f; // Stage 1, Hugs
 			float CrushCount = 0.0f; // Stage 2
 			float STNCount = 0.0f; // Stage 3, Shrink to nothing
@@ -118,7 +116,7 @@ namespace GTS {
 			float HandCrushed = 0.0f; // Stage 5, Crushed with hand
 			float VoreCount = 0.0f; // Stage 6, Fully Vored
 			float GiantCount = 0.0f; // Stage 7, Giant Count
-			///
+			
 
 			float stolen_attributes = 0.0f;
 

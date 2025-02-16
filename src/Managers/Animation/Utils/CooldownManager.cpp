@@ -15,44 +15,41 @@
 
 using namespace GTS;
 
-using namespace REL;
-
-
-
 namespace {
-	const float LAUNCH_COOLDOWN = 1.8f;
-	const float PUSH_COOLDOWN = 2.0f;
-	const float HANDDAMAGE_COOLDOWN = 0.6f;
-	const float THIGHDAMAGE_COOLDOWN = 1.2f;
 
-    const float ABSORB_OTHER_COOLDOWN = 30.0f;
+	constexpr float LAUNCH_COOLDOWN = 1.8f;
+	constexpr float PUSH_COOLDOWN = 2.0f;
+	constexpr float HANDDAMAGE_COOLDOWN = 0.6f;
+	constexpr float THIGHDAMAGE_COOLDOWN = 1.2f;
 
-    const float BREAST_SUFFOCATE_OTHER_COOLDOWN = 30.0f;
-    const float BREAST_ABSORB_OTHER_COOLDOWN = 30.0f;
-    const float BREAST_VORE_OTHER_COOLDOWN = 30.0f;
+	constexpr float ABSORB_OTHER_COOLDOWN = 30.0f;
 
-    const float TINYCALAMITY_ONESHOT_COOLDOWN = 60.0f;
-    
-	const float HEALTHGATE_COOLDOWN = 60.0f;
-	const float SCARE_COOLDOWN = 6.0f;
-	const float BUTTCRUSH_COOLDOWN = 30.0f;
-	const float HUGS_COOLDOWN = 10.0f;
+	constexpr float BREAST_SUFFOCATE_OTHER_COOLDOWN = 30.0f;
+	constexpr float BREAST_ABSORB_OTHER_COOLDOWN = 30.0f;
+	constexpr float BREAST_VORE_OTHER_COOLDOWN = 30.0f;
 
-    const float LAUGH_COOLDOWN = 5.0f;
-	const float MOAN_COOLDOWN = 5.0f;
-    const float MOAN_CRUSH_COOLDOWN = 3.0f;
+	constexpr float TINYCALAMITY_ONESHOT_COOLDOWN = 60.0f;
 
-    const float SOUND_COOLDOWN = 2.0f;
-    const float GROW_SOUND_COOLDOWN = 1.0f;
+	constexpr float HEALTHGATE_COOLDOWN = 60.0f;
+	constexpr float SCARE_COOLDOWN = 6.0f;
+	constexpr float BUTTCRUSH_COOLDOWN = 30.0f;
+	constexpr float HUGS_COOLDOWN = 10.0f;
 
-    const float HIT_COOLDOWN = 1.0f;
-    const float AI_GROWTH_COOLDOWN = 2.0f;
-    const float SHRINK_OUTBURST_COOLDOWN = 18.0f;
-    const float SHRINK_OUTBURST_COOLDOWN_FORCED = 180.0f;
-    const float SHRINK_PARTICLE_COOLDOWN = 0.25f;
-    const float SHRINK_PARTICLE_COOLDOWN_GAZE = 0.25f;
-    const float SHRINK_PARTICLE_COOLDOWN_ANIM = 1.5f;
-    const float SHRINK_TINYCALAMITY_RAGE = 60.0f;
+	constexpr float LAUGH_COOLDOWN = 5.0f;
+	constexpr float MOAN_COOLDOWN = 5.0f;
+	constexpr float MOAN_CRUSH_COOLDOWN = 3.0f;
+
+	constexpr float SOUND_COOLDOWN = 2.0f;
+	constexpr float GROW_SOUND_COOLDOWN = 1.0f;
+
+	constexpr float HIT_COOLDOWN = 1.0f;
+	constexpr float AI_GROWTH_COOLDOWN = 2.0f;
+	constexpr float SHRINK_OUTBURST_COOLDOWN = 18.0f;
+	constexpr float SHRINK_OUTBURST_COOLDOWN_FORCED = 180.0f;
+	constexpr float SHRINK_PARTICLE_COOLDOWN = 0.25f;
+	constexpr float SHRINK_PARTICLE_COOLDOWN_GAZE = 0.25f;
+	constexpr float SHRINK_PARTICLE_COOLDOWN_ANIM = 1.5f;
+	constexpr float SHRINK_TINYCALAMITY_RAGE = 60.0f;
 
     float Calculate_BreastActionCooldown(Actor* giant, int type) {
         float Cooldown = 1.0;

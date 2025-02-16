@@ -1,19 +1,9 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/shrink_cloak.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Magic/Effects/Shrink_Cloak.hpp"
+#include "Magic/Effects/Common.hpp"
 
 namespace {
-	/// Currently this magic is unused
+	// Currently this magic is unused
 }
-
 
 namespace GTS {
 	std::string ShrinkCloak::GetName() {
@@ -24,10 +14,10 @@ namespace GTS {
 		this->power = GetActiveEffect()->magnitude;
 	}
 
-	void ShrinkCloak::OnStart() {
-	}
+	void ShrinkCloak::OnStart() {}
 
 	void ShrinkCloak::OnUpdate() {
+
         auto caster = GetCaster();
 		if (!caster) {
 			return;
@@ -47,6 +37,5 @@ namespace GTS {
 		}
 	}
 
-	void ShrinkCloak::OnFinish() {
-	}
+	void ShrinkCloak::OnFinish() {}
 }

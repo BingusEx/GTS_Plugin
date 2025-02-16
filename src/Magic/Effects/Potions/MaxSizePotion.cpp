@@ -1,17 +1,9 @@
-#include "magic/effects/Potions/MaxSizePotion.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-
-// A potion that TEMPORARILY increases max possible size
+#include "Magic/Effects/Potions//MaxSizePotion.hpp"
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
+
+// A potion that TEMPORARILY increases max possible size
 
 namespace {
 
@@ -24,8 +16,8 @@ namespace {
 
 }
 
-
 namespace GTS {
+
 	std::string MaxSizePotion::GetName() {
 		return "MaxSizePotion";
 	}

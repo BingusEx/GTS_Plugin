@@ -1,13 +1,9 @@
 #pragma once
-#include "magic/magic.hpp"
-// Module that handles Size Potion
 
-
-
-
-
+#include "Magic/Magic.hpp"
 
 namespace GTS {
+
 	class MaxSizePotion : public Magic {
 		public:
 			using Magic::Magic;
@@ -19,6 +15,7 @@ namespace GTS {
 			virtual std::string GetName() override;
 
 			MaxSizePotion(ActiveEffect* effect);
+
 		private:
 			float Power = 0.0f;
 	};

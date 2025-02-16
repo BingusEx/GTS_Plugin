@@ -1,20 +1,20 @@
-#include "magic/effects/grow_other.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+
+#include "Magic/Effects/Grow_Other.hpp"
+#include "Magic/Effects/Common.hpp"
 
 namespace GTS {
+
 	std::string GrowOther::GetName() {
 		return "GrowOther";
 	}
 
 	void GrowOther::OnUpdate() {
-		const float BASE_POWER = 0.00045f;
-		const float BONUS = 0.00045f;
-		const float SMT_BONUS = 2.0f;
-		const float DUAL_CAST_BONUS = 2.0f;
-		const float CRUSH_GROWTH_CHECK = 1.4f;
+
+		constexpr float BASE_POWER = 0.00045f;
+		constexpr float BONUS = 0.00045f;
+		constexpr float SMT_BONUS = 2.0f;
+		constexpr float DUAL_CAST_BONUS = 2.0f;
+		constexpr float CRUSH_GROWTH_CHECK = 1.4f;
 
 		auto caster = GetCaster();
 		if (!caster) {

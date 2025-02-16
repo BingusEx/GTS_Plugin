@@ -1,11 +1,7 @@
-#include "magic/effects/GrowthSpurt.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/GtsManager.hpp"
-#include "magic/magic.hpp"
-#include "magic/effects/common.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
-#include "managers/Rumble.hpp"
+#include "Magic/Effects/GrowthSpurt.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 

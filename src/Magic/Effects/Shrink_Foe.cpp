@@ -1,14 +1,7 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/shrink_foe.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Magic/Effects/Shrink_Foe.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 using namespace GTS;
 
@@ -42,16 +35,17 @@ namespace GTS {
 	}
 
 	ShrinkFoe::ShrinkFoe(ActiveEffect* effect) : Magic(effect) {
-		const float SHRINK_POWER = 2.15f; // Power = Shrink Power
-		const float SHRINK_EFFIC = 0.16f; // Efficiency = size steal efficiency.
-		const float SHRINK_AOE_POWER = 2.40f;
-		const float SHRINK_AOE_EFFIC = 0.18f;
-		const float SHRINK_AOE_MASTER_POWER = 2.70f;
-		const float SHRINK_AOE_MASTER_EFFIC = 0.20f;
-		const float SHRINK_BOLT_POWER = 6.0f;
-		const float SHRINK_BOLT_EFFIC = 0.06f;
-		const float SHRINK_STORM_POWER = 12.0f;
-		const float SHRINK_STORM_EFFIC = 0.03f;
+
+		constexpr float SHRINK_POWER = 2.15f; // Power = Shrink Power
+		constexpr float SHRINK_EFFIC = 0.16f; // Efficiency = size steal efficiency.
+		constexpr float SHRINK_AOE_POWER = 2.40f;
+		constexpr float SHRINK_AOE_EFFIC = 0.18f;
+		constexpr float SHRINK_AOE_MASTER_POWER = 2.70f;
+		constexpr float SHRINK_AOE_MASTER_EFFIC = 0.20f;
+		constexpr float SHRINK_BOLT_POWER = 6.0f;
+		constexpr float SHRINK_BOLT_EFFIC = 0.06f;
+		constexpr float SHRINK_STORM_POWER = 12.0f;
+		constexpr float SHRINK_STORM_EFFIC = 0.03f;
 
 		auto base_spell = GetBaseEffect();
 

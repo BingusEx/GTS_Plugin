@@ -1,12 +1,8 @@
-#include "magic/effects/shrink.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "Constants.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
+#include "Magic/Effects/Shrink.hpp"
+#include "Magic/Effects/Common.hpp"
 
 namespace GTS {
+
 	std::string Shrink::GetName() {
 		return "Shrink";
 	}

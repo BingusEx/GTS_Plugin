@@ -1,14 +1,6 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/absorb_effect.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-
-
-
+#include "Magic/Effects/Absorb_Effect.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 namespace GTS {
 	Absorb::Absorb(ActiveEffect* effect) : Magic(effect) {}

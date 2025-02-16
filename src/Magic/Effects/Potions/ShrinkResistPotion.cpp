@@ -1,11 +1,6 @@
-#include "managers/GtsManager.hpp"
-#include "magic/effects/Potions/ShrinkResistPotion.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
-
-#include "managers/Rumble.hpp"
+#include "Magic/Effects/Potions/ShrinkResistPotion.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 

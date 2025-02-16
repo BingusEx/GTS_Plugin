@@ -24,36 +24,35 @@ using namespace GTS;
 
 namespace {
 
-	// This function allocates a new console, redirects the standard streams,
-	// and enables ANSI escape sequences for colored output.
+	// This function allocates a new console and redirects the standard streams
 	void AllocateConsole() {
 
 		// Allocate a new console for the calling process.
 		if (!AllocConsole()) {
-			std::cerr << "Failed to allocate console!" << '\n';
+			std::cerr << "Failed to allocate console" << '\n';
 			return;
 		}
 
 		// Redirect unbuffered STDOUT to the console.
 		FILE* fpOut = nullptr;
 		if (freopen_s(&fpOut, "CONOUT$", "w", stdout) != 0) {
-			std::cerr << "Failed to redirect stdout!" << '\n';
+			std::cerr << "Failed to redirect stdout" << '\n';
 		}
 
 		// Redirect unbuffered STDIN to the console.
 		FILE* fpIn = nullptr;
 		if (freopen_s(&fpIn, "CONIN$", "r", stdin) != 0) {
-			std::cerr << "Failed to redirect stdin!" << '\n';
+			std::cerr << "Failed to redirect stdin" << '\n';
 		}
 
 		// Redirect unbuffered STDERR to the console.
 		FILE* fpErr = nullptr;
 		if (freopen_s(&fpErr, "CONOUT$", "w", stderr) != 0) {
-			std::cerr << "Failed to redirect stderr!" << '\n';
+			std::cerr << "Failed to redirect stderr" << '\n';
 		}
 
-
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 		// Enable ANSI escape sequences for colored output (requires Windows 10+).
 		DWORD mode = 0;
 		if (GetConsoleMode(hConsole, &mode)) {
@@ -224,6 +223,7 @@ static void InitializePapyrus() {
 }
 
 static void InitializeEventSystem() {
+
 	EventDispatcher::AddListener(&DebugOverlayMenu::GetSingleton());
 	EventDispatcher::AddListener(&Runtime::GetSingleton()); // Stores spells, globals and other important data
 	EventDispatcher::AddListener(&Persistent::GetSingleton());
@@ -277,11 +277,11 @@ SKSEPluginLoad(const LoadInterface * a_skse){
 	//I mean is this good? No. But does it finnaly allow us to propperly debug this dll? Yes.
 
 	//If you see a 32+ mb dll being built there's a 100% chance it will ctd at the first hook.
-	//"Normal" debug dlls should be around 21-23mb as of 15-02-2025
+	//"Normal" debug dlls should be around 10-13mb as of 15-02-2025
 
 	#ifdef GTSDEBUG
 		AllocateConsole();
-		ReportInfo("GTSplugin debug build, Attach the debugger and press OK.");
+		ReportInfo("GTSplugin Debug Build.\nAttach the debugger and press OK.");
 		std::cout << "GTSPlugin Debug Build" << '\n';
 	#endif
 

@@ -1,13 +1,9 @@
 #pragma once
-#include "magic/magic.hpp"
-// Module that handles footsteps
 
-
-
-
-
+#include "Magic/Magic.hpp"
 
 namespace GTS {
+
 	class SwordOfSize : public Magic {
 		public:
 			virtual void OnStart() override;

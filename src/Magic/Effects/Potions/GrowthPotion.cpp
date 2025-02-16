@@ -1,12 +1,6 @@
-#include "managers/GtsManager.hpp"
-#include "magic/effects/Potions/GrowthPotion.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "magic/effects/common.hpp"
-#include "magic/magic.hpp"
-#include "scale/scale.hpp"
-#include "data/runtime.hpp"
-
-#include "managers/Rumble.hpp"
+#include "Magic/Effects/Potions/GrowthPotion.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 

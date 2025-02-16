@@ -1,4 +1,4 @@
-#include "magic/magic.hpp"
+#include "Magic/Magic.hpp"
 
 #include "magic/effects/common.hpp"
 #include "magic/effects/absorb_effect.hpp"
@@ -29,17 +29,15 @@
 
 namespace GTS {
 
-	void Magic::OnStart() {
-	}
-	void Magic::OnUpdate() {
-	}
-	void Magic::OnFinish() {
-	}
+	void Magic::OnStart() {}
+
+	void Magic::OnUpdate() {}
+
+	void Magic::OnFinish() {}
 
 	std::string Magic::GetName() {
 		return "";
 	}
-
 
 	Magic::Magic(ActiveEffect* effect) : activeEffect(effect) {
 		if (this->activeEffect) {
@@ -122,6 +120,7 @@ namespace GTS {
 	Actor* Magic::GetTarget() {
 		return this->target;
 	}
+
 	Actor* Magic::GetCaster() {
 		return this->caster;
 	}
@@ -253,13 +252,12 @@ namespace GTS {
 
 		RegisterMagic<ShrinkPotion>("SizeDrainPotion");
 		RegisterMagic<Shrink_Poison>("ShrinkPoison");
-		//
+
 		RegisterMagic<ShrinkFoe>("ShrinkEnemy");
 		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOE");
 		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOEMast");
 		RegisterMagic<ShrinkFoe>("ShrinkBolt");
 		RegisterMagic<ShrinkFoe>("ShrinkStorm");
-
 
 		RegisterMagic<Gigantism>("EnchGigantism");
 
