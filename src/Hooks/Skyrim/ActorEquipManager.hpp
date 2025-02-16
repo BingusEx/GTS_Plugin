@@ -5,8 +5,6 @@
 
 namespace Hooks {
 
-	
-
 	class Hook_ActorEquipManager {
 
 		public:

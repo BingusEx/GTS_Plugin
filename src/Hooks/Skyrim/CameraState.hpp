@@ -2,8 +2,6 @@
 
 namespace Hooks {
 
-	
-	
 	void HookCameraStates();
 
 	class Hook_CameraState

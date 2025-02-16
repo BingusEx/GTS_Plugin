@@ -1,9 +1,4 @@
 #include "Hooks/Skyrim/Stealth.hpp"
-#include "Hooks/Hooks.hpp"
-
-#include "Utils/ActorUtils.hpp"
-#include "Scale/Scale.hpp"
-
 
 using namespace GTS;
 

@@ -1,8 +1,4 @@
 #include "Hooks/Skyrim/RaceMenu.hpp"
-#include "Hooks/Hooks.hpp"
-
-#include "Scale/ModScale.hpp"
-
 
 using namespace GTS;
 

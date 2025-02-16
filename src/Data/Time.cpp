@@ -1,7 +1,4 @@
-#include "data/time.hpp"
-
-
-
+#include "Data/Time.hpp"
 
 namespace {
 	inline static float* g_delta_time = (float*)REL::RelocationID(523660, 410199).address();

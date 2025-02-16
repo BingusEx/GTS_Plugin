@@ -9,6 +9,7 @@ TODO: Add these to commonlib some day
 #include "RE/H/hkpConvexShape.h"
 
 namespace RE {
+
 	class hkpTriangleShape : public hkpConvexShape {
 		public:
 			inline static constexpr auto RTTI = RTTI_hkpTriangleShape;

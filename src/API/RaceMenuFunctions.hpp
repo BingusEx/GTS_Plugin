@@ -1,8 +1,6 @@
 #pragma once
 
-#include "utils/papyrusUtils.hpp"
-#include "data/transient.hpp"
-#include "data/time.hpp"
+#include "Utils/PapyrusUtils.hpp"
 
 // Credits to SlaveTatsNG   (https://github.com/nopse0/SlaveTatsNG/blob/423cc566bd955ec3e5f8b70112085b6bce949de2/include/nioverride_impl_old.h)
 

@@ -1,12 +1,11 @@
 #pragma once
 // Takes a actor and extracts its collision objects
+
 #include "Colliders/Common.hpp"
 #include "Colliders/CharController.hpp"
 #include "Colliders/Ragdoll.hpp"
 
 namespace GTS {
-
-	
 
 	class ActorCollisionData : public ColliderData {
 		public:

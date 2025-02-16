@@ -1,7 +1,4 @@
 #include "Hooks/Skyrim/Movement.hpp"
-#include "Hooks/Hooks.hpp"
-#include "Scale/Scale.hpp"
-
 
 using namespace GTS;
 

@@ -1,8 +1,4 @@
-#include "API/SmoothCamAPI.hpp"
 #include "API/APIManager.hpp"
-
-
-
 
 namespace GTS {
 

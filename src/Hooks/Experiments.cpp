@@ -1,13 +1,6 @@
 #include "Hooks/Experiments.hpp"
 
-#include "Data/Transient.hpp"
-#include "Data/Runtime.hpp"
-
-#include "Utils/ActorUtils.hpp"
-#include "Scale/scale.hpp"
-
 using namespace GTS;
-
 
 // Possible hooks that may benefit from scaling: All info for Special Edition (SE)
 // Main REF: TESObjectREFR::GetScale_14028CC60

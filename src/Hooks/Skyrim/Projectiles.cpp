@@ -1,9 +1,5 @@
 #include "Hooks/Skyrim/Projectiles.hpp"
 
-#include "Utils/Camera.hpp"
-#include "Scale/Scale.hpp"
-
-
 using namespace GTS;
 
 namespace {

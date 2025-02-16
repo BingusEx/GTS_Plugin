@@ -1,7 +1,6 @@
 #include "Hooks/Detours/FunctionHook.hpp"
 #include "Hooks/Detours/Detours.hpp"
 
-
 namespace Hooks {
 
 	constexpr uint32_t MaxRetry = 3;

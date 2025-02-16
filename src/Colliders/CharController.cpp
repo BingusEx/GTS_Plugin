@@ -1,8 +1,6 @@
 #include "Colliders/CharController.hpp"
 #include "Colliders/RE/RE.hpp"
 
-
-
 namespace GTS {
 
 	CharContData::CharContData(bhkCharacterController* charCont) {

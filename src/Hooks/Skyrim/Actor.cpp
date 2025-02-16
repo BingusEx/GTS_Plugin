@@ -1,13 +1,7 @@
 
 #include "Hooks/Skyrim/Actor.hpp"
-
-#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Attributes.hpp"
-#include "Data/Persistent.hpp"
-#include "Data/Plugin.hpp"
-#include "Data/Runtime.hpp"
-#include "Scale/Scale.hpp"
-
+#include "Managers/Animation/AnimationManager.hpp"
 
 using namespace GTS;
 

@@ -1,10 +1,7 @@
 #pragma once
-#include "Hooks/Hooks.hpp"
 
 namespace Hooks {
 
-	
-	
 	class Hook_BGSImpactManager {
 		public:
 			static void Hook(Trampoline& trampoline);

@@ -1,7 +1,5 @@
 #include "Hooks/Skyrim/CameraState.hpp"
 
-
-
 using namespace GTS;
 
 namespace Hooks {

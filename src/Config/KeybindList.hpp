@@ -1,6 +1,5 @@
 #pragma once
 
-
 struct GTSInputEvent {
     std::string Event;                      //Event Name
     std::vector<std::string> Keys;          //List Of Dinput key names Minus "DIK_ preffix"
@@ -37,6 +36,7 @@ inline bool CheckDuplicateEvent(const std::vector<GTSInputEvent>& items) {
 }
 
 namespace GTS {
+
     //----------------------------------------
     // EVENT LIST ----
     //----------------------------------------

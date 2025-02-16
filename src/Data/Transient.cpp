@@ -1,9 +1,5 @@
 #include "Data/Transient.hpp"
 
-
-
-
-
 namespace GTS {
 	Transient& Transient::GetSingleton() noexcept {
 		static Transient instance;

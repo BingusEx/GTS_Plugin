@@ -2,7 +2,6 @@
 #include "Managers/Input/InputManager.hpp"
 #include "UI/UIManager.hpp"
 
-
 using namespace GTS;
 
 namespace Hooks {

@@ -1,19 +1,6 @@
 #include "Hooks/Skyrim/HeadTracking.hpp"
 
-#include "utils/actorUtils.hpp"
-#include "utils/actorBools.hpp"
-#include "scale/modscale.hpp"
-#include "scale/scale.hpp"
-
-
-#include "Data/Time.hpp"
-#include "Data/Tasks.hpp"
-
-
-
-
 using namespace GTS;
-
 
 namespace {
 

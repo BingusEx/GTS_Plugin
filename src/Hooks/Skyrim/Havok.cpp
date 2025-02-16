@@ -1,23 +1,12 @@
 #include "Hooks/Skyrim/Havok.hpp"
-
-#include "managers/OverkillManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/transient.hpp"
-#include "Constants.hpp"
-#include "scale/scale.hpp"
-
-
-#include "data/runtime.hpp"
-#include "Data/Tasks.hpp"
-
-
+#include "Managers/OverkillManager.hpp"
 
 using namespace GTS;
 
 namespace {
 
-	const float tree_ignore_threshold = 16.0f;
-	const float actor_ignore_limit = 3.0f;
+	constexpr float tree_ignore_threshold = 16.0f;
+	constexpr float actor_ignore_limit = 3.0f;
 
 	COL_LAYER GetCollisionLayer(const std::uint32_t& collisionFilterInfo) {
 		return static_cast<COL_LAYER>(collisionFilterInfo & 0x7F);

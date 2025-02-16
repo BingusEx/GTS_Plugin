@@ -1,7 +1,6 @@
 #include "Hooks/Skyrim/D3DPresent.hpp"
 #include "UI/UIManager.hpp"
 
-
 using namespace GTS;
 
 namespace Hooks {

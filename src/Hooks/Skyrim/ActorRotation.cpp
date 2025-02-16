@@ -1,7 +1,5 @@
 #include "Hooks/Skyrim/ActorRotation.hpp"
 
-
-
 namespace Hooks { // This hook is commented out inside hooks.cpp
 
 	void Hook_ActorRotation::Hook(Trampoline& trampoline) { // Sadly, works on player only and seems to depend on Camera Angle. Reports only Player.

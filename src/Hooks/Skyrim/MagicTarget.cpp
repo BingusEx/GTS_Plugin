@@ -1,6 +1,4 @@
 #include "Hooks/Skyrim/MagicTarget.hpp"
-#include "Data/Persistent.hpp"
-
 
 using namespace GTS;
 

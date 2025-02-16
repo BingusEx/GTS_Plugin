@@ -1,9 +1,4 @@
-#include "data/world.hpp"
-
-
-
-
-
+#include "Data/World.hpp"
 
 namespace {
 	inline static RE::GMatrix3D* RawWorldToCamMatrix = (RE::GMatrix3D*) REL::RelocationID(519579, 406126).address();

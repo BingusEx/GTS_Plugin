@@ -3,14 +3,9 @@
  *  Hooks on various GetScale calls
  */
 
-#include "hooks/hooks.hpp"
+namespace Hooks {
 
-namespace Hooks
-{
-	
-	
-	class Hook_Experiments
-	{
+	class Hook_Experiments{
 		public:
 			static void PatchShaking();
 			static void Hook(Trampoline& trampoline);

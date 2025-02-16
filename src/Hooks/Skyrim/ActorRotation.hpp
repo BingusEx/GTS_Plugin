@@ -4,8 +4,6 @@
   Hooks for actor rotation
 */
 
-#include "Hooks/Hooks.hpp"
-
 namespace Hooks {
 	
 	class Hook_ActorRotation {

@@ -1,13 +1,9 @@
 #pragma once
 
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
 
 namespace GTS {
-
-	
 
     inline bool IsGtsBusy_ForControls(Actor* actor) {
 		bool GTSBusy = false;

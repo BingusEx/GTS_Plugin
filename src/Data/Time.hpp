@@ -2,12 +2,8 @@
 // Module that holds data that is loaded at runtime
 // This includes various forms
 
-
-
-
-
-
 namespace GTS {
+
 	class Time {
 		public:
 			static float WorldTimeDelta();

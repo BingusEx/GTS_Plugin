@@ -1,10 +1,4 @@
 #include "Hooks/Skyrim/PreventAnimations.hpp"
-#include "Hooks/Hooks.hpp"
-
-#include "Data/Transient.hpp"
-
-#include "Scale/Scale.hpp"
-
 
 using namespace GTS;
 

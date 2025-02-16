@@ -1,14 +1,7 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
 #include "Hooks/Skyrim/Character.hpp"
-#include "managers/Attributes.hpp"
-#include "data/runtime.hpp"
-#include "data/persistent.hpp"
-#include "data/plugin.hpp"
-
-#include "scale/scale.hpp"
-
-
+#include "Managers/Attributes.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Damage/SizeHitEffects.hpp"
 
 using namespace GTS;
 

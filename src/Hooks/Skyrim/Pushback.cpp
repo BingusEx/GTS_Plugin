@@ -1,12 +1,4 @@
 #include "Hooks/Skyrim/Pushback.hpp"
-#include "Hooks/Hooks.hpp"
-
-#include "Scale/Scale.hpp"
-#include "Utils/ActorUtils.hpp"
-#include "Data/Transient.hpp"
-
-
-
 
 using namespace GTS;
 

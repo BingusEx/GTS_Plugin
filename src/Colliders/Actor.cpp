@@ -1,8 +1,5 @@
 #include "Colliders/Actor.hpp"
 
-
-
-
 namespace GTS {
 	
 	ActorCollisionData::ActorCollisionData(Actor* actor) : charCont(actor ? actor->GetCharController() : nullptr), ragdoll(actor ? GetRagdoll(actor) : nullptr) {}

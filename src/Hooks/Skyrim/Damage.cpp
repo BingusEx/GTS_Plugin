@@ -1,14 +1,11 @@
-#include "Hooks/Detours/FunctionHook.hpp"
 #include "Hooks/Skyrim/Damage.hpp"
 
-#include "Managers/animation/Grab.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "Managers/damage/SizeHitEffects.hpp"
+#include "Managers/OverkillManager.hpp"
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
 #include "Utils/DifficultyUtils.hpp"
-
-#include "Managers/OverkillManager.hpp"
 
 namespace GTS {
 

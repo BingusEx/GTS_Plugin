@@ -3,8 +3,6 @@
 
 namespace Hooks {
 
-	
-
 	class Hook_Projectiles {
 		public:
 			static void Hook();

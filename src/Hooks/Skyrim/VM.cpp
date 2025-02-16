@@ -1,13 +1,5 @@
 #include "Hooks/Skyrim/VM.hpp"
 
-
-
-
-using namespace RE::BSScript;
-using namespace RE::BSScript::Internal;
-
-using namespace GTS;
-
 namespace Hooks {
 
 	// BGSImpactManager

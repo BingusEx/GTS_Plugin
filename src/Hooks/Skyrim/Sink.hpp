@@ -3,17 +3,9 @@
  *  Hooks for sinking
  */
 
-#include "Hooks/Hooks.hpp"
+namespace Hooks{
 
-
-
-
-namespace Hooks
-{
-	
-	
-	class Hook_Sinking
-	{
+	class Hook_Sinking{
 		public:
 			static void Hook(Trampoline& trampoline);
 	};

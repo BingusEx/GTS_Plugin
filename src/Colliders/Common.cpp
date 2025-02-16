@@ -1,8 +1,6 @@
 #include "Colliders/Common.hpp"
 #include "Colliders/RE/RE.hpp"
 
-
-
 namespace GTS {
 
 	COL_LAYER GetCollidesWith(const std::uint32_t& collisionFilterInfo) {

@@ -1,12 +1,7 @@
 
-#include "managers/GtsSizeManager.hpp"
-#include "utils/ItemDistributor.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "scale/modscale.hpp"
-
-
-
+#include "Data/Persistent.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Utils/ItemDistributor.hpp"
 
 namespace {
 

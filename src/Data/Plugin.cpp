@@ -1,6 +1,4 @@
-#include "data/plugin.hpp"
-
-
+#include "Data/Plugin.hpp"
 
 namespace GTS {
 

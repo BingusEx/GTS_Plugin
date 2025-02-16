@@ -1,7 +1,4 @@
 #include "Hooks/Skyrim/TESCamera.hpp"
-#include "Data/Plugin.hpp"
-
-
 
 using namespace GTS;
 

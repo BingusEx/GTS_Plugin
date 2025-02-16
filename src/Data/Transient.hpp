@@ -3,8 +3,6 @@
 
 namespace GTS {
 
-	
-
 	struct TempActorData {
 
 		float base_height;

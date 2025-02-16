@@ -1,8 +1,6 @@
 #include "Colliders/Ragdoll.hpp"
 #include "Colliders/Common.hpp"
 
-
-
 namespace GTS {
 
 	RagdollData::RagdollData(hkaRagdollInstance* ragdoll) {

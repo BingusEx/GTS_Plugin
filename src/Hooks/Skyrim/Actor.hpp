@@ -1,11 +1,7 @@
 #pragma once
-#include "Hooks/Hooks.hpp"
 
 namespace Hooks {
 
-	
-	
-	
 	class Hook_Actor {
 		
 		public:

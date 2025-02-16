@@ -1,7 +1,5 @@
 #pragma once
 
-#include <toml.hpp>
-
 #include "Config/ConfigUtil.hpp"
 #include "Config/KeybindList.hpp"
 

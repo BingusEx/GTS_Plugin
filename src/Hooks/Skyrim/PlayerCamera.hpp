@@ -2,8 +2,6 @@
 
 namespace Hooks {
 
-	
-
 	class Hook_PlayerCamera {
 		public:
 			static void Hook();

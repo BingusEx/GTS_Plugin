@@ -113,15 +113,16 @@
 // For console sink
 #include <spdlog/sinks/msvc_sink.h>
 #include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>  
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+#include <toml.hpp>
+#include <magic_enum/magic_enum.hpp>
 
 // Compatible declarations with other sample projects.
 #define DLLEXPORT __declspec(dllexport)
 
 using namespace std::literals;
 using namespace REL::literals;
-
-
 
 namespace GTS {
 	using namespace std;
@@ -143,8 +144,6 @@ namespace Hooks {
 	using namespace GTS;
 }
 
-
-
 namespace logger = SKSE::log;
 
 #include "git.h"
@@ -155,7 +154,8 @@ namespace logger = SKSE::log;
 #include "Profiler/Profiler.hpp"
 #include "Events/Events.hpp"
 #include "Utils/Utils.hpp"
-#include "Data/Data.hpp"
 #include "Scale/Scale.hpp"
 #include "Scale/ModScale.hpp"
 #include "Scale/Height.hpp"
+#include "Data/Data.hpp"
+#include "Hooks/Hooks.hpp"

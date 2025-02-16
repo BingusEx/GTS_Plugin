@@ -1,14 +1,10 @@
 #include "Hooks/Skyrim/Sink.hpp"
-#include "Scale/Scale.hpp"
-
-
 
 using namespace GTS;
 
 namespace Hooks {
 
 	void Hook_Sinking::Hook(Trampoline& trampoline) {
-
 
 		static FunctionHook<float(TESObjectREFR* a_this)> GetScaledBoundSize(
 			RELOCATION_ID(36448, 37444),

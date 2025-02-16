@@ -2,9 +2,6 @@
 
 namespace Hooks {
 
-	
-	
-
 	class Hook_Character{
 
 		public:

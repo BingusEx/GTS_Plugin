@@ -1,7 +1,6 @@
 #include "Hooks/Skyrim/ActorEquipManager.hpp"
 #include "Managers/RipClothManager.hpp"
 
-
 using namespace GTS;
 
 namespace Hooks {

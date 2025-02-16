@@ -2,8 +2,6 @@
 
 namespace Hooks {
 
-	
-
 	class Hook_MagicTarget {
 		public:
 			static void Hook();

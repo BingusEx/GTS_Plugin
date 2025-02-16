@@ -2,9 +2,6 @@
 
 namespace Hooks {
 
-	
-	
-
 	class Hook_Renderer {
 		public:
 		static void Hook(Trampoline& trampoline);

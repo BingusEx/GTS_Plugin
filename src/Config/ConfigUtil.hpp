@@ -1,8 +1,6 @@
 #pragma once
 
 #include <reflect> // boost-ext/reflect
-#include <toml.hpp>
-#include <magic_enum/magic_enum.hpp>
 
 /*
     TOML11 Reflection Macro & Templates. Based on https://github.com/ToruNiina/toml11/blob/main/examples/reflect/reflect.hpp

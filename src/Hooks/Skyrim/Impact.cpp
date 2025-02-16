@@ -1,10 +1,5 @@
 #include "Hooks/Skyrim/Impact.hpp"
-
-#include "managers/impact.hpp"
-
-#include "scale/scale.hpp"
-
-
+#include "Managers/Impact.hpp"
 
 using namespace GTS;
 

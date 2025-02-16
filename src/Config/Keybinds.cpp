@@ -1,6 +1,4 @@
 #include "Config/Keybinds.hpp"
-#include "Config/KeybindList.hpp"
-#include "magic_enum/magic_enum.hpp"
 
 namespace GTS {
 

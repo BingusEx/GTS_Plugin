@@ -2,8 +2,6 @@
 
 namespace Hooks {
 
-	
-
 	class Hook_PlayerCharacter {
 		public:
 			static void Hook();

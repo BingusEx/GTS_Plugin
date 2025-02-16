@@ -1,11 +1,8 @@
 #pragma once
+
 // Module that holds data that is persistent across saves
 
-#include "Scale/ModScale.hpp"
-
 namespace GTS {
-
-	
 
 	struct ActorData {
 		float native_scale;
@@ -147,6 +144,7 @@ namespace GTS {
 				.o = 1.0f,
 				.a = 0.0f, //Default is 0
 			};
+
 			SizeMethod size_method = SizeMethod::ModelScale;
 			CameraCollisions camera_collisions;
 		private:
