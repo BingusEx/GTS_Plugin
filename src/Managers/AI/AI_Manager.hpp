@@ -1,14 +1,7 @@
 #pragma once
 
-
-
-
-
-
-
-
-
 namespace GTS {
+
 	class AiData {
 		public:
 			AiData(Actor* giant);
@@ -19,6 +12,7 @@ namespace GTS {
 			bool ActorsAreDead = false;
 			bool IsThighSandwiching = false;
 	};
+
 	class AiManager : public EventListener  {
 		public:
 			[[nodiscard]] static AiManager& GetSingleton() noexcept;

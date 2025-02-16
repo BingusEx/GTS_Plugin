@@ -2,13 +2,13 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategory.hpp"
-#include "config/Config.hpp"
-#include "config/Keybinds.hpp"
+#include "Config/Config.hpp"
+#include "Config/Keybinds.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
 
 namespace GTS {
 
-    class CategoryKeybinds : public ImCategory {
+    class CategoryKeybinds final : public ImCategory {
         public:
         CategoryKeybinds(){
             title = "Keybinds";
@@ -28,7 +28,7 @@ namespace GTS {
         void DrawOptions();
         void DrawContent();
 
-        const inline void SetWindowBusy(const bool a_busy) {
+        static inline void SetWindowBusy(const bool a_busy) {
             if (auto Window = ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
                 Window->Busy = a_busy;
             }

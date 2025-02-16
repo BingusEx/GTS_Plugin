@@ -34,7 +34,7 @@ namespace GTS {
             }
         } FontData;
 
-        enum AQueueType {
+        enum class AQueueType {
             kRasterizerScale,
             kRebuildAtlas
         };
@@ -45,8 +45,8 @@ namespace GTS {
 
         //Funcs
         void ChangeRasterizerScaleImpl(float a_scale);
-        void RebuildFontAtlasImpl();
-        void BuildFontsInt();
+        void RebuildFontAtlasImpl() const;
+        void BuildFontsInt() const;
 
         public:
         ~ImFontManager() = default;
@@ -57,7 +57,7 @@ namespace GTS {
         }
 
         inline void PushAction(AQueueType a_type, const float a_value){
-            ActionQueue.push(std::make_pair(a_type, a_value));
+            ActionQueue.emplace(a_type, a_value);
         }
 
         //Queuable Actions

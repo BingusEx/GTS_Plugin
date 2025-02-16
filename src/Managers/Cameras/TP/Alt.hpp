@@ -1,7 +1,6 @@
 #pragma once
-#include "managers/cameras/tpState.hpp"
 
-
+#include "Managers/Cameras/TPState.hpp"
 
 namespace GTS {
 	class Alt : public ThirdPersonCameraState {

@@ -35,6 +35,7 @@
 
 namespace GTS {
 	void RegisterManagers() {
+
 		EventDispatcher::AddListener(&GameModeManager::GetSingleton()); // Manages Game Modes
 		EventDispatcher::AddListener(&GtsManager::GetSingleton()); // Manages smooth size increase and animation & movement speed
 		//EventDispatcher::AddListener(&AttackManager::GetSingleton()); // Manages disallowing of Attack at large scales for NPC's

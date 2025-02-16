@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <random>
+
 #include "ClibUtil/rng.hpp"
 
 namespace GTS {
@@ -17,7 +17,7 @@ namespace GTS {
 		return static_cast<float>(dist(generator));
 	}
 
-	[[nodiscard]] inline float RandomFloat() {
+	[[nodiscard]] static inline float RandomFloat() {
 		std::uniform_real_distribution<> dist(0.f, std::numeric_limits<float>::max());
 		return static_cast<float>(dist(generator));
 	}
@@ -26,12 +26,12 @@ namespace GTS {
 	// Random Int
 	// -----------------
 
-	[[nodiscard]] inline int RandomInt(const int a_min, const int a_max) {
+	[[nodiscard]] static inline int RandomInt(const int a_min, const int a_max) {
 		std::uniform_int_distribution<> dist(a_min, a_max);
 		return dist(generator);
 	}
 
-	[[nodiscard]] inline int RandomInt() {
+	[[nodiscard]] static inline int RandomInt() {
 		std::uniform_int_distribution<> dist(0, INT_MAX);
 		return dist(generator);
 	}
@@ -42,15 +42,15 @@ namespace GTS {
     // 30 in 181 chance to return 0,
     // 1 in 181 chance to return 1
     // 150 in 181 chance to return 2
-    // x in nSum chance to return n[i]
-    [[nodiscard]] inline int _RandomIntWeighted(std::initializer_list<int> a_weights) {
+    /// x in nSum chance to return n[i]
+    [[nodiscard]] static inline int _RandomIntWeighted(std::initializer_list<int> a_weights) {
         std::discrete_distribution<> dist(a_weights.begin(), a_weights.end());
         return dist(generator);
     }
 
     //Wrapped in a template so we dont have to pass {} in the arguments
     template <typename... Args>
-    [[nodiscard]] inline int RandomIntWeighted(Args... a_weights) {
+    [[nodiscard]] static inline int RandomIntWeighted(Args... a_weights) {
         //std::discrete_distribution<> dist({ a_weights... });
         return _RandomIntWeighted({ a_weights... });
     }
@@ -61,7 +61,7 @@ namespace GTS {
 
 	//Returns a boolean based on the percentage chance of the value being true
 	//ie. RandomPercent(70) -> 70% Chance of returning true
-	[[nodiscard]] inline bool RandomPercent(float a_chance) {
+	[[nodiscard]] static inline bool RandomPercent(float a_chance) {
         std::uniform_real_distribution<> dist(0.f, 100.f);
         return a_chance - dist(generator) >= -std::numeric_limits<float>::epsilon();
     }
@@ -71,12 +71,12 @@ namespace GTS {
 	// -------------------
 
 	//https://en.cppreference.com/w/cpp/numeric/random/normal_distribution
-	[[nodiscard]] inline float RandomFloatGauss(float a_mean, float a_deviation) {
+	[[nodiscard]] static inline float RandomFloatGauss(float a_mean, float a_deviation) {
 		std::normal_distribution <> dist(a_mean, a_deviation);
 		return static_cast<float>(dist(generator));
 	}
 
-	[[nodiscard]] inline int RandomIntGauss(int a_mean, int a_deviation) {
+	[[nodiscard]] static inline int RandomIntGauss(int a_mean, int a_deviation) {
 		std::normal_distribution <> dist(a_mean, a_deviation);
 		return static_cast<int>(dist(generator));
 	}

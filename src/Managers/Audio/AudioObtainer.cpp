@@ -1,17 +1,4 @@
 #include "managers/audio/AudioObtainer.hpp"
-#include "managers/highheel.hpp"
-#include "managers/modevent.hpp"
-#include "managers/impact.hpp"
-#include "managers/tremor.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-
-using namespace GTS;
 
 namespace GTS {
 
@@ -203,6 +190,7 @@ namespace GTS {
         }
         return nullptr;
     }
+
     BSISoundDescriptor* get_footstep_highheel(const FootEvent& foot_kind, const int scale) {
         switch (foot_kind) {
             case FootEvent::Left:

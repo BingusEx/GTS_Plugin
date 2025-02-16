@@ -1,10 +1,8 @@
 #pragma once
-#include "managers/cameras/state.hpp"
-
-
-
+#include "Managers/Cameras/State.hpp"
 
 namespace GTS {
+
 	class TransState : public CameraState {
 		public:
 			virtual float GetScale() override;
@@ -26,7 +24,7 @@ namespace GTS {
 
 			TransState(CameraState* stateA, CameraState* stateB);
 
-			bool IsDone();
+			bool IsDone() const;
 		private:
 			CameraState* stateA;
 			CameraState* stateB;

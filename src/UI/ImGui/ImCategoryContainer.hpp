@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ImCategory.hpp"
+#include "UI/ImGui/ImCategory.hpp"
 
 namespace GTS {
 
@@ -33,7 +33,7 @@ namespace GTS {
             categories.push_back(std::move(category));
         }
 
-        [[nodiscard]] float GetLongestCategory();
+        [[nodiscard]] float GetLongestCategory() const;
 
     };
 }

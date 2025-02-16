@@ -1,11 +1,10 @@
 #pragma once
+
 // Critically Damped Springs
 //
 
-
-
-
 namespace GTS {
+
 	class SpringBase {
 		public:
 			virtual void Update(float delta) = 0;

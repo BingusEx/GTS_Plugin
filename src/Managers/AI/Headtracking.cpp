@@ -1,19 +1,13 @@
 
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/ai/headtracking.hpp"
-#include "Managers/Input/InputManager.hpp"
-
-#include "scale/scale.hpp"
-
+#include "Managers/AI/Headtracking.hpp"
+#include "Managers/GameMode/GameModeManager.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
-	const float REDUCTION_FACTOR = 0.44f;
-	const float PI = 3.14159f;
+
+	constexpr float REDUCTION_FACTOR = 0.44f;
+	constexpr float PI = std::numbers::pi_v<float>;
 
 	NiPoint3 HeadLocation(TESObjectREFR& obj, const float& scale) {
 		NiPoint3 headOffset(0.0f, 0.0f, 0.0f);
@@ -49,7 +43,7 @@ namespace {
 			return HeadLocation(*obj);
 		}
 	}
-	NiPoint3 HeadLocation(ActorHandle objRefr, const float& scale) {
+	NiPoint3 HeadLocation(const ActorHandle& objRefr, const float& scale) {
 		if (!objRefr) {
 			return NiPoint3();
 		} else {
@@ -60,7 +54,7 @@ namespace {
 			return HeadLocation(*obj, scale);
 		}
 	}
-	NiPoint3 HeadLocation(ActorHandle objRefr) {
+	NiPoint3 HeadLocation(const ActorHandle& objRefr) {
 		if (!objRefr) {
 			return NiPoint3();
 		} else {
@@ -72,7 +66,7 @@ namespace {
 		}
 	}
 
-	NiPoint3 HeadLocation(ObjectRefHandle objRefr, const float& scale) {
+	NiPoint3 HeadLocation(const ObjectRefHandle& objRefr, const float& scale) {
 		if (!objRefr) {
 			return NiPoint3();
 		} else {
@@ -83,7 +77,7 @@ namespace {
 			return HeadLocation(*obj, scale);
 		}
 	}
-	NiPoint3 HeadLocation(ObjectRefHandle objRefr) {
+	NiPoint3 HeadLocation(const ObjectRefHandle& objRefr) {
 		if (!objRefr) {
 			return NiPoint3();
 		} else {

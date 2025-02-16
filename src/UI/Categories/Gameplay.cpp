@@ -1,7 +1,6 @@
-#include "Gameplay.hpp"
+#include "UI/Categories/Gameplay.hpp"
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
-#include "fmt/format.h"
 
 namespace GTS {
 
@@ -11,8 +10,8 @@ namespace GTS {
             "Basic:\n"
             "- Grow: Slowly grow to the size limit specified below.\n"
             "- Shrink: Slowly shrink back to the actor's natural scale.\n"
-            "- Combat Growth: Grow during combat and shrink outside of combat back to the natural scale.\n\n"
-            "- Slow Combat Growth: Slowly grow during combat and retain any size gain.\n"
+            "- Combat Growth: Grow during combat and shrink outside of combat back to the natural scale.\n"
+            "- Slow Combat Growth: Slowly grow during combat and retain any size gain.\n\n"
             "Curses:\n"
             "- Curse of the Giantess: You will rapidly grow to the specified size if you are smaller. Spells like \"Restore Size\" will not shrink you below this size.\n"
             "- Curse of Diminishing: You will slowly shrink to the target scale if too large.\n"

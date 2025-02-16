@@ -9,7 +9,7 @@
 
 namespace GTS {
 
-    class CategoryInterface : public ImCategorySplit {
+    class CategoryInterface final : public ImCategorySplit {
         public:
         CategoryInterface(){
             title = "Interface";

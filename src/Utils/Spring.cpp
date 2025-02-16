@@ -1,6 +1,7 @@
 #include "Utils/Spring.hpp"
 
 namespace {
+
 	// Spring code from https://theorangeduck.com/page/spring-roll-call
 	float halflife_to_damping(float halflife, float eps = 1e-5f)
 	{
@@ -50,8 +51,6 @@ namespace GTS {
 	Spring::~Spring() {
 		SpringManager::RemoveSpring(this);
 	}
-
-
 
 	void Spring3::Update(float dt) {
 		UpdateValues(this->value.x, this->target.x, this->velocity.x, this->halflife, dt);

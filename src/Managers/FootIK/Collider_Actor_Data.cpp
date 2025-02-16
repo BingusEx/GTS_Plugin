@@ -2,7 +2,7 @@
 //
 //
 
-namespace {
+//namespace {
 	/*
 	hkbFootIkDriver* GetFootIk(Actor* actor) {
 		BSAnimationGraphManagerPtr animGraphManager;
@@ -22,9 +22,9 @@ namespace {
 		}
 		return nullptr;
 	}*/
-}
+//}
 
-namespace GTS {
+//namespace GTS {
 	/*ColliderActorData::ColliderActorData(Actor* actor) {
 	}
 
@@ -93,4 +93,4 @@ namespace GTS {
 	void ColliderActorData::AddFootIk(hkbFootIkDriver* ik) {
 		this->footIkData.UpdateColliders(ik);
 	}*/
-}
+//}

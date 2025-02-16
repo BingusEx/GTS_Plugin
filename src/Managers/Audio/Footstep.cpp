@@ -1,51 +1,40 @@
-#include "managers/audio/AudioObtainer.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/highheel.hpp"
-#include "managers/modevent.hpp"
-#include "managers/impact.hpp"
-#include "managers/tremor.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Audio/AudioObtainer.hpp"
+#include "Managers/Highheel.hpp"
 
 using namespace GTS;
 
 namespace {
 
 	// Params
-	const VolumeParams Params_Empty = {.a = 0.0f, .k = 0.0f, .n = 0.0f, .s = 0.0f};
+	constexpr VolumeParams Params_Empty = {.a = 0.0f, .k = 0.0f, .n = 0.0f, .s = 0.0f};
 
-	const VolumeParams xlFootstep_Params = {.a = 12.0f, .k = 0.50f, .n = 0.5f, .s = 1.0f};
-	const VolumeParams xxlFootstep_Params = {.a = 20.0f, .k = 0.50f,  .n = 0.5f, .s = 1.0f};
-	const VolumeParams lJumpLand_Params = {.a = 1.2f, .k = 0.65f,  .n = 0.7f, .s = 1.0f};
+	constexpr VolumeParams xlFootstep_Params = {.a = 12.0f, .k = 0.50f, .n = 0.5f, .s = 1.0f};
+	constexpr VolumeParams xxlFootstep_Params = {.a = 20.0f, .k = 0.50f,  .n = 0.5f, .s = 1.0f};
+	constexpr VolumeParams lJumpLand_Params = {.a = 1.2f, .k = 0.65f,  .n = 0.7f, .s = 1.0f};
 
-	const VolumeParams xlRumble_Params = {.a = 12.0f, .k = 0.50f, .n = 0.5f, .s = 1.0f};
+	constexpr VolumeParams xlRumble_Params = {.a = 12.0f, .k = 0.50f, .n = 0.5f, .s = 1.0f};
 
-	const VolumeParams Footstep_2_Params = {.a = 1.35f, .k = 1.0f, .n = 0.75f, .s = 1.0f};    // https://www.desmos.com/calculator/6yzmmrg3oi
-	const VolumeParams Footstep_4_Params = {.a = 3.0f, .k = 1.0f, .n = 1.15f, .s = 1.0f};     // https://www.desmos.com/calculator/ighurmlanl
-	const VolumeParams Footstep_8_Params = {.a = 6.0f, .k = 0.26f, .n = 1.94f, .s = 1.0f};    // https://www.desmos.com/calculator/d3gsgj6ocs
-	const VolumeParams Footstep_12_Params = {.a = 12.0f, .k = 0.27f, .n = 1.9f, .s = 1.0f};   // https://www.desmos.com/calculator/akoyl4cxch
-	const VolumeParams Footstep_24_Params = {.a = 16.0f, .k = 0.36f, .n = 1.5f, .s = 0.25f};  // https://www.desmos.com/calculator/bh4fhfrji6
-	const VolumeParams Footstep_48_Params = {.a = 36.0f, .k = 0.20f, .n = 1.5f, .s = 0.25f};  // https://www.desmos.com/calculator/3q4qgkrker
-	const VolumeParams Footstep_96_Params = {.a = 80.0f, .k = 0.66f, .n = 0.90f, .s = 0.1f};  // https://www.desmos.com/calculator/ufdbieymdi
-	const VolumeParams Footstep_128_Params = {.a = 118.0f, .k = 0.19f, .n = 1.5f, .s = 0.1f}; // https://www.desmos.com/calculator/pvrge5dejz
+	constexpr VolumeParams Footstep_2_Params = {.a = 1.35f, .k = 1.0f, .n = 0.75f, .s = 1.0f};    // https://www.desmos.com/calculator/6yzmmrg3oi
+	constexpr VolumeParams Footstep_4_Params = {.a = 3.0f, .k = 1.0f, .n = 1.15f, .s = 1.0f};     // https://www.desmos.com/calculator/ighurmlanl
+	constexpr VolumeParams Footstep_8_Params = {.a = 6.0f, .k = 0.26f, .n = 1.94f, .s = 1.0f};    // https://www.desmos.com/calculator/d3gsgj6ocs
+	constexpr VolumeParams Footstep_12_Params = {.a = 12.0f, .k = 0.27f, .n = 1.9f, .s = 1.0f};   // https://www.desmos.com/calculator/akoyl4cxch
+	constexpr VolumeParams Footstep_24_Params = {.a = 16.0f, .k = 0.36f, .n = 1.5f, .s = 0.25f};  // https://www.desmos.com/calculator/bh4fhfrji6
+	constexpr VolumeParams Footstep_48_Params = {.a = 36.0f, .k = 0.20f, .n = 1.5f, .s = 0.25f};  // https://www.desmos.com/calculator/3q4qgkrker
+	constexpr VolumeParams Footstep_96_Params = {.a = 80.0f, .k = 0.66f, .n = 0.90f, .s = 0.1f};  // https://www.desmos.com/calculator/ufdbieymdi
+	constexpr VolumeParams Footstep_128_Params = {.a = 118.0f, .k = 0.19f, .n = 1.5f, .s = 0.1f}; // https://www.desmos.com/calculator/pvrge5dejz
 	// Params end
 
-	const float limitless = 0.0f;
-	const float limit_x2 = 2.0f;
-	const float limit_x4 = 4.0f;
-	const float limit_x8 = 8.0f;
-	const float limit_x12 = 12.0f;
-	const float limit_x14 = 14.0f;
-	const float limit_x24 = 24.0f;
-	const float limit_x48 = 48.0f;
-	const float limit_x96 = 96.0f;
-	const float limit_mega = 106.0f;
+	constexpr float limitless = 0.0f;
+	constexpr float limit_x2 = 2.0f;
+	constexpr float limit_x4 = 4.0f;
+	constexpr float limit_x8 = 8.0f;
+	constexpr float limit_x12 = 12.0f;
+	constexpr float limit_x14 = 14.0f;
+	constexpr float limit_x24 = 24.0f;
+	constexpr float limit_x48 = 48.0f;
+	constexpr float limit_x96 = 96.0f;
+	constexpr float limit_mega = 106.0f;
 
 	std::string GetFootstepName(Actor* giant, bool right) {
 		std::string tag;

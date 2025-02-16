@@ -1,10 +1,7 @@
-#include "papyrus/modevents.hpp"
-#include "managers/modevent.hpp"
-
-
+#include "Papyrus/ModEvents.hpp"
+#include "Managers/ModEvent.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {

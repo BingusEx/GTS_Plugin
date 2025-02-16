@@ -14,7 +14,7 @@
 //using namespace REL;
 //using namespace GTS;
 
-namespace GTS {
+//namespace GTS {
 	/*
 	ColliderManager& ColliderManager::GetSingleton() noexcept {
 		static ColliderManager instance;
@@ -129,4 +129,4 @@ namespace GTS {
 	void ColliderManager::FlagReset(){
 		this->last_reset_frame.store(Time::FramesElapsed());
 	}*/
-}
+//}

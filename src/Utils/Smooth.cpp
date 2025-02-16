@@ -1,10 +1,7 @@
-#include "utils/smooth.hpp"
-
-
-
-
+#include "Utils/Smooth.hpp"
 
 namespace {
+
 	// Spring code from https://theorangeduck.com/page/spring-roll-call
 	float halflife_to_damping(float halflife, float eps = 1e-5f)
 	{

@@ -1,6 +1,5 @@
-#include "Keybinds.hpp"
+#include "UI/Categories/Keybinds.hpp"
 #include "UI/DearImGui/imgui.h"
-
 #include "UI/imGui/ImUtil.hpp"
 #include "UI/DearImGui/imgui_stdlib.h"
 #include "UI/ImGui/ImInput.hpp"
@@ -12,6 +11,8 @@ namespace GTS {
 
 	    //New Render Loop. Reset Index.
 	    //Why is it 1000? Why not.
+		//Well allright ill tell you why. It's to make sure the ID pushed to imgui is sufficiently unique
+		//Unless we end up with 1000 calls to the imutil_unique wrapper that is...
 	    CurEventIndex = 1000;
 
 	    //Calc the correct width
@@ -291,7 +292,7 @@ namespace GTS {
 	                            if (ImGui::IsKeyPressed(static_cast<ImGuiKey>(key))){
 
 	                                // Convert the key to a string representation.
-	                                std::string keyName = GetDIKStringFromImGuiKey(static_cast<ImGuiKey>(key));
+	                                std::string keyName = ImGuiKeyToDIKString(static_cast<ImGuiKey>(key));
 	                                if(keyName == "INVALID") continue;
 
 	                                // Only append if it's not already in TempKeys.

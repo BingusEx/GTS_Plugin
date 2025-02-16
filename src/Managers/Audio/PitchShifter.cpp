@@ -1,15 +1,5 @@
-
-#include "managers/audio/PitchShifter.hpp"
-
-#include "config/Config.hpp"
-
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
-#include "utils/debug.hpp"
-#include "utils/av.hpp"
-
+#include "Managers/audio/PitchShifter.hpp"
+#include "Config/Config.hpp"
 
 using namespace GTS;
 

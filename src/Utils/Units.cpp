@@ -1,13 +1,11 @@
-#include "utils/units.hpp"
-
-
-
+#include "Utils/Units.hpp"
 
 namespace {
-	const float CONVERSION_FACTOR = 70.0f;
+	constexpr float CONVERSION_FACTOR = 70.0f;
 }
 
 namespace GTS {
+
 	float unit_to_meter(const float& unit) {
 		// Game reports that the height of a slaughterfish is 0.31861934
 		// From inspecting the bounding box of the slaughterfish and applying
@@ -35,6 +33,7 @@ namespace GTS {
 	NiPoint3 unit_to_meter(const NiPoint3& unit) {
 		return unit / CONVERSION_FACTOR;
 	}
+
 	NiPoint3 meter_to_unit(const NiPoint3& meter) {
 		return meter * CONVERSION_FACTOR;
 	}

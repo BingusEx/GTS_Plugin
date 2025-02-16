@@ -1,10 +1,9 @@
 #pragma once
-#include "managers/cameras/state.hpp"
 
-
-
+#include "Managers/Cameras/State.hpp"
 
 namespace GTS {
+
 	class ThirdPersonCameraState : public CameraState {
 		public:
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPos) override;

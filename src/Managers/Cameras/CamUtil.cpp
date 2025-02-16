@@ -1,30 +1,20 @@
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/cameras/state.hpp"
-#include "managers/camera.hpp"
-#include "managers/highheel.hpp"
-#include "Constants.hpp"
-#include "api/APIManager.hpp"
-#include "scale/modscale.hpp"
-#include "rays/raycast.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Rays/raycast.hpp"
 #include "UI/DebugAPI.hpp"
-
-
-
 
 using namespace GTS;
 
 namespace {
+
 	enum class CameraDataMode {
 		State,
 		Transform,
 	};
 
-	const CameraDataMode currentMode = CameraDataMode::State;
+	constexpr CameraDataMode currentMode = CameraDataMode::State;
 
 	const BoneTarget GetBoneTarget_Anim(CameraTracking Camera_Anim) {
+
 		switch (Camera_Anim) {
 			case CameraTracking::None: {
 				return BoneTarget();

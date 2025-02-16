@@ -1,12 +1,6 @@
 #pragma once
-// Misc codes
-#include <math.h>
-#include <regex>
-#include "glm/glm.hpp"
 
-
-
-
+#include <glm/glm.hpp>
 
 namespace GTS {
 

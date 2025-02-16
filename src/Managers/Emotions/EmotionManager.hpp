@@ -1,11 +1,6 @@
 #pragma once
+
 // Module that handles AttributeAdjustment
-
-
-
-
-
-
 
 namespace GTS {
 	class EmotionManager : public EventListener {

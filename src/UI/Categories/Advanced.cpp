@@ -1,9 +1,7 @@
-#include "Advanced.hpp"
+#include "UI/Categories/Advanced.hpp"
 #include "UI/DearImGui/imgui.h"
-
 #include "UI/ImGui/ImWindowManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
-#include "spdlog/spdlog.h" 
 
 namespace GTS {
 
@@ -17,8 +15,7 @@ namespace GTS {
             const char* T2 = "Enable the debug overlay.";
             const char* T3 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
 
-            const char* T4 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens\n"
-                             "Sidenote: I've never actually seen this do anything... No extra info is flushed out. I guess we always immediatly empty the log buffer...";
+            const char* T4 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
 
             if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
 

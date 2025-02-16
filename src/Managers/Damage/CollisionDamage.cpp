@@ -1,32 +1,22 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/damage/TinyCalamity.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/Damage/SizeHitEffects.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
+#include "Managers/Audio/GoreAudio.hpp"
+#include "Managers/CrushManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
-#include "managers/audio/GoreAudio.hpp"
+#include "Magic/Effects/Common.hpp"
 
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/MovementForce.hpp"
-
-#include "utils/DeathReport.hpp"
-#include "utils/actorUtils.hpp"
-
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
+#include "Utils/DeathReport.hpp"
+#include "Utils/MovementForce.hpp"
 
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	bool StrongGore(DamageSource cause) {
 		bool Strong = false;
 		switch (cause) {

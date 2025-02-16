@@ -1,17 +1,9 @@
-#include "managers/perks/PerkHandler.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-
-#include <vector>
-#include <string>
+#include "Managers/Perks/PerkHandler.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
     float Perk_Acceleration_GetBonus(Actor* giant) {
         float bonus = std::clamp(GetGtsSkillLevel(giant) - 75.0f, 0.0f, 25.0f) * 0.01f;
         return 1.05f + bonus;

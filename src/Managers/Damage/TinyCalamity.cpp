@@ -1,34 +1,37 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/MovementForce.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "utils/looting.hpp"
-#include "managers/vore.hpp"
-#include "data/runtime.hpp"
 
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/AI/AIFunctions.hpp"
+
 #include "Managers/Animation/Utils/TurnTowards.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
+#include "Managers/Animation/TinyCalamity_Shrink.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+
+
+#include "Managers/Perks/PerkHandler.hpp"
+
+
+#include "Managers/Attributes.hpp"
+
+#include "Utils/MovementForce.hpp"
+#include "Utils/Looting.hpp"
+
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
+
+#include "Managers/AI/AIFunctions.hpp"
+
+
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Vore.hpp"
+
+#include "Magic/Effects/common.hpp"
 
 using namespace GTS;
 
 namespace {
+
     void ScareEnemies(Actor* giant)  {
 		int FearChance = RandomInt(0, 2);
 		if (FearChance <= 0) {

@@ -50,7 +50,7 @@ namespace GTS {
 
 		[[nodiscard]] unordered_set<std::uint32_t> GetKeys();
 
-		[[nodiscard]] BlockInputTypes ShouldBlock();
+		[[nodiscard]] BlockInputTypes ShouldBlock() const;
 
 		[[nodiscard]] bool IsDisabled() const;
 

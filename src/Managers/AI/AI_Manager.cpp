@@ -1,34 +1,16 @@
-#include "managers/animation/Controllers/HugController.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/ThighSandwichController.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/ai/ai_SelectAction.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/ai_Manager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "managers/audio/footstep.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "managers/vore.hpp"
-#include "utils/random.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/AI/AI_Manager.hpp"
+#include "Managers/AI/AI_SelectAction.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Vore.hpp"
 
 using namespace GTS;
 
 namespace {
 
-	const float MINIMUM_STOMP_DISTANCE = 50.0f;
-	const float MINIMUM_STOMP_SCALE_RATIO = 1.5f;
-	const float STOMP_ANGLE = 50;
-	const float PI = 3.14159f;
+	constexpr float MINIMUM_STOMP_DISTANCE = 50.0f;
+	constexpr float MINIMUM_STOMP_SCALE_RATIO = 1.5f;
+	constexpr float STOMP_ANGLE = 50;
+	constexpr float PI = std::numbers::pi_v<float>;
 
 	bool CanStompDead(Actor* tiny, float sizedifference) {
 		if (tiny->IsDead() && sizedifference < Action_Crush) {

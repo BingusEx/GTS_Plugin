@@ -1,10 +1,11 @@
-#include "ImFontManager.hpp"
+#include "UI/ImGui/ImFontManager.hpp"
 #include "UI/DearImGui/imgui_impl_dx11.h"
 
 namespace GTS {
 
     void ImFontManager::Init() {
         //Initalzie font data, add any new font defines here.
+        //Fontname, Path to ttf font file, font scale
         AddFont(new FontData("sidebar", _SkyrimGUI_Light, 34.0f));
         AddFont(new FontData("title", _SkyrimGUI_Medium, 58.0f));
         AddFont(new FontData("footer", _SkyrimGUI_Medium, 28.0f));
@@ -16,10 +17,11 @@ namespace GTS {
 
         BuildFontsInt();
 
-        for (auto& [key, value] : Fonts) {
+        for (auto& value : Fonts | views::values) {
             if (value->font == nullptr) {
-                //logger::critical("Could not load font: {}", key);
-                //SKSE Report and fail
+                logger::critical("Could not load font: {}", value->name);
+                const std::string_view msg = fmt::format("Could not load ImGui Font {}.\nThe game will now close.", value->name);
+                ReportAndExit(msg);
             }
         }
     }
@@ -30,13 +32,13 @@ namespace GTS {
         }
     }
 
-    void ImFontManager::BuildFontsInt() {
+    void ImFontManager::BuildFontsInt() const {
         ImGuiIO& io = ImGui::GetIO();
         ImFontAtlas* fontAtlas = io.Fonts;
         fontAtlas->Clear();
         fontAtlas->AddFontDefault();
-        for (auto& font : Fonts) {
-            font.second->font = fontAtlas->AddFontFromFileTTF(font.second->path.c_str(), font.second->size * Settings.fScale, font.second->conf);
+        for (const auto& value : Fonts | views::values) {
+            value->font = fontAtlas->AddFontFromFileTTF(value->path.c_str(), value->size * Settings.fScale, value->conf);
         }
     }
 
@@ -57,21 +59,18 @@ namespace GTS {
 
             switch (type) {
 
-                case kRasterizerScale:
-                {
+                case AQueueType::kRasterizerScale: {
                     ChangeRasterizerScaleImpl(value);
                     break;
                 }
 
-                case kRebuildAtlas:
-                {
+                case AQueueType::kRebuildAtlas: {
                     RebuildFontAtlasImpl();
                     break;
                 }
 
-                default:
-                {
-                    //logger::warn("ImFontmanager: Unimplemented Action!")
+                default: {
+                    logger::warn("ImFontmanager: Unimplemented Action!");
                     break;
                 }
             }
@@ -80,7 +79,7 @@ namespace GTS {
     }
 
     void ImFontManager::ChangeRasterizerScaleImpl(float a_scale) {
-        for (auto [key, value] : Fonts) {
+        for (const auto& value : Fonts | views::values) {
             if (value->font != nullptr) {
                 value->conf->RasterizerDensity = a_scale;
             }
@@ -88,7 +87,7 @@ namespace GTS {
         RebuildFontAtlasImpl();
     }
 
-    void ImFontManager::RebuildFontAtlasImpl() {
+    void ImFontManager::RebuildFontAtlasImpl() const {
 
         BuildFontsInt();
         ImGui::GetIO().Fonts->ClearTexData();

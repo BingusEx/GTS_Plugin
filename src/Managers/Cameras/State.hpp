@@ -1,9 +1,9 @@
 #pragma once
 
-
-
 namespace GTS {
+
 	class CameraState {
+
 		public:
 			virtual void EnterState();
 			virtual void ExitState();
@@ -27,4 +27,5 @@ namespace GTS {
 			virtual bool PermitTransition();
 			virtual bool PermitCameraTransforms();
 	};
+
 }

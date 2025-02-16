@@ -1,20 +1,5 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/actorBools.hpp"
-#include "utils/findActor.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "utils/random.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-#include "data/tasks.hpp"
-
-
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
 using namespace GTS;
 

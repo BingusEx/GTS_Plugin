@@ -1,14 +1,8 @@
-#include "managers/cameras/fp/normal.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "scale/height.hpp"
-
-
+#include "Managers/Cameras/FP/Normal.hpp"
 
 namespace GTS {
 	float FirstPerson::GetScaleOverride(bool IsCrawling) {
-		float proneFactor = 1.005f;
+		constexpr float proneFactor = 1.005f;
 		if (IsCrawling) {
 			return proneFactor; // 1.0 only if we crawl
 		} else {

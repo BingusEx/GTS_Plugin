@@ -2,9 +2,9 @@
 
 // Module that handles footIk scaling
 
-#include "Managers/footik/footIK.hpp"
+//#include "Managers/footik/footIK.hpp"
 
-namespace GTS {
+//namespace GTS {
 	/*
 	class ColliderActorData {
 		public:
@@ -29,4 +29,4 @@ namespace GTS {
 
 			FootIkData footIkData;
 	};*/
-}
+//}

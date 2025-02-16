@@ -1,41 +1,29 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/audio/footstep.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/explosion.hpp"
-#include "utils/DeathReport.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorBools.hpp"
-#include "utils/actorUtils.hpp"
-#include "colliders/actor.hpp"
-#include "managers/Rumble.hpp"
-#include "utils/findActor.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "scale/height.hpp"
-#include "data/runtime.hpp"
-#include "colliders/RE/RE.hpp"
+#include "Utils/ActorUtils.hpp"
+#include "Utils/DeathReport.hpp"
+#include "Utils/FindActor.hpp"
 
-#include "config/Config.hpp"
+#include "Magic/Effects/Common.hpp"
 
-#include "rays/raycast.hpp"
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
-#include "utils/av.hpp"
+#include "Colliders/Actor.hpp"
+#include "Colliders/RE/RE.hpp"
 
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/TinyCalamity_Shrink.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Gamemode/GameModeManager.hpp"
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/Damage/LaunchActor.hpp"
+#include "Managers/AI/AIfunctions.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Attributes.hpp"
+#include "Managers/Rumble.hpp"
+#include "Managers/explosion.hpp"
+#include "Managers/GtsSizeManager.hpp"
+
+#include "Config/Config.hpp"
 
 
 using namespace GTS;
@@ -48,9 +36,10 @@ namespace RE {
 }
 
 namespace {
-	const float EPS = 1e-4f;
 
-	const SoftPotential getspeed {
+	constexpr float EPS = 1e-4f;
+
+	constexpr SoftPotential getspeed {
 		// https://www.desmos.com/calculator/vyofjrqmrn
 		.k = 0.142f, 
 		.n = 0.82f,
@@ -877,35 +866,27 @@ namespace GTS {
 		return Difference;
 	}
 
-	float GetActorWeight(Actor* giant, bool metric) {
-		float hh = HighHeelManager::GetBaseHHOffset(giant)[2]/100;
-		float scale = get_visual_scale(giant);
-		float smt = 1.0f;
-		float totalscale = scale + (hh*0.10f * scale);
-		float actorweight = 1.0f + giant->GetWeight()/300;
-		float weight;
-		if (metric) { // 70.1 kg as a base
-			weight = 70.1f * actorweight * (totalscale * totalscale * totalscale);
-		} else {
-			weight = (70.1f * actorweight * (totalscale * totalscale * totalscale)) * 2.205f;
-		} if (HasSMT(giant)) {
-			smt = 6.0f;
-		}
-		return weight * smt;
+	//Returns Metric KG
+	float GetActorWeight(Actor* giant) {
+		if (!giant) return 1.0f;
+
+		float HHOffset = HighHeelManager::GetBaseHHOffset(giant)[2] / 100;
+		float Scale = get_visual_scale(giant);
+		const uint8_t SMT = HasSMT(giant) ? 6 : 1;
+		float TotalScale = Scale + (HHOffset * 0.10f * Scale);
+		const float ActorWeight = giant->GetWeight();
+		constexpr float BaseWeight = 50.0f; //KG at 0 weight
+		return BaseWeight * ((1.0f + ActorWeight / 100.f) * static_cast<float>(std::pow(TotalScale, 3))) * SMT;
 	}
 
-	float GetActorHeight(Actor* giant, bool metric) {
-		float hh = HighHeelManager::GetBaseHHOffset(giant)[2]/100;
+	//Returns Metric Meters
+	float GetActorHeight(Actor* giant) {
+		if (!giant) return 1.0f;
+
+		float hh = HighHeelManager::GetBaseHHOffset(giant)[2] / 100;
 		float bb = GetSizeFromBoundingBox(giant);
 		float scale = get_visual_scale(giant);
-		float smt = 1.0f;
-		float height;
-		if (metric) { // Characters_AssumedCharSize m as a base
-			height = Characters_AssumedCharSize * bb * scale + (hh * scale); // meters
-		} else {
-			height = (Characters_AssumedCharSize * bb * scale + (hh * scale)) * 3.28f; // ft
-		}
-		return height;
+		return  Characters_AssumedCharSize * bb * scale + (hh * scale); // meters;
 	}
 
 	float GetSizeFromBoundingBox(Actor* tiny) {

@@ -7,7 +7,7 @@ namespace GTS {
 		public:
 		Timer(double delta);
 		bool ShouldRun();
-		double TimeDelta();
+		double TimeDelta() const;
 		bool ShouldRunFrame();
 		std::uint64_t FrameDelta();
 		void Reset();

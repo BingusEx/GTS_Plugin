@@ -1,11 +1,10 @@
 #include "Managers/Input/ManagedInputEvent.hpp"
 
-
-
 namespace GTS {
 
 	//Construct the Managed Input Event...
-	//TODO Patched together from old code, Needs rewrite to remove all the proxy code...
+
+	//TODO Patched together from old code, should really be rewritten entirely...
 
 	ManagedInputEvent::ManagedInputEvent(const GTSInputEvent& a_event) {
 
@@ -191,7 +190,7 @@ namespace GTS {
 		return keys;
 	}
 
-	BlockInputTypes ManagedInputEvent::ShouldBlock() {
+	BlockInputTypes ManagedInputEvent::ShouldBlock() const {
 		return this->blockinput;
 	}
 }

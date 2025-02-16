@@ -1,9 +1,7 @@
 #pragma once
 
-
-
-
 namespace GTS {
+
 	void critically_damped(
 		float& x,
 		float& v,

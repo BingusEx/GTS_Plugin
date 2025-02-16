@@ -1,9 +1,8 @@
 #pragma once
+
 // Handles the various methods of scaling an actor
 
 namespace GTS {
-
-	
 
 	void set_target_height(Actor* actor, float height);
 	float get_target_height(Actor* actor);

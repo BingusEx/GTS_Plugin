@@ -7,7 +7,7 @@ namespace GTS {
             
         //Fields
         std::string title = "Default";
-        std::string description = "Default";
+
         bool visible = true;
 
         virtual ~ImCategory() = default;

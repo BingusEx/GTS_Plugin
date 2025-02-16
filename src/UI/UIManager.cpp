@@ -29,9 +29,7 @@ namespace {
         }
 
         //Attempt to fix alt tab getting stuck
-
 		//Doesnt work :( Can microsoft stop "fixing" api's that aren't broken smh
-
         //GTS::UIManager::GetSingleton().ReleaseStuckKeys();
         //GTS::UIManager::GetSingleton().OnFocusLost();
 
@@ -79,6 +77,7 @@ namespace GTS {
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
         
         //Keyboard nav is too buggy if using borderless mode...
+        //This tries to remmedy that slightly
         io.ConfigFlags |= ImGuiConfigFlags_NavNoCaptureKeyboard;
 
         RECT rect{};

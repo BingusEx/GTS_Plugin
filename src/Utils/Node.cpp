@@ -1,12 +1,9 @@
 
-#include <regex>
-#include "data/plugin.hpp"
-
-
-using namespace GTS;
+#include "Utils/Node.hpp"
 
 namespace GTS {
-	const int loop_threshold = 200;
+
+	constexpr int loop_threshold = 256;
 
 	void loop_message(NiAVObject* root, std::string_view message) {
 		auto owner_data = root->GetUserData();
@@ -83,6 +80,7 @@ namespace GTS {
 		}
 		return nodes;
 	}
+
 	void walk_nodes(Actor* actor) {
 		if (!actor->Is3DLoaded()) {
 			return;
@@ -273,6 +271,7 @@ namespace GTS {
 	}
 
 	NiAVObject* find_node_regex(Actor* actor, std::string_view node_regex, bool first_person) {
+
 		if (!actor->Is3DLoaded()) {
 			return nullptr;
 		}
@@ -431,6 +430,7 @@ namespace GTS {
 											capsule->GetAabbImpl(identity, 1e-3f, out);
 											_mm_store_ps(&min[0], out.min.quad);
 											_mm_store_ps(&max[0], out.max.quad);
+
 											log::trace(" - New bounds: {},{},{}<{},{},{}", min[0], min[1],min[2], max[0],max[1],max[2]);
 											log::trace(" - pad28: {}", orig_capsule->pad28);
 											log::trace(" - pad2C: {}", orig_capsule->pad2C);

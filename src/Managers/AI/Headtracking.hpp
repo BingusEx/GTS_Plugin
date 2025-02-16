@@ -1,7 +1,4 @@
 #pragma once
-// Module for the Gts Related code
-
-#include "Utils/Spring.hpp"
 
 namespace GTS {
 

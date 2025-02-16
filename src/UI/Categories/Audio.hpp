@@ -5,7 +5,7 @@
 
 namespace GTS {
 
-    class CategoryAudio: public ImCategorySplit {
+    class CategoryAudio final : public ImCategorySplit {
         public:
         CategoryAudio(){
             title = "Audio";

@@ -1,10 +1,9 @@
 #pragma once
-#include "managers/cameras/tpState.hpp"
 
-
-
+#include "Managers/Cameras/TPState.hpp"
 
 namespace GTS {
+
 	class Foot : public ThirdPersonCameraState {
 		public:
 			virtual void EnterState() override;

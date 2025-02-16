@@ -2,10 +2,6 @@
 
 namespace GTS {
 
-	
-	
-	
-
 	enum class AnimationCondition {
 		kHugs = 0,
 		kStompsAndKicks = 1,
@@ -13,7 +9,6 @@ namespace GTS {
 		kVore = 3,
 		kOthers = 4,
 	};
-
 
 	[[nodiscard]] RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis);
 
@@ -38,8 +33,6 @@ namespace GTS {
 	void PlayLaughSound(RE::Actor* actor, float volume, int type);
 
 	// GTS State Bools
-	
-
 	void Potion_SetMightBonus(RE::Actor* giant, float value, bool add);
 	float Potion_GetMightBonus(RE::Actor* giant);
 
@@ -103,8 +96,8 @@ namespace GTS {
 	float Damage_CalculateSizeDamage(RE::Actor* giant, RE::Actor* tiny);
 
 	float GetSizeDifference(Actor* giant, Actor* tiny, SizeType Type, bool Check_SMT, bool HH);
-	float GetActorWeight(Actor* giant, bool metric);
-	float GetActorHeight(Actor* giant, bool metric);
+	float GetActorWeight(Actor* giant);
+	float GetActorHeight(Actor* giant);
 	float GetSizeFromBoundingBox(Actor* tiny);
 	float GetRoomStateScale(Actor* giant);
 	float GetProneAdjustment();
@@ -112,7 +105,6 @@ namespace GTS {
 	void override_actor_scale(Actor* giant, float amt, SizeEffectType type);
 	void update_target_scale(Actor* giant, float amt, SizeEffectType type);
 	float get_update_target_scale(Actor* giant, float amt, SizeEffectType type);
-
 
 	void SpawnActionIcon(Actor* giant);
 	// End

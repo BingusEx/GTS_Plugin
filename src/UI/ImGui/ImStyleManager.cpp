@@ -1,4 +1,4 @@
-#include "ImStyleManager.hpp"
+#include "UI/ImGui/ImStyleManager.hpp"
 #include "UI/DearImGui/imgui.h"
 
 namespace GTS {

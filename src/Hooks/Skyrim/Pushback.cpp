@@ -28,8 +28,11 @@ namespace {
 }
 
 namespace Hooks {
-	
-	void Hook_Pushback::Hook(Trampoline& trampoline) {
+
+
+	void Hook_PushBack::Hook(Trampoline& trampoline) {
+
+		// Reduces amount of CharController being pushed back on being hit based on size
 
         static FunctionHook<void(bhkCharacterController* controller, hkVector4& a_from, float time)>HavokPushHook (      
 			REL::RelocationID(76442, 78282), 

@@ -1,12 +1,6 @@
-
-
 #pragma once
 
-
-
 namespace GTS {
-
-    
 
     bool TinyCalamity_WrathfulCalamity(Actor* giant);
     

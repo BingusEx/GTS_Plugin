@@ -26,10 +26,9 @@
 #include "Hooks/Skyrim/VM.hpp"
 #include "Hooks/Skyrim/D3DPresent.hpp"
 #include "Hooks/Skyrim/Controls.hpp"
+#include "Hooks/Skyrim/PushAway.hpp"
 
 #include "Hooks/Experiments.hpp"
-
-
 
 namespace Hooks
 {
@@ -53,8 +52,8 @@ namespace Hooks
 		log::info("Gts finished applying Control hooks...");
 	}
 
-	void Install()
-	{
+	void Install(){
+
 		log::info("Gts applying hooks...");
 
 		auto& trampoline = SKSE::GetTrampoline();
@@ -76,14 +75,17 @@ namespace Hooks
 		Hook_Sinking::Hook(trampoline);
 		Hook_Jumping::Hook(trampoline);
 		Hook_Damage::Hook(trampoline);
-		Hook_Pushback::Hook(trampoline);
+		Hook_PushBack::Hook(trampoline);
+		Hook_PushAway::Hook(trampoline);
 		Hook_Input::Hook(trampoline);
 		Hook_Renderer::Hook(trampoline);
 
 		InstallControls();
+
 		//if (REL::Module::IsSE()) { // Used when something is not RE'd yet for AE
 			
 		//}
+
 		Hook_Stealth::Hook(trampoline);
 		Hook_Movement::Hook(trampoline);
 		
@@ -96,8 +98,6 @@ namespace Hooks
 		//Hook_MagicTarget::Hook();
 		//Hook_ActorRotation::Hook(trampoline);
 		//Hook_Experiments::Hook(trampoline);
-
-
 
 		log::info("Gts finished applying hooks...");
 	}

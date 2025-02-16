@@ -1,14 +1,6 @@
-#include "papyrus/scale.hpp"
-#include "scale/scale.hpp"
-#include "scale/modscale.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "managers/GtsManager.hpp"
-
-
+#include "Scale/Scale.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {
@@ -20,8 +12,6 @@ namespace {
 			}
 		}
 	}
-
-
 
 	// Model Scale
 	bool SetModelScale(StaticFunctionTag*, Actor* actor, float scale) {
@@ -105,6 +95,7 @@ namespace {
 		}
 		return result;
 	}
+
 	float GetHybridScale(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
 			return 0.0f;
@@ -115,6 +106,7 @@ namespace {
 		}
 		return result;
 	}
+
 	bool ModHybridScale(StaticFunctionTag*, Actor* actor, float amt) {
 		bool result = false;
 		auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -173,6 +165,7 @@ namespace {
 		log::error("Scale method is invalid");
 		return Persistent::GetSingleton().size_method;
 	}
+
 	bool SetScale(StaticFunctionTag*, Actor* actor, float scale) {
 		bool result = false;
 		auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -184,6 +177,7 @@ namespace {
 		}
 		return result;
 	}
+
 	float GetScale(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
 			return 0.0f;
@@ -191,6 +185,7 @@ namespace {
 		auto result = get_scale(actor);
 		return result;
 	}
+
 	bool ModScale(StaticFunctionTag*, Actor* actor, float amt) {
 		bool result = false;
 		auto actor_data = Persistent::GetSingleton().GetData(actor);

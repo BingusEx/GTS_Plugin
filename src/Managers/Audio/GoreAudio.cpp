@@ -1,16 +1,4 @@
-#include "managers/audio/GoreAudio.hpp"
-#include "managers/highheel.hpp"
-#include "managers/modevent.hpp"
-#include "managers/impact.hpp"
-#include "managers/tremor.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
+#include "Managers/Audio/GoreAudio.hpp"
 
 using namespace GTS;
 

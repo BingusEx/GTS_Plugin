@@ -1,23 +1,9 @@
-
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/perks/ShrinkingGaze.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
-
-#include <vector>
-#include <string>
-
+#include "Managers/Perks/ShrinkingGaze.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/AI/AIFunctions.hpp"
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
-
-
-
 
 namespace {
     void ShrinkByOverTime(Actor* tiny, float over_time, float by) {
@@ -36,7 +22,7 @@ namespace {
 				return false;
 			}
 
-			float Scale = get_visual_scale(actor);
+			/*float Scale = get_visual_scale(actor);*/
 			double End = Time::WorldTimeElapsed();
 
 			if (End - Start < over_time) {

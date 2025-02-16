@@ -3,8 +3,6 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/DearImGui/imgui_internal.h"
 
-#include "magic_enum/magic_enum.hpp"
-
 
 // RAII helper to push an ID on construction and pop it on destruction
 // So i don't have to remember to use push pop constantly...

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Config/Keybinds.hpp"
 #include "Managers/Input/ManagedInputEvent.hpp"
 
 namespace GTS {

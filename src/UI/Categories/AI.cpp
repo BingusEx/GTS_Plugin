@@ -1,6 +1,5 @@
-#include "AI.hpp"
+#include "UI/Categories/AI.hpp"
 #include "UI/DearImGui/imgui.h"
-
 #include "UI/ImGui/ImUtil.hpp"
 
 namespace GTS {

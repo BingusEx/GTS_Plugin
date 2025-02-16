@@ -1,9 +1,9 @@
+#include "Rays/Raycast.hpp"
+#include "Rays/AllCollector.hpp"
+
 #include "UI/DebugAPI.hpp"
-#include "rays/raycast.hpp"
-#include "rays/allcollector.hpp"
 
 using namespace GTS;
-
 
 namespace {
 	void CastRayImpl(TESObjectREFR* ref, const NiPoint3& in_origin, const NiPoint3& direction, const float& unit_length, AllRayCollector* collector) {
@@ -50,8 +50,8 @@ namespace {
 
 namespace GTS {
 
-	RayResult CastCamRay(glm::vec4 start, glm::vec4 end, float traceHullSize)
-		noexcept {
+	RayResult CastCamRay(glm::vec4 start, glm::vec4 end, float traceHullSize) noexcept {
+
 		RayResult res;
 
 		const auto ply = RE::PlayerCharacter::GetSingleton();

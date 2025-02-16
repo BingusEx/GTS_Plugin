@@ -96,6 +96,8 @@
 #include <vector>
 #include <version>
 #include <d3d11.h>
+#include <ehdata.h>
+#include <rttidata.h>
 
 #include <RE/Skyrim.h>
 #include <SKSE/SKSE.h>
@@ -159,3 +161,4 @@ namespace logger = SKSE::log;
 #include "Scale/Height.hpp"
 #include "Data/Data.hpp"
 #include "Hooks/Hooks.hpp"
+#include "Version.hpp"

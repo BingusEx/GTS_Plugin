@@ -2,11 +2,11 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategory.hpp"
-#include "config/Config.hpp"
+#include "Config/Config.hpp"
 
 namespace GTS {
 
-    class CategoryInfo : public ImCategory {
+    class CategoryInfo final : public ImCategory {
         public:
         CategoryInfo(){
             title = "Info";

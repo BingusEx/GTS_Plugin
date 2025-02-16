@@ -1,14 +1,9 @@
 #pragma once
+
 // Module that handles footsteps
 
-#include "managers/impact.hpp"
-
-
-
-
-
-
 namespace GTS {
+
 	class FootStepManager : public EventListener {
 		public:
 			[[nodiscard]] static FootStepManager& GetSingleton() noexcept;

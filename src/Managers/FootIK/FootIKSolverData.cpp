@@ -1,7 +1,7 @@
-#include "managers/footik/footIKSolverData.hpp"
-#include "Colliders/RE/RE.hpp"
+//#include "managers/footik/footIKSolverData.hpp"
+//#include "Colliders/RE/RE.hpp"
 
-namespace GTS {
+//namespace GTS {
 
 	/*
 	// Note: solvers do not respect the reference counting. Skyrim will delete it
@@ -35,4 +35,4 @@ namespace GTS {
 		this->solver->m_setup.m_raycastDistanceUp = this->m_raycastDistanceUp * new_scale;
 		this->solver->m_setup.m_raycastDistanceDown = this->m_raycastDistanceDown * new_scale;
 	}*/
-}
+//}

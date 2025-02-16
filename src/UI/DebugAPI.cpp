@@ -1,6 +1,6 @@
 #pragma once
+
 #include "UI/DebugAPI.hpp"
-#include "Data/World.hpp"
 
 using namespace GTS;
 

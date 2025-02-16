@@ -1,32 +1,16 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/SurvivalMode.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/voreUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "scale/modscale.hpp"
-#include "Constants.hpp"
-#include "utils/looting.hpp"
-#include "managers/vore.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Utils/VoreUtils.hpp"
+#include "Utils/SurvivalMode.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Rumble.hpp"
+#include "Managers/Vore.hpp"
 
-
-#include <cmath>
-#include <random>
-
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
 namespace {
+
     void BuffAttributes(Actor* giant, float tinyscale) {
 		if (giant) {
 			if (Runtime::HasPerk(giant, "SoulVorePerk")) { // Permamently increases random AV after eating someone
@@ -61,7 +45,7 @@ namespace {
 namespace GTS {
 
 	VoreInformation GetVoreInfo(Actor* giant, Actor* tiny, float growth_mult) {
-		float recorded_scale = Vore::GetSingleton().ReadOriginalScale(tiny);
+		float recorded_scale = Vore::ReadOriginalScale(tiny);
 		float Health_Regeneration = 0.0f; // No hp regen by default
 		float duration = 80.0f; // 80 seconds duration by default
 		float growth = 0.275f; // Default power of gaining size

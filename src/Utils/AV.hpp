@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 namespace GTS {
 
 	float GetMaxAV(Actor* actor, ActorValue av);

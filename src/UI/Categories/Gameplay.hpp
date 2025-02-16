@@ -5,7 +5,7 @@
 
 namespace GTS {
 
-    class CategoryGameplay: public ImCategorySplit {
+    class CategoryGameplay final : public ImCategorySplit {
         public:
         CategoryGameplay(){
             title = "Gameplay";
@@ -16,7 +16,7 @@ namespace GTS {
 
         private:
         SettingsGameplay& Settings = Config::GetGameplay();
-        void GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings);
+        static void GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings);
     };
 
 }

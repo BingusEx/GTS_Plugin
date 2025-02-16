@@ -1,18 +1,13 @@
-#include "managers/cameras/tp/foot.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/highheel.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
+#include "Managers/Cameras/TP/Foot.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Managers/HighHeel.hpp"
 
 namespace {
-	const float OFFSET = 0.24f * 70.0f; // About 24cm up
+	constexpr float OFFSET = 0.24f * 70.0f; // About 24cm up
 }
 
 namespace GTS {
+
 	void Foot::EnterState() {
 		auto player = GetCameraActor();
 		if (player) {

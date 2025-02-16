@@ -1,10 +1,10 @@
 #pragma once
 
 // Module that handles FootIK
-#include "Managers/footik/footIKSolverData.hpp"
-#include "Colliders/RE/RE.hpp"
+//#include "Managers/footik/footIKSolverData.hpp"
+//#include "Colliders/RE/RE.hpp"
 
-namespace GTS {
+//namespace GTS {
 	/*
 	class FootIkData {
 		public:
@@ -23,4 +23,4 @@ namespace GTS {
 
 			std::unordered_map<hkaFootPlacementIkSolver*, FootIkSolverData> solver_data;
 	};*/
-}
+//}

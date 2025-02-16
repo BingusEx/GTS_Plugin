@@ -1,21 +1,20 @@
-#include "utils/DeathReport.hpp"
-#include "managers/highheel.hpp"
-#include "utils/random.hpp"
-
+#include "Utils/DeathReport.hpp"
+#include "Managers/HighHeel.hpp"
 
 using namespace GTS;
 
 namespace {
-	const std::string_view lFoot = "NPC L Foot [Lft ]";
-	const std::string_view rFoot = "NPC R Foot [Rft ]";
-	const std::string_view rCalf = "NPC R Calf [RClf]";
-	const std::string_view lCalf = "NPC L Calf [LClf]";
-	const std::string_view rHand = "NPC R Finger20 [RF20]";
-	const std::string_view lHand = "NPC L Finger20 [LF20]";
-	const std::string_view rThigh = "NPC R FrontThigh";
-	const std::string_view breast = "NPC Spine2 [Spn2]";
-	const std::string_view booty = "NPC Spine [Spn0]";
-	const std::string_view none = "None";
+
+	constexpr std::string_view lFoot = "NPC L Foot [Lft ]";
+	constexpr std::string_view rFoot = "NPC R Foot [Rft ]";
+	constexpr std::string_view rCalf = "NPC R Calf [RClf]";
+	constexpr std::string_view lCalf = "NPC L Calf [LClf]";
+	constexpr std::string_view rHand = "NPC R Finger20 [RF20]";
+	constexpr std::string_view lHand = "NPC L Finger20 [LF20]";
+	constexpr std::string_view rThigh = "NPC R FrontThigh";
+	constexpr std::string_view breast = "NPC Spine2 [Spn2]";
+	constexpr std::string_view booty = "NPC Spine [Spn0]";
+	constexpr std::string_view none = "None";
 
 	void CrushedMessage(std::string_view GiantName, std::string_view TinyName, int random, bool hh) {
 		if (!hh) {

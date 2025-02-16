@@ -1,11 +1,4 @@
-#include "utils/text.hpp"
-#include <algorithm>
-#include <cctype>
-#include <string>
-
-
-
-
+#include "Utils/Text.hpp"
 
 namespace GTS {
 
@@ -19,29 +12,21 @@ namespace GTS {
 	}
 
 	std::string str_tolower(std::string s) {
-		std::transform(s.begin(), s.end(), s.begin(),
-		               [](unsigned char c){
+		ranges::transform(s, s.begin(),[](unsigned char c){
 			return std::tolower(c);
-		}
-		               );
+		});
 		return s;
 	}
 
 	std::string str_toupper(std::string s) {
-		std::transform(s.begin(), s.end(), s.begin(),
-		               [](unsigned char c){
+		ranges::transform(s, s.begin(),[](unsigned char c){
 			return std::toupper(c);
-		}
-		               );
+		});
 		return s;
 	}
 
 	// courtesy of https://stackoverflow.com/questions/5878775/how-to-find-and-replace-string
-	void replace_first(
-		std::string& s,
-		std::string const& toReplace,
-		std::string const& replaceWith
-		) {
+	void replace_first(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
 		std::size_t pos = s.find(toReplace);
 		if (pos == std::string::npos) {
 			return;

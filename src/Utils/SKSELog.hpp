@@ -1,12 +1,8 @@
 #pragma once
 
-#include <ShlObj.h>
-
 namespace GTS {
 
-	
-
-	static inline std::optional<std::filesystem::path> log_directory() {
+	static inline std::optional<std::filesystem::path> log_directory_fixed() {
 		wchar_t* buffer{ nullptr };
 		const auto result = ::SHGetKnownFolderPath(::FOLDERID_Documents, ::KNOWN_FOLDER_FLAG::KF_FLAG_DEFAULT, nullptr, std::addressof(buffer));
 		std::unique_ptr<wchar_t[], decltype(&::CoTaskMemFree)> knownPath(buffer, ::CoTaskMemFree);

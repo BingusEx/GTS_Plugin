@@ -1,7 +1,6 @@
 #pragma once
-#include "managers/cameras/state.hpp"
 
-
+#include "Managers/Cameras/State.hpp"
 
 namespace GTS {
 	class FirstPersonCameraState : public CameraState {

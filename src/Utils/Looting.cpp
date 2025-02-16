@@ -1,24 +1,14 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/looting.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-#include "utils/av.hpp"
+#include "Utils/Looting.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Rays/Raycast.hpp"
 #include "UI/DebugAPI.hpp"
-#include "rays/raycast.hpp"
-
-
-
 
 using namespace GTS;
 
 namespace {
 
-	void RunScaleTask(ObjectRefHandle dropboxHandle, Actor* actor, const double Start, const float Scale, const bool soul, const NiPoint3 TotalPos) {
+	void RunScaleTask(const ObjectRefHandle& dropboxHandle, Actor* actor, const double Start, const float Scale, const bool soul, const NiPoint3 TotalPos) {
+
 		std::string taskname = std::format("Dropbox {}", actor->formID); // create task name for main task
 		TaskManager::RunFor(taskname, 16, [=](auto& progressData) { // Spawn loot piles
 			if (!dropboxHandle) {

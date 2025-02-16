@@ -34,7 +34,7 @@ namespace GTS {
             return instance;
         }
 
-        [[nodiscard]] inline float GetScale(){
+        [[nodiscard]] inline float GetScale() const {
             return Settings.fScale;
         }
 

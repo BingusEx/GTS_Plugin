@@ -5,8 +5,8 @@
 #include "UI/ImGUI/ImFontManager.hpp"
 #include "UI/ImGUI/ImStyleManager.hpp"
 
-#include "config/Config.hpp"
-#include "config/Keybinds.hpp"
+#include "Config/Config.hpp"
+#include "Config/Keybinds.hpp"
 
 namespace GTS {
 
@@ -29,8 +29,6 @@ namespace GTS {
         inline void SetDisabled(bool a_Disabled) {
             Disabled = a_Disabled;
         }
-
-
 
         private:
         void AsyncLoad();

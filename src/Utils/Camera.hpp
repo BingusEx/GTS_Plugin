@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 namespace GTS {
 
 	void shake_camera_script(TESObjectREFR* actor, float intensity, float duration);

@@ -1,11 +1,4 @@
-#include "scale/scale.hpp"
-#include "managers/GtsManager.hpp"
-
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-
-
+#include "Scale/Scale.hpp"
 
 namespace {
 	constexpr float EPS = std::numeric_limits<float>::epsilon();

@@ -1,5 +1,5 @@
 // Module that handles footsteps
-namespace GTS {
+//namespace GTS {
 
 	/*
 	FootIkData::FootIkData() {
@@ -78,4 +78,4 @@ namespace GTS {
 			this->solver_data.try_emplace(solver, solver);
 		}
 	}*/
-}
+//}

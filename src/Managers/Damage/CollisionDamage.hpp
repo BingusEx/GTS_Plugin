@@ -1,15 +1,4 @@
 #pragma once
-#include <vector>
-#include <atomic>
-#include <unordered_map>
-
-#include <RE/Skyrim.h>
-
-
-
-
-
-
 
 // Module for accurate size-related damage
 

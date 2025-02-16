@@ -1,21 +1,12 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "utils/random.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/GameMode/GameModeManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	float GetShrinkPenalty(float size) {
 		// https://www.desmos.com/calculator/pqgliwxzi2
 		SoftPotential launch {
@@ -67,8 +58,10 @@ namespace GTS {
 	}
 
 	void GameModeManager::ApplyGameMode(Actor* actor, const ChosenGameMode& game_mode, const float& GrowthRate, const float& ShrinkRate)  {
+
 		auto profiler = Profilers::Profile("Manager: ApplyGameMode");
-		const float EPS = 1e-7f;
+		constexpr float EPS = 1e-7f;
+
 		if (game_mode != ChosenGameMode::None) {
 			auto player = PlayerCharacter::GetSingleton();
 			float natural_scale = get_natural_scale(actor, true);
@@ -212,7 +205,9 @@ namespace GTS {
 		if (!actor) {
 			return;
 		}
+
 		ChosenGameMode gameMode = ChosenGameMode::None;
+
 		float growthRate = 0.0f;
 		float shrinkRate = 0.0f;
 		int game_mode_int = 0;
@@ -251,7 +246,7 @@ namespace GTS {
 				} else if (SizeManager::GetSingleton().GetGrowthSpurt(actor) > 0.01f) {
 					shrinkRate = 0.0f;
 				} else if (actor->IsInCombat() && BalanceMode >= 2.0f) {
-					shrinkRate *= GameModeManager::GetSingleton().GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Combat); // shrink at 6% rate
+					shrinkRate *= GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Combat); // shrink at 6% rate
 				}
 
 				if (fabs(shrinkRate) <= 1e-6) {
@@ -283,6 +278,6 @@ namespace GTS {
 
 		shrinkRate *= Perk_GetSprintShrinkReduction(actor); // up to 20% reduction
 
-		GameModeManager::GetSingleton().ApplyGameMode(actor, gameMode, growthRate/2, shrinkRate);
+		ApplyGameMode(actor, gameMode, growthRate/2, shrinkRate);
 	}
 }

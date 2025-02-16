@@ -1,6 +1,7 @@
 #pragma once
 
 namespace GTS {
+
 	//-----------------------------------------Misc
 	constexpr float Collision_Distance_Override = 5.75f;
 	constexpr float Characters_AssumedCharSize = 1.82f; // We assume that default humanoid height is 1.82m, used in some calculations

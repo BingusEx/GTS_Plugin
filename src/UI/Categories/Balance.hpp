@@ -1,11 +1,11 @@
 #pragma once
 
 #include "UI/ImGUI/ImCategorySplit.hpp"
-#include "config/Config.hpp"
+#include "Config/Config.hpp"
 
 namespace GTS {
 
-    class CategoryBalance: public ImCategorySplit {
+    class CategoryBalance final : public ImCategorySplit {
         public:
         CategoryBalance(){
             title = "Balance";

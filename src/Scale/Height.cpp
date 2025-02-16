@@ -1,11 +1,9 @@
-#include "scale/height.hpp"
-#include "scale/scale.hpp"
-#include "managers/GtsManager.hpp"
-#include "data/transient.hpp"
+#include "Scale/Height.hpp"
 
 using namespace GTS;
 
 namespace {
+
 	float height_to_scale(Actor* actor, float height) {
 		if (!actor) {
 			return 1.0f;
@@ -31,6 +29,7 @@ namespace {
 }
 
 namespace GTS {
+
 	void set_target_height(Actor* actor, float height) {
 		float scale = height_to_scale(actor, height);
 		set_target_scale(actor, scale);

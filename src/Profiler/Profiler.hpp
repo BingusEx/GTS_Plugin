@@ -1,7 +1,9 @@
 #pragma once
 
 namespace GTS {
+
 	class Profiler {
+
 		private:
 			// Type aliases to make accessing nested type easier
 			using Clock = std::chrono::steady_clock;

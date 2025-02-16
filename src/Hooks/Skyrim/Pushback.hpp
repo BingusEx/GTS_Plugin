@@ -4,7 +4,7 @@
 
 namespace Hooks {	
 
-	class Hook_Pushback {
+	class Hook_PushBack {
 		public:
 			static void Hook(Trampoline& trampoline);
 	};

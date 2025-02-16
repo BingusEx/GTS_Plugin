@@ -6,20 +6,9 @@
 
 //categories
 #include "Config/ConfigUtil.hpp"
-#include "Data/Plugin.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
 
 namespace GTS {
-
-    inline void DrawInfo(/*Actor* TargetActor */) {
-
-
-
-
-
-
-    }
-
 
     //Do All your Init Stuff here
     //Note: Dont do any calls to the imgui api here as the window is not yet created
@@ -34,7 +23,7 @@ namespace GTS {
 
     void WindowStatus::Draw() {
 
-        DrawBG = hasFlag((GTSInfoFeatures)sUI.iFlags, GTSInfoFeatures::kDrawBackground);
+        DrawBG = hasFlag(static_cast<GTSInfoFeatures>(sUI.iFlags), GTSInfoFeatures::kDrawBackground);
         flags = (sUI.bLock ? (flags | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove) : (flags & ~ImGuiWindowFlags_NoResize & ~ImGuiWindowFlags_NoMove));
 
         //Handle Fixed Position and Size
@@ -45,12 +34,11 @@ namespace GTS {
 
         }
 
-
         {
 
             //Get Actor ptr.
-            ImGui::PushFont(ImFontManager::GetSingleton().GetFont("widgetbody"));
-            DrawGTSInfo((GTSInfoFeatures)Settings.GetUI().StatusWindow.iFlags);
+            ImGui::PushFont(ImFontManager::GetFont("widgetbody"));
+            DrawGTSInfo(static_cast<GTSInfoFeatures>(Config::GetUI().StatusWindow.iFlags),RE::PlayerCharacter::GetSingleton());
             ImGui::PopFont();
 
         }

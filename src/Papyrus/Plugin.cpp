@@ -1,26 +1,18 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "utils/ItemDistributor.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/voreUtils.hpp"
-#include "data/persistent.hpp"
-#include "papyrus/plugin.hpp"
-#include "data/transient.hpp"
-#include "managers/vore.hpp"
-#include <sstream>
-#include <iomanip>
-#include <math.h>
-
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Papyrus/Plugin.hpp"
+#include "Data/Transient.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Attributes.hpp"
+#include "Managers/GtsManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Gamemode/GameModeManager.hpp"
+#include "Utils/VoreUtils.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {
+
 	constexpr std::string_view PapyrusClass = "GtsPlugin";
 	float GetDistanceToCamera(StaticFunctionTag*, Actor* actor) {
 		return get_distance_to_camera(actor);

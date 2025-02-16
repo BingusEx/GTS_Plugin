@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ImWindow.hpp"
-#include "ImFontManager.hpp"
-#include "ImStyleManager.hpp"
+#include "UI/ImGui/ImWindow.hpp"
+#include "UI/ImGui/ImFontManager.hpp"
+#include "UI/ImGui/ImStyleManager.hpp"
 
 namespace GTS {
 
@@ -29,7 +29,7 @@ namespace GTS {
 
         [[nodiscard]] ImWindow* GetWindowByName(const std::string& a_name) const;
         
-        [[nodiscard]] inline bool HasWindows(){
+        [[nodiscard]] inline bool HasWindows() const {
             return !windows.empty();
         }
 

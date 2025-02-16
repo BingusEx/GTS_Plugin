@@ -1,18 +1,9 @@
-#include "managers/GtsManager.hpp"
-#include "scale/modscale.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-
-
+#include "Scale/ModScale.hpp"
 
 using namespace GTS;
 
 namespace {
+
 	struct InitialScales {
         float model;
         float npc;

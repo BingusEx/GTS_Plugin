@@ -1,12 +1,10 @@
-#include "papyrus/papyrus.hpp"
-#include "papyrus/plugin.hpp"
-#include "papyrus/scale.hpp"
-#include "papyrus/height.hpp"
-#include "papyrus/modevents.hpp"
-#include "papyrus/camera.hpp"
-#include "papyrus/totalcontrol.hpp"
-
-
+#include "Papyrus/Papyrus.hpp"
+#include "Papyrus/Plugin.hpp"
+#include "papyrus/Scale.hpp"
+#include "papyrus/Height.hpp"
+#include "papyrus/ModEvents.hpp"
+#include "papyrus/Camera.hpp"
+#include "papyrus/TotalControl.hpp"
 
 using namespace GTS;
 using namespace RE::BSScript;

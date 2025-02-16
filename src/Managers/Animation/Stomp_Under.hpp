@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class AnimationUnderStomp {
 		public:
 			static bool ShouldStompUnder_NPC(Actor* giant, float distance);

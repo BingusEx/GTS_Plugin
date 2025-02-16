@@ -5,7 +5,7 @@
 
 namespace GTS {
 
-    class CategoryGeneral: public ImCategorySplit {
+    class CategoryGeneral final : public ImCategorySplit {
 
         public:
 

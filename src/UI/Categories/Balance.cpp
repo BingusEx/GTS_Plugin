@@ -1,5 +1,4 @@
-#include "Balance.hpp"
-
+#include "UI/Categories/Balance.hpp"
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 

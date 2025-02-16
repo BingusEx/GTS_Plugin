@@ -1,18 +1,10 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "utils/actorBools.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-
+#include "Utils/ActorBools.hpp"
 
 // I'm planning to switch to it later and remove these functions from ActorUtils.cpp
 // delayed because it's hard to see important changes since there's like 100+ file changes when switching to it
 
 namespace GTS {
+
 	bool IsStaggered(Actor* tiny) {
 		bool staggered = false;
 		if (tiny) {
@@ -49,6 +41,7 @@ namespace GTS {
 		}
 		return false;
 	}
+
    /*bool BehaviorGraph_DisableHH(Actor* actor) { // should .dll disable HH if Behavior Graph has HH Disable data?
 		bool disable = false;
 		actor->GetGraphVariableBool("GTS_DisableHH", disable);

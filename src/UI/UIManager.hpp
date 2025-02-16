@@ -53,10 +53,12 @@ namespace GTS {
 
 			OnFocusLost();
 
-
-
 			return false;
 
+		}
+
+		[[nodiscard]] static inline bool MenuOpen() {
+			return ImWindowManager::GetSingleton().HasInputConsumers();
 		}
 
 		constexpr static inline std::string_view ImGuiINI = "Data\\SKSE\\Plugins\\GTSPlugin\\GTSPluginImGui.ini";

@@ -1,35 +1,21 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Utils/InputFunctions.hpp"
+#include "Utils/UnitConverter.hpp"
 #include "Utils/InputConditions.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/InputFunctions.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "managers/vore.hpp"
-#include "data/runtime.hpp"
-#include "data/plugin.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-#include "utils/av.hpp"
+#include "Managers/Vore.hpp"
+#include "Managers/Rumble.hpp"
 
-
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
-
 namespace {
+
 	void ReportScaleIntoConsole(Actor* actor, bool enemy) {
+
 		float hh = HighHeelManager::GetBaseHHOffset(actor)[2]/100;
 		float gigantism = Ench_Aspect_GetPower(actor) * 100;
 		float naturalscale = get_natural_scale(actor, true);
@@ -40,21 +26,56 @@ namespace {
 
 		float BB = GetSizeFromBoundingBox(actor);
 		if (enemy) {
-			Cprint("{} Bounding Box To Size: {:.2f}, GameScale: {:.2f}", actor->GetDisplayFullName(), BB, game_getactorscale(actor));
-			Cprint("{} Size Difference With the Player: {:.2f}", actor->GetDisplayFullName(), GetSizeDifference(player, actor, SizeType::VisualScale, false, true));
-		} else {
-			Cprint("{} Height: {:.2f} m / {:.2f} ft; Weight: {:.2f} kg / {:.2f} lb;", actor->GetDisplayFullName(), GetActorHeight(actor, true), GetActorHeight(actor, false), GetActorWeight(actor, true), GetActorWeight(actor, false));
+			Cprint("{} Bounding Box To Size: {:.2f}, GameScale: {:.2f}", 
+				actor->GetDisplayFullName(), 
+				BB, 
+				game_getactorscale(actor)
+			);
+
+			Cprint("{} Size Difference With the Player: {:.2f}", 
+				actor->GetDisplayFullName(), 
+				GetSizeDifference(player, actor, SizeType::VisualScale, false, true)
+			);
+		}
+		else {
+			Cprint("{} Height: {} Weight: {}", 
+				actor->GetDisplayFullName(),
+				GetFormatedWeight(actor),
+				GetFormatedHeight(actor)
+			);
 		}
 
 		if (maxscale > 250.0f * naturalscale) {
-			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: Infinite; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, BB, gigantism);
-		} else {
-			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: {:.2f}; Aspect Of Giantess: {:.1f}%)", actor->GetDisplayFullName(), scale, naturalscale, BB, maxscale, gigantism);
+
+			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: Infinite; Aspect Of Giantess: {:.1f}%)", 
+				actor->GetDisplayFullName(), 
+				scale, 
+				naturalscale, 
+				BB, 
+				gigantism
+			);
 		}
+		else {
+			Cprint("{} Scale: {:.2f}  (Natural Scale: {:.2f}; Bounding Box: {}; Size Limit: {:.2f}; Aspect Of Giantess: {:.1f}%)", 
+				actor->GetDisplayFullName(), 
+				scale, 
+				naturalscale, 
+				BB, 
+				maxscale, 
+				gigantism
+			);
+		}
+
 		if (hh > 0.0f) { // if HH is > 0, print HH info
-			Cprint("{} High Heels: {:.2f} (+{:.2f} cm / +{:.2f} ft)", actor->GetDisplayFullName(), hh, hh, hh*3.28f);
+			Cprint("{} High Heels: {:.2f} (+{:.2f} cm / +{:.2f} ft)", 
+				actor->GetDisplayFullName(), 
+				hh, 
+				hh, 
+				hh*3.28f
+			);
 		}
 	}
+
 	void ReportScale(bool enemy) {
 		for (auto actor: find_actors()) {
 			if (actor->formID != 0x14) {
@@ -82,86 +103,89 @@ namespace {
 
 	void TotalControlGrowEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
-			float scale = get_visual_scale(player);
-			float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
+		float scale = get_visual_scale(player);
+		float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
 
-			float perk = Perk_GetCostReduction(player);
+		float perk = Perk_GetCostReduction(player);
 
-			DamageAV(player, ActorValue::kStamina, 0.15f * perk * (scale * 0.5f + 0.5f) * stamina * TimeScale());
-			Grow(player, 0.0010f * stamina, 0.0f);
-			float Volume = std::clamp(get_visual_scale(player)/16.0f, 0.20f, 2.0f);
-			Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
-			static Timer timergrowth = Timer(2.00);
-			if (timergrowth.ShouldRun()) {
-				Runtime::PlaySoundAtNode("growthSound", player, Volume, 1.0f, "NPC Pelvis [Pelv]");
-			}
+		DamageAV(player, ActorValue::kStamina, 0.15f * perk * (scale * 0.5f + 0.5f) * stamina * TimeScale());
+		Grow(player, 0.0010f * stamina, 0.0f);
+		float Volume = std::clamp(get_visual_scale(player)/16.0f, 0.20f, 2.0f);
+		Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
+		static Timer timergrowth = Timer(2.00);
+		if (timergrowth.ShouldRun()) {
+			Runtime::PlaySoundAtNode("growthSound", player, Volume, 1.0f, "NPC Pelvis [Pelv]");
+		}
 	}
+
 	void TotalControlShrinkEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
-			float scale = get_visual_scale(player);
-			float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
+		float scale = get_visual_scale(player);
+		float stamina = std::clamp(GetStaminaPercentage(player), 0.05f, 1.0f);
 
-			float perk = Perk_GetCostReduction(player);
+		float perk = Perk_GetCostReduction(player);
 
-			if (get_target_scale(player) > 0.12f) {
-				DamageAV(player, ActorValue::kStamina, 0.07f * perk * (scale * 0.5f + 0.5f) * stamina * TimeScale());
-				ShrinkActor(player, 0.0010f * stamina, 0.0f);
-			} else {
-				set_target_scale(player, 0.12f);
-			}
+		if (get_target_scale(player) > 0.12f) {
+			DamageAV(player, ActorValue::kStamina, 0.07f * perk * (scale * 0.5f + 0.5f) * stamina * TimeScale());
+			ShrinkActor(player, 0.0010f * stamina, 0.0f);
+		} else {
+			set_target_scale(player, 0.12f);
+		}
 
-			float Volume =std::clamp(get_visual_scale(player)*0.10f, 0.10f, 1.0f);
-			Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
-			static Timer timergrowth = Timer(2.00);
-			if (timergrowth.ShouldRun()) {
-				Runtime::PlaySound("shrinkSound", player, Volume, 1.0f);
-			}
+		float Volume =std::clamp(get_visual_scale(player)*0.10f, 0.10f, 1.0f);
+		Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
+		static Timer timergrowth = Timer(2.00);
+		if (timergrowth.ShouldRun()) {
+			Runtime::PlaySound("shrinkSound", player, Volume, 1.0f);
+		}
 	}
+
 	void TotalControlGrowOtherEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
-			for (auto actor: find_actors()) {
-				if (!actor) {
-					continue;
-				}
-				if (actor->formID != 0x14 && (IsTeammate(actor))) {
+		for (auto actor: find_actors()) {
+			if (!actor) {
+				continue;
+			}
+			if (actor->formID != 0x14 && (IsTeammate(actor))) {
 
-					float perk = Perk_GetCostReduction(player);
+				float perk = Perk_GetCostReduction(player);
 
-					float npcscale = get_visual_scale(actor);
-					float magicka = std::clamp(GetMagikaPercentage(player), 0.05f, 1.0f);
-					DamageAV(player, ActorValue::kMagicka, 0.15f * perk * (npcscale * 0.5f + 0.5f) * magicka * TimeScale());
-					Grow(actor, 0.0010f * magicka, 0.0f);
-					float Volume = std::clamp(0.20f, 2.0f, get_visual_scale(actor)/16.0f);
-					Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
-					static Timer timergrowth = Timer(2.00);
-					if (timergrowth.ShouldRun()) {
-						Runtime::PlaySoundAtNode("growthSound", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
-					}
+				float npcscale = get_visual_scale(actor);
+				float magicka = std::clamp(GetMagikaPercentage(player), 0.05f, 1.0f);
+				DamageAV(player, ActorValue::kMagicka, 0.15f * perk * (npcscale * 0.5f + 0.5f) * magicka * TimeScale());
+				Grow(actor, 0.0010f * magicka, 0.0f);
+				float Volume = std::clamp(0.20f, 2.0f, get_visual_scale(actor)/16.0f);
+				Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
+				static Timer timergrowth = Timer(2.00);
+				if (timergrowth.ShouldRun()) {
+					Runtime::PlaySoundAtNode("growthSound", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
 				}
 			}
+		}
 	}
+
 	void TotalControlShrinkOtherEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
-			for (auto actor: find_actors()) {
-				if (!actor) {
-					continue;
-				}
-				if (actor->formID != 0x14 && (IsTeammate(actor))) {
-					
-					float perk = Perk_GetCostReduction(player);
-
-					float npcscale = get_visual_scale(actor);
-					float magicka = std::clamp(GetMagikaPercentage(player), 0.05f, 1.0f);
-					DamageAV(player, ActorValue::kMagicka, 0.07f * perk * (npcscale * 0.5f + 0.5f) * magicka * TimeScale());
-					ShrinkActor(actor, 0.0010f * magicka, 0.0f);
-					float Volume = std::clamp(get_visual_scale(actor) * 0.10f, 0.10f, 1.0f);
-					Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
-					static Timer timergrowth = Timer(2.00);
-					if (timergrowth.ShouldRun()) {
-						Runtime::PlaySound("shrinkSound", actor, Volume, 1.0f);
-					}
-				} 
+		for (auto actor: find_actors()) {
+			if (!actor) {
+				continue;
 			}
+			if (actor->formID != 0x14 && (IsTeammate(actor))) {
+				
+				float perk = Perk_GetCostReduction(player);
+
+				float npcscale = get_visual_scale(actor);
+				float magicka = std::clamp(GetMagikaPercentage(player), 0.05f, 1.0f);
+				DamageAV(player, ActorValue::kMagicka, 0.07f * perk * (npcscale * 0.5f + 0.5f) * magicka * TimeScale());
+				ShrinkActor(actor, 0.0010f * magicka, 0.0f);
+				float Volume = std::clamp(get_visual_scale(actor) * 0.10f, 0.10f, 1.0f);
+				Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
+				static Timer timergrowth = Timer(2.00);
+				if (timergrowth.ShouldRun()) {
+					Runtime::PlaySound("shrinkSound", actor, Volume, 1.0f);
+				}
+			} 
+		}
 	}
 
 	void RapidGrowthEvent(const ManagedInputEvent& data) {
@@ -175,6 +199,7 @@ namespace {
 			}
 			AnimationManager::StartAnim("TriggerGrowth", player);
 	}
+
 	void RapidShrinkEvent(const ManagedInputEvent& data) {
 		auto player = PlayerCharacter::GetSingleton();
 			float target = get_target_scale(player);
@@ -307,9 +332,11 @@ namespace {
 	void AnimSpeedUpEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(0.045f); // Increase speed and power
 	}
+
 	void AnimSpeedDownEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(-0.045f); // Decrease speed and power
 	}
+
 	void AnimMaxSpeedEvent(const ManagedInputEvent& data) {
 		AnimationManager::AdjustAnimSpeed(0.090f); // Strongest attack speed buff
 	}
@@ -337,9 +364,10 @@ namespace {
 	}
 }
 
-namespace GTS
-{
+namespace GTS {
+
 	void InputFunctions::RegisterEvents() {
+
 		InputManager::RegisterInputEvent("SizeReserve", SizeReserveEvent, SizeReserveCondition);
 		InputManager::RegisterInputEvent("DisplaySizeReserve", DisplaySizeReserveEvent, SizeReserveCondition);
 		InputManager::RegisterInputEvent("PartyReport", PartyReportEvent);

@@ -35,7 +35,7 @@ namespace GTS {
 			virtual std::string DebugName() override;
 
 			float GetBalanceModeInfo(BalanceModeInfo info);
-			void ApplyGameMode(Actor* actor, const ChosenGameMode& game_mode, const float& GrowthRate, const float& ShrinkRate);
+			static void ApplyGameMode(Actor* actor, const ChosenGameMode& game_mode, const float& GrowthRate, const float& ShrinkRate);
 			void GameMode(Actor* actor);
 	};
 }

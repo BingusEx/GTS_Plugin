@@ -1,21 +1,11 @@
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchObject.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Damage/LaunchObject.hpp"
+#include "Managers/HighHeel.hpp"
 #include "UI/DebugAPI.hpp"
-#include "data/time.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	void Break_Object(TESObjectREFR* ref, float damage, float giant_size, bool smt) {
 		if (giant_size > 1.5f || smt) {
 			if (smt) {

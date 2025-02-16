@@ -1,7 +1,5 @@
+#include "UI/Windows/WindowSettings.hpp"
 #include "UI/DearImGui/imgui.h"
-#include "magic_enum/magic_enum.hpp"
-
-#include "WindowSettings.hpp"
 
 //categories
 #include "UI/Categories/Gameplay.hpp"
@@ -16,12 +14,8 @@
 #include "UI/Categories/Balance.hpp"
 
 #include "UI/ImGui/ImUtil.hpp"
-
 #include "Config/ConfigUtil.hpp"
-
 #include "Managers/Input/InputManager.hpp"
-#include "Version.hpp"
-
 
 namespace GTS {
 
@@ -146,16 +140,6 @@ namespace GTS {
 	            ImGui::SetTooltip(THelp);
 	        }
 	    }
-
-	    // {  // Debug Draw Window Manager total time
-
-	    //     ImGui::PushFont(FontMgr.GetFont("subscript"));
-	    //     ImGui::Text("Window Manager: %.3f ms",rendertime);
-	    //     ImGui::SameLine();
-	    //     ImGui::Text("%.3fms",maxtime);
-	    //     ImGui::Text("Render Loop: %.3f ms",renderloop);
-	    //     ImGui::PopFont();
-	    // }
 
 	    ImUtil::SeperatorH();
 

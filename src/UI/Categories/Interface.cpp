@@ -1,10 +1,6 @@
-#include "Interface.hpp"
-
+#include "UI/Categories/Interface.hpp"
 #include "UI/ImGUI/ImUtil.hpp"
 #include "UI/ImGUI/ImWindowManager.hpp"
-#include "UI/ImGui/ImUtil.hpp"
-
-#include "magic_enum/magic_enum.hpp"
 #include "UI/Windows/GTSInfo.hpp"
 
 namespace GTS {

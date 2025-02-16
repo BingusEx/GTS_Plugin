@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 namespace GTS {
 
 	template< typename ... Args >

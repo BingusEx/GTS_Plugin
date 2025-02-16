@@ -1,8 +1,6 @@
 #pragma once
-#include "managers/cameras/tp/foot.hpp"
 
-
-
+#include "Managers/Cameras/TP/Foot.hpp"
 
 namespace GTS {
 	class FootL : public Foot {

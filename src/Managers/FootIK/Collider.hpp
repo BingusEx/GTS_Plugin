@@ -1,11 +1,9 @@
 #pragma once
 
+//#include "Colliders/RE/RE.hpp"
+//#include "managers/footik/collider_actor_data.hpp"
 
-
-#include "Colliders/RE/RE.hpp"
-#include "managers/footik/collider_actor_data.hpp"
-
-namespace GTS {
+//namespace GTS {
 	/*
 	class ColliderManager : public EventListener {
 		public:
@@ -28,4 +26,4 @@ namespace GTS {
 			std::atomic_uint64_t last_reset_frame = std::atomic_uint64_t(0);
 			TESObjectCELL* previous_cell = nullptr;
 	};*/
-}
+//}

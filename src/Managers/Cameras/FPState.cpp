@@ -1,9 +1,5 @@
-#include "Managers/Cameras/fpState.hpp"
-
-#include "Data/Persistent.hpp"
-#include "Managers/cameras/camutil.hpp"
-
-
+#include "Managers/Cameras/FPState.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
 
 namespace GTS {
 

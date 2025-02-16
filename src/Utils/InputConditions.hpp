@@ -1,8 +1,7 @@
 #pragma once
-#include "utils/actorUtils.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "data/runtime.hpp"
+
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/Animation/HugShrink.hpp"
 
 /* 
 	Input Conditions.
@@ -16,9 +15,6 @@
 */
 
 namespace GTS {
-
-	
-	
 
 	//---------------------
 	// ButtCrush
@@ -171,10 +167,12 @@ namespace GTS {
 		if (!Runtime::HasPerk(target, "GrowthDesirePerkAug")) {
 			return false;
 		}
-		if (!IsGtsBusy(target) && !IsChangingSize(target)) {
-			return true;
-		}
-		return false;
+
+		//if (!IsGtsBusy(target) && !IsChangingSize(target)) {
+		//	return true;
+		//}
+
+		return true;
 	}
 
 

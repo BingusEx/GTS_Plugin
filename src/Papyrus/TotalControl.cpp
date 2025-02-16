@@ -1,22 +1,12 @@
-#include "papyrus/scale.hpp"
-#include "scale/scale.hpp"
-#include "scale/modscale.hpp"
-#include "data/persistent.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "Constants.hpp"
-
-
+#include "Papyrus/TotalControl.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {
+
 	constexpr std::string_view PapyrusClass = "GtsControl";
 
 	void GrowTeammate(StaticFunctionTag*, float power) {

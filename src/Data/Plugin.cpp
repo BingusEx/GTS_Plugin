@@ -1,5 +1,7 @@
 #include "Data/Plugin.hpp"
 
+#include "UI/UIManager.hpp"
+
 namespace GTS {
 
 	bool Plugin::Enabled() {
@@ -39,7 +41,7 @@ namespace GTS {
 	bool Plugin::Live() {
 		if (Ready()) {
 			auto ui = RE::UI::GetSingleton();
-			if (!ui->GameIsPaused() || ui->GetMenu(RaceSexMenu::MENU_NAME)) {
+			if (!ui->GameIsPaused() || ui->GetMenu(RaceSexMenu::MENU_NAME) || !UIManager::MenuOpen()) {
 				// Not paused
 				return true;
 			}

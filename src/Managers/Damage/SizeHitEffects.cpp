@@ -1,23 +1,20 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Damage/SizeHitEffects.hpp"
+
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+
+#include "Managers/Rumble.hpp"
+#include "Managers/CrushManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
+
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	void Prevent_Stagger(Actor* attacker, Actor* receiver) {
 		float sizedifference = GetSizeDifference(receiver, attacker, SizeType::GiantessScale, true, true);
 		receiver->SetGraphVariableFloat("GiantessScale", sizedifference); // Manages Stagger Resistance inside Behaviors.

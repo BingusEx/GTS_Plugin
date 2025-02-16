@@ -1,25 +1,12 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
+#include "Managers/Emotions/EmotionManager.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
 using namespace RE;
 using namespace GTS;
 
 namespace {
 
-	const float Speed_up = 12.0f;
+	constexpr float Speed_up = 12.0f;
 
 	BSFaceGenAnimationData* GetFacialData(Actor* giant) {
 		auto fgen = giant->GetFaceGenAnimationData();

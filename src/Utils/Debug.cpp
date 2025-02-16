@@ -1,13 +1,7 @@
-#pragma once
-#include "utils/debug.hpp"
-#include <ehdata.h>
-#include <rttidata.h>
-
-
-
-
+#include "Utils/Debug.hpp"
 
 namespace GTS {
+
 	std::string GetRawName(const void* obj_c) {
 		// Get the meta entry in vftable
 		void* obj = const_cast<void*>(obj_c);

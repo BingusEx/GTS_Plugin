@@ -1,14 +1,8 @@
 #pragma once
 // Module that handles footsteps
 
-#include "managers/impact.hpp"
-
-
-
-
-
-
 namespace GTS {
+
     struct VolumeParams {
         float a;
         float k;

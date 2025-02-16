@@ -1,16 +1,9 @@
-#include "utils/DynamicScale.hpp"
-#include "utils/actorUtils.hpp"
-#include "Constants.hpp"
+#include "Utils/DynamicScale.hpp"
+#include "Rays/Raycast.hpp"
 #include "UI/DebugAPI.hpp"
-#include "scale/scale.hpp"
-#include "rays/raycast.hpp"
-
-using namespace GTS;
-
-
-
 
 namespace GTS {
+
 	float GetCeilingHeight(Actor* giant) {
 		if (!giant) {
 			return std::numeric_limits<float>::infinity();

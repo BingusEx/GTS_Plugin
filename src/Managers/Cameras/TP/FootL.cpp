@@ -1,19 +1,13 @@
-#include "managers/cameras/tp/footL.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/highheel.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
+#include "Managers/Cameras/TP/footL.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
 
 namespace {
-	const float OFFSET = -0.04f * 70.0f; // About 4cm down
+	constexpr float OFFSET = -0.04f * 70.0f; // About 4cm down
 }
 
 namespace GTS {
 	NiPoint3 FootL::GetFootPos() {
-		const std::string_view leftFootLookup = "NPC L Foot [Lft ]";
+		constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
 		auto player = GetCameraActor();
 		if (player) {
 			auto rootModel = player->Get3D(false);

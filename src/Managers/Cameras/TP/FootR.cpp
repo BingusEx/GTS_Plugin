@@ -1,14 +1,8 @@
-#include "managers/cameras/tp/footR.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/highheel.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
+#include "Managers/Cameras/TP/FootR.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
 
 namespace {
-	const float OFFSET = 0.04f * 70.0f; // About 4cm down
+	constexpr float OFFSET = 0.04f * 70.0f; // About 4cm down
 }
 
 namespace GTS {

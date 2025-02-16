@@ -1,28 +1,16 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchObject.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorBools.hpp"
-#include "utils/actorUtils.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "UI/DebugAPI.hpp"
-#include "data/time.hpp"
+#include "Managers/Damage/LaunchActor.hpp"
+#include "Managers/Damage/LaunchObject.hpp"
+
+#include "Managers/Animation//Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
 
-	const float LAUNCH_DAMAGE = 2.4f;
-	const float LAUNCH_KNOCKBACK = 0.02f;
-	const float BASE_CHECK_DISTANCE = 20.0f;
+	constexpr float LAUNCH_DAMAGE = 2.4f;
+	constexpr float LAUNCH_KNOCKBACK = 0.02f;
+	constexpr float BASE_CHECK_DISTANCE = 20.0f;
 
 	float GetLaunchThreshold(Actor* giant) {
 		float threshold = 8.0f;

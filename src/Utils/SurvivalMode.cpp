@@ -1,10 +1,4 @@
-#include "managers/damage/CollisionDamage.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/SurvivalMode.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
+#include "Utils/SurvivalMode.hpp"
 
 namespace GTS {
 

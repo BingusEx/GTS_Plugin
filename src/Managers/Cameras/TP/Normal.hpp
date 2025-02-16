@@ -1,9 +1,9 @@
 #pragma once
-#include "managers/cameras/tpState.hpp"
 
-
+#include "Managers/Cameras/TPState.hpp"
 
 namespace GTS {
+
 	class Normal : public ThirdPersonCameraState {
 		public:
 			float ZOffset = -1;  // Added Back And Forth Offset

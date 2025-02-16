@@ -1,19 +1,12 @@
-#include "managers/cameras/tpState.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
+#include "Managers/Cameras/TPState.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Managers/GtsSizeManager.hpp"
 #include "UI/DebugAPI.hpp"
-
-
 
 using namespace GTS;
 
 namespace {
+
 	float Modify_HalfLife() {
 		auto player = PlayerCharacter::GetSingleton();
 		auto& sizemanager = SizeManager::GetSingleton();
@@ -23,6 +16,7 @@ namespace {
 }
 
 namespace GTS {
+
 	NiPoint3 ThirdPersonCameraState::GetPlayerLocalOffset(const NiPoint3& cameraPos) {
 		NiPoint3 pos = NiPoint3();
 		auto player = GetCameraActor();

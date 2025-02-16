@@ -4,29 +4,6 @@
 
 namespace GTS {
 
-    // const inline double ScaleToHeight(/*RE::Actor* a_Actor*/){
-    //     return Scale
-    // }
-
-    // const inline double ScaleToKG(/*RE::Actor* a_Actor*/){
-
-    //     //TODO Fix.;
-    //     const float Scale = 1.0f;
-    //     const int ActorWeight = 100;
-    //     const int SMT = 1; //Actor.HasMagicEffect(SmallMassiveThreat) ? 6 : 1;
-    //     constexpr float BaseWeight = 55.0f; //KG at 0 weight
-    //     return BaseWeight * ((1.0f + ActorWeight / 200.f) * std::pow(Scale, 3)) * SMT;
-    // }
-
-    //Return KG
-    const inline double ActorWeightFormula(){
-        return 3123213322.0;
-    }
-
-    const inline double ActorHeightFormula(){
-        return 124.82;
-    }
-
     //Metric -> Imperial
 
     const inline double KiloToPound(const double a_kg){
@@ -36,19 +13,16 @@ namespace GTS {
     const inline double MetersToFeet(const double a_meter){
         return a_meter * 3.28084;
     }
-    
 
-    //Metric -> Mammoth (Because funny)
+    //Metric -> Mammoth (Because memes)
 
     const inline double MetersToMammoth(const double a_meter){
-        return a_meter / 3.85;
+        return a_meter / 3.04; //<--- Value probably needs tweaking...
     }
 
     const inline double KiloToMammoth(const double a_kg){
-        return a_kg / 11113.01;
+        return a_kg / 5113.01; //<--- Value probably needs tweaking...
     }
-
-
 
     // Formaters
 
@@ -118,30 +92,30 @@ namespace GTS {
     }
 
     const inline std::string FormatMammothWeight(const double a_mammoth){
-        return fmt::format("{:.0f} Mammoths", a_mammoth);
+        return fmt::format("{:.2f} Mammoths", a_mammoth);
     }
 
-    const inline std::string GetWeight(/*RE::Actor* a_Actor*/){
+    const inline std::string GetFormatedWeight(RE::Actor* a_Actor){
         std::string displayUnits = Config::GetUI().sDisplayUnits;
         if (displayUnits == "kImperial") 
-            return FormatImperialWeight(KiloToPound(ActorWeightFormula(/*a_Actor*/)));
+            return FormatImperialWeight(KiloToPound(GetActorWeight(a_Actor)));
 
         else if (displayUnits == "kMammoth") 
-            return FormatMammothWeight(KiloToMammoth(ActorWeightFormula(/*a_Actor*/)));
+            return FormatMammothWeight(KiloToMammoth(GetActorWeight(a_Actor)));
         
         else
-            return FormatMetricWeight(ActorWeightFormula(/*a_Actor*/));
+            return FormatMetricWeight(GetActorWeight(a_Actor));
     }
 
-    const inline std::string GetHeight(/*RE::Actor* a_Actor*/){
+    const inline std::string GetFormatedHeight(RE::Actor* a_Actor){
         std::string displayUnits = Config::GetUI().sDisplayUnits;
         if (displayUnits == "kImperial") 
-            return FormatImperialHeight(MetersToFeet(ActorHeightFormula(/*a_Actor*/)));
+            return FormatImperialHeight(MetersToFeet(GetActorHeight(a_Actor)));
 
         else if (displayUnits == "kMammoth") 
-            return FormatMammothHeight(MetersToMammoth(ActorHeightFormula(/*a_Actor*/)));
+            return FormatMammothHeight(MetersToMammoth(GetActorHeight(a_Actor)));
         
         else
-            return FormatMetricHeight(ActorHeightFormula(/*a_Actor*/));
+            return FormatMetricHeight(GetActorHeight(a_Actor));
     }
 }

@@ -1,14 +1,11 @@
-#include "papyrus/camera.hpp"
-#include "data/persistent.hpp"
-#include "managers/cameras/camutil.hpp"
-
-
+#include "Papyrus/Camera.hpp"
+#include "Managers/Cameras/Camutil.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {
+
 	constexpr std::string_view PapyrusClass = "GtsCamera";
 
 	void SetEnableCollisionActor(StaticFunctionTag*, bool enabled) {

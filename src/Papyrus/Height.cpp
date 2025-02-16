@@ -1,11 +1,6 @@
-#include "papyrus/height.hpp"
-#include "data/runtime.hpp"
-#include "scale/height.hpp"
-
-
+#include "Papyrus/Height.hpp"
 
 using namespace GTS;
-
 using namespace RE::BSScript;
 
 namespace {

@@ -1,16 +1,11 @@
-#include "utils/MovementForce.hpp"
-#include "data/transient.hpp"
-#include "scale/scale.hpp"
-
-
+#include "Utils/MovementForce.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	NodeMovementType Convert_To_MovementType(DamageSource Source) {
+
 		NodeMovementType Type = NodeMovementType::Movement_None;
 
 		switch (Source) {

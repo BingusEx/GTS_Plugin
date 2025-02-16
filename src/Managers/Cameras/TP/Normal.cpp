@@ -1,9 +1,6 @@
-#include "managers/cameras/tp/normal.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "data/runtime.hpp"
-
-
+#include "Managers/Cameras/TP/Normal.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
 namespace GTS {
 	NiPoint3 Normal::GetOffset(const NiPoint3& cameraPos) {

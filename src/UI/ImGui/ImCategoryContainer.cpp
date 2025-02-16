@@ -1,10 +1,10 @@
-#include "ImCategoryContainer.hpp"
-#include "ImUtil.hpp"
+#include "UI/ImGui/ImCategoryContainer.hpp"
+#include "UI/ImGui/ImUtil.hpp"
 #include "UI/DearImGui/imgui.h"
 
 namespace GTS {
 
-    float ImCategoryManager::GetLongestCategory() {
+    float ImCategoryManager::GetLongestCategory() const {
 
         if (!ImUtil::ValidState()) return -1.0f;
 

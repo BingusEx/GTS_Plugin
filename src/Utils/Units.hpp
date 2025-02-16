@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 namespace GTS {
 	float unit_to_meter(const float& unit);
 	float meter_to_unit(const float& meter);

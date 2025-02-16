@@ -1,6 +1,5 @@
-#include "ImWindowManager.hpp"
-
-#include "ImUtil.hpp"
+#include "UI/ImGui/ImWindowManager.hpp"
+#include "UI/ImGui/ImUtil.hpp"
 
 namespace GTS {
 

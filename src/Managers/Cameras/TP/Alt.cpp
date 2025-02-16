@@ -1,12 +1,9 @@
-#include "managers/cameras/camutil.hpp"
-#include "managers/cameras/tp/alt.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-
-
+#include "Managers/Cameras/TP/Alt.hpp"
+#include "Managers/Cameras/Camutil.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
 namespace GTS {
+
 	NiPoint3 Alt::GetOffset(const NiPoint3& cameraPos) {
 		return NiPoint3(
 			Runtime::GetFloat("cameraAlternateX"),

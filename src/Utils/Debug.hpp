@@ -1,11 +1,7 @@
 #pragma once
 
-
-
-
-
 namespace GTS {
-	std::string GetRawName(const void* obj);
+	std::string GetRawName(const void* obj_c);
 
 	std::string Vector2Str(const hkVector4& vector);
 

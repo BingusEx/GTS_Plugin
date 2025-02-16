@@ -1,11 +1,4 @@
-#include "utils/camera.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/Rumble.hpp"
-
-
-
-
-
+#include "Utils/Camera.hpp"
 
 namespace GTS {
 

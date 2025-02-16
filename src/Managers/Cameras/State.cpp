@@ -1,20 +1,10 @@
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/cameras/state.hpp"
-#include "scale/modscale.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-using namespace GTS;
+#include "Managers/Cameras/State.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
 
 namespace GTS {
-	void CameraState::EnterState() {
-	}
-	void CameraState::ExitState() {
-	}
+
+	void CameraState::EnterState() {}
+	void CameraState::ExitState() {}
 
 	float CameraState::GetScale() {
 		auto player = GetCameraActor();
@@ -32,9 +22,11 @@ namespace GTS {
 	NiPoint3 CameraState::GetOffset(const NiPoint3& cameraPosLocal) {
 		return NiPoint3(0.0f, 0.0f, 0.0f);
 	}
+
 	NiPoint3 CameraState::GetOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetOffset(cameraPosLocal);
 	}
+
 	NiPoint3 CameraState::GetOffset(const NiPoint3& cameraPosLocal, bool IsCrawling) {
 		if (IsCrawling) {
 			return this->GetOffsetProne(cameraPosLocal);
@@ -46,9 +38,11 @@ namespace GTS {
 	NiPoint3 CameraState::GetCombatOffset(const NiPoint3& cameraPosLocal) {
 		return NiPoint3(0.0f, 0.0f, 0.0f);
 	}
+
 	NiPoint3 CameraState::GetCombatOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetCombatOffset(cameraPosLocal);
 	}
+
 	NiPoint3 CameraState::GetCombatOffset(const NiPoint3& cameraPosLocal, bool IsCrawling) {
 		if (IsCrawling) {
 			return this->GetCombatOffsetProne(cameraPosLocal);
@@ -60,9 +54,11 @@ namespace GTS {
 	NiPoint3 CameraState::GetPlayerLocalOffset(const NiPoint3& cameraPosLocal) {
 		return NiPoint3(0.0f, 0.0f, 0.0f);
 	}
+
 	NiPoint3 CameraState::GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal) {
 		return this->GetPlayerLocalOffset(cameraPosLocal);
 	}
+
 	NiPoint3 CameraState::GetPlayerLocalOffset(const NiPoint3& cameraPosLocal, bool IsCrawling) {
 		if (IsCrawling) {
 			return this->GetPlayerLocalOffsetProne(cameraPosLocal);
@@ -74,6 +70,7 @@ namespace GTS {
 	bool CameraState::PermitManualEdit() {
 		return true;
 	}
+
 	bool CameraState::PermitTransition() {
 		return true;
 	}

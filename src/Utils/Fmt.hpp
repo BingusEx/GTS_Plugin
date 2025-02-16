@@ -1,11 +1,7 @@
 #pragma once
-#include <fmt/core.h>
-#include <spdlog/fmt/ostr.h>
-
-
 
 template <> struct fmt::formatter<RE::BSFixedString> : formatter<std::string_view> {
-	auto format(RE::BSFixedString v, format_context& ctx) const {
+	auto format(const RE::BSFixedString& v, format_context& ctx) const {
 		string_view name = "<empty>";
 		if (v.c_str()) {
 			name = v.c_str();

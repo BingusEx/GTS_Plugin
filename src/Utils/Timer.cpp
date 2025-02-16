@@ -1,7 +1,4 @@
-#include "Timer.hpp"
-#include "Data/Time.hpp"
-
-
+#include "Utils/Timer.hpp"
 
 using namespace GTS;
 
@@ -32,7 +29,7 @@ namespace GTS {
 		return false;
 	}
 
-	double Timer::TimeDelta() {
+	double Timer::TimeDelta() const {
 		return this->elaped_time;
 	}
 

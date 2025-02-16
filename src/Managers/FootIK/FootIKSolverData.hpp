@@ -1,9 +1,9 @@
-#pragma once
+//#pragma once
 
 // Module that handles footsteps
-#include "Colliders/RE/RE.hpp"
+//#include "Colliders/RE/RE.hpp"
 
-namespace GTS {
+//namespace GTS {
 	/*
 	class FootIkSolverData {
 		public:
@@ -22,4 +22,4 @@ namespace GTS {
 			float m_raycastDistanceUp;
 			float m_raycastDistanceDown;
 	};*/
-}
+//}
