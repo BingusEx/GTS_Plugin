@@ -1,30 +1,18 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/GrabAnimationController.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "managers/audio/footstep.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/Controllers/GrabAnimationController.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
 
+#include "Managers/GtsSizeManager.hpp"
 
 using namespace GTS;
 
 namespace {
 
-	const float MINIMUM_GRAB_DISTANCE = 85.0f;
-	const float GRAB_ANGLE = 70;
-	const float PI = 3.14159f;
+	constexpr float MINIMUM_GRAB_DISTANCE = 85.0f;
+	constexpr float GRAB_ANGLE = 70;
+	constexpr float PI = std::numbers::pi_v<float>;
 
 	void CantGrabPlayerMessage(Actor* giant, Actor* tiny, float sizedifference) {
 		if (sizedifference < Action_Grab) {

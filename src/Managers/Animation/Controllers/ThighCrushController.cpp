@@ -1,4 +1,4 @@
-#include "managers/animation/Controllers/ThighCrushController.hpp"
+#include "Managers/Animation/Controllers/ThighCrushController.hpp"
 #include "managers/animation/Utils/CooldownManager.hpp"
 #include "managers/animation/Utils/AnimationUtils.hpp"
 #include "managers/animation/AnimationManager.hpp"
@@ -22,10 +22,9 @@
 
 
 namespace {
-
-	const float MINIMUM_THIGH_DISTANCE = 58.0f;
-	const float THIGH_ANGLE = 75;
-	const float PI = 3.14159f;
+	constexpr float MINIMUM_THIGH_DISTANCE = 58.0f;
+	constexpr float THIGH_ANGLE = 75;
+	constexpr float PI = std::numbers::pi_v<float>;;
 }
 
 namespace GTS {

@@ -1,11 +1,6 @@
 #pragma once
+
 // Module that handles crushing others
-
-
-
-
-
-
 
 namespace GTS {
 

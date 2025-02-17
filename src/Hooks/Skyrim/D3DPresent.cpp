@@ -43,7 +43,7 @@ namespace Hooks {
 	//DXGISwapchain::Present
 	void Hook_Renderer::Present(uint32_t a1) {
 		_Present(a1);
-		UIManager::GetSingleton().Render();
+		UIManager::GetSingleton().Update();
 	}
 
 	void Hook_Renderer::Hook(Trampoline& trampoline) {

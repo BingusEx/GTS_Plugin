@@ -1,14 +1,8 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-
-namespace GTS
-{
-	class HitManager : public EventListener
-	{
+	class HitManager : public EventListener {
 		public:
 			[[nodiscard]] static HitManager& GetSingleton() noexcept;
 

@@ -1,9 +1,7 @@
-#include "managers/modevent.hpp"
-
-
-
+#include "Managers/ModEvent.hpp"
 
 namespace GTS {
+
 	ModEventManager& ModEventManager::GetSingleton() noexcept {
 		static ModEventManager instance;
 

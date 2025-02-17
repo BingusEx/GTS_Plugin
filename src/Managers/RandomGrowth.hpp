@@ -1,10 +1,6 @@
 #pragma once
+
 // Module that handles AttributeValues
-
-
-
-
-
 
 namespace GTS {
 

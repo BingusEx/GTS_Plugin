@@ -68,10 +68,10 @@ namespace GTS {
         if(a_kg < 1.0f)
             return fmt::format("{:.0f} g",a_kg * 100.f);
 
-        if(a_kg > 100000.0f)
+        if(a_kg > 300000.0f)
             return fmt::format("{:.2f} kt", a_kg / 1000000.f);
 
-        if(a_kg > 10000.0f)
+        if(a_kg > 30000.0f)
             return fmt::format("{:.2f} t", a_kg / 1000.f);
 
 

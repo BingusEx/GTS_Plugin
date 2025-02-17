@@ -223,6 +223,9 @@ struct SettingsAdvanced {
     bool bDamageAV = true;
     bool bCooldowns = true;
     bool bAllocConsole = false;
+
+    float fAnimSpeedAdjMultPlayer = 1.0f;
+    float fAnimSpeedAdjMultTeammate = 1.0f;
 };
 TOML_SERIALIZABLE(SettingsAdvanced);
 

@@ -1,14 +1,9 @@
 #pragma once
+
 // Module that handles footsteps
 
-
-
-
-
-
 namespace GTS {
-	class ContactListener : public hkpContactListener, public hkpWorldPostSimulationListener
-	{
+	class ContactListener : public hkpContactListener, public hkpWorldPostSimulationListener {
 
 		public:
 			void ContactPointCallback(const hkpContactPointEvent& a_event) override;

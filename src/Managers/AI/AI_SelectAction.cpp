@@ -7,7 +7,7 @@
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/HugShrink.hpp"
-#include "Managers/ThighSandwichController.hpp"
+#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
 #include "Managers/AttackManager.hpp"
 
 using namespace GTS;

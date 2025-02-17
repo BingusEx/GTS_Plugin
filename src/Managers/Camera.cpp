@@ -1,19 +1,13 @@
-#include "managers/cameras/camutil.hpp"
+#include "Managers/Camera.hpp"
+
+#include "Managers/Cameras/CamUtil.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/camera.hpp"
-#include "api/APIManager.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
 
-
+#include "Utils/InputConditions.hpp"
+#include "API/APIManager.hpp"
 
 using namespace REL;
 using namespace GTS;
-
 
 namespace {
 

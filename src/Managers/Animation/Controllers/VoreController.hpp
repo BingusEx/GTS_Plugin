@@ -1,14 +1,6 @@
 #pragma once
 
-
-#include <string>
-
-
-
-
-
-namespace GTS
-{
+namespace GTS {
 
 	// Represents current vore data for an actor
 	class VoreData {
@@ -57,8 +49,7 @@ namespace GTS
 			bool allGrabbed = false;
 	};
 
-	class Vore : public EventListener
-	{
+	class Vore : public EventListener {
 		public:
 			[[nodiscard]] static Vore& GetSingleton() noexcept;
 

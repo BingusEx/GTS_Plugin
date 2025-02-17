@@ -146,7 +146,7 @@ namespace {
 	}
 
 	/*void RotateCaster(Actor* giant, HeadtrackingData& data) { // Unused
-		const float PI = 3.14159f;
+		const float PI = 3.std::numbers::pi_v<float>;
 		if (!giant) {
 			return;
 		}

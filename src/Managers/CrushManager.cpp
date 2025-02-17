@@ -1,24 +1,11 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "magic/effects/TinyCalamity.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "utils/looting.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/CrushManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
 
-
-
-#include <random>
-
-#include "GtsSizeManager.hpp"
-
+#include "Magic/Effects/Common.hpp"
+#include "Utils/Looting.hpp"
 
 using namespace REL;
 using namespace GTS;

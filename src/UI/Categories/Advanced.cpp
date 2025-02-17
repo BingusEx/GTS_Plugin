@@ -51,10 +51,15 @@ namespace GTS {
 
                 const char* T0 = "Immediately return from DamageAV Calls for the player.";
                 const char* T1 = "Bypass action cooldowns.";
+                const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
 
                 if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
                     ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
                     ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
+
+                    ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
+                    ImUtil::SliderF("Animspeed Teammate", &Settings.fAnimSpeedAdjMultTeammate, 0.2f, 1.0f, T2);
+
                     ImGui::Spacing();
                 }
         }

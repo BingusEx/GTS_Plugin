@@ -1,21 +1,8 @@
-#include "managers/OverkillManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "utils/looting.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/OverkillManager.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
+#include "Utils/Looting.hpp"
 
-
-
-#include <random>
-
-
-
-using namespace REL;
 using namespace GTS;
 
 namespace {

@@ -3,7 +3,7 @@
 
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Rumble.hpp"
-#include "Managers/Vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
 #include "Magic/Effects/Common.hpp"
 

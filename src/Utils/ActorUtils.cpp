@@ -2138,9 +2138,12 @@ namespace GTS {
 				float speedmultcalc = soft_core(scale, getspeed);
 				speedmultcalc = std::clamp(speedmultcalc, 0.01f, 1.0f);
 
+				if (giant->formID == 0x14)
+					return Config::GetAdvanced().fAnimSpeedAdjMultPlayer * speedmultcalc;
+				if (IsTeammate(giant))
+					return Config::GetAdvanced().fAnimSpeedAdjMultTeammate * speedmultcalc;
+
 				return speedmultcalc;
-			} else {
-				return 1.0f;
 			}
 		}
 		return 1.0f;

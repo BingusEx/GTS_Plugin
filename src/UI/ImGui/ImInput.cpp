@@ -40,6 +40,7 @@ namespace GTS {
 					if (auto MainWindow = ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
 						if (key == VK_ESCAPE && MainWindow->Show && !MainWindow->Busy) {
 							MainWindow->Show = false;
+							Main::GetSingleton()->freezeTime = false;
 						}
 					}
 

@@ -1,30 +1,19 @@
-#include "managers/RipClothManager.hpp"
+#include "Managers/RipClothManager.hpp"
 
-#include "managers/GtsSizeManager.hpp"
-#include "Constants.hpp"
-#include "managers/GtsManager.hpp"
-#include "magic/effects/common.hpp"
-#include "scale/scale.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "data/time.hpp"
+#include "config/Config.hpp"
 
-
-#include "managers/Rumble.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-
-
+#include "Managers/Rumble.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 namespace GTS {
 
     #define RANDOM_OFFSET RandomFloat(0.01f, rip_randomOffsetMax - 0.01f)
-	static bool RipClothManagerActive;
 
 	// List of keywords (Editor ID's) we want to ignore when stripping
 	static const std::vector<string> KeywordBlackList = {
 		"SOS_Genitals", //Fix Slot 52 Genitals while still keeping the ability to unequip slot 52 underwear
 		"ArmorJewelry",
-		"VendorItemJewelry"
+		"VendorItemJewelry",
 		"ClothingRing",
 		"ClothingNecklace",
 		"SexLabNoStrip", //This is the keyword 3BA uses for the SMP addons?, it doesnt even originate from SL.
@@ -75,12 +64,13 @@ namespace GTS {
 	std::string ClothManager::DebugName() {
 		return "ClothManager";
 	}
+
 	//Add A check bool to transient to decect npc_reequips
 
 	//I don't like this. Ideally we should call the same update func that the game does when the npc changes cells for example.
 	//But alas i have no idea how to do that :(
 	//This will equip all armor in the inventory
-	void ReEquipClothing(Actor* a_actor) {
+	static void ReEquipClothing(Actor* a_actor) {
 		//log::info("ReEquip: {}", a_actor->GetName());
 		const auto inv = a_actor->GetInventory();
 		for (const auto& [item, invData] : inv) {
@@ -95,7 +85,7 @@ namespace GTS {
 		}
 	}
 
-	float ClothManager::ReConstructOffset(Actor* a_actor, float scale) {
+	float ClothManager::ReConstructOffset(Actor* a_actor, float scale) const {
 
 		if (!a_actor) {
 			return 0.0f;
@@ -103,6 +93,9 @@ namespace GTS {
 		float offset = 0.0f;
 
 		if (scale < 0.0f) return -1.0f;
+
+		const float rip_threshold = Config::GetGameplay().fClothRipStart;
+		const float rip_tooBig = Config::GetGameplay().fClothRipThreshold;
 
 		if (scale >= rip_tooBig) {
 			offset = rip_tooBig - rip_threshold + rip_randomOffsetMax;
@@ -119,7 +112,7 @@ namespace GTS {
 	}
 
 	//Have We Shrinked Since The Last Update?
-	bool IsShrinking(Actor* a_actor, float Scale) {
+	static bool IsShrinking(Actor* a_actor, float Scale) {
 
 		if (!a_actor) return false;
 
@@ -132,7 +125,7 @@ namespace GTS {
 		return Shrinking;
 	}
 
-	void RipRandomClothing(RE::Actor* a_actor) {
+	static void RipRandomClothing(RE::Actor* a_actor) {
 
 		if(!a_actor) {
 			return;
@@ -183,7 +176,7 @@ namespace GTS {
 		Rumbling::Once("ClothManager", a_actor, Rumble_Misc_TearClothes, 0.075f);
 	}
 
-	void RipAllClothing(RE::Actor* a_actor) {
+	static void RipAllClothing(RE::Actor* a_actor) {
 
 		if (!a_actor) {
 			return;
@@ -223,12 +216,12 @@ namespace GTS {
 		}
 	}
 
-	void ClothManager::CheckClothingRip(Actor* a_actor) {
+	void ClothManager::CheckClothingRip(Actor* a_actor) const {
 
 		if (!a_actor) return;
 
-		RipClothManagerActive = (Runtime::GetFloat("AllowClothTearing") > 0.0f);
-		if (!RipClothManagerActive || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return;
+
+		if (!Config::GetGameplay().bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return;
 
 		static Timer timer = Timer(1.2);
 		if (!timer.ShouldRunFrame()) return;
@@ -239,11 +232,14 @@ namespace GTS {
 		float CurrentScale = get_visual_scale(a_actor);
 
 		if (actordata->rip_lastScale < 0 || actordata->rip_offset < 0) {
-			log::info("CheckClothingRip: Values were invallid, Resetting...");
+			log::trace("CheckClothingRip: Values were invallid, Resetting...");
 			actordata->rip_lastScale = CurrentScale;
 			actordata->rip_offset = ReConstructOffset(a_actor, CurrentScale);
 			return;
 		}
+
+		const float rip_threshold = Config::GetGameplay().fClothRipStart;
+		const float rip_tooBig = Config::GetGameplay().fClothRipThreshold;
 
 		if (CurrentScale < rip_threshold) {
 			//If Smaller than rip_Threshold but offset was > 0 means we shrunk back down, so reset the offset
@@ -272,7 +268,7 @@ namespace GTS {
 			return;
 		}
 
-		float Offs = RANDOM_OFFSET;
+		const float Offs = RANDOM_OFFSET;
 		//if we meet scale conditions
 		//log::info("Offset Before Rip {}", actordata->rip_offset);
 		if (CurrentScale >= (rip_threshold + actordata->rip_offset + Offs)) {
@@ -291,7 +287,9 @@ namespace GTS {
 		//Cached offset instead of getting the variable directly. 
 		//The Check can get spammed by the Equip hook when a lot of actors are around.
 		//If clothing rip is disabled or is not a follower, allow re-equip
-		if (!RipClothManagerActive || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return false;
+		if (!Config::GetGameplay().bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return false;
+
+		const float rip_threshold = Config::GetGameplay().fClothRipStart;
 
 		//if smaller than rip_threhsold or target actor is the player allow re-equip
 		if (get_visual_scale(a_actor) < rip_threshold || a_actor->formID == 0x14) {

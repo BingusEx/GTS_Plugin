@@ -1,18 +1,11 @@
-#include "managers/contact.hpp"
-#include "data/persistent.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/GtsManager.hpp"
-#include "managers/highheel.hpp"
-#include "scale/scale.hpp"
-#include "scale/modscale.hpp"
-
-
-
+#include "Managers/Contact.hpp"
+#include "Managers/GtsManager.hpp"
 
 using namespace REL;
 using namespace GTS;
 
 namespace {
+
 	// From https://github.com/ersh1/Precision, https://github.com/adamhynek/activeragdoll/ and https://github.com/adamhynek/higgs
 	enum class WorldExtensionIds : int32_t
 	{

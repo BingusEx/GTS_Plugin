@@ -1,34 +1,18 @@
+#include "Managers/GtsManager.hpp"
 
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/audio/PitchShifter.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+#include "Managers/Gamemode/GameModeManager.hpp"
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
+#include "Managers/Audio/PitchShifter.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Managers/RipClothManager.hpp"
+#include "Managers/MaxSizeManager.hpp"
+#include "Managers/Animation/Grab.hpp"
 
-#include "managers/cameras/camutil.hpp"
-
-#include "managers/RipClothManager.hpp"
-#include "managers/MaxSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
-
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/DynamicScale.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/actorBools.hpp"
-#include "data/persistent.hpp"
-#include "scale/modscale.hpp"
-#include "data/transient.hpp"
-#include "Constants.hpp"
-
+#include "Magic/Effects/Common.hpp"
+#include "Utils/DynamicScale.hpp"
 #include "AI/AIFunctions.hpp"
-
-#include "data/runtime.hpp"
-#include "utils/camera.hpp"
-#include "UI/DebugAPI.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
 
 using namespace GTS;
 

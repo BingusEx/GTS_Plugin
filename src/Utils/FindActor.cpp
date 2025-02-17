@@ -1,5 +1,4 @@
-#include "utils/findActor.hpp"
-#include "utils/actorUtils.hpp"
+#include "Utils/FindActor.hpp"
 
 namespace GTS {
 	/**

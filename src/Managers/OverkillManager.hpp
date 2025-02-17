@@ -1,11 +1,6 @@
 #pragma once
+
 // Module that handles overkilling others
-
-
-
-
-
-
 
 namespace GTS {
 

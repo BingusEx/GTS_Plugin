@@ -1,7 +1,7 @@
 #include "Managers/AI/AI_Manager.hpp"
 #include "Managers/AI/AI_SelectAction.hpp"
 #include "Managers/GtsSizeManager.hpp"
-#include "Managers/Vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
 using namespace GTS;
 

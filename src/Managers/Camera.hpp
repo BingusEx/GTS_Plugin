@@ -1,29 +1,21 @@
 #pragma once
+
 // Module that handles the Camera
 
+#include "Managers/Cameras/State.hpp"
+#include "Managers/Cameras/Trans.hpp"
 
+#include "Managers/Cameras/TP/Alt.hpp"
+#include "Managers/Cameras/TP/Normal.hpp"
+#include "Managers/Cameras/TP/Foot.hpp"
+#include "Managers/Cameras/TP/FootL.hpp"
+#include "Managers/Cameras/TP/footR.hpp"
 
-
-#include "managers/cameras/state.hpp"
-#include "managers/cameras/trans.hpp"
-#include "managers/cameras/tp/alt.hpp"
-#include "managers/cameras/tp/normal.hpp"
-#include "managers/cameras/tp/foot.hpp"
-#include "managers/cameras/tp/footL.hpp"
-#include "managers/cameras/tp/footR.hpp"
-
-#include "managers/cameras/fp/normal.hpp"
-#include "managers/cameras/fp/combat.hpp"
-#include "managers/cameras/fp/loot.hpp"
-
-
-
-
+#include "Managers/Cameras/FP/normal.hpp"
+#include "Managers/Cameras/FP/combat.hpp"
+#include "Managers/Cameras/FP/loot.hpp"
 
 namespace GTS {
-	enum class CameraMode {
-
-	};
 
 	class CameraManager : public EventListener {
 		public:

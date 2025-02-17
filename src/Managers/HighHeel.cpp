@@ -1,16 +1,9 @@
-#include "managers/highheel.hpp"
-#include "data/runtime.hpp"
-
-#include "scale/modscale.hpp"
-#include "managers/GtsManager.hpp"
-#include "data/persistent.hpp"
-#include "scale/scale.hpp"
-#include "managers/animation/AnimationManager.hpp"
+#include "Managers/HighHeel.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
-
 using namespace GTS;
 
 namespace {

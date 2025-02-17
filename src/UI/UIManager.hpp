@@ -9,15 +9,6 @@ namespace GTS {
 
 		private:
 
-		struct ImGuiUserDAT {
-			struct {
-				float x = 1.f;
-				float y = 1.f;
-			} screenScaleRatio;
-		};
-
-		ImGuiUserDAT ImGuiUserData = {};
-
 		UIManager(const UIManager&) = delete;
 		UIManager& operator=(const UIManager&) = delete;
 
@@ -37,7 +28,7 @@ namespace GTS {
 		}
 
 		void Init();
-		void Render();
+		void Update();
 
 		[[nodiscard]] inline bool Ready() const {
 			return Initialized.load();

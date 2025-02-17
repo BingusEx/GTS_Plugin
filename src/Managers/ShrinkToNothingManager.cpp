@@ -1,22 +1,9 @@
-#include "managers/ShrinkToNothingManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "utils/looting.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/ShrinkToNothingManager.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Utils/looting.hpp"
 
-
-
-#include <random>
-
-
-
-using namespace REL;
 using namespace GTS;
 
 namespace {

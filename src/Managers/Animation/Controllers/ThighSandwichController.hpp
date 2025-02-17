@@ -1,14 +1,7 @@
 #pragma once
 
-
-
-
-
-
-
-
-
 namespace GTS {
+
 	class SandwichingData {
 		public:
 			SandwichingData(Actor* giant);

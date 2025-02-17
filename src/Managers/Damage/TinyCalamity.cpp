@@ -24,7 +24,7 @@
 
 
 #include "Managers/GtsSizeManager.hpp"
-#include "Managers/Vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
 #include "Magic/Effects/common.hpp"
 

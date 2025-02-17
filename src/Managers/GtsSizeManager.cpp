@@ -1,37 +1,19 @@
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/GtsManager.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/highheel.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/Rumble.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-
-
-
-
-#include <random>
-
+#include "Managers/GtsSizeManager.hpp"
 
 using namespace GTS;
-
 using namespace REL;
 
 
 namespace {
-	const float LAUNCH_COOLDOWN = 0.8f;
-	const float DAMAGE_COOLDOWN = 2.0f;
-	const float HANDDAMAGE_COOLDOWN = 0.6f;
-	const float THIGHDAMAGE_COOLDOWN = 1.2f;
-	const float HEALTHGATE_COOLDOWN = 60.0f;
-	const float SCARE_COOLDOWN = 6.0f;
-	const float BUTTCRUSH_COOLDOWN = 30.0f;
-	const float HUGS_COOLDOWN = 8.0f;
+
+	constexpr float LAUNCH_COOLDOWN = 0.8f;
+	constexpr float DAMAGE_COOLDOWN = 2.0f;
+	constexpr float HANDDAMAGE_COOLDOWN = 0.6f;
+	constexpr float THIGHDAMAGE_COOLDOWN = 1.2f;
+	constexpr float HEALTHGATE_COOLDOWN = 60.0f;
+	constexpr float SCARE_COOLDOWN = 6.0f;
+	constexpr float BUTTCRUSH_COOLDOWN = 30.0f;
+	constexpr float HUGS_COOLDOWN = 8.0f;
 
 	float Calculate_Halflife(CameraTracking Bone) {
 		if (Bone == CameraTracking::Thigh_Crush) { // Thigh Crushing

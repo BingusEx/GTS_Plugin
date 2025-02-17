@@ -1,11 +1,6 @@
 #pragma once
+
 // Module that handles footsteps
-
-
-
-
-
-
 
 namespace GTS {
 	class ExplosionManager : public EventListener {

@@ -1,12 +1,7 @@
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-
-
+#include "Managers/Tremor.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
-
 
 namespace {
 	enum Formula {

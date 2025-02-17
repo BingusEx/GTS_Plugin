@@ -1,21 +1,16 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/RandomGrowth.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/RandomGrowth.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
 
+#include "Magic/effects/common.hpp"
 
 using namespace GTS;
 
 namespace {
+
 	float Get_Breach_Threshold(Actor* actor) {
 		float threshold = 1.65f;
 
@@ -70,6 +65,7 @@ namespace {
 }
 
 namespace GTS {
+
 	RandomGrowth& RandomGrowth::GetSingleton() noexcept {
 		static RandomGrowth instance;
 		return instance;

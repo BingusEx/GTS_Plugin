@@ -1,7 +1,9 @@
 #pragma once
+
 #include "Utils/Spring.hpp"
 
-// Module that handles high heel
+// Module that handles high heels
+
 namespace GTS {
 
 	struct HHData {

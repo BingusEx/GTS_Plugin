@@ -5,7 +5,7 @@
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "Managers/Vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 #include "Managers/Rumble.hpp"
 
 #include "Magic/Effects/Common.hpp"

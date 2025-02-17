@@ -28,7 +28,6 @@
  */
 #include "managers/animation/Utils/AnimationUtils.hpp"
 #include "managers/animation/AnimationManager.hpp"
-#include "managers/ThighSandwichController.hpp"
 #include "managers/animation/ThighSandwich.hpp"
 #include "managers/damage/TinyCalamity.hpp"
 #include "managers/damage/LaunchActor.hpp"
@@ -47,6 +46,9 @@
 #include "managers/Rumble.hpp"
 #include "data/persistent.hpp"
 #include "Constants.hpp"
+
+#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
+
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 

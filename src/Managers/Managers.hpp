@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 //
 #include "Managers/"
 #include "Managers/"
@@ -13,7 +11,6 @@
 #include "Managers/"
 
 
-
 //Root
 #include "Managers/AttackManager.hpp"
 #include "Managers/Atributes.hpp"
@@ -21,7 +18,7 @@
 #include "Managers/Contact.hpp"
 #include "Managers/CrushManager.hpp"
 #include "Managers/Explosion.hpp"
-#include "Managers/GrabAnimationController.hpp"
+#include "Managers/Animation/Controllers/GrabAnimationController.hpp"
 #include "Managers/GtsManager.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/HighHeel.hpp"
@@ -36,9 +33,9 @@
 #include "Managers/RipClothManager.hpp"
 #include "Managers/Rumble.hpp"
 #include "Managers/ShrinkToNothingManager.hpp"
-#include "Managers/ThighSandwichController.hpp"
+#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
 #include "Managers/Tremor.hpp"
-#include "Managers/Vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
 
 #include "Managers/"

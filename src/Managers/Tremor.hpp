@@ -1,13 +1,9 @@
 #pragma once
+
 // Module that handles footsteps
 
-
-
-
-
-
-
 namespace GTS {
+
 	class TremorManager : public EventListener {
 		public:
 			[[nodiscard]] static TremorManager& GetSingleton() noexcept;

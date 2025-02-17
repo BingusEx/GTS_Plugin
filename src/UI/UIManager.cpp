@@ -1,20 +1,15 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/DearImGui/imgui_impl_dx11.h"
 #include "UI/DearImGui/imgui_impl_win32.h"
-#include "UIManager.hpp"
+#include "UI/UIManager.hpp"
 
-#include "Data/Plugin.hpp"
-
-#include "ImGui/ImUtil.hpp"
+#include "UI/ImGui/ImUtil.hpp"
 
 #include "UI/ImGui/ImWindowManager.hpp"
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/WindowStatus.hpp"
 
 #include "Managers/Input/InputManager.hpp"
-
-
-
 
 namespace {
 
@@ -26,10 +21,13 @@ namespace {
 
         if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
             Window->Show = true;
+
+        	//Freeze the game
+            RE::Main::GetSingleton()->freezeTime = true;
         }
 
         //Attempt to fix alt tab getting stuck
-		//Doesnt work :( Can microsoft stop "fixing" api's that aren't broken smh
+		//Doesnt work :( Can microsoft stop "fixing" apis that aren't broken smh
         //GTS::UIManager::GetSingleton().ReleaseStuckKeys();
         //GTS::UIManager::GetSingleton().OnFocusLost();
 
@@ -68,31 +66,14 @@ namespace GTS {
         ImGui::CreateContext();
 
         ImGuiIO& io = ImGui::GetIO();
-        io.UserData = &ImGuiUserData;
         io.IniFilename = ImGuiINI.data();
         io.DisplaySize = { static_cast<float>(SwapChainDesc.BufferDesc.Width), static_cast<float>(SwapChainDesc.BufferDesc.Height) };
         io.ConfigNavEscapeClearFocusWindow = false;
-
-        //Appears to do the exact opposite of what we want...
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
         
         //Keyboard nav is too buggy if using borderless mode...
         //This tries to remmedy that slightly
         io.ConfigFlags |= ImGuiConfigFlags_NavNoCaptureKeyboard;
-
-        RECT rect{};
-        if (GetClientRect(SwapChainDesc.OutputWindow, &rect) == TRUE) {
-            ImGuiUserData.screenScaleRatio = {
-            	.x = static_cast<float>(SwapChainDesc.BufferDesc.Width) / static_cast<float>(rect.right),
-            	.y = static_cast<float>(SwapChainDesc.BufferDesc.Height) / static_cast<float>(rect.bottom)
-            };
-        }
-        else {
-            ImGuiUserData.screenScaleRatio = {
-            	.x= 1.0f,
-            	.y= 1.0f
-            };
-        }
 
         ImGui_ImplWin32_Init(SwapChainDesc.OutputWindow);
         ImGui_ImplDX11_Init(D3DDevice, D3DContext);
@@ -111,7 +92,7 @@ namespace GTS {
 
     }
 
-    void UIManager::Render() {
+    void UIManager::Update() {
         std::ignore = Profilers::Profile("UIManager::Render");
 
         if (!Initialized) {
@@ -134,6 +115,8 @@ namespace GTS {
         ImGui::Render();
 
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+        ImFontManager::GetSingleton().ProcessActions();
 
     }
 }

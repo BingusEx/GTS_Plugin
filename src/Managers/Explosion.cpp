@@ -1,11 +1,6 @@
-#include "managers/GtsManager.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "rays/raycast.hpp"
-
-
+#include "Managers/Explosion.hpp"
+#include "Managers/HighHeel.hpp"
+#include "Rays/Raycast.hpp"
 
 using namespace GTS;
 

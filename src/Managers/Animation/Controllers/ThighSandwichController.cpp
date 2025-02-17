@@ -1,30 +1,21 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/ThighSandwichController.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
+
+
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+
+#include "Managers/GtsSizeManager.hpp"
+#include "Magic/Effects/Common.hpp"
 
 
 using namespace GTS;
 
 
 namespace {
-	const float MINIMUM_SANDWICH_DISTANCE = 70.0f;
-	const float SANDWICH_ANGLE = 60;
-	const float PI = 3.14159f;
+
+	constexpr float MINIMUM_SANDWICH_DISTANCE = 70.0f;
+	constexpr float SANDWICH_ANGLE = 60;
+	constexpr float PI = std::numbers::pi_v<float>;
 
 	void CantThighSandwichPlayerMessage(Actor* giant, Actor* tiny, float sizedifference) {
 		if (sizedifference < Action_Sandwich) {

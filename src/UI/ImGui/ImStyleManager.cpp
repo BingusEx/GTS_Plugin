@@ -5,7 +5,7 @@ namespace GTS {
 
     void ImStyleManager::InitializeDefaultStyle(ImGuiStyle& style) {
         // Rounding Settings
-        style.WindowRounding = 1.5f;
+        style.WindowRounding = 2.5f;
         style.ChildRounding = 1.5f;
         style.FrameRounding = 1.5f;
         style.ScrollbarRounding = 1.5f;
@@ -19,7 +19,7 @@ namespace GTS {
         //style.AntiAliasedFill  = true;
 
         // Border Sizes
-        style.WindowBorderSize = 0.0f;
+        style.WindowBorderSize = 0.3f;
         style.ChildBorderSize = 0.0f;
         style.FrameBorderSize = 0.1f;
         style.ScrollbarSize = 7.0f;

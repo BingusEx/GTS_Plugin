@@ -1,27 +1,10 @@
 #pragma once
-// Module for the Gts Related code
-#include <vector>
-#include <atomic>
-#include <unordered_map>
-
-#include <RE/Skyrim.h>
-
-
-
-
-
-
 
 namespace GTS {
-	/**
-	 * The class which tracks gts size effects.
-	 */
+
 	class AttackManager : public EventListener  {
 		public:
 
-			/**
-			 * Get the singleton instance of the <code>AttackManager</code>.
-			 */
 			[[nodiscard]] static AttackManager& GetSingleton() noexcept;
 
 			virtual std::string DebugName() override;

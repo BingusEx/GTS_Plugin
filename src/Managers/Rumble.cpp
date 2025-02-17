@@ -1,19 +1,7 @@
 // Module that handles rumbling
-#include "managers/animation/AnimationManager.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
 
-
-
-
-
-
-
-
-
+#include "Managers/Rumble.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
 namespace GTS {
 

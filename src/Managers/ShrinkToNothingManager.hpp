@@ -1,11 +1,6 @@
 #pragma once
+
 // Module that handles shrinking to nothing
-
-
-
-
-
-
 
 namespace GTS {
 

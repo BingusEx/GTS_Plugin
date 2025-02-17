@@ -1,17 +1,9 @@
-#include "managers/gamemode/GameModeManager.hpp"
-#include "managers/AttackManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/AttackManager.hpp"
 
 using namespace GTS;
 
-
-
-
 namespace {
+
 	bool IsHumanoid(Actor* giant) {
 		bool human = Runtime::HasKeyword(giant, "ActorTypeNPC");
 		return human;

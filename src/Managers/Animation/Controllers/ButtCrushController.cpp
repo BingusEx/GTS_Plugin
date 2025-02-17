@@ -24,9 +24,9 @@ using namespace GTS;
 
 namespace {
 
-	const float MINIMUM_BUTTCRUSH_DISTANCE = 95.0f;
-	const float BUTTCRUSH_ANGLE = 70;
-	const float PI = 3.14159f;
+	constexpr float MINIMUM_BUTTCRUSH_DISTANCE = 95.0f;
+	constexpr float BUTTCRUSH_ANGLE = 70;
+	constexpr float PI = std::numbers::pi_v<float>;;
 
 	void AttachToObjectBTask(Actor* giant, Actor* tiny) {
 		std::string name = std::format("ButtCrush_{}", tiny->formID);

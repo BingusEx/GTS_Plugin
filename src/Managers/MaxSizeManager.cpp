@@ -1,9 +1,5 @@
 #include "Managers/MaxSizeManager.hpp"
-#include "Managers/ai/aifunctions.hpp"
-
-#include "utils/actorUtils.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/AI/aifunctions.hpp"
 
 using namespace GTS;
 

@@ -19,7 +19,7 @@
 #include "managers/Rumble.hpp"
 #include "data/transient.hpp"
 #include "Constants.hpp"
-#include "managers/vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"

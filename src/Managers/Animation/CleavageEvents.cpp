@@ -27,7 +27,7 @@
 #include "managers/tremor.hpp"
 #include "Constants.hpp"
 #include "utils/looting.hpp"
-#include "managers/vore.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 #include "data/runtime.hpp"
 #include "scale/scale.hpp"
 #include "data/time.hpp"

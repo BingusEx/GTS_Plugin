@@ -1,25 +1,10 @@
-#include "managers/ShrinkToNothingManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "managers/hitmanager.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "utils/looting.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-
-
-
-
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/HitManager.hpp"
 
 using namespace GTS;
+
 namespace {
+
 	float GetPushPower(float sizeRatio) {
 		// https://www.desmos.com/calculator/wh0vwgljfl
 		SoftPotential push {
@@ -34,6 +19,7 @@ namespace {
 }
 
 namespace GTS {
+
 	HitManager& HitManager::GetSingleton() noexcept {
 		static HitManager instance;
 		return instance;

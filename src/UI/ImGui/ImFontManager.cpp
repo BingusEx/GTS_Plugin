@@ -95,9 +95,9 @@ namespace GTS {
 
         //Causes a complete reinit of the imgui context
         //Idealy we'd only want to invalidate the font related stuff
-        //That requires a modification to ImGuiDX11, which we can't do... :(
+        //But that appears to not be possible
         //As long as you dont spam this it's fine.
-        //Even if you did it doesn't cause a memleak. It just lags for ~300ms on each call
+        //Even if you did it doesn't cause a memleak. It just lags for ~100ms on each call
         ImGui_ImplDX11_InvalidateDeviceObjects();
     }
 }

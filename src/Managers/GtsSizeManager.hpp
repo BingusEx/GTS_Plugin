@@ -1,12 +1,7 @@
 #pragma once
-// Module that handles AttributeAdjustment
-
-
-
-
-
 
 namespace GTS {
+
 	struct SizeManagerData {
 		float AspectOfGiantess = 0.0f;
 

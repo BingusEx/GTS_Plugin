@@ -1,12 +1,9 @@
 #pragma once
+
 // Module that handles various reload events
 
-
-
-
-
-
 namespace GTS {
+
 	class ReloadManager : public EventListener,
 		public BSTEventSink<TESHitEvent>,
 		public BSTEventSink<TESObjectLoadedEvent>,

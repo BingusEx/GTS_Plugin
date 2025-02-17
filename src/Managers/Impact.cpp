@@ -1,28 +1,15 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/explosion.hpp"
-#include "managers/modevent.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/impact.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "UI/DebugAPI.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Impact.hpp"
 
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
-
-
-
-
-
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/ModEvent.hpp"
 
 using namespace GTS;
 
 namespace {
+
 	bool CanDoImpact(Actor* actor, FootEvent kind) { // This function is needed to prevent sound spam from followers at large sizes
 		if (IsTeammate(actor) && actor->formID != 0x14) {
 			if (get_visual_scale(actor) < 6.0f) {

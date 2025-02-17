@@ -1,5 +1,5 @@
 #pragma once
-#include "utils/spring.hpp"
+
 // Module that handles Rumble
 
 namespace GTS {

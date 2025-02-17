@@ -1,18 +1,6 @@
-#include "managers/damage/tinyCalamity.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/GtsManager.hpp"
-#include "managers/Attributes.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-
+#include "Managers/Attributes.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
 using namespace REL;
 using namespace GTS;
@@ -20,6 +8,7 @@ using namespace GTS;
 // TODO move away from polling
 
 namespace {
+
 	void SetINIFloat(std::string_view name, float value) {
 		auto ini_conf = GameSettingCollection::GetSingleton();
 		std::string s_name(name);

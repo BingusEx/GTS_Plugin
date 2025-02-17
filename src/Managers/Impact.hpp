@@ -1,13 +1,7 @@
 #pragma once
 
-// Module that handles footsteps
-
-
-
-
-
-
 namespace GTS {
+
 	class ImpactManager {
 		public:
 			[[nodiscard]] static ImpactManager& GetSingleton() noexcept;

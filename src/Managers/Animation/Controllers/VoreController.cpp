@@ -1,40 +1,27 @@
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/SurvivalMode.hpp"
-#include "utils/actorUtils.hpp"
-#include "utils/voreUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "data/transient.hpp"
-#include "scale/modscale.hpp"
-#include "Constants.hpp"
-#include "utils/looting.hpp"
-#include "managers/vore.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
+#include "Managers/AI/AIFunctions.hpp"
 
+#include "Magic/Effects/Common.hpp"
 
-#include <cmath>
-#include <random>
-
+#include "Utils/SurvivalMode.hpp"
+#include "Utils/voreUtils.hpp"
+#include "Utils/looting.hpp"
 
 using namespace GTS;
 
 namespace {
-	const float MINIMUM_VORE_DISTANCE = 94.0f;
-	const float VORE_ANGLE = 76;
-	const float PI = 3.14159f;
+	constexpr float MINIMUM_VORE_DISTANCE = 94.0f;
+	constexpr float VORE_ANGLE = 76;
+	constexpr float PI = std::numbers::pi_v<float>;;
 }
 
 namespace GTS {
-	VoreData::VoreData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {
-	}
+
+	VoreData::VoreData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {}
 
 	void VoreData::AddTiny(Actor* tiny) {
 		this->tinies.try_emplace(tiny->formID, tiny->CreateRefHandle());
