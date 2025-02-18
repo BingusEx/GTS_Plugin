@@ -91,7 +91,8 @@
           "type": "STRING",
           "value": "RelWithDebInfo"
         },
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHsc -DGTSDEBUG=1"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHsc -DGTSDEBUG=1",
+        "GTS_BUILDPRESET": "Debug"
       }
     },
     {
@@ -112,7 +113,8 @@
           "type": "STRING",
           "value": "RelWithDebInfo"
         },
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHa -DGTSDEBUG=1"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHa -DGTSDEBUG=1",
+        "GTS_BUILDPRESET": "DebugEha"
       }
     },
     {
@@ -132,7 +134,8 @@
         "CMAKE_BUILD_TYPE": {
           "type": "STRING",
           "value": "RelWithDebInfo"
-        }
+        },
+        "GTS_BUILDPRESET": "Release"
       }
     },
     {
@@ -153,7 +156,8 @@
           "type": "STRING",
           "value": "RelWithDebInfo"
         },
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
+        "GTS_BUILDPRESET": "RelMax"
       }
     },
     {
@@ -174,7 +178,8 @@
           "type": "STRING",
           "value": "RelWithDebInfo"
         },
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
+        "GTS_BUILDPRESET": "RelMaxAVX2"
       }
     }
   ],

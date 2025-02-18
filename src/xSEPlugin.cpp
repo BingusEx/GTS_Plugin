@@ -67,13 +67,12 @@ namespace {
 
 				// Called after all plugins have finished running SKSEPlugin_Load.
 				case MessagingInterface::kPostLoad: { 
-					//RegisterAPIs();
 					break;
 				}
 
 				// Called after all kPostLoad message handlers have run.
 				case MessagingInterface::kPostPostLoad: {
-					Racemenu::Register();
+					//Racemenu::Register(); // <- Disabled For Now...
 					break;
 				}
 

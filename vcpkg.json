@@ -13,8 +13,6 @@
         "toml11",
         "nlohmann-json",
 		    "gluino",
-        "fmt",
-        "spdlog",
         "magic-enum",
         "boost-pfr"
       ]
@@ -22,13 +20,21 @@
   },
   "default-features": ["plugin"],
   "overrides": [
-	  {
-      "name" : "toml11",
+    {
+      "name": "toml11",
       "version": "4.3.0"
     },
-	  {
-      "name" : "nlohmann-json",
+    {
+      "name": "nlohmann-json",
       "version": "3.11.3"
+    },
+    {
+      "name": "magic-enum",
+      "version": "0.9.7#1"
+    },
+    {
+      "name": "glm",
+      "version": "1.0.1#3"
     }
   ]
 }

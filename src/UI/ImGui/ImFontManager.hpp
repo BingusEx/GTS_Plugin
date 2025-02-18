@@ -12,9 +12,17 @@ namespace GTS {
         const std::string _ext = ".ttf";
         const std::string _basePath = R"(Data\SKSE\Plugins\GTSPlugin\Fonts\)";
 
-        const std::string _SkyrimGUI_Light = _basePath +"Futura Condensed Light" + _ext;
+       /* const std::string _SkyrimGUI_Light = _basePath +"Futura Condensed Light" + _ext;
         const std::string _SkyrimGUI_Medium = _basePath + "Futura Condensed Medium" + _ext;
-        const std::string _SkyrimGUI_Console = _basePath + "Arial" + _ext;
+        const std::string _SkyrimGUI_Console = _basePath + "Arial" + _ext;*/
+
+        //Jost mimicks futura <- Skyrim Default UI Font
+        //OpenSans mimicks Arial <- Skyrim Default UI Font for the console
+
+        const std::string _Jost_Light = _basePath + R"(Jost\Jost-Light)" + _ext;
+        const std::string _Jost_Regular = _basePath + R"(Jost\Jost-Regular)" + _ext;
+        const std::string _Jost_Medium = _basePath + R"(Jost\Jost-Medium)" + _ext;
+        const std::string _OpenSans_Regular = _basePath + R"(OpenSans\OpenSans-Regular)" + _ext;
 
         const SettingsUI& Settings = Config::GetUI();
 
@@ -28,9 +36,8 @@ namespace GTS {
             FontData(const std::string& name, const std::string& path, float size) : name(name), path(path), size(size) {
                 //8 is probably overkill...
                 //By directly chaning the font scale this hack is no longer needed.
-                //Decrease from default to save a bit of VRAM.
-                conf->OversampleH = 2;
-                conf->OversampleV = 1;
+                conf->OversampleH = 4;
+                conf->OversampleV = 3;
             }
         } FontData;
 

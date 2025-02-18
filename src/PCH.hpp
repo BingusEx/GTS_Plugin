@@ -113,18 +113,25 @@
 #undef DeleteFile
 
 // For console sink
+
 #include <spdlog/sinks/msvc_sink.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#include <toml.hpp>
-#include <magic_enum/magic_enum.hpp>
+#include <reflect>                      //https://github.com/qlibs/reflect
+#include <toml.hpp>                     //https://github.com/ToruNiina/toml11
+#include <magic_enum/magic_enum.hpp>    //https://github.com/Neargye/magic_enum
 
 // Compatible declarations with other sample projects.
 #define DLLEXPORT __declspec(dllexport)
 
 using namespace std::literals;
 using namespace REL::literals;
+
+namespace reflect {
+	//Fix ambiguity in reflects' usage of the detail namespace
+	using namespace reflect::v1_2_4::detail;
+}
 
 namespace GTS {
 	using namespace std;
@@ -146,12 +153,20 @@ namespace Hooks {
 	using namespace GTS;
 }
 
+//Add Missing Game versions to our antequated version of clib-ng
+namespace RE {
+	constexpr REL::Version RUNTIME_SSE_1_6_659(1, 6, 659, 0);
+	constexpr REL::Version RUNTIME_SSE_1_6_678(1, 6, 678, 0);
+	constexpr REL::Version RUNTIME_SSE_1_6_1130(1, 6, 1130, 0);
+	constexpr REL::Version RUNTIME_SSE_1_6_1170(1, 6, 1170, 0);
+}
+
 namespace logger = SKSE::log;
 
+//git version tracking
 #include "git.h"
 
 //Own Includes
-
 #include "Constants.hpp"
 #include "Profiler/Profiler.hpp"
 #include "Events/Events.hpp"

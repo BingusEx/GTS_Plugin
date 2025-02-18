@@ -62,7 +62,6 @@ source_group(
 ########################################################################################################################
 
 find_package(Boost REQUIRED)
-find_package(spdlog CONFIG REQUIRED)
 find_package(CommonLibSSE CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(toml11 CONFIG REQUIRED)
@@ -82,7 +81,7 @@ FetchContent_Declare(
   boost_ext_reflect
   GIT_REPOSITORY https://github.com/qlibs/reflect
   GIT_SHALLOW ON  # Download the branch without its history
-  GIT_TAG        v1.1.1
+  GIT_TAG        v1.2.4
 )
 FetchContent_MakeAvailable(boost_ext_reflect)
 
@@ -103,7 +102,6 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
 	Boost::headers
-	spdlog::spdlog
 	toml11::toml11
 	nlohmann_json::nlohmann_json
 	cmake_git_version_tracking
@@ -118,37 +116,51 @@ target_precompile_headers(${PROJECT_NAME}
 # # Automatic deployment
 # #######################################################################################################################
 
-# Extract the last component of the binary directory (which we assume is something like "build-debug", "build-release", etc.)
-get_filename_component(BUILD_FOLDER "${CMAKE_BINARY_DIR}" NAME)
-
-# Use a regular expression to extract the suffix after the hyphen.
-# For example, if BUILD_FOLDER is "build-debug", then BUILD_NAME becomes "Debug"
-string(REGEX MATCH "[-]([A-Za-z0-9_]+)$" _match "${BUILD_FOLDER}")
-if(_match)
-  # Remove the hyphen to get a clean build name (e.g. "Debug")
-  string(REGEX REPLACE "[-]" "" BUILD_NAME "${_match}")
-  # Optionally, capitalize the first letter if needed.
+# Use the new cache variable if it is defined.
+if(DEFINED GTS_BUILDPRESET)
+  set(BUILD_NAME "${GTS_BUILDPRESET}")
 else()
-  # Fallback in case the regex doesn't match.
-  set(BUILD_NAME "${CMAKE_BUILD_TYPE}")
+  # Extract the last component of the binary directory (assumed to be like "build-debug", "build-release", etc.)
+  get_filename_component(BUILD_FOLDER "${CMAKE_BINARY_DIR}" NAME)
+
+  # Use a regex to extract the suffix after the hyphen.
+  # For example, if BUILD_FOLDER is "build-debug", then BUILD_NAME becomes "Debug"
+  string(REGEX MATCH "[-]([A-Za-z0-9_]+)$" _match "${BUILD_FOLDER}")
+  if(_match)
+    # Remove the hyphen to get a clean build name (e.g. "Debug")
+    string(REGEX REPLACE "[-]" "" BUILD_NAME "${_match}")
+  else()
+    # Fallback in case the regex doesn't match.
+    set(BUILD_NAME "${CMAKE_BUILD_TYPE}")
+  endif()
 endif()
 
 message(STATUS "Automatic deployment build name: ${BUILD_NAME}")
 
-# Use BUILD_NAME in the install and deployment paths
-install(DIRECTORY DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Papyrus${BUILD_NAME}/")
-
+# Create the target deployment folder.
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+  COMMAND ${CMAKE_COMMAND} -E make_directory
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/")
 
+# Copy the main DLL.
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+  COMMAND ${CMAKE_COMMAND} -E copy
+          $<TARGET_FILE:${PROJECT_NAME}>
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/")
 
-# Copy the PDB if available for these configurations
+# Copy the PDB if available for Debug or RelWithDebInfo configurations.
 if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin${BUILD_NAME}/")
+    COMMAND ${CMAKE_COMMAND} -E copy
+            $<TARGET_PDB_FILE:${PROJECT_NAME}>
+            "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/")
 endif()
+
+# Copy the Fonts folder into a new "GTSPlugin" subfolder in the deployment folder.
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Fonts"
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/GTSPlugin/Fonts")
 
 file(GLOB_RECURSE OUTPUT_DLLS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.dll")
 file(GLOB_RECURSE OUTPUT_PDBS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.pdb")
@@ -158,13 +170,17 @@ set_property(TARGET ${PROJECT_NAME}
 set_property(TARGET ${PROJECT_NAME}
   APPEND PROPERTY ADDITIONAL_CLEAN_FILES "${OUTPUT_PDBS}")
 
-# Also copy the PDB and dll to the directory defined by the GTSPLUGIN_COPY_DIR environment variable,
+# Also copy the PDB and DLL to the directory defined by the GTSPLUGIN_COPY_DIR environment variable,
 # if it is defined.
 if(DEFINED ENV{GTSPLUGIN_COPY_DIR})
   if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo|Release")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
+      COMMAND ${CMAKE_COMMAND} -E copy
+              $<TARGET_PDB_FILE:${PROJECT_NAME}>
+              "$ENV{GTSPLUGIN_COPY_DIR}/")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "$ENV{GTSPLUGIN_COPY_DIR}/")
+      COMMAND ${CMAKE_COMMAND} -E copy
+              $<TARGET_FILE:${PROJECT_NAME}>
+              "$ENV{GTSPLUGIN_COPY_DIR}/")
   endif()
 endif()

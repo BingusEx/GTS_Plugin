@@ -94,10 +94,10 @@ namespace GTS {
         REGISTER_STRUCT_NAME(SettingsBalance, "Balance");
         REGISTER_STRUCT_NAME(SettingsCamera, "Camera");
         REGISTER_STRUCT_NAME(SettingsGameplay, "Gameplay");
-        REGISTER_STRUCT_NAME(SettingsUI, "GtsUI");
+        REGISTER_STRUCT_NAME(SettingsUI, "UI");
         REGISTER_STRUCT_NAME(SettingsHidden, "Hidden");
 
-        const std::string _Subfolder = "Data\\SKSE\\Plugins\\GTSPlugin";
+        const std::string _Subfolder = R"(Data\SKSE\Plugins\GTSPlugin)";
         const std::string _ConfigFile = "Settings.toml";
 
         //Currentpath Resolves to the Skyrim root folder where the .exe is.

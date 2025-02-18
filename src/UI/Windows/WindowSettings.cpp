@@ -93,7 +93,9 @@ namespace GTS {
 	void WindowSettings::Draw() {
 
 	    auto& Categories = CatMgr.GetCategories();
+		ImGui::PushFont(ImFontManager::GetFont("footer"));
 	    const float Footer = ImGui::GetFrameHeightWithSpacing() + (ImGui::GetStyle().ItemSpacing.y * 4);  // text + separator
+		ImGui::PopFont();
 	    
 	    //Calc Button Width
 	    std::array<const char*,3> Lables = { "Load", "Save", "Reset" };
@@ -147,7 +149,7 @@ namespace GTS {
 
 	    {  // Draw Sidebar
 
-	        ImGui::BeginChild("Sidebar", ImVec2(CatMgr.GetLongestCategory(), -Footer), true);
+	        ImGui::BeginChild("Sidebar", ImVec2(CatMgr.GetLongestCategory(), ImGui::GetContentRegionAvail().y - Footer), true);
 	        ImGui::BeginDisabled(Disabled);
 	        ImGui::PushFont(ImFontManager::GetFont("sidebar"));
 
@@ -176,7 +178,7 @@ namespace GTS {
 
 	    { // Content Area, Where the category contents are drawn
 
-	        ImGui::BeginChild("Content", ImVec2(0, -Footer), true); // Remaining width
+	        ImGui::BeginChild("Content", ImVec2(0, ImGui::GetContentRegionAvail().y - Footer), true); // Remaining width
 
 	        // Validate selectedCategory to ensure it's within bounds
 	        if (CatMgr.activeIndex >= 0 && CatMgr.activeIndex < Categories.size()) {

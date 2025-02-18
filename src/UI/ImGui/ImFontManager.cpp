@@ -6,21 +6,21 @@ namespace GTS {
     void ImFontManager::Init() {
         //Initalzie font data, add any new font defines here.
         //Fontname, Path to ttf font file, font scale
-        AddFont(new FontData("sidebar", _SkyrimGUI_Light, 34.0f));
-        AddFont(new FontData("title", _SkyrimGUI_Medium, 58.0f));
-        AddFont(new FontData("footer", _SkyrimGUI_Medium, 28.0f));
-        AddFont(new FontData("text", _SkyrimGUI_Console, 17.0f));
-        AddFont(new FontData("errortext", _SkyrimGUI_Console, 21.0f));
-        AddFont(new FontData("subscript", _SkyrimGUI_Console, 12.0f));
-        AddFont(new FontData("widgetbody", _SkyrimGUI_Light, 22.0f));
-        AddFont(new FontData("widgettitle", _SkyrimGUI_Light, 32.0f));
+        AddFont(new FontData("sidebar", _Jost_Regular, 34.0f));
+        AddFont(new FontData("title", _Jost_Medium, 56.0f));
+        AddFont(new FontData("footer", _Jost_Medium, 30.0f));
+        AddFont(new FontData("text", _OpenSans_Regular, 20.0f));
+        AddFont(new FontData("errortext", _OpenSans_Regular, 22.0f));
+        AddFont(new FontData("subscript", _OpenSans_Regular, 16.0f));
+        AddFont(new FontData("widgetbody", _Jost_Regular, 21.0f));
+        AddFont(new FontData("widgettitle", _Jost_Light, 32.0f));
 
         BuildFontsInt();
 
         for (auto& value : Fonts | views::values) {
             if (value->font == nullptr) {
                 logger::critical("Could not load font: {}", value->name);
-                const std::string_view msg = fmt::format("Could not load ImGui Font {}.\nThe game will now close.", value->name);
+                const std::string msg = fmt::format("Could not load ImGui Font {}.\nThe game will now close.", value->name);
                 ReportAndExit(msg);
             }
         }
