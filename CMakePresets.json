@@ -23,12 +23,13 @@
         "VCPKG_HOST_TRIPLET": "x64-windows-skse",
         "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/cmake",
         "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL",
-		"VCPKG_OVERLAY_PORTS": "${sourceDir}/cmake/ports/"
+        "VCPKG_OVERLAY_PORTS": "${sourceDir}/cmake/ports/"
       },
       "warnings": {
         "deprecated": false,
         "dev": false
-      }
+      },
+      "extraArgs": [ "-Wno-dev" ]
     },
     {
       "name": "win32",
@@ -94,6 +95,7 @@
         "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /Ob0 /Od /RTC1 /EHsc -DGTSDEBUG=1",
         "GTS_BUILDPRESET": "Debug"
       }
+
     },
     {
       "name": "build-debug-eha",
