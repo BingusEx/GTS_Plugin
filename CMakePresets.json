@@ -28,8 +28,7 @@
       "warnings": {
         "deprecated": false,
         "dev": false
-      },
-      "extraArgs": [ "-Wno-dev" ]
+      }
     },
     {
       "name": "win32",
