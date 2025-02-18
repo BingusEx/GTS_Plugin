@@ -1,14 +1,7 @@
 #pragma once
 
-
-
-
-
-
-
-
-
 namespace GTS {
+
 	class AnimationThighSandwich : public EventListener {
 		public:
 			[[nodiscard]] static AnimationThighSandwich& GetSingleton() noexcept;

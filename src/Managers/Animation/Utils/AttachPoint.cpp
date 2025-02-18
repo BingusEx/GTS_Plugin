@@ -1,6 +1,4 @@
-#include "managers/animation/Utils/AttachPoint.hpp"
-#include "scale/scale.hpp"
-
+#include "Managers/Animation/Utils/AttachPoint.hpp"
 
 using namespace GTS;
 

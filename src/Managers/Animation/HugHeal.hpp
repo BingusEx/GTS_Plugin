@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class HugHeal {
 		public:
 			static void RegisterEvents();

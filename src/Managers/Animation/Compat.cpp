@@ -1,3 +1,12 @@
+#include "Managers/Animation/Compat.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/CrushManager.hpp"
+
+using namespace GTS;
+
 // Animation: Compatibility
 // Notes: Made avaliable for other generic anim mods
 //  - Stages
@@ -8,26 +17,6 @@
 //   - "MCO_SecondDodge",           // enables GTS sounds and footstep effects
 //   - "SoundPlay.MCO_DodgeSound",
 
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Compat.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-using namespace GTS;
 
 /*
 
@@ -48,8 +37,9 @@ GTS_CustomDamage_Cleavage_OFF
 */
 
 namespace {
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	void RunThighCollisionTask(Actor* giant, bool right, bool CooldownCheck, float radius, float damage, float bbmult, float crush_threshold, int random, std::string_view name) {
 		auto gianthandle = giant->CreateRefHandle();

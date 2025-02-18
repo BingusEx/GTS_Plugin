@@ -1,4 +1,4 @@
-#include "managers/audio/AudioObtainer.hpp"
+#include "Managers/Audio/AudioObtainer.hpp"
 
 namespace GTS {
 

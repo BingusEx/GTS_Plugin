@@ -1,27 +1,10 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/animation/Growth.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/audio/footstep.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Growth.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Rumble.hpp"
 
-
-
-
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 

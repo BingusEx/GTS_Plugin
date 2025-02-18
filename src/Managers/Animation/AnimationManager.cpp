@@ -1,48 +1,47 @@
-#include "managers/animation/TinyCalamity_Instakill.hpp"
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Stomp_Under_FullBody.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/animation/Stomp_Under_Strong.hpp"
-#include "managers/animation/Sneak_Slam_Strong.hpp"
-#include "managers/animation/Stomp_Under_Slam.hpp"
-#include "managers/animation/Stomp_Under_Butt.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Grab_Sneak_Vore.hpp"
-#include "managers/animation/Sneak_KneeCrush.hpp"
-#include "managers/animation/CleavageEvents.hpp"
-#include "managers/animation/CleavageState.hpp"
-#include "managers/animation/Vore_Standing.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/animation/Sneak_Swipes.hpp"
-#include "managers/animation/RandomGrowth.hpp"
-#include "managers/animation/Stomp_Normal.hpp"
-#include "managers/animation/Stomp_Strong.hpp"
-#include "managers/animation/Stomp_Under.hpp"
-#include "managers/animation/FootTrample.hpp"
-#include "managers/animation/Grab_Attack.hpp"
-#include "managers/animation/Grab_Throw.hpp"
-#include "managers/animation/Sneak_Slam.hpp"
-#include "managers/animation/Vore_Sneak.hpp"
-#include "managers/animation/Vore_Crawl.hpp"
-#include "managers/animation/ThighCrush.hpp"
-#include "managers/animation/Grab_Vore.hpp"
-#include "managers/animation/ButtCrush.hpp"
-#include "managers/animation/BoobCrush.hpp"
-#include "managers/animation/FootGrind.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/animation/Crawling.hpp"
-#include "managers/animation/HugHeal.hpp"
-#include "managers/animation/Proning.hpp"
-#include "managers/animation/Compat.hpp"
-#include "managers/animation/Growth.hpp"
-#include "managers/animation/Shrink.hpp"
-#include "managers/animation/Kicks.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "utils/InputFunctions.hpp"
-#include "data/persistent.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/TinyCalamity_Instakill.hpp"
+#include "Managers/Animation/Sneak_Slam_FingerGrind.hpp"
+#include "Managers/Animation/Stomp_Under_FullBody.hpp"
+#include "Managers/Animation/TinyCalamity_Shrink.hpp"
+#include "Managers/Animation/Stomp_Under_Strong.hpp"
+#include "Managers/Animation/Sneak_Slam_Strong.hpp"
+#include "Managers/Animation/Stomp_Under_Slam.hpp"
+#include "Managers/Animation/Stomp_Under_Butt.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab_Sneak_Vore.hpp"
+#include "Managers/Animation/Sneak_KneeCrush.hpp"
+#include "Managers/Animation/CleavageEvents.hpp"
+#include "Managers/Animation/CleavageState.hpp"
+#include "Managers/Animation/Vore_Standing.hpp"
+#include "Managers/Animation/ThighSandwich.hpp"
+#include "Managers/Animation/Sneak_Swipes.hpp"
+#include "Managers/Animation/RandomGrowth.hpp"
+#include "Managers/Animation/Stomp_Normal.hpp"
+#include "Managers/Animation/Stomp_Strong.hpp"
+#include "Managers/Animation/Stomp_Under.hpp"
+#include "Managers/Animation/FootTrample.hpp"
+#include "Managers/Animation/Grab_Attack.hpp"
+#include "Managers/Animation/Grab_Throw.hpp"
+#include "Managers/Animation/Sneak_Slam.hpp"
+#include "Managers/Animation/Vore_Sneak.hpp"
+#include "Managers/Animation/Vore_Crawl.hpp"
+#include "Managers/Animation/ThighCrush.hpp"
+#include "Managers/Animation/Grab_Vore.hpp"
+#include "Managers/Animation/ButtCrush.hpp"
+#include "Managers/Animation/BoobCrush.hpp"
+#include "Managers/Animation/FootGrind.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Animation/Crawling.hpp"
+#include "Managers/Animation/HugHeal.hpp"
+#include "Managers/Animation/Proning.hpp"
+#include "Managers/Animation/Compat.hpp"
+#include "Managers/Animation/Growth.hpp"
+#include "Managers/Animation/Shrink.hpp"
+#include "Managers/Animation/Kicks.hpp"
+#include "Managers/Animation/Grab.hpp"
+
+#include "Managers/Perks/PerkHandler.hpp"
+
+#include "Utils/InputFunctions.hpp"
 
 
 using namespace GTS;
@@ -59,10 +58,11 @@ namespace {
 }
 
 namespace GTS {
-	AnimationEventData::AnimationEventData(Actor& giant, TESObjectREFR* tiny) : giant(giant), tiny(tiny) {
-	}
-	AnimationEvent::AnimationEvent(std::function<void(AnimationEventData&)> a_callback,  std::string a_group) : callback(a_callback), group(a_group) {
-	}
+
+	AnimationEventData::AnimationEventData(Actor& giant, TESObjectREFR* tiny) : giant(giant), tiny(tiny) {}
+
+	AnimationEvent::AnimationEvent(std::function<void(AnimationEventData&)> a_callback,  std::string a_group) : callback(a_callback), group(a_group) {}
+
 	TriggerData::TriggerData( std::vector< std::string_view> behavors,  std::string_view group) : behavors({}), group(group) {
 		for (auto& sv: behavors) {
 			this->behavors.push_back(std::string(sv));
@@ -133,7 +133,6 @@ namespace GTS {
 		AnimationSneakCrush::RegisterEvents();
 
 		AnimationBoobCrush::RegisterEvents();
-
 
 		Animation_GrabSneak_Vore::RegisterEvents();
 		Animation_GrabVore::RegisterEvents();

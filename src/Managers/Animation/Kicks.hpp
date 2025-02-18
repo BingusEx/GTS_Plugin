@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class AnimationKicks {
 		public:
 			static void RegisterEvents();

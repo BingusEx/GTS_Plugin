@@ -1,4 +1,7 @@
 #include "Managers/Cameras/CamUtil.hpp"
+
+#include "Hooks/Skyrim/INISettings.hpp"
+
 #include "Rays/raycast.hpp"
 #include "UI/DebugAPI.hpp"
 
@@ -267,19 +270,22 @@ namespace GTS {
 		}
 	}
 
-	void ResetIniSettings() {
-		EnsureINIFloat("fOverShoulderPosX:Camera", 30.0f);
-		EnsureINIFloat("fOverShoulderPosY:Camera", 30.0f);
-		EnsureINIFloat("fOverShoulderPosZ:Camera", -10.0f);
-		EnsureINIFloat("fOverShoulderCombatPosX:Camera", 0.0f);
-		EnsureINIFloat("fOverShoulderCombatPosY:Camera", 0.0f);
-		EnsureINIFloat("fOverShoulderCombatPosZ:Camera", 20.0f);
-		EnsureINIFloat("fVanityModeMaxDist:Camera", 600.0f);
-		EnsureINIFloat("fVanityModeMinDist:Camera", 155.0f);
-		EnsureINIFloat("fMouseWheelZoomSpeed:Camera", 0.8000000119f);
-		EnsureINIFloat("fMouseWheelZoomIncrement:Camera", 0.075000003f);
-		UpdateThirdPerson();
-	}
+	//No longer needed
+	//void ResetIniSettings() {
+	//	EnsureINIFloat("fOverShoulderPosX:Camera", 30.0f);
+	//	EnsureINIFloat("fOverShoulderPosY:Camera", 30.0f);
+	//	EnsureINIFloat("fOverShoulderPosZ:Camera", -10.0f);
+	//	EnsureINIFloat("fOverShoulderCombatPosX:Camera", 0.0f);
+	//	EnsureINIFloat("fOverShoulderCombatPosY:Camera", 0.0f);
+	//	EnsureINIFloat("fOverShoulderCombatPosZ:Camera", 20.0f);
+
+	//	EnsureINIFloat("fVanityModeMaxDist:Camera", 600.0f);
+	//	EnsureINIFloat("fVanityModeMinDist:Camera", 155.0f);
+	//	EnsureINIFloat("fMouseWheelZoomSpeed:Camera", 0.8000000119f);
+	//	EnsureINIFloat("fMouseWheelZoomIncrement:Camera", 0.075000003f);
+
+	//	UpdateThirdPerson();
+	//}
 
 	NiCamera* GetNiCamera() {
 		auto camera = PlayerCamera::GetSingleton();
@@ -543,16 +549,12 @@ namespace GTS {
 		return 0.0f;
 	}
 
-	float MaxZoom() {
-		return GetINIFloat("fVanityModeMaxDist:Camera");
-	}
-
 	NiPoint3 CompuleLookAt(float zoomScale) {
 		NiPoint3 cameraTrans = GetCameraPosition();
 
 		NiMatrix3 cameraRotMat = GetCameraRotation();
 
-		float zoomOffset = ZoomFactor() * MaxZoom() * zoomScale;
+		float zoomOffset = ZoomFactor() * (*Hooks::gINI_CAMERA::fVanityModeMaxDist) * zoomScale;
 		NiPoint3 zoomOffsetVec = NiPoint3(0.0f, zoomOffset, 0.0f);
 		return cameraRotMat * zoomOffsetVec + cameraTrans;
 	}

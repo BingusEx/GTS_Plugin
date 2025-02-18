@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class Animation_VoreSneak {
 		public:
 			static void RegisterEvents();

@@ -1,32 +1,11 @@
-#include "managers/animation/Controllers/ButtCrushController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/CleavageState.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/ButtCrush.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Managers/Animation/CleavageState.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Grab.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
-
-
-
-
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 
@@ -53,6 +32,7 @@ IsInCleavageState(Actor* actor)
 */
 
 namespace {
+
     const std::vector<std::string_view> BREAST_NODES_R = { // used for body rumble
         "R Breast01",
         "R Breast02",
@@ -89,7 +69,7 @@ namespace {
 
         return hp_reduction;
     }
-    void AttemptBreastActionOnTiny(std::string pass_anim) {
+    void AttemptBreastActionOnTiny(const std::string& pass_anim) {
         Actor* player = GetPlayerOrControlled();
         if (IsInCleavageState(player)) {
             auto tiny = Grab::GetHeldActor(player);
@@ -98,7 +78,7 @@ namespace {
             }
         }
     }
-    bool AttemptBreastAction(std::string pass_anim, CooldownSource Source, std::string cooldown_msg, std::string perk) {
+    bool AttemptBreastAction(const std::string& pass_anim, CooldownSource Source, std::string cooldown_msg, const std::string& perk) {
         Actor* player = GetPlayerOrControlled();
         if (IsInCleavageState(player)) {
             auto tiny = Grab::GetHeldActor(player);
@@ -139,7 +119,7 @@ namespace {
 
         return false;
     }
-    bool PassAnimation(std::string animation, bool check_cleavage) {
+    bool PassAnimation(const std::string& animation, bool check_cleavage) {
         Actor* player = GetPlayerOrControlled();
         if (player) {
             bool BetweenCleavage = IsInCleavageState(player);

@@ -1,28 +1,18 @@
-#include "managers/animation/TinyCalamity_Instakill.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/audio/footstep.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorBools.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "rays/raycast.hpp"
+#include "Managers/Animation/TinyCalamity_Instakill.hpp"
+#include "Managers/Animation/TinyCalamity_Shrink.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/Utils/TurnTowards.hpp"
 
+#include "Managers/Perks/PerkHandler.hpp"
+#include "Managers/AI/aifunctions.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Rumble.hpp"
 
+#include "Magic/Effects/Common.hpp"
 
+#include "Utils/AttachPoint.hpp"
 
 using namespace GTS;
 

@@ -1,23 +1,6 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/TinyCalamity_Shrink.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/audio/footstep.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "rays/raycast.hpp"
-
-
-
+#include "Managers/Animation/TinyCalamity_Shrink.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 

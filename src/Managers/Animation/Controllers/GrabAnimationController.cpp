@@ -1,6 +1,7 @@
 #include "Managers/Animation/Controllers/GrabAnimationController.hpp"
 
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
+
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Grab.hpp"
 

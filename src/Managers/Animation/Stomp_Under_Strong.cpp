@@ -1,31 +1,16 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/Stomp_Under_Strong.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/Stomp_Under_Strong.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
-
-
-
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 
 namespace {
-    const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
     void DoImpactRumble(Actor* giant, std::string_view node, std::string_view name) {
 		float shake_power = Rumble_Stomp_Under_Strong;

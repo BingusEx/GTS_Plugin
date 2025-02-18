@@ -1,15 +1,16 @@
 #include "Managers/Animation/Controllers/VoreController.hpp"
-
+#include "Managers/Animation/Utils/AttachPoint.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
-#include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Perks/PerkHandler.hpp"
 #include "Managers/AI/AIFunctions.hpp"
 
 #include "Magic/Effects/Common.hpp"
 
+
+
 #include "Utils/SurvivalMode.hpp"
-#include "Utils/voreUtils.hpp"
-#include "Utils/looting.hpp"
+#include "Utils/VoreUtils.hpp"
+#include "Utils/Looting.hpp"
 
 using namespace GTS;
 

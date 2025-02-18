@@ -1,44 +1,25 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/BoobCrush.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/BoobCrush.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
 #include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Rumble.hpp"
 
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
 /*
    GTS_BoobCrush_Smile_On
    GTS_BoobCrush_Smile_Off
-   GTS_BoobCrush_TrackBody        (Enables camera tracking)
-   GTS_BoobCrush_UnTrackBody  (Disables it)
-   GTS_BoobCrush_BreastImpact  (Damage everything under breasts, on impact)
-   GTS_BoobCrush_DOT_Start       (When we want to deal damage over time when we do long idle with swaying legs)
+   GTS_BoobCrush_TrackBody			(Enables camera tracking)
+   GTS_BoobCrush_UnTrackBody		(Disables it)
+   GTS_BoobCrush_BreastImpact		(Damage everything under breasts, on impact)
+   GTS_BoobCrush_DOT_Start			(When we want to deal damage over time when we do long idle with swaying legs)
    GTS_BoobCrush_DOT_End
    GTS_BoobCrush_Grow_Start
    GTS_BoobCrush_Grow_Stop
-
-
  */
 
 namespace {

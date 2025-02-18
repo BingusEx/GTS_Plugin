@@ -1,5 +1,5 @@
-//#include "managers/footik/collider.hpp"
-//#include "managers/GtsManager.hpp"
+//#include "Managers/footik/collider.hpp"
+//#include "Managers/GtsManager.hpp"
 //#include "data/runtime.hpp"
 //#include "scale/scale.hpp"
 //#include "data/time.hpp"

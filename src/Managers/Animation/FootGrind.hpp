@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class AnimationFootGrind {
 		public:
 			static void RegisterEvents();

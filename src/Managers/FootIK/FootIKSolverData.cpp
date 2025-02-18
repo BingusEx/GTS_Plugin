@@ -1,4 +1,4 @@
-//#include "managers/footik/footIKSolverData.hpp"
+//#include "Managers/footik/footIKSolverData.hpp"
 //#include "Colliders/RE/RE.hpp"
 
 //namespace GTS {

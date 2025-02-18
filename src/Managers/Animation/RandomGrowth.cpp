@@ -1,33 +1,17 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/animation/RandomGrowth.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/RandomGrowth.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/RandomGrowth.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/RandomGrowth.hpp"
+#include "Managers/Rumble.hpp"
 
-
-
-
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
 namespace {
-	const float anim_fps_speed = 30.0f;
+
+	constexpr float anim_fps_speed = 30.0f;
 
 	GrowthAnimation GetGrowthType(Actor* giant) { // Used as a way to read which exact Growth was triggered (it is full RNG on Behavior side)
 		int growthtype = 0;

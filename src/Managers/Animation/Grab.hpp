@@ -1,10 +1,5 @@
 #pragma once
 
-
-
-
-
-
 namespace GTS {
 	struct GrabData {
 		public:
@@ -16,8 +11,7 @@ namespace GTS {
 
 	void Utils_CrushTask(Actor* giant, Actor* grabbedActor, float bonus, bool do_sound, bool stagger, DamageSource source, QuestStage stage);
 
-	class Grab : public EventListener
-	{
+	class Grab : public EventListener {
 		public:
 			[[nodiscard]] static Grab& GetSingleton() noexcept;
 

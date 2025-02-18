@@ -1,11 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class AnimationThighCrush {
 		public:
 			static void RegisterEvents();

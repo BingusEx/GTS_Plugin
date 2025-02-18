@@ -1,26 +1,13 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Stomp_Strong.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Stomp_Under.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Managers/Animation/Stomp_Strong.hpp"
+#include "Managers/Animation/Stomp_Under.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Audio/Footstep.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
+#include "Managers/Rumble.hpp"
+
 #include "Utils/InputConditions.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
 
 using namespace GTS;
 

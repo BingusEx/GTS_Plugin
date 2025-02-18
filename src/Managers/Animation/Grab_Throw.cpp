@@ -1,45 +1,19 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "Managers/Animation/Controllers/GrabAnimationController.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/Grab_Throw.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/OverkillManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/Attributes.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
-#include "Constants.hpp"
-#include "Managers/Animation/Controllers/VoreController.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab_Throw.hpp"
+#include "Managers/OverkillManager.hpp"
+#include "Managers/Animation/Grab.hpp"
 
+#include "Managers/Rumble.hpp"
 
-
-
-#include <random>
-
-
-using namespace REL;
 using namespace GTS;
 
 namespace {
 
-    const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
-	void Throw_Actor(ActorHandle giantHandle, ActorHandle tinyHandle, NiPoint3 startCoords, NiPoint3 endCoords, std::string_view TaskName) {
+	void Throw_Actor(const ActorHandle& giantHandle, const ActorHandle& tinyHandle, NiPoint3 startCoords, NiPoint3 endCoords, std::string_view TaskName) {
 
 		double startTime = Time::WorldTimeElapsed();
 
@@ -108,7 +82,8 @@ namespace {
 
 					NiMatrix3 giantRot = giant->GetCurrent3D()->world.rotate;
 					direction = giantRot * (customDirection / customDirection.Length());
-				} else {
+				}
+				else {
 				    if (IsCrawling(giant)) { // Strongest throw, needs custom throw direction again
 						speed *= 0.20f; // Hand travels fast so it's a good idea to decrease its power
 
@@ -117,7 +92,7 @@ namespace {
 						float angle_z = 0.0f;// Runtime::GetFloat("combatCameraAlternateX"); // 0
 
 						// Conversion to radians
-						const float PI = 3.141592653589793f;
+						constexpr float PI = 3.141592653589793f;
 						float angle_x_rad = angle_x * 180.0f / PI;
 						float angle_y_rad = angle_y * 180.0f / PI;
 						float angle_z_rad = angle_z * 180.0f / PI;
@@ -207,6 +182,7 @@ namespace {
 	}
 
 	void GTSGrab_Throw_FS_R(AnimationEventData& data) {
+
 		if (IsUsingThighAnimations(&data.giant) || IsCrawling(&data.giant)) {
 			return; // Needed to not apply it during animation blending for thigh/crawling animations
 		}
@@ -325,7 +301,8 @@ namespace {
 	}
 	
 
-	void GTSGrab_Throw_ThrowActor(AnimationEventData& data) { // Throw frame 1
+	void GTSGrab_Throw_ThrowActor(AnimationEventData& data) {
+		// Throw frame 1
 		auto giant = &data.giant;
 
 		giant->SetGraphVariableInt("GTS_GrabbedTiny", 0);
@@ -338,10 +315,12 @@ namespace {
 		Grab::Release(giant);
 	}
 
-	void GTSGrab_Throw_Throw_Post(AnimationEventData& data) { // Throw frame 2
+	void GTSGrab_Throw_Throw_Post(AnimationEventData& data) {
+		// Throw frame 2
 	}
 
-	void GTSGrab_Throw_MoveStop(AnimationEventData& data) { // Throw Frame 3
+	void GTSGrab_Throw_MoveStop(AnimationEventData& data) {
+		// Throw Frame 3
 		auto giant = &data.giant;
 		DrainStamina(giant, "GrabThrow", "DestructionBasics", false, 1.25f);
 		StopLHandRumble("GrabThrowL", data.giant);

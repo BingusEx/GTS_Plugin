@@ -1,6 +1,6 @@
 #pragma once
 
-#include "managers/animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
 
 

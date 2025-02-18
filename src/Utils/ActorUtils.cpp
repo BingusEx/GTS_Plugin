@@ -20,10 +20,13 @@
 #include "Managers/Audio/Footstep.hpp"
 #include "Managers/Attributes.hpp"
 #include "Managers/Rumble.hpp"
-#include "Managers/explosion.hpp"
+#include "Managers/Explosion.hpp"
 #include "Managers/GtsSizeManager.hpp"
+#include "Managers/HighHeel.hpp"
 
 #include "Config/Config.hpp"
+
+#include "UI/DebugAPI.hpp"
 
 
 using namespace GTS;

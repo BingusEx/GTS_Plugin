@@ -1,4 +1,5 @@
 #include "Utils/AV.hpp"
+#include "Config/Config.hpp"
 
 namespace GTS {
 
@@ -27,6 +28,11 @@ namespace GTS {
 		if (IsInGodMode(actor) && amount > 0) { // do nothing if TGM is on and value is > 0
 			return;
 		}
+
+		if (!Config::GetAdvanced().bDamageAV && actor->formID == 0x14) {
+			return;
+		}
+
 		actor->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, av, -amount);
 	}
 

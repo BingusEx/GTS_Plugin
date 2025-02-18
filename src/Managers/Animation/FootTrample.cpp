@@ -1,32 +1,19 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/FootTrample.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Managers/Animation/FootTrample.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "managers/explosion.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Rumble.hpp"
 
-
-
-
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 
 namespace {
 
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	void DeplenishStamina(Actor* giant, float WasteStamina) {
 		DamageAV(giant, ActorValue::kStamina, WasteStamina * GetWasteMult(giant));

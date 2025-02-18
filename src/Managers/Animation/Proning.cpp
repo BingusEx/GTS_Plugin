@@ -1,19 +1,14 @@
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Proning.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "utils/InputConditions.hpp"
+#include "Managers/Animation/Proning.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Rumble.hpp"
+
+#include "Magic/Effects/Common.hpp"
+
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 

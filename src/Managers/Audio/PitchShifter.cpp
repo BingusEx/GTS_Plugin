@@ -1,4 +1,4 @@
-#include "Managers/audio/PitchShifter.hpp"
+#include "Managers/Audio/PitchShifter.hpp"
 #include "Config/Config.hpp"
 
 using namespace GTS;

@@ -62,8 +62,10 @@ namespace {
 			camera->ToggleFreeCameraMode(false);
 		}
 	}
+
+	//Unused TODO Remove
 	void ResetTheCamera(StaticFunctionTag*) {
-		ResetIniSettings();
+		//ResetIniSettings();
 	}
 }
 

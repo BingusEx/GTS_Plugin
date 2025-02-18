@@ -5,7 +5,7 @@
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Rumble.hpp"
 
-#include "Magic/effects/common.hpp"
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 

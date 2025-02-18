@@ -1,3 +1,22 @@
+#include "Managers/Animation/ThighSandwich.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+
+#include "Managers/Audio/GoreAudio.hpp"
+#include "Managers/Input/InputManager.hpp"
+
+#include "Managers/CrushManager.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
+
+#include "Magic/Effects/Common.hpp"
+
+#include "Utils/InputConditions.hpp"
+
+using namespace GTS;
+
 // Animation: Stomp
 //  - Stages
 /*
@@ -26,43 +45,11 @@
    //AnimObjectA = Tiny
    //AnimObjectB = rune
  */
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/GoreAudio.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/audio/footstep.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "data/persistent.hpp"
-#include "Constants.hpp"
-
-#include "Managers/Animation/Controllers/ThighSandwichController.hpp"
-
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
-
-
-
-using namespace GTS;
 
 namespace {
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	const std::vector<std::string_view> BODY_NODES = { // used for body rumble
 		"NPC COM [COM ]",

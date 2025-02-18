@@ -1,46 +1,28 @@
-#include "managers/animation/Controllers/ButtCrushController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/CleavageEvents.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/animation/CleavageState.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/ButtCrush.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "utils/DifficultyUtils.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "utils/looting.hpp"
+#include "Managers/Animation/CleavageEvents.hpp"
+
 #include "Managers/Animation/Controllers/VoreController.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/CleavageState.hpp"
 
+#include "Managers/Damage/SizeHitEffects.hpp"
+#include "Managers/Damage/TinyCalamity.hpp"
 
-#include "api/RaceMenuFunctions.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
 
-
-
+#include "Magic/Effects/Common.hpp"
+#include "Utils/Looting.hpp"
+#include "API/Racemenu.hpp"
 
 using namespace GTS;
 
 namespace {
+
     void Absorb_GrowInSize(Actor* giant, Actor* tiny, float multiplier) {
         if (Runtime::HasPerkTeam(giant, "HugCrush_Greed")) {
 			multiplier *= 1.15f;
@@ -428,9 +410,54 @@ namespace {
             ModSizeExperience(giant, 0.235f);
         }
     }
+
+    //static void GrowBreastsOverTime(Actor* giant) { // Currently relies on doing DLL -> pex script -> other DLL method which may be slow so it's disabled
+    //    // Should probably be capped at +50 or +100% of natural breast size
+    //    // As a fun thing can probably even try to calculate total player weight based on morph values if we will manage to use RaceMenu functions directly
+    //    std::string taskname = std::format("GrowBreasts_{}", giant->formID);
+    //    ActorHandle giantHandle = giant->CreateRefHandle();
+
+    //    auto transient = Transient::GetSingleton().GetActorData(giant);
+    //    double startTime = Time::WorldTimeElapsed();
+
+    //    float duration = 3.0f;
+    //    float total_size_add = 1.0f;
+    //    float initial_size = 0.0f;
+    //    if (transient) {
+    //        initial_size = transient->breast_size_buff;
+    //    }
+
+    //    TaskManager::Run(taskname, [=](auto& progressData) {
+    //        if (!giantHandle) {
+    //            return false;
+    //        }
+
+
+    //        static Timer delay = 0.12;
+
+    //        double endTime = Time::WorldTimeElapsed();
+
+    //        Actor* giant = giantHandle.get().get();
+    //        float timepassed = endTime - startTime;
+    //        float breast_buff = (initial_size)+(timepassed * 0.33f) * total_size_add;
+
+    //        if (delay.ShouldRunFrame())
+				//Racemenu::SetMorph(giant, "Breasts", breast_buff, true);
+
+    //        if (timepassed >= static_cast<double>(duration)) {
+    //            if (transient) {
+    //                transient->breast_size_buff = breast_buff;
+    //            }
+    //            return false;
+    //        }
+    //        return true;
+    //        });
+    //}
+
     void GTS_BS_GrowBoobs(const AnimationEventData& data) {
         Animation_Cleavage::LaunchCooldownFor(&data.giant, CooldownSource::Action_Breasts_Absorb);
-        //RaceMenu::legacy_binding::GrowBreastsOverTime(&data.giant);
+        //Racemenu::ClearMorph(&data.giant, "Breasts");
+        //GrowBreastsOverTime(&data.giant);
     }
 
     ///===================================================================

@@ -1,4 +1,5 @@
-#include "API/APIManager.hpp"
+#include "API/Racemenu.hpp"
+#include "API/SmoothCam.hpp"
 #include "Hooks/Hooks.hpp"
 #include "Papyrus/Papyrus.hpp"
 #include "UI/DebugAPI.hpp"
@@ -71,7 +72,8 @@ namespace {
 				}
 
 				// Called after all kPostLoad message handlers have run.
-				case MessagingInterface::kPostPostLoad: { 
+				case MessagingInterface::kPostPostLoad: {
+					Racemenu::Register();
 					break;
 				}
 
@@ -82,9 +84,11 @@ namespace {
 
 				// All ESM/ESL/ESP plugins have loaded, main menu is now active.
 				case MessagingInterface::kDataLoaded: {
+
 					EventDispatcher::DoDataReady();
 					InputManager::GetSingleton().Init();
-					APIManager::GetSingleton().Register();
+					SmoothCam::Register();
+
 					CPrintPluginInfo();
 					break;
 				}

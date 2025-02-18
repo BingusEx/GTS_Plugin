@@ -11,23 +11,22 @@ namespace GTS {
         ImUtil_Unique{
 
             const char* T0 = "Enable the profiler to diagnose performance issues.";
-            const char* T1 = "Call AllocConsole() during mod startup to display stdout and stderr messages.";
-            const char* T2 = "Enable the debug overlay.";
-            const char* T3 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
+            const char* T1 = "Enable the debug overlay.";
 
-            const char* T4 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
+            const char* T2 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
+
+            const char* T3 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
 
             if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
 
                 ImUtil::CheckBox("Enable Profiling",&Settings.bProfile, T0);
-                ImUtil::CheckBox("Allocate Console",&Settings.bAllocConsole, T1);
-                ImUtil::CheckBox("Show Debug Overlay",&Settings.bShowOverlay,T2);
+                ImUtil::CheckBox("Show Debug Overlay",&Settings.bShowOverlay,T1);
 
-                if (ImUtil::ComboEx<spdlog::level::level_enum>("Log Level", Settings.sLogLevel,T3,false,true)) {
+                if (ImUtil::ComboEx<spdlog::level::level_enum>("Log Level", Settings.sLogLevel,T2,false,true)) {
                     spdlog::set_level(spdlog::level::from_str(Settings.sLogLevel));
 				}
 
-				if (ImUtil::ComboEx<spdlog::level::level_enum>("Flush Level", Settings.sFlushLevel,T4,false,true)) {
+				if (ImUtil::ComboEx<spdlog::level::level_enum>("Flush Level", Settings.sFlushLevel,T3,false,true)) {
                    spdlog::flush_on(spdlog::level::from_str(Settings.sFlushLevel));
 				}
 

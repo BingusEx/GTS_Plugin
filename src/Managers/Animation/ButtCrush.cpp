@@ -1,33 +1,17 @@
-#include "managers/animation/Controllers/ButtCrushController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/ButtCrush.hpp"
-#include "managers/damage/TinyCalamity.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
+
+#include "Managers/Animation/Controllers/ButtCrushController.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/ButtCrush.hpp"
+
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/AI/AIFunctions.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Rumble.hpp"
 
-
-
-
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 
@@ -61,8 +45,8 @@ namespace {
 		"NPC R Hand [RHnd]",
 	};
 
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	void StartRumble(std::string_view tag, Actor& actor, float power, float halflife) {
 		for (auto& node_name: ALL_RUMBLE_NODES) {

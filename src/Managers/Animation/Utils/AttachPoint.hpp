@@ -1,11 +1,7 @@
 #pragma once
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "rays/raycast.hpp"
-#include "data/runtime.hpp"
-#include "RE/N/NiMatrix3.h"
-#include "RE/N/NiPoint3.h"
-#include "scale/scale.hpp"
+
+#include "Managers/HighHeel.hpp"
+#include "Rays/Raycast.hpp"
 #include "UI/DebugAPI.hpp"
 
 namespace GTS {

@@ -1,13 +1,10 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class Animation_GrabVore {
 		public:
 			static void RegisterEvents();
 	};
+
 }

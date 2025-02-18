@@ -1,24 +1,17 @@
-#include "managers/animation/Controllers/ButtCrushController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/animation/BoobCrush.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "managers/audio/footstep.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/camera.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/Controllers/ButtCrushController.hpp"
+
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AttachPoint.hpp"
+
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/BoobCrush.hpp"
+
+#include "Managers/AI/AIFunctions.hpp"
+
+#include "Managers/GtsSizeManager.hpp"
+
+#include "Managers/Rumble.hpp"
+#include "Managers/HighHeel.hpp"
 
 using namespace GTS;
 

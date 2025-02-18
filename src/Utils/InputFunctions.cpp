@@ -7,8 +7,11 @@
 #include "Managers/Input/InputManager.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
 #include "Managers/Rumble.hpp"
+#include "Managers/HighHeel.hpp"
 
 #include "Magic/Effects/Common.hpp"
+
+
 
 using namespace GTS;
 

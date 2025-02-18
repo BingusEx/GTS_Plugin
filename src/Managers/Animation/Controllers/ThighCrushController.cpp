@@ -1,25 +1,10 @@
 #include "Managers/Animation/Controllers/ThighCrushController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/ai/ai_SelectAction.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
 
+#include "Managers/Animation/AnimationManager.hpp"
 
-
-
+#include "Managers/AI/AI_SelectAction.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/HighHeel.hpp"
 
 namespace {
 	constexpr float MINIMUM_THIGH_DISTANCE = 58.0f;

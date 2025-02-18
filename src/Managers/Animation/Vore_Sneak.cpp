@@ -1,27 +1,7 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/animation/Vore_Sneak.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
+#include "Managers/Animation/Vore_Sneak.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-
-
-
-
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 using namespace GTS;
 

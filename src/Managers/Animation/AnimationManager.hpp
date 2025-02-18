@@ -1,11 +1,6 @@
 #pragma once
 
-
-
-
-
-namespace GTS
-{
+namespace GTS {
 	// This data is passed to an animation that is in progress
 	//   It is created when StartAnim is called
 	//   It is destroyed after ActorAnimEvent if stage == 0

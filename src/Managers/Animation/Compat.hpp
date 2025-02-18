@@ -1,4 +1,6 @@
 #pragma once
+
+
 // Animation: Compatibility
 // Notes: Made avaliable for other generic anim mods
 //  - Stages
@@ -9,12 +11,8 @@
 //   - "MCO_SecondDodge",           // enables GTS sounds and footstep effects
 //   - "SoundPlay.MCO_DodgeSound",
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class AnimationCompat {
 		public:
 			static void RegisterEvents();

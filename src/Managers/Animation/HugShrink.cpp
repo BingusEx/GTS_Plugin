@@ -1,20 +1,19 @@
-#include "managers/animation/Controllers/HugController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "Utils/InputConditions.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Controllers/HugController.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/Utils/TurnTowards.hpp"
+
+#include "Managers/Input/InputManager.hpp"
+#include "Managers/Rumble.hpp"
+
+#include "Magic/Effects/Common.hpp"
+
+#include "Utils/AttachPoint.hpp"
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 

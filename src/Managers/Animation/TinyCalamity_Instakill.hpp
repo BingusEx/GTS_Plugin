@@ -1,9 +1,7 @@
+#pragma once
 
+namespace GTS {
 
-
-
-namespace GTS
-{
 	class Animation_TinyCalamity_InstaKill {
 		public:
 			static void RegisterEvents();

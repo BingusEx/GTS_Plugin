@@ -1,10 +1,4 @@
 #pragma once
-// Module that handles AttributeAdjustment
-
-
-
-
-
 
 namespace GTS {
 

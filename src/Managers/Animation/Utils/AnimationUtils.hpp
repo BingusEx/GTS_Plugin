@@ -1,7 +1,5 @@
 #pragma once
 
-#include "managers/animation/Utils/AttachPoint.hpp"
-
 namespace GTS {
 
 	enum class FollowerAnimType {

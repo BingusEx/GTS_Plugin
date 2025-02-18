@@ -1,3 +1,21 @@
+#include "Managers/Animation/ThighCrush.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+
+#include "Managers/Animation/Controllers/ThighCrushController.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+
+#include "Managers/Input/InputManager.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/AI/AIFunctions.hpp"
+#include "Managers/Rumble.hpp"
+
+#include "Magic/Effects/Common.hpp"
+
+#include "Utils/InputConditions.hpp"
+
+using namespace GTS;
+
 // Animation: ThighCrush
 //  - Stages
 //    - "GTStosit",                     // [0] Start air rumble and camera shake
@@ -14,38 +32,10 @@
 //    - "GTSstandRS",                   // [11] Silent impact of right feet
 //    - "GTStoexit",                    // [12] Leave animation, disable air rumble and such
 
-#include "managers/animation/Controllers/ThighCrushController.hpp"
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/ThighCrush.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-
-#include "Managers/AI/AIFunctions.hpp"
-
-#include "scale/scale.hpp"
-
-
-
-
-
-using namespace GTS;
-
 namespace {
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	const std::vector<std::string_view> BODY_RUMBLE_NODES = { // used for body rumble
 		"NPC COM [COM ]",

@@ -1,25 +1,15 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/damage/LaunchObject.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/animation/Crawling.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
+#include "Managers/Animation/Crawling.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
+
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+
+#include "Managers/Damage/LaunchObject.hpp"
 #include "Managers/Input/InputManager.hpp"
-#include "utils/InputConditions.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "rays/raycast.hpp"
+#include "Managers/GtsSizeManager.hpp"
 
-
-
+#include "Utils/InputConditions.hpp"
 
 using namespace GTS;
 

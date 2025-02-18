@@ -5,7 +5,6 @@
 #include "Managers/Damage/CollisionDamage.hpp"
 #include "Managers/Damage/TinyCalamity.hpp"
 #include "Managers/Audio/PitchShifter.hpp"
-#include "Managers/Cameras/CamUtil.hpp"
 #include "Managers/RipClothManager.hpp"
 #include "Managers/MaxSizeManager.hpp"
 #include "Managers/Animation/Grab.hpp"
@@ -14,14 +13,33 @@
 #include "Utils/DynamicScale.hpp"
 #include "AI/AIFunctions.hpp"
 
+#include "Config/Config.hpp"
+
+#include "Hooks/Skyrim/INISettings.hpp"
+
 using namespace GTS;
 
-namespace {
-	constexpr float ini_adjustment = 1000000; //1 million units distance
 
-	void FixEmotionsRange() { // Makes facial emotions always enabled at any size
-		EnsureINIFloat("fTalkingDistance:LOD", ini_adjustment);
-		EnsureINIFloat("fLodDistance:LOD", ini_adjustment);
+namespace {
+
+	constexpr float ini_adjustment = 65535.f; //High Value
+
+	void FixEmotionsRange() {
+
+		// Makes facial emotions always enabled at any size
+		*Hooks::gINI_LOD::fTalkingDistance = ini_adjustment;
+		*Hooks::gINI_LOD::fLodDistance = ini_adjustment;
+
+	}
+
+	void UpdateCameraINIs() {
+		auto& CamSettings = Config::GetCamera();
+
+		*Hooks::gINI_CAMERA::fVanityModeMinDist = CamSettings.fCameraDistMin;
+		*Hooks::gINI_CAMERA::fVanityModeMaxDist = CamSettings.fCameraDistMax;
+		*Hooks::gINI_CAMERA::fMouseWheelZoomIncrement = CamSettings.fCameraIncrement;
+		*Hooks::gINI_CAMERA::fMouseWheelZoomSpeed = CamSettings.fCameraZoomSpeed;
+
 	}
 
 	void Foot_PerformIdleEffects_Main(Actor* actor) {
@@ -264,9 +282,13 @@ namespace {
 		if (scale < 1e-5) {
 			return;
 		}
-		IsInSexlabAnim(actor, PlayerCharacter::GetSingleton()) ? 
-		persi_actor_data->anim_speed = GetAnimationSlowdown(PlayerCharacter::GetSingleton())  // Copy player speed onto the actor
-		: 
+
+		// Copy player speed onto the actor
+		if (IsInSexlabAnim(actor, PlayerCharacter::GetSingleton())) {
+			persi_actor_data->anim_speed = GetAnimationSlowdown(PlayerCharacter::GetSingleton());
+			return;
+		}  
+		
 		persi_actor_data->anim_speed = GetAnimationSlowdown(actor); // else behave as usual
 	}
 
@@ -316,8 +338,10 @@ void GtsManager::Update() {
 	ManageActorControl(); // Sadly have to call it non stop since im unsure how to easily fix it otherwise :(
 	ShiftAudioFrequency();
 	FixActorFade();
+	UpdateCameraINIs();
 
 	for (auto actor: find_actors()) {
+
 		if (actor) {
 
 			if (actor->formID == 0x14 || IsTeammate(actor)) {

@@ -3,6 +3,8 @@
 #include "Managers/AI/AIFunctions.hpp"
 #include "Magic/Effects/Common.hpp"
 
+#include "UI/DebugAPI.hpp"
+
 using namespace GTS;
 
 namespace {

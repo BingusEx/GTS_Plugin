@@ -122,10 +122,23 @@ namespace GTS {
 
 	    ImUtil_Unique {
 
-	        const char* T0 = "Change the minimum zoom distance.";
-	        const char* T1 = "Change the maximum zoom distance.";
-	        const char* T2 = "Change the zoom speed.";
-	        const char* T3 = "Change the zoom step.";
+	        const char* T0 = "Offsets the 3rd person camera's minimum zoom distance.\n"
+							 "Combined with the maximum distance this affects the distance from the player\n"
+							 "where the camera perspective switches to 1st person.";
+
+	        const char* T1 = "Offsets the 3rd person camera's maximum zoom distance.\n"
+							 "Higher values will zoom out the camera more.\n"
+							 "Combined with the minimum distance this affects the distance from the player\n"
+	    					 "where the camera perspective switches to 1st person.";
+
+			const char* T2 = "Changes the transition speed between camera steps.";
+
+	        const char* T3 = "Changes the camera's zoom step divisor.\n"
+							 "Lower values increase the ammount of zoom steps,\n"
+	    					 "whilst higher values decrease them.\n";
+
+			const char* T4 = "Toggle wether this mod should override skyrim's defalt camera settings.\n"
+				"NOTE: Requires a game restart for the original values to be reapplied.";
 
 	        const char* THelp = 
 	            "These are the same settings as can be found in skyrim.ini.\n"
@@ -140,10 +153,17 @@ namespace GTS {
 	                ImGui::SetTooltip(THelp);
 	            }
 
-	            ImUtil::SliderF("Minimum Distance", &Settings.fCameraDistMin, -10.0f, 100.0f, T0, "%.1f");
-	            ImUtil::SliderF("Maximum Distance", &Settings.fCameraDistMax, 200.0f, 700.0f, T1, "%.1f");
-	            ImUtil::SliderF("Zoom Speed", &Settings.fCameraZoom, 5.0f, 40.0f, T2, "%.1f");
-	            ImUtil::SliderF("Zoom Step", &Settings.fCameraStep, 0.0f, 0.3f, T3, "%.3f");
+				ImUtil::CheckBox("Enable Adjustments", &Settings.bEnableSkyrimCameraAdjustments, T4);
+
+				ImGui::BeginDisabled(!&Settings.bEnableSkyrimCameraAdjustments);
+
+	            ImUtil::SliderF("Minimum Distance", &Settings.fCameraDistMin, -100.0f, 300.0f, T0, "%.1f");
+	            ImUtil::SliderF("Maximum Distance", &Settings.fCameraDistMax, 50.0f, 1200.0f, T1, "%.1f");
+	            ImUtil::SliderF("Zoom Speed", &Settings.fCameraZoomSpeed, 0.1f, 10.0f, T2, "%.1f");
+	            ImUtil::SliderF("Zoom Step", &Settings.fCameraIncrement, 0.01f, 0.25f, T3, "%.3f");
+
+				ImGui::EndDisabled();
+
 
 	            ImGui::Spacing();
 	        }

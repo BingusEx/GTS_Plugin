@@ -9,6 +9,8 @@
 
 #include "Magic/Effects/Common.hpp"
 
+#include "UI/DebugAPI.hpp"
+
 #include "Utils/DeathReport.hpp"
 #include "Utils/MovementForce.hpp"
 

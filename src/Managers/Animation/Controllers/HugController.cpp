@@ -1,10 +1,12 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Controllers/HugController.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/ThighSandwich.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/GtsSizeManager.hpp"
+#include "Managers/Animation/Controllers/HugController.hpp"
+
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+
+#include "Managers/GtsSizeManager.hpp"
 
 using namespace GTS;
 

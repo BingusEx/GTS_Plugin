@@ -1,12 +1,7 @@
 #pragma once
 
+namespace GTS {
 
-
-
-
-
-namespace GTS
-{
 	struct BoobCrushData {
 		public:
 			BoobCrushData(Actor* tiny);

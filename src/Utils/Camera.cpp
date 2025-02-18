@@ -100,7 +100,7 @@ namespace GTS {
 					return true;
 				}
 			} else if (cameraID == RE::CameraState::kFirstPerson) {
-				auto actor3D = RE::PlayerCharacter::GetSingleton()->Get3D(0);
+				auto actor3D = RE::PlayerCharacter::GetSingleton()->Get3D(false);
 				if (actor3D && !actor3D->GetFlags().any(RE::NiAVObject::Flag::kHidden) & 1) {
 					return true;
 				}

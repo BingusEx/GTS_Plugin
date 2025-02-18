@@ -222,7 +222,6 @@ struct SettingsAdvanced {
     bool bAllActorSizeEffects = false;
     bool bDamageAV = true;
     bool bCooldowns = true;
-    bool bAllocConsole = false;
 
     float fAnimSpeedAdjMultPlayer = 1.0f;
     float fAnimSpeedAdjMultTeammate = 1.0f;
@@ -365,10 +364,13 @@ struct SettingsCamera {
     std::string sAutoCameraModeTP = "kDisabled";
 
     // Distance and zoom controls
-    float fCameraDistMin = 6.0f;
+
+    bool bEnableSkyrimCameraAdjustments = false;
+
+    float fCameraDistMin = 50.0f;
     float fCameraDistMax = 400.0f;
-    float fCameraZoom = 20.0f;
-    float fCameraStep = 0.075f;
+    float fCameraZoomSpeed = 20.0f;
+    float fCameraIncrement = 0.075f;
 
     // Collision settings
     bool bCamCollideActor = false;

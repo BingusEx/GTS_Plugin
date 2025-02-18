@@ -1,55 +1,53 @@
-#include "managers/animation/Controllers/ButtCrushController.hpp"
-#include "managers/animation/Controllers/HugController.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Animation/Utils/AttachPoint.hpp"
+
 #include "Managers/Animation/Controllers/ThighSandwichController.hpp"
 #include "Managers/Animation/Controllers/GrabAnimationController.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/perks/PerkHandler.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/MovementForce.hpp"
-#include "utils/papyrusUtils.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/DeathReport.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "utils/looting.hpp"
+#include "Managers/Animation/Controllers/ButtCrushController.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
-#include "utils/random.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Controllers/HugController.hpp"
+
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+
+#include "Managers/Emotions/EmotionManager.hpp"
+#include "Managers/Perks/PerkHandler.hpp"
+
+#include "Managers/Damage/CollisionDamage.hpp"
+#include "Managers/Damage/LaunchActor.hpp"
 
 #include "Managers/AI/AIFunctions.hpp"
 
+#include "Managers/Rumble.hpp"
+
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/HighHeel.hpp"
+
+#include "Magic/Effects/Common.hpp"
+
+#include "Utils/MovementForce.hpp"
+#include "Utils/DeathReport.hpp"
+#include "Utils/Looting.hpp"
 
 using namespace GTS;
-
 
 namespace {
 
 	std::string_view GetImpactNode(CrawlEvent kind) {
 		if (kind == CrawlEvent::RightKnee) {
 			return "NPC R Calf [RClf]";
-		} else if (kind == CrawlEvent::LeftKnee) {
+		}
+		else if (kind == CrawlEvent::LeftKnee) {
 			return "NPC L Calf [LClf]";
-		} else if (kind == CrawlEvent::RightHand) {
+		}
+		else if (kind == CrawlEvent::RightHand) {
 			return "NPC R Finger20 [RF20]";
-		} else if (kind == CrawlEvent::LeftHand) {
+		}
+		else if (kind == CrawlEvent::LeftHand) {
 			return "NPC L Finger20 [LF20]";
-		} else {
+		}
+		else {
 			return "NPC L Finger20 [LF20]";
 		}
 	}
@@ -65,20 +63,20 @@ namespace {
 
 namespace GTS {
 
-	const std::string_view leftFootLookup = "NPC L Foot [Lft ]";
-	const std::string_view rightFootLookup = "NPC R Foot [Rft ]";
+	constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
+	constexpr std::string_view rightFootLookup = "NPC R Foot [Rft ]";
 
-	const std::string_view leftCalfLookup = "NPC L Calf [LClf]";
-	const std::string_view rightCalfLookup = "NPC R Calf [RClf]";
+	constexpr std::string_view leftCalfLookup = "NPC L Calf [LClf]";
+	constexpr std::string_view rightCalfLookup = "NPC R Calf [RClf]";
 
-	const std::string_view leftCalfLookup_failed = "NPC L Calf [LClf]";
-	const std::string_view rightCalfLookup_failed = "NPC R Calf [RClf]";
+	constexpr std::string_view leftCalfLookup_failed = "NPC L Calf [LClf]";
+	constexpr std::string_view rightCalfLookup_failed = "NPC R Calf [RClf]";
 
-	const std::string_view leftToeLookup_failed = "NPC L Toe0 [LToe]";
-	const std::string_view rightToeLookup_failed = "NPC R Toe0 [RToe]";
+	constexpr std::string_view leftToeLookup_failed = "NPC L Toe0 [LToe]";
+	constexpr std::string_view rightToeLookup_failed = "NPC R Toe0 [RToe]";
 
-	const std::string_view leftToeLookup = "NPC L Joint 3 [Lft ]";
-	const std::string_view rightToeLookup = "NPC R Joint 3 [Rft ]";
+	constexpr std::string_view leftToeLookup = "NPC L Joint 3 [Lft ]";
+	constexpr std::string_view rightToeLookup = "NPC R Joint 3 [Rft ]";
 
 	void BlockFirstPerson(Actor* actor, bool block) { // Credits to ArranzCNL for this function. Forces Third Person because we don't have FP working yet.
 		auto playerControls = RE::PlayerControls::GetSingleton();
@@ -845,7 +843,7 @@ namespace GTS {
 	void FootGrindCheck(Actor* actor, float radius, bool strong, bool Right) {  // Check if we hit someone with stomp. Yes = Start foot grind. Left Foot.
 		if (actor) {
 			float giantScale = get_visual_scale(actor);
-			const float BASE_CHECK_DISTANCE = 180.0f;
+			constexpr float BASE_CHECK_DISTANCE = 180.0f;
 			float SCALE_RATIO = 3.0f;
 
 			float maxFootDistance = radius * giantScale;
@@ -1052,7 +1050,7 @@ namespace GTS {
 			auto& sizemanager = SizeManager::GetSingleton();
 			float giantScale = get_visual_scale(actor);
 			float perk = GetPerkBonus_Thighs(actor);
-			const float BASE_CHECK_DISTANCE = 90.0f;
+			constexpr float BASE_CHECK_DISTANCE = 90.0f;
 			float SCALE_RATIO = 1.75f;
 
 			if (HasSMT(actor)) {

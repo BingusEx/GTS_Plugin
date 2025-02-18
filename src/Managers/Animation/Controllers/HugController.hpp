@@ -1,13 +1,5 @@
 #pragma once
 
-
-
-
-
-
-
-
-
 namespace GTS {
 
 	class HugAnimationController : public EventListener  {

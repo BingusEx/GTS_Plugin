@@ -1,42 +1,16 @@
-#include "managers/animation/Controllers/HugController.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/emotions/EmotionManager.hpp"
-#include "managers/ShrinkToNothingManager.hpp"
-#include "managers/damage/SizeHitEffects.hpp"
-#include "managers/animation/HugShrink.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/animation/HugHeal.hpp"
-#include "colliders/charcontroller.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/ai/aifunctions.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "magic/effects/common.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/tremor.hpp"
-#include "managers/Rumble.hpp"
-#include "data/transient.hpp"
-#include "Constants.hpp"
-#include "Managers/Animation/Controllers/VoreController.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/HugHeal.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Rumble.hpp"
 
+#include "Magic/Effects/Common.hpp"
 
-
-
-#include <random>
-
-
-using namespace REL;
 using namespace GTS;
 
-
-
 namespace {
+
 	void ActivateEmotions(Actor* actor, bool toggle) {
 		float p_1 = 1.0f;
 		float p_2 = 0.75f;

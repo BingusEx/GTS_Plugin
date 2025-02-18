@@ -1,13 +1,7 @@
-
-
 #pragma once
 
+namespace GTS {
 
-
-
-
-namespace GTS
-{
 	class Animation_SneakSlam_FingerGrind {
 		public:
 			static void RegisterEvents();

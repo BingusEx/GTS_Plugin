@@ -1,11 +1,6 @@
 #pragma once
 
-
-
-
-
-namespace GTS
-{
+namespace GTS {
 
 	class Animation_VoreCrawl {
 		public:

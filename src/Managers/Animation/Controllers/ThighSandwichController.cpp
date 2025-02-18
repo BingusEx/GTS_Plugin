@@ -1,11 +1,14 @@
 #include "Managers/Animation/Controllers/ThighSandwichController.hpp"
 
-
 #include "Managers/Animation/AnimationManager.hpp"
+
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/Utils/AttachPoint.hpp"
 
 #include "Managers/GtsSizeManager.hpp"
 #include "Magic/Effects/Common.hpp"
+
+
 
 
 using namespace GTS;

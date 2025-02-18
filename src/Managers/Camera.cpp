@@ -4,7 +4,7 @@
 #include "Managers/Input/InputManager.hpp"
 
 #include "Utils/InputConditions.hpp"
-#include "API/APIManager.hpp"
+#include "API/SmoothCam.hpp"
 
 using namespace REL;
 using namespace GTS;
@@ -15,25 +15,30 @@ namespace {
 		auto& camera = CameraManager::GetSingleton();
 		camera.ResetLeftRight();
 	}
+
 	void VerticalResetEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		camera.ResetUpDown();
 	}
+
 	void CamUpEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		float size = get_visual_scale(PlayerCharacter::GetSingleton());
 		camera.AdjustUpDown(0.6f + (size * 0.05f - 0.05f));
 	}
+
 	void CamDownEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		float size = get_visual_scale(PlayerCharacter::GetSingleton());
 		camera.AdjustUpDown(-(0.6f + (size * 0.05f - 0.05f)));
 	}
+
 	void CamLeftEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		float size = get_visual_scale(PlayerCharacter::GetSingleton());
 		camera.AdjustLeftRight(-(0.6f + (size * 0.05f - 0.05f)));
 	}
+
 	void CamRightEvent(const ManagedInputEvent& data) {
 		auto& camera = CameraManager::GetSingleton();
 		float size = get_visual_scale(PlayerCharacter::GetSingleton());
@@ -69,20 +74,19 @@ namespace GTS {
 
 		auto profiler = Profilers::Profile("Camera: Update");
 		CameraState* currentState = this->GetCameraState();
-		auto& APIMngr = APIManager::GetSingleton();
 
-		if (APIMngr.SmoothCamEnabled()) {
+		if (SmoothCam::Enabled()) {
 			if (auto TPState = reinterpret_cast<ThirdPersonCameraState*>(GetCameraStateTP())) {
 				if ((TPState == &this->footLState ||
 					TPState == &this->footRState  ||
 					TPState == &this->footState   ||
-					TPState->GetBoneTarget().boneNames.size() > 0)) { //Checks for Valid states when using Normal or Alt Cam
+					!TPState->GetBoneTarget().boneNames.empty())) { //Checks for Valid states when using Normal or Alt Cam
 					//Take control from SC so we can do our own thing if one of these conditions match
-					APIMngr.ReqControlFromSC();
+					SmoothCam::RequestConrol();
 				}
 				else {
 					//If not in one of the above states. Return camera control to SC.
-					APIMngr.RetControlToSC();
+					SmoothCam::ReturnControl();
 					return;
 				}
 			}

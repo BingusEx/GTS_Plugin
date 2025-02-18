@@ -1,17 +1,8 @@
-#include "managers/animation/Utils/CooldownManager.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "data/persistent.hpp"
-#include "managers/Rumble.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "data/time.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 
+#include "Config/Config.hpp"
 
-
-
-#include <random>
-
+#include "Managers/Animation/AnimationManager.hpp"
 
 using namespace GTS;
 
@@ -292,6 +283,12 @@ namespace GTS {
     }
 
     bool IsActionOnCooldown(Actor* giant, CooldownSource source) {
+
+        //Check the cleat flag to disable only action cooldowns and not others
+        if (!Config::GetAdvanced().bCooldowns && Enum_Contains<CooldownSource>(source,"Action")) {
+            return false;
+        }
+
         double time = Time::WorldTimeElapsed();
         auto& data = CooldownManager::GetSingleton().GetCooldownData(giant);
 

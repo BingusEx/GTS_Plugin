@@ -134,8 +134,10 @@ namespace GTS {
 	    ImGui::SameLine(ImGui::GetContentRegionAvail().x - (ImGui::CalcTextSize("Control Info (?)").x));
 	    
 	    {
-	        const char* THelp = "Holding Ctrl when clicking on a UI control allows you to manually enter a value for finer adjustment.";
-	        ImGui::TextColored(ImUtil::ColorSubscript, "Control Info (?)");
+	        const char* THelp = "Holding Ctrl when clicking on a UI element (eg. slider) allows you to manually enter a value for finer adjustment.\n\n"
+								"If the settings menu is behaving strangely and you can't select/change things try pressing  Tab once";
+
+	        ImGui::TextColored(ImUtil::ColorSubscript, "Help/Info (?)");
 	        if (ImGui::IsItemHovered()){
 	            ImGui::SetTooltip(THelp);
 	        }

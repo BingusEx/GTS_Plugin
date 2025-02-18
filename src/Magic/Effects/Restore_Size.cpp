@@ -2,8 +2,8 @@
 #include "Common.hpp"
 #include "restore_size.hpp"
 
-#include "managers/Rumble.hpp"
-#include "managers/animation/Utils/CooldownManager.hpp"
+#include "Managers/Rumble.hpp"
+#include "Managers/Animation/Utils/CooldownManager.hpp"
 using namespace GTS;
 
 namespace {

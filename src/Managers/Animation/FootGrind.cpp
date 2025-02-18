@@ -1,32 +1,19 @@
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/FootGrind.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/explosion.hpp"
-#include "managers/highheel.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/FootGrind.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
 
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Explosion.hpp"
+#include "Managers/Rumble.hpp"
 
-
+#include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
 
 namespace {
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
 	float GetGrindEventLimit(Actor* giant) {
 		float limit = 7.0f;

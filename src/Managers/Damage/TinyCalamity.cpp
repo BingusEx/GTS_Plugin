@@ -1,4 +1,6 @@
+#include "Managers/Damage/TinyCalamity.hpp"
 
+#include "Managers/Animation/Controllers/VoreController.hpp"
 
 #include "Managers/Animation/Utils/TurnTowards.hpp"
 #include "Managers/Animation/Utils/CooldownManager.hpp"
@@ -7,26 +9,19 @@
 #include "Managers/Animation/TinyCalamity_Shrink.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 
-
-
 #include "Managers/Perks/PerkHandler.hpp"
-
-
 #include "Managers/Attributes.hpp"
 
 #include "Utils/MovementForce.hpp"
 #include "Utils/Looting.hpp"
 
 #include "Managers/Damage/CollisionDamage.hpp"
-#include "Managers/Damage/TinyCalamity.hpp"
-
 #include "Managers/AI/AIFunctions.hpp"
-
-
 #include "Managers/GtsSizeManager.hpp"
-#include "Managers/Animation/Controllers/VoreController.hpp"
 
-#include "Magic/Effects/common.hpp"
+#include "Magic/Effects/Common.hpp"
+
+#include "UI/DebugAPI.hpp"
 
 using namespace GTS;
 
@@ -316,7 +311,7 @@ namespace GTS {
 
                 float giantScale = get_visual_scale(giant);
 
-                const float BASE_DISTANCE = 48.0f;
+                constexpr float BASE_DISTANCE = 48.0f;
                 float CheckDistance = BASE_DISTANCE*giantScale;
 
                 if (IsDebugEnabled() && (giant->formID == 0x14 || IsTeammate(giant))) {

@@ -1,11 +1,7 @@
 #pragma once
 
-
-
-
-
-
 namespace GTS {
+
 	struct HugShrinkData {
 		public:
 			HugShrinkData(TESObjectREFR* tiny, float strength);

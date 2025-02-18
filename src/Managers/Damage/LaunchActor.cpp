@@ -1,8 +1,12 @@
 #include "Managers/Damage/LaunchActor.hpp"
+
+#include "Managers/HighHeel.hpp"
 #include "Managers/Damage/LaunchObject.hpp"
 
 #include "Managers/Animation//Utils/CooldownManager.hpp"
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
+
+#include "UI/DebugAPI.hpp"
 
 using namespace GTS;
 

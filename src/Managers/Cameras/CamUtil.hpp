@@ -15,7 +15,7 @@ namespace GTS {
 
 	void UpdateThirdPerson();
 
-	void ResetIniSettings();
+	//void ResetIniSettings();
 
 	NiCamera* GetNiCamera();
 	void UpdateWorld2ScreetMat(NiCamera* niCamera);
@@ -43,7 +43,7 @@ namespace GTS {
 	NiPoint3 ThirdPersonPoint();
 
 	float ZoomFactor();
-	float MaxZoom();
+
 	NiPoint3 CompuleLookAt(float zoomScale = 0.95f);
 
 	// Get's camera position relative to the player

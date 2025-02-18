@@ -1,31 +1,17 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Stomp_Under.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/cameras/camutil.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "managers/explosion.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "managers/tremor.hpp"
-#include "Constants.hpp"
-#include "data/transient.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
+#include "Managers/Animation/Stomp_Under.hpp"
 
-
-
-
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
+#include "Managers/Audio/Footstep.hpp"
+#include "Managers/Rumble.hpp"
 
 using namespace GTS;
 
 namespace {
-    const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
+
+	constexpr std::string_view RNode = "NPC R Foot [Rft ]";
+	constexpr std::string_view LNode = "NPC L Foot [Lft ]";
 
     void DoImpactRumble(Actor* giant, std::string_view node, std::string_view name) {
 		float shake_power = Rumble_Stomp_Under_Light;
@@ -90,7 +76,7 @@ namespace GTS {
 
     bool AnimationUnderStomp::ShouldStompUnder_NPC(Actor* giant, float distance) {
         //log::info("Distance of {} is {}", giant->GetDisplayFullName(), distance);
-        const float min_distance = 37.5f;
+        constexpr float min_distance = 37.5f;
         const float blending = std::clamp(distance / min_distance, 0.0f, 1.0f);
 
         bool blend = false;
@@ -113,7 +99,7 @@ namespace GTS {
         //abs makes it become 1 -> 0 -> 1 for down -> middle -> up
         const float absPitch = abs(GetCameraRotation().entry[2][1]);
         //Remap our starting range
-        const float InvLookDownStartAngle = 0.9f; //Starting value of remap. Defines start angle for how down we are looking
+        constexpr float InvLookDownStartAngle = 0.9f; //Starting value of remap. Defines start angle for how down we are looking
         const float InvLookdownIntensity = std::clamp(Remap(absPitch, 1.0f, InvLookDownStartAngle, 0.0f, 1.0f), 0.0f, 1.0f);
 
         bool allow = absPitch > InvLookDownStartAngle;

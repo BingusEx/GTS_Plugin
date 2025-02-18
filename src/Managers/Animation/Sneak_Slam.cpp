@@ -1,30 +1,17 @@
-#include "managers/animation/Sneak_Slam_FingerGrind.hpp"
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/Utils/CrawlUtils.hpp"
-#include "managers/damage/CollisionDamage.hpp"
-#include "managers/animation/Sneak_Slam.hpp"
-#include "managers/damage/LaunchActor.hpp"
-#include "managers/audio/footstep.hpp"
-#include "managers/animation/Grab.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/CrushManager.hpp"
-#include "Managers/Input/InputManager.hpp"
-#include "utils/actorUtils.hpp"
-#include "managers/Rumble.hpp"
-#include "Constants.hpp"
-#include "data/runtime.hpp"
-#include "scale/scale.hpp"
-#include "rays/raycast.hpp"
+#include "Managers/Animation/Sneak_Slam.hpp"
+#include "Managers/Animation/Sneak_Slam_FingerGrind.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
 
-
-
+#include "Managers/Animation/Utils/CrawlUtils.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
 using namespace GTS;
 
 namespace {
-	const std::string_view Rfinger = "NPC R Finger12 [RF12]";
-	const std::string_view Lfinger = "NPC L Finger12 [LF12]";
+
+	constexpr std::string_view Rfinger = "NPC R Finger12 [RF12]";
+	constexpr std::string_view Lfinger = "NPC L Finger12 [LF12]";
 
 	void Finger_StartShrinkTask(Actor* giant, bool Right, float Radius, float Damage, float CrushMult) {
 		auto gianthandle = giant->CreateRefHandle();
