@@ -635,7 +635,7 @@ namespace GTS {
 	}
 
 	bool IsDebugEnabled() {
-		return Runtime::GetBool("EnableDebugOverlay"); // used for debug mode of collisions and such
+		return Config::GetAdvanced().bShowOverlay;
 	}
 
 	bool CanDoDamage(Actor* giant, Actor* tiny, bool HoldCheck) {

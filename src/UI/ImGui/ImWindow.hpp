@@ -10,7 +10,7 @@ namespace GTS {
 
         public:
 
-        enum WindowAnchor {
+        enum class WindowAnchor {
             kTopLeft,
             kTopRight,
             kCenter,
@@ -18,16 +18,15 @@ namespace GTS {
             kBottomRight,
         };
 
-        enum WindowMessage {
+        enum class WindowMessage {
             kUpdateStyle,
         };
 
         //Internal Flags
         bool Show = false;
         bool ConsumeInput = false;
-        bool DrawBG = true;
         bool Busy = false;
-        
+
         float FixedScaleMax = 95.0f;                //Max scale for the window
         float FixedScaleMin = 40.0f;                //Min scale for the window
         
@@ -41,7 +40,8 @@ namespace GTS {
 
         virtual void Draw() = 0;
         virtual inline bool ShouldShow() = 0;
-        virtual inline float GetAlpha() = 0;
+        virtual inline float GetAlphaMult() = 0;
+        virtual inline float GetBGAlphaMult() = 0;
 
         ImVec2 GetAnchorPos(WindowAnchor a_position, ImVec2 a_padding);
     };

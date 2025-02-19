@@ -32,8 +32,12 @@ namespace {
 
 	}
 
+	//Todo Find a way to not have to update this every frame.
 	void UpdateCameraINIs() {
+
 		auto& CamSettings = Config::GetCamera();
+
+		if (!CamSettings.bEnableSkyrimCameraAdjustments) return;
 
 		*Hooks::gINI_CAMERA::fVanityModeMinDist = CamSettings.fCameraDistMin;
 		*Hooks::gINI_CAMERA::fVanityModeMaxDist = CamSettings.fCameraDistMax;

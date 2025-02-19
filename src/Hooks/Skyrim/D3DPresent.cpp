@@ -26,7 +26,7 @@ namespace Hooks {
 		return _WndProcHandler(a_hwnd, a_msg, a_wParam, a_lParam);
 	}
 
-	//D3D11 Swapchain
+	//DXGI Swapchain
 	void Hook_Renderer::CreateD3DAndSwapChain() {
 		_CreateD3DAndSwapChain();
 		UIManager::GetSingleton().Init();
@@ -46,9 +46,28 @@ namespace Hooks {
 		UIManager::GetSingleton().Update();
 	}
 
+	//HudMenu Present
+	struct Hook_HUDMenu_Present {
+
+		static void thunk (RE::IMenu* a_menu) {
+			func(a_menu);
+			UIManager::GetSingleton().Update();
+		}
+
+		static inline REL::Relocation<decltype(thunk)> func;
+
+		static void Install() {
+			REL::Relocation<std::uintptr_t> vtbl{ RE::VTABLE_HUDMenu[0] };
+			func = vtbl.write_vfunc(0x06, thunk);
+			logger::info("Hooked IMenu HUDMenu[0] Vtable");
+		}
+
+	};
+
+
 	void Hook_Renderer::Hook(Trampoline& trampoline) {
 		//Credits to ershin for the hooks here
-		//const REL::Relocation<uintptr_t> inputHook{ REL::VariantID(67315, 68617, 0xC519E0) };					// C150B0, C3B360, C519E0
+
 		const REL::Relocation<uintptr_t> registerWindowHook{ REL::VariantID(75591, 77226, 0xDC4B90) };  // D71F00, DA3850, DC4B90
 		const REL::Relocation<uintptr_t> created3d11Hook{ REL::VariantID(75595, 77226, 0xDC5530) };     // D72810, DA3850, DC5530
 		const REL::Relocation<uintptr_t> presentHook{ REL::VariantID(75461, 77246, 0xDBBDD0) };         // D6A2B0, DA5BE0, DBBDD0
@@ -56,14 +75,19 @@ namespace Hooks {
 
 		//_InputFunc = trampoline.write_call<5>(inputHook.address() + REL::VariantOffset(0x7B, 0x7B, 0x81).offset(), InputFunc);
 
-		_RegisterClassA = *(uintptr_t*)trampoline.write_call<6>(registerWindowHook.address() + REL::VariantOffset(0x8E, 0x15C, 0x99).offset(), RegisterClassA);
+		_RegisterClassA = *reinterpret_cast<uintptr_t*>(trampoline.write_call<6>(registerWindowHook.address() + REL::VariantOffset(0x8E, 0x15C, 0x99).offset(), RegisterClassA));
 		logger::info("Hooked RegisterClassA");
 
 		_CreateD3DAndSwapChain = trampoline.write_call<5>(created3d11Hook.address() + REL::VariantOffset(0x9, 0x275, 0x9).offset(), CreateD3DAndSwapChain);
-		logger::info("Hooked SwapChain");
+		logger::info("Hooked CreateD3DAndSwapChain");
 
-		_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
-		logger::info("Hooked Present");
+		//_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
+		//logger::info("Hooked DXGISwapchain Present");
+
+		//Updating Earliser in the render pass allows us to auto hide everything when
+		//skyrim is doing its fade to black
+		Hook_HUDMenu_Present::Install();
+
 	}
 
 }

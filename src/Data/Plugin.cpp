@@ -71,8 +71,7 @@ namespace GTS {
 			RE::StatsMenu::MENU_NAME,
 			RE::TrainingMenu::MENU_NAME,
 			RE::TutorialMenu::MENU_NAME,
-			RE::TweenMenu::MENU_NAME,
-			"CustomMenu"s // Apparently papyrus scripts use this?
+			RE::TweenMenu::MENU_NAME
 		};
 
 		if (Plugin::Ready()) {

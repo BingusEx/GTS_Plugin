@@ -45,31 +45,46 @@ namespace GTS {
             }
 
             if (Plugin::AnyMenuOpen()) {
+                for (const auto& window : windows) {
+
+                    if (window->Name == "Settings" && window->Show) {
+                        //If for some unexplicable reason a menu appears while the settings menu is open and frozen
+                        //Explicitly disable freeze time as a precaution
+                        RE::Main::GetSingleton()->freezeTime = false;
+                    }
+
+                    window->Show = false;
+
+                }
                 return;
             }
 
             for (const auto& window : windows) {
 
-
                 if (window->ShouldShow()) {
 
-                    ImGui::PushStyleVar(ImGuiStyleVar_Alpha, window->GetAlpha());
+                    const float BGAlpha = window->GetBGAlphaMult();
+                    const float AlphaMult = window->GetAlphaMult();
+
+                    auto BorderCol = ImGui::GetStyle().Colors[ImGuiCol_Border];
+                    BorderCol.w *= BGAlpha;
+
+                    //Set Background alpha
+                    ImGui::SetNextWindowBgAlpha(BGAlpha * AlphaMult);
+                    ImGui::PushStyleColor(ImGuiCol_Border, BorderCol);
+
+                    //Set Entire Window Alpha
+                    ImGui::PushStyleVar(ImGuiStyleVar_Alpha, AlphaMult);
+
                     ImGui::PushFont(ImFontManager::GetFont("text")); //Default font
 
-                    volatile bool PushedVars = false;
-
-                    if (!window->DrawBG) {
-                        ImGui::SetNextWindowBgAlpha(0.f);
-                    }
-
                     ImGui::Begin(window->Name.c_str(), &window->Show, window->flags);
+
                     window->Draw();
 
-                    if (PushedVars) {
-                        ImGui::PopStyleColor();
-                    }
-
                     ImGui::End();
+
+                    ImGui::PopStyleColor();
                     ImGui::PopStyleVar();
                     ImGui::PopFont();
                 }

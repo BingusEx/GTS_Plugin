@@ -11,9 +11,9 @@ namespace GTS {
         private:
         SettingsUI& Settings = Config::GetUI();
 
-        void InitializeDefaultStyle(ImGuiStyle& style);
-        void ApplyAccentColor(ImGuiStyle& style);
-        void SetupStyleImpl();
+        static void InitializeDefaultStyle(ImGuiStyle& style);
+        void ApplyAccentColor(ImGuiStyle& style) const;
+        void SetupStyleImpl() const;
 
         static inline ImVec4 CalculateContrastColor(const ImVec4& background) {
             const float luminance = 0.2126f * background.x + 

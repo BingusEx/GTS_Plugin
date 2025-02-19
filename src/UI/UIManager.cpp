@@ -19,25 +19,24 @@ namespace {
             return;
         }
 
-        if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
-            Window->Show = true;
-
-        	//Freeze the game
-            RE::Main::GetSingleton()->freezeTime = true;
+        if (GTS::Plugin::AnyMenuOpen()) {
+            RE::DebugNotification("A menu is open, please close it before opening GTS Settings.");
+            return;
         }
 
-        //Attempt to fix alt tab getting stuck
-		//Doesnt work :( Can microsoft stop "fixing" apis that aren't broken smh
-        //GTS::UIManager::GetSingleton().ReleaseStuckKeys();
-        //GTS::UIManager::GetSingleton().OnFocusLost();
+        if (RE::UI::GetSingleton()->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
+            RE::DebugNotification("The dialogue menu is open, please close it first.");
+            return;
+        }
 
-        //auto& io = ImGui::GetIO();
-        //io.ClearInputKeys();
-        //io.ClearEventsQueue();
-        //io.ClearInputMouse();
+        if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
+            //Show Settings Window
+            Window->Show = true;
 
+            //Freeze the game
+            RE::Main::GetSingleton()->freezeTime = true;
+        }
     }
-
 }
 
 namespace GTS {
@@ -89,21 +88,22 @@ namespace GTS {
         logger::info("ImGui Init OK");
 
         InputManager::RegisterInputEvent("OpenSettings", OpenSettings);
-
     }
 
-    void UIManager::Update() {
-        std::ignore = Profilers::Profile("UIManager::Render");
 
-        if (!Initialized) {
+    //Gets called last so it will overlay everything
+    void UIManager::Update() {
+        std::ignore = Profilers::Profile("UIManager::Update");
+
+        if (!Initialized.load()) {
             return;
         }
-
-        ProcessInputEventQueue();
 
         if (!Plugin::Ready()) {
             return;
         }
+
+        ProcessInputEventQueue();
 
         ImGui_ImplWin32_NewFrame();
         ImGui_ImplDX11_NewFrame();

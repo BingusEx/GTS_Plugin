@@ -179,9 +179,12 @@ struct WindowConfStatus {
     std::array<float, 2> f2Offset = {20.0f, 20.0f};
     std::string sAnchor = "kTopRight";
     float fAlpha = 1.0f;
+    float fBGAlphaMult = 1.0f;
+
+    bool bEnableFade = true;
 
     // Display control
-    uint32_t iFlags = 2070;
+    uint32_t iFlags = 22;
 };
 TOML_SERIALIZABLE(WindowConfStatus);
 

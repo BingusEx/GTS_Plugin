@@ -52,7 +52,7 @@ namespace GTS {
 			return ImWindowManager::GetSingleton().HasInputConsumers();
 		}
 
-		constexpr static inline std::string_view ImGuiINI = "Data\\SKSE\\Plugins\\GTSPlugin\\GTSPluginImGui.ini";
+		constexpr static inline std::string_view ImGuiINI = R"(Data\SKSE\Plugins\GTSPlugin\GTSPluginImGui.ini)";
 
 	};
 }

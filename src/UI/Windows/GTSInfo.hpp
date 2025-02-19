@@ -9,13 +9,12 @@ namespace GTS {
         kShowAspect = (1 << 3),
         kShowWeight = (1 << 4),
         kShowDmgResist = (1 << 5),
-        kShowCarryW = (1 << 6),
+        kShowCarryWeight = (1 << 6),
         kShowSpeedmult = (1 << 7),
         kShowJumpMult = (1 << 8),
         kShowDmgMult = (1 << 9),
         kAutoSize = (1 << 10),
-        kDrawBackground = (1 << 11),
-        kShowPermanentSize = (1 << 12)
+        kShowPermanentSize = (1 << 11)
     };
 
 

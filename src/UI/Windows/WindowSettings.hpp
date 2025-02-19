@@ -22,7 +22,13 @@ namespace GTS {
             return this->Show;
         }
 
-        inline float GetAlpha() override {
+
+        //Stubs. The settings window does not need these
+        inline float GetAlphaMult() override {
+            return 1.0f;
+        }
+
+        inline float GetBGAlphaMult() override {
             return 1.0f;
         }
 

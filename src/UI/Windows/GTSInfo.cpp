@@ -71,7 +71,7 @@ namespace GTS {
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgResist))
 				ImGui::Text("Bonus Dmg Resist: %.1f%%", _damageResist);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowCarryW))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowCarryWeight))
 				ImGui::Text("Bonus Carry Weight: %.1f", _carryWeight);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowSpeedmult))

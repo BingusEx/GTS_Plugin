@@ -2,6 +2,7 @@
 #include "UI/ImGUI/ImUtil.hpp"
 #include "UI/ImGUI/ImWindowManager.hpp"
 #include "UI/Windows/GTSInfo.hpp"
+#include "UI/Windows/WindowStatus.hpp"
 
 namespace GTS {
 
@@ -89,11 +90,21 @@ namespace GTS {
 	        const char* T3 = "Choose the alignment point for the window on screen";
 	        const char* T4 = "Adjust horizontal offset from the selected anchor point.";
 	        const char* T5 = "Adjust vertical offset from the selected anchor point.";
+			const char* T6 = "Adjust the opacity of the stats window's backround.";
+			const char* T7 = "Toggle whether the stats widget fades if the players scale or max scale don't change for 8 seconds.";
+
+			if (Settings.StatusWindow.bEnableFade) {
+				if (auto ConfWindow = dynamic_cast<WindowStatus*>(ImWindowManager::GetSingleton().GetWindowByName("Status"))) {
+					ConfWindow->Show();
+				}
+			}
 
 	        if(ImGui::CollapsingHeader("Status Widget",ImUtil::HeaderFlags)){ 
-	            ImUtil::CheckBox("Show Player Stats Widget", &Settings.StatusWindow.bVisible, T0);
+				ImUtil::CheckBox("Show Player Stats Widget", &Settings.StatusWindow.bVisible, T0);
+				ImUtil::CheckBox("Inactivity Fade", &Settings.StatusWindow.bEnableFade,T7);
 
-	            ImUtil::SliderF("Widget Alpha", &Settings.StatusWindow.fAlpha, 0.1f, 1.0f, T1,("%.1fx"));
+	            ImUtil::SliderF("Widget Alpha", &Settings.StatusWindow.fAlpha, 0.1f, 1.0f, T1,"%.1fx");
+				ImUtil::SliderF("Widget BG Alpha", &Settings.StatusWindow.fBGAlphaMult, 0.0f, 1.0f, T6, "%.1fx");
 	            
 	            ImGui::Spacing();
 	            
