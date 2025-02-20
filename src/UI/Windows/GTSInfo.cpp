@@ -3,6 +3,8 @@
 #include "UI/DearImGui/imgui.h"
 
 #include "Managers/Attributes.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+
 #include "Utils/UnitConverter.hpp"
 
 namespace GTS {
@@ -51,6 +53,8 @@ namespace GTS {
         const float _speed = (Atrib.GetAttributeBonus(a_Actor, ActorValue::kSpeedMult) - 1.0f) * 100.f;
         const float _jumpHeight = (Atrib.GetAttributeBonus(a_Actor, ActorValue::kJumpingBonus) - 1.0f) * 100.0f;
         const float _damage = (Atrib.GetAttributeBonus(a_Actor, ActorValue::kAttackDamageMult) - 1.0f) * 100.0f;
+        const float _ShrinkResist = (1.0f - Potion_GetShrinkResistance(a_Actor)) * 100.f;
+        const float _OnTheEdge = (GetPerkBonus_OnTheEdge(a_Actor,0.01f) - 1.0f) * 100.f;
 
 
         //TODO NEEDS TO BE CHANGED
@@ -71,28 +75,37 @@ namespace GTS {
         if (a_Actor->formID == 0x14) {
             if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowEssence))
                 ImGui::Text("Essence: +%.2fx", _Essence);
+
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowShrinkResist))
+                ImGui::Text("Shrink Resist: %.1f%%", _ShrinkResist);
+
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowOnTheEdge))
+                ImGui::Text("On The Edge: %.1f%%", _OnTheEdge);
         }
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowWeight))
-				ImGui::Text("Weight: %s", GTS::GetFormatedWeight(a_Actor).c_str());
+        	ImGui::Text("Weight: %s", GTS::GetFormatedWeight(a_Actor).c_str());
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowAspect))
-				ImGui::Text("Aspect of GTS: %.0f%%", _aspectOfGTS);
+        	ImGui::Text("Aspect of GTS: %.0f%%", _aspectOfGTS);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgResist))
-				ImGui::Text("Bonus Dmg Resist: %.1f%%", _damageResist);
+        	ImGui::Text("Bonus Dmg Resist: %.1f%%", _damageResist);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowCarryWeight))
-				ImGui::Text("Bonus Carry Weight: %.1f", _carryWeight);
+        	ImGui::Text("Bonus Carry Weight: %.1f", _carryWeight);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowSpeedmult))
-				ImGui::Text("Bonus Speed: %.1f%%", _speed);
+        	ImGui::Text("Bonus Speed: %.1f%%", _speed);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowJumpMult))
-				ImGui::Text("Bonus Jump Height: %.1f%%", _jumpHeight);
+        	ImGui::Text("Bonus Jump Height: %.1f%%", _jumpHeight);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgMult))
-				ImGui::Text("Bonus Damage: %.1f%%", _damage);
+        	ImGui::Text("Bonus Damage: %.1f%%", _damage);
+
+
+
 
     }
 }

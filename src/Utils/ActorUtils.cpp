@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Utils/ActorUtils.hpp"
 #include "Utils/DeathReport.hpp"
 #include "Utils/FindActor.hpp"
@@ -130,20 +132,6 @@ namespace {
 		return true;
 	}
 
-	float GetPerkBonus_OnTheEdge(Actor* giant, float amt) {
-		float bonus = 1.0f;
-		bool perk = Runtime::HasPerkTeam(giant, "OnTheEdge");
-		if (perk) {
-			float GetHP = std::clamp(GetHealthPercentage(giant) + 0.4f, 0.5f, 1.0f); // Bonus Size Gain if Actor has perk
-			if (amt > 0) {
-				bonus /= GetHP;
-			} else if (amt < 0) {
-				bonus *= GetHP;
-			} // When health is < 60%, empower growth by up to 50%. Max value at 10% health.
-		}
-		return bonus;
-	}
-
 	float ShakeStrength(Actor* Source) {
 		float Size = get_visual_scale(Source);
 		float k = 0.065f;
@@ -197,10 +185,22 @@ namespace {
 	};
 }
 
-RE::ExtraDataList::~ExtraDataList() {
-}
+RE::ExtraDataList::~ExtraDataList() = default;
 
 namespace GTS {
+
+	float GetPerkBonus_OnTheEdge(Actor* giant, float amt) {
+		float bonus = 1.0f;
+		bool perk = Runtime::HasPerkTeam(giant, "OnTheEdge");
+		if (perk) {
+			float hpFactor = std::clamp(GetHealthPercentage(giant) + 0.4f, 0.5f, 1.0f);
+			bonus = (amt > 0.0f) ? (2.0f - hpFactor) : hpFactor;
+			// AMT > 0 = increase size gain (1.5 / 0.5 = 3.0 for example)
+			// AMT < 0 = decrease size loss (1.5 * 0.5 = 0.75 for example)
+		}
+		return bonus;
+	}
+
 	RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis) {
 		float S = sin(angle);
 		float C = cos(angle);
@@ -406,12 +406,13 @@ namespace GTS {
 	float Potion_GetShrinkResistance(Actor* giant) {
 		auto transient = Transient::GetSingleton().GetData(giant);
 		float Resistance = 1.0f;
+
 		if (transient) {
 			Resistance -= transient->ShrinkResistance;
 		}
-		if (Resistance <= 0.25f) {
-			Resistance = 0.25f; // cap it just in case
-		}
+
+		Resistance = std::max(Resistance, 0.20f);
+
 		return Resistance;
 	}
 

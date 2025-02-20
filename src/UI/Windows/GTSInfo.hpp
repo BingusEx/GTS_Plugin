@@ -15,7 +15,9 @@ namespace GTS {
         kShowDmgMult = (1 << 9),
         kAutoSize = (1 << 10),
         kShowEssence = (1 << 11),
-        kShowBonusSize = (1 << 12)
+        kShowBonusSize = (1 << 12),
+        kShowShrinkResist = (1 << 13),
+        kShowOnTheEdge = (1 << 14),
     };
 
 

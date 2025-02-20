@@ -10,6 +10,8 @@ namespace GTS {
 		kOthers = 4,
 	};
 
+	float GetPerkBonus_OnTheEdge(Actor* giant, float amt);
+
 	[[nodiscard]] RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis);
 
 	RE::Actor* GetActorPtr(RE::Actor* actor);
