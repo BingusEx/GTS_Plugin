@@ -47,17 +47,18 @@ namespace GTS {
                 ImGui::ShowStackToolWindow();
             }
 
-            if (Plugin::AnyMenuOpen() || RE::UI::GetSingleton()->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
+            auto UI = UI::GetSingleton();
+
+            if (Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME) || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
+
                 for (const auto& window : windows) {
 
                     if (window->Name == "Settings" && window->Show) {
-                        //If for some unexplicable reason a menu appears while the settings menu is open and frozen
-                        //Explicitly disable freeze time as a precaution
+                        logger::warn("WindowManager::Update -> Force closed settings!");
                         UIManager::CloseSettings();
                     }
-
+                    //Redundant
                     window->Show = false;
-
                 }
                 return;
             }

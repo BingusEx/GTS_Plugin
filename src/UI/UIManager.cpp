@@ -16,23 +16,34 @@ namespace {
 
     void OpenSettingsImpl(bool a_IsConsole) {
 
-        if (!GTS::Plugin::Ready() || GTS::Plugin::AnyMenuOpen() || (RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME) && !a_IsConsole)) {
+        auto UI = RE::UI::GetSingleton();
+        
+        if (!GTS::Plugin::Ready() || GTS::Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
 
             if (a_IsConsole) {
-                GTS::Cprint("Can not show the settings menu at this time.");
+                GTS::Cprint("Can not open the settings menu at this time.");
             }
 
             return;
         }
 
-        if (RE::UI::GetSingleton()->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
-            RE::DebugNotification("The dialogue menu is open, please close it first.");
-            return;
-        }
-
         if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
-            //Show Settings Window
-            Window->Show = true;
+
+            if (UI->IsMenuOpen(RE::Console::MENU_NAME)) {
+                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
+                msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
+            }
+
+            if (UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
+                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
+                msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
+            }
+
+            //Due to the HUDMenu hook dialogue draws above our stuff. Just disallow opening settings if a dialogue menu is opened.
+            if (UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
+                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
+                msgQueue->AddMessage(RE::DialogueMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
+            }
 
             if (GTS::Config::GetAdvanced().bPauseGame) {
                 //Pause the game
@@ -46,10 +57,9 @@ namespace {
 
             RE::UIBlurManager::GetSingleton()->IncrementBlurCount();
 
-            if (a_IsConsole) {
-                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
-                msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
-            }
+            //Show Settings Window
+            Window->Show = true;
+
         }
     }
 
