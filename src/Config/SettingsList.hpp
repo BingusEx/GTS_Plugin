@@ -227,7 +227,7 @@ struct SettingsAdvanced {
     bool bDamageAV = true;
     bool bCooldowns = true;
     bool bPauseGame = true;
-
+    float fSGTMMult = 0.5f;
     float fAnimSpeedAdjMultPlayer = 1.0f;
     float fAnimSpeedAdjMultTeammate = 1.0f;
 };

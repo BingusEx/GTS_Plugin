@@ -7,7 +7,7 @@ namespace Hooks {
 	 * Contains Re'd offsets for the values in skyrims ini settings.
 	 */
 
-	namespace gINI_LOD {
+	namespace LOD {
 
 		//SE OFFSET: 141dea048
 		static float* fLodDistance = reinterpret_cast<float*>(REL::RelocationID(507568, 378623).address());
@@ -16,7 +16,7 @@ namespace Hooks {
 		static float* fTalkingDistance = reinterpret_cast<float*>(REL::RelocationID(507570, 378626).address());
 	};
 
-	namespace gINI_CAMERA {
+	namespace Camera {
 
 		//SE OFFSET: 141df37d8
 		static float* fVanityModeMaxDist = reinterpret_cast<float*>(REL::RelocationID(509878, 382627).address());
@@ -31,5 +31,25 @@ namespace Hooks {
 		static float* fMouseWheelZoomIncrement = reinterpret_cast<float*>(REL::RelocationID(509888, 382642).address());
 	
 	};
+
+	/*
+	* Contains Re'd offsets for global vars.
+	*/
+
+	namespace Time {
+
+		static float GGTM() {
+			static float* g_SGTM = reinterpret_cast<float*>(RELOCATION_ID(511883, 388443).address());
+			return *g_SGTM;
+		}
+
+		static void SGTM(float a_in) {
+			static float* g_SGTM = reinterpret_cast<float*>(RELOCATION_ID(511883, 388443).address());
+			*g_SGTM = a_in;
+			REL::Relocation<decltype(SGTM)> func{ RELOCATION_ID(66989, 68246) };
+			return;
+		}
+	}
+
 }
 

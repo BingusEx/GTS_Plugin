@@ -52,15 +52,11 @@ namespace GTS {
                 const char* T1 = "Bypass action cooldowns.";
                 const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
 
-                const char* T3 = "Toggle whether to fully pause the game when the menu is open.\n"
-								 "It's heavily recomended that you don't disable this.\n"
-								 "Applies after closing and re-opening the menu.";
+                
 
                 if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
                     ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
                     ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
-                    ImUtil::CheckBox("Pause Game", &Settings.bPauseGame, T3);
-
                     ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
                     ImUtil::SliderF("Animspeed Teammate", &Settings.fAnimSpeedAdjMultTeammate, 0.2f, 1.0f, T2);
 
@@ -75,12 +71,6 @@ namespace GTS {
 
             //ImGui Debug
             if (ImGui::CollapsingHeader("ImGui Debug",ImUtil::HeaderFlags)) {
-                ImGui::BulletText("Viewport Size: (%.2f,%.2f)", ImGui::GetMainViewport()->Size.x, ImGui::GetMainViewport()->Size.y);
-                ImGui::BulletText("Viewport Position: (%.2f,%.2f)", ImGui::GetMainViewport()->Pos.x, ImGui::GetMainViewport()->Pos.y);
-                ImGui::BulletText("Config Window Size: (%.2f,%.2f)", ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
-                ImGui::BulletText("Config Window Position: (%.2f,%.2f)", ImGui::GetWindowPos().x, ImGui::GetWindowPos().y);
-                ImGui::Spacing();
-
                 {
                     const char* T0 = "Show ImGui's Metrics Window";
                     const char* T1 = "Show ImGui's Stack Window";
@@ -88,6 +78,25 @@ namespace GTS {
                     ImUtil::CheckBox("Show Metrics", &ImWindowManager::GetSingleton().ShowMetrics,T0);
                     ImUtil::CheckBox("Show Stack", &ImWindowManager::GetSingleton().ShowStack,T1);
                 }
+            }
+
+        }
+
+
+        ImUtil_Unique{
+
+            const char* T0 = "Toggle whether to fully pause the game when the menu is open.\n"
+                             "It's heavily recomended that you don't disable this.\n"
+                             "Applies after closing and re-opening the menu.";
+
+			const char* T1 = "Multiply game speed by this value when the settings menu is open.\nOnly works if Pause game is disabled.";
+
+            //ImGui Debug
+            if (ImGui::CollapsingHeader("Pause",ImUtil::HeaderFlags)) {
+
+	            ImUtil::CheckBox("Pause Game", &Settings.bPauseGame, T0);
+	            ImUtil::SliderF("SGTM Mult", &Settings.fSGTMMult, 0.05f, 1.0f, T1, "%.2fx", Settings.bPauseGame);
+
             }
 
         }

@@ -2,6 +2,9 @@
 #include "UI/DearImGui/imgui_impl_dx11.h"
 #include "UI/DearImGui/imgui_impl_win32.h"
 #include "UI/UIManager.hpp"
+
+#include "Hooks/Skyrim/Settings.hpp"
+
 #include "Managers/Console/ConsoleManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
@@ -37,6 +40,9 @@ namespace {
                 //Old method Only stops world update
                 //RE::Main::GetSingleton()->freezeTime = true;
             }
+            else {
+                Hooks::Time::SGTM(GTS::Config::GetAdvanced().fSGTMMult);
+            }
 
             RE::UIBlurManager::GetSingleton()->IncrementBlurCount();
 
@@ -70,6 +76,7 @@ namespace GTS {
 
             //RE::Main::GetSingleton()->freezeTime = false;
             RE::UIBlurManager::GetSingleton()->DecrementBlurCount();
+            Hooks::Time::SGTM(1.0f);
         }
     }
 

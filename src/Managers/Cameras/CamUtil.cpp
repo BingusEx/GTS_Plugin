@@ -1,6 +1,5 @@
 #include "Managers/Cameras/CamUtil.hpp"
-
-#include "Hooks/Skyrim/INISettings.hpp"
+#include "Hooks/Skyrim/Settings.hpp"
 
 #include "Rays/raycast.hpp"
 #include "UI/DebugAPI.hpp"
@@ -554,7 +553,7 @@ namespace GTS {
 
 		NiMatrix3 cameraRotMat = GetCameraRotation();
 
-		float zoomOffset = ZoomFactor() * (*Hooks::gINI_CAMERA::fVanityModeMaxDist) * zoomScale;
+		float zoomOffset = ZoomFactor() * (*Hooks::Camera::fVanityModeMaxDist) * zoomScale;
 		NiPoint3 zoomOffsetVec = NiPoint3(0.0f, zoomOffset, 0.0f);
 		return cameraRotMat * zoomOffsetVec + cameraTrans;
 	}

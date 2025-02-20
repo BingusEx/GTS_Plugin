@@ -15,7 +15,7 @@
 
 #include "Config/Config.hpp"
 
-#include "Hooks/Skyrim/INISettings.hpp"
+#include "Hooks/Skyrim/Settings.hpp"
 
 using namespace GTS;
 
@@ -27,8 +27,8 @@ namespace {
 	void FixEmotionsRange() {
 
 		// Makes facial emotions always enabled at any size
-		*Hooks::gINI_LOD::fTalkingDistance = ini_adjustment;
-		*Hooks::gINI_LOD::fLodDistance = ini_adjustment;
+		*Hooks::LOD::fTalkingDistance = ini_adjustment;
+		*Hooks::LOD::fLodDistance = ini_adjustment;
 
 	}
 
@@ -39,10 +39,10 @@ namespace {
 
 		if (!CamSettings.bEnableSkyrimCameraAdjustments) return;
 
-		*Hooks::gINI_CAMERA::fVanityModeMinDist = CamSettings.fCameraDistMin;
-		*Hooks::gINI_CAMERA::fVanityModeMaxDist = CamSettings.fCameraDistMax;
-		*Hooks::gINI_CAMERA::fMouseWheelZoomIncrement = CamSettings.fCameraIncrement;
-		*Hooks::gINI_CAMERA::fMouseWheelZoomSpeed = CamSettings.fCameraZoomSpeed;
+		*Hooks::Camera::fVanityModeMinDist = CamSettings.fCameraDistMin;
+		*Hooks::Camera::fVanityModeMaxDist = CamSettings.fCameraDistMax;
+		*Hooks::Camera::fMouseWheelZoomIncrement = CamSettings.fCameraIncrement;
+		*Hooks::Camera::fMouseWheelZoomSpeed = CamSettings.fCameraZoomSpeed;
 
 	}
 
