@@ -92,7 +92,9 @@ namespace GTS {
 	        const char* T5 = "Adjust vertical offset from the selected anchor point.";
 			const char* T6 = "Adjust the opacity of the stats window's backround.";
 			const char* T7 = "Toggle whether the stats widget fades if the players scale or max scale don't change for 8 seconds.";
+			const char* T8 = "Change how long the widget menu should be shown for after a value has changed.";
 
+			//Hack
 			if (Settings.StatusWindow.bEnableFade) {
 				if (auto ConfWindow = dynamic_cast<WindowStatus*>(ImWindowManager::GetSingleton().GetWindowByName("Status"))) {
 					ConfWindow->Show();
@@ -101,7 +103,11 @@ namespace GTS {
 
 	        if(ImGui::CollapsingHeader("Status Widget",ImUtil::HeaderFlags)){ 
 				ImUtil::CheckBox("Show Player Stats Widget", &Settings.StatusWindow.bVisible, T0);
+
 				ImUtil::CheckBox("Inactivity Fade", &Settings.StatusWindow.bEnableFade,T7);
+				ImUtil::SliderF("Fade After", &Settings.StatusWindow.fFadeAfter, 0.5f, 10.0f, T8, "After %.1f Seconds", !Settings.StatusWindow.bEnableFade);
+
+				ImGui::Spacing();
 
 	            ImUtil::SliderF("Widget Alpha", &Settings.StatusWindow.fAlpha, 0.1f, 1.0f, T1,"%.1fx");
 				ImUtil::SliderF("Widget BG Alpha", &Settings.StatusWindow.fBGAlphaMult, 0.0f, 1.0f, T6, "%.1fx");

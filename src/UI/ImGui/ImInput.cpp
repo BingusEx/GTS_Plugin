@@ -1,4 +1,6 @@
 #include "UI/ImGui/ImInput.hpp"
+
+#include "UI/UIManager.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
 
 namespace GTS {
@@ -39,8 +41,7 @@ namespace GTS {
 
 					if (auto MainWindow = ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
 						if (key == VK_ESCAPE && MainWindow->Show && !MainWindow->Busy) {
-							MainWindow->Show = false;
-							Main::GetSingleton()->freezeTime = false;
+							UIManager::CloseSettings();
 						}
 					}
 

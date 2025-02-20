@@ -46,7 +46,10 @@ namespace GTS {
         }
         ImGui::EndChild();
 
-        if (TempFollowerCount == 0) return;
+        if (TempFollowerCount == 0) {
+            ImGui::EndChild();
+            return;
+        }
 
         //Sort by scale
         ranges::sort(FollowerList, [](Actor* a, Actor* b) {

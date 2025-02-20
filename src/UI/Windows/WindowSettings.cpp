@@ -17,6 +17,8 @@
 #include "Config/ConfigUtil.hpp"
 #include "Managers/Input/InputManager.hpp"
 
+#include "UI/UIManager.hpp"
+
 namespace GTS {
 
 	//This is bad... Should probably be disabled.
@@ -24,14 +26,13 @@ namespace GTS {
 	//Just one poorly timed memory read and its joever.
 	//sadly i cant use atomic types or volatiles in the structs themselves.
 	void WindowSettings::AsyncLoad(){
-
 		Plugin::Live();
 
 	    if(!Settings.LoadSettings()){
 	        ErrorString = "Could Not Load Settings! Check GTSPlugin.log for more info";
 	    }
 	    else{
-	        ErrorString = "";
+
 	        if(!KeyMgr.LoadKeybinds()){
 	            ErrorString = "Could Not Load Input Settings! Check GTSPlugin.log for more info";
 	        }
@@ -52,7 +53,7 @@ namespace GTS {
 	        ErrorString = "Could Not Save Settings! Check GTSPlugin.log for more info.";
 	    }
 	    else{
-	        ErrorString = "";
+
 	        if(!KeyMgr.SaveKeybinds()){
 	            ErrorString = "Could Not Save Input Settings! Check GTSPlugin.log for more info.";
 	        }
@@ -125,21 +126,41 @@ namespace GTS {
 	            ImGui::SetWindowPos(GetAnchorPos(StringToEnum<ImWindow::WindowAnchor>(sUI.sAnchor), Offset));
 	        }
 	    }
-	    
+
+		const auto OldPos = ImGui::GetCursorPos();
+
+		{
+
+			ImGui::PushFont(ImFontManager::GetFont("sidebar"));
+			ImVec2 pos = ImVec2(ImGui::GetContentRegionAvail().x - (ImGui::GetStyle().FramePadding.x * 2 + ImGui::GetStyle().WindowPadding.x + ImGui::GetStyle().CellPadding.x), 20);
+			ImGui::SetCursorPos(pos);
+
+			// Create the button
+			if (ImUtil::Button(" X ")) {
+				UIManager::CloseSettings();
+			}
+
+			ImGui::PopFont();
+		}
+
+		ImGui::SetCursorPos(OldPos);
+
 	    {  // Draw Title
 
 	        ImGui::PushFont(ImFontManager::GetFont("title"));
 	        ImGui::Text(Title.c_str());
 	        ImGui::PopFont();
 	    }
-	    
-	    ImGui::SameLine(ImGui::GetContentRegionAvail().x - (ImGui::CalcTextSize("Control Info (?)").x));
-	    
+
+
+		//ImGui::SameLine(ImGui::GetContentRegionAvail().x - (ImGui::CalcTextSize("Control Info (?)").x));
+
 	    {
 	        const char* THelp = "1. Holding Ctrl when clicking on a UI element (eg. slider) allows you to manually enter a value instead.\n\n"
-								"2. If the settings menu is behaving strangely and you can't select/change things try pressing the Tab key once.";
+								"2. If the settings menu is behaving strangely and you can't select/change things try pressing the Tab key once.\n\n"
+	    						"3. You can also close this menu by pressing ESC.";
 
-	        ImGui::TextColored(ImUtil::ColorSubscript, "Help/Info (?)");
+	        ImGui::TextColored(ImUtil::ColorSubscript, "Help / Info (?)");
 	        if (ImGui::IsItemHovered()){
 	            ImGui::SetTooltip(THelp);
 	        }

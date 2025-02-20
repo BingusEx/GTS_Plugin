@@ -9,6 +9,7 @@
 #include "Managers/Register.hpp"
 #include "Managers/Input/InputManager.hpp"
 #include "Managers/Animation/Utils/CooldownManager.hpp"
+#include "Managers/Console/ConsoleManager.hpp"
 
 using namespace SKSE;
 using namespace RE;
@@ -86,6 +87,7 @@ namespace {
 
 					EventDispatcher::DoDataReady();
 					InputManager::GetSingleton().Init();
+					ConsoleManager::Init();
 					SmoothCam::Register();
 
 					CPrintPluginInfo();
@@ -213,6 +215,7 @@ SKSEPluginLoad(const LoadInterface * a_skse){
 
 	Init(a_skse);
 	VersionCheck(a_skse);
+
 
 	InitializeMessaging();
 	Hooks::Install();

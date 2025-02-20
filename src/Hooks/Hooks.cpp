@@ -10,11 +10,15 @@
 #include "Hooks/Skyrim/MagicTarget.hpp"
 #include "Hooks/Skyrim/Projectiles.hpp"
 #include "Hooks/Skyrim/CameraState.hpp"
+#include "Hooks/Skyrim/D3DPresent.hpp"
 #include "Hooks/Skyrim/Character.hpp"
 #include "Hooks/Skyrim/Movement.hpp"
+#include "Hooks/Skyrim/Controls.hpp"
+#include "Hooks/Skyrim/PushAway.hpp"
 #include "Hooks/Skyrim/Pushback.hpp"
 #include "Hooks/Skyrim/RaceMenu.hpp"
 #include "Hooks/Skyrim/Stealth.hpp"
+#include "Hooks/Skyrim/Console.hpp"
 #include "Hooks/Skyrim/Impact.hpp"
 #include "Hooks/Skyrim/Damage.hpp"
 #include "Hooks/Skyrim/Actor.hpp"
@@ -24,9 +28,6 @@
 #include "Hooks/Skyrim/Sink.hpp"
 #include "Hooks/Skyrim/Jump.hpp"
 #include "Hooks/Skyrim/VM.hpp"
-#include "Hooks/Skyrim/D3DPresent.hpp"
-#include "Hooks/Skyrim/Controls.hpp"
-#include "Hooks/Skyrim/PushAway.hpp"
 
 #include "Hooks/Experiments.hpp"
 
@@ -92,7 +93,8 @@ namespace Hooks
 		Hook_HeadTracking::Hook(trampoline);
 		Hook_PreventAnimations::Hook(trampoline);
 		Hook_RaceMenu::Hook(trampoline);
-		
+		Hook_Console::Hook(trampoline);
+
 		HookCameraStates();
 
 		//Hook_MagicTarget::Hook();

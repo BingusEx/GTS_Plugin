@@ -36,6 +36,10 @@ namespace GTS {
 	std::string str_tolower(std::string s);
 	std::string str_toupper(std::string s);
 
+	std::string trim(const std::string& s);
+	void ltrim(std::string& s);
+	void rtrim(std::string& s);
+
 	// courtesy of https://stackoverflow.com/questions/5878775/how-to-find-and-replace-string
 	void replace_first(
 		std::string& s,

@@ -182,6 +182,7 @@ struct WindowConfStatus {
     float fBGAlphaMult = 1.0f;
 
     bool bEnableFade = true;
+    float fFadeAfter = 6.0f;
 
     // Display control
     uint32_t iFlags = 22;

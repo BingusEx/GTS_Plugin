@@ -29,7 +29,7 @@ namespace GTS {
         }
 
         inline float GetBGAlphaMult() override {
-            return 1.0f;
+            return ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w;
         }
 
         inline void SetDisabled(bool a_Disabled) {
@@ -42,7 +42,7 @@ namespace GTS {
 
         std::atomic<bool> SaveLoadBusy = false;
 
-        std::string ErrorString = "";
+        std::string ErrorString;
         ImCategoryManager& CatMgr = ImCategoryManager::GetSingleton();
         ImFontManager& FontMgr = ImFontManager::GetSingleton();
         ImStyleManager& StyleMgr = ImStyleManager::GetSingleton();

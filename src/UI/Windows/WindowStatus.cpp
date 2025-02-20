@@ -51,7 +51,7 @@ namespace GTS {
                 return;
             }
 
-            if (Time::WorldTimeElapsed() - LastData.LastWorldTime > FadeAfter) {
+            if (Time::WorldTimeElapsed() - LastData.LastWorldTime > Config::GetUI().StatusWindow.fFadeAfter) {
                 StartFade();
             }
         }

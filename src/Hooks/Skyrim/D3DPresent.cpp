@@ -32,7 +32,7 @@ namespace Hooks {
 		UIManager::GetSingleton().Init();
 	}
 
-	//Register Window Class
+	//Register WndProc
 	WORD Hook_Renderer::RegisterClassA(WNDCLASSA* a_wndClass) {
 		_WndProcHandler = reinterpret_cast<uintptr_t>(a_wndClass->lpfnWndProc);
 		a_wndClass->lpfnWndProc = &WndProcHandler;

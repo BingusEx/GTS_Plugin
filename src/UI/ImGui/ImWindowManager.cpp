@@ -44,7 +44,7 @@ namespace GTS {
                 ImGui::ShowStackToolWindow();
             }
 
-            if (Plugin::AnyMenuOpen()) {
+            if (Plugin::AnyMenuOpen() || RE::UI::GetSingleton()->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
                 for (const auto& window : windows) {
 
                     if (window->Name == "Settings" && window->Show) {

@@ -154,26 +154,32 @@ namespace {
 
 	void update_height(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data) {
 		auto profiler = Profilers::Profile("Manager: update_height");
+
 		if (!actor) {
 			return;
 		}
+
 		if (!trans_actor_data) {
 			log::info("!Upate_height: Trans Data not found for {}", actor->GetDisplayFullName());
 			return;
 		}
+
 		if (!persi_actor_data) {
 			log::info("!Upate_height: Pers Data not found for {}", actor->GetDisplayFullName());
 			return;
 		}
-		float currentOtherScale = Get_Other_Scale(actor);
+
+		const float currentOtherScale = Get_Other_Scale(actor);
 		trans_actor_data->otherScales = currentOtherScale;
 
+		const float natural_scale = get_natural_scale(actor, false);
 		float target_scale = persi_actor_data->target_scale;
-		
+		const float max_scale = persi_actor_data->max_scale / natural_scale;
+
 		// Smooth target_scale towards max_scale if target_scale > max_scale
-		float max_scale = persi_actor_data->max_scale;
 		if (target_scale > max_scale) {
-			float minimum_scale_delta = 0.000005f; // 0.00005f
+			constexpr float minimum_scale_delta = 0.000005f;
+
 			if (fabs(target_scale - max_scale) < minimum_scale_delta) {
 				float target = max_scale;
 				persi_actor_data->target_scale = target;
@@ -187,7 +193,8 @@ namespace {
 					Time::WorldTimeDelta()
 					);
 			}
-		} else {
+		}
+		else {
 			persi_actor_data->target_scale_v = 0.0f;
 		}
 

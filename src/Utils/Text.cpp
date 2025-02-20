@@ -39,4 +39,32 @@ namespace GTS {
 		return s;
 	}
 
+	// Trims whitespace from the beginning and end of the string
+	std::string trim(const std::string& s) {
+		auto start = s.begin();
+		while (start != s.end() && std::isspace(static_cast<unsigned char>(*start))) {
+			++start;
+		}
+
+		auto end = s.end();
+		do {
+			--end;
+		}
+		while (end != start && std::isspace(static_cast<unsigned char>(*end)));
+
+		return string(start, end + 1);
+	}
+
+	// In-place trimming functions for a std::string
+	void ltrim(std::string& s) {
+		s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+			[](unsigned char ch) { return !std::isspace(ch); }));
+	}
+
+	void rtrim(std::string& s) {
+		s.erase(std::find_if(s.rbegin(), s.rend(),
+			[](unsigned char ch) { return !std::isspace(ch); }).base(), s.end());
+	}
+
+
 }

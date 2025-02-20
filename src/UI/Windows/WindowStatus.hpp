@@ -31,7 +31,6 @@ namespace GTS {
         std::string_view FadeTask = "StatsWindowFadeTask";
         std::string_view ShowTask = "StatsShowTask";
 
-        const float FadeAfter = 7.0f;
 
         PlayerLastData LastData = {};
 

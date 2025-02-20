@@ -2,25 +2,41 @@
 #include "UI/DearImGui/imgui_impl_dx11.h"
 #include "UI/DearImGui/imgui_impl_win32.h"
 #include "UI/UIManager.hpp"
-
+#include "Managers/Console/ConsoleManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
-
 #include "UI/ImGui/ImWindowManager.hpp"
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/WindowStatus.hpp"
-
 #include "Managers/Input/InputManager.hpp"
 
 namespace {
 
-    void OpenSettings(const GTS::ManagedInputEvent& data) {
+    void OpenSettingsImpl(bool a_IsConsole) {
 
         if (!GTS::Plugin::Ready()) {
+
+            if (a_IsConsole) {
+                GTS::Cprint("Can not show the settings menu at this time.");
+            }
+
+            return;
+        }
+
+        if (GTS::Plugin::AnyMenuOpen() || (RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME) && !a_IsConsole)) {
+
+            if (a_IsConsole) {
+                GTS::Cprint("Can not show the settings menu at this time.");
+            }
+
             return;
         }
 
         if (GTS::Plugin::AnyMenuOpen()) {
-            RE::DebugNotification("A menu is open, please close it before opening GTS Settings.");
+
+            if (a_IsConsole) {
+                GTS::Cprint("Can not show the settings menu at this time.");
+            }
+
             return;
         }
 
@@ -35,11 +51,33 @@ namespace {
 
             //Freeze the game
             RE::Main::GetSingleton()->freezeTime = true;
+
+            if (a_IsConsole) {
+                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
+                msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
+            }
         }
     }
+
+    void OpenSettingsK(const GTS::ManagedInputEvent& data) {
+        OpenSettingsImpl(false);
+    }
+
+    void OpenSettingsC() {
+        OpenSettingsImpl(true);
+    }
+
 }
 
 namespace GTS {
+
+    void UIManager::CloseSettings() {
+        if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
+            //Show Settings Window
+            Window->Show = false;
+            RE::Main::GetSingleton()->freezeTime = false;
+        }
+    }
 
     void UIManager::Init() {
 
@@ -87,7 +125,8 @@ namespace GTS {
 
         logger::info("ImGui Init OK");
 
-        InputManager::RegisterInputEvent("OpenSettings", OpenSettings);
+        InputManager::RegisterInputEvent("OpenSettings", OpenSettingsK);
+        ConsoleManager::RegisterCommand("menu", OpenSettingsC, "Open the settings menu");
     }
 
 
