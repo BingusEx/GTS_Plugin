@@ -69,6 +69,8 @@ namespace GTS {
 
         ImGui::BeginDisabled(!Settings.bEnableActionAI);
 
+        //---- VORE
+
         ImUtil_Unique{
 
             const char* T0 = "Enable starting a vore action.";
@@ -81,17 +83,23 @@ namespace GTS {
             }
         }
 
+        //---- STOMP
+
         ImUtil_Unique{
 
             const char* T0 = "Enable foot stomps when standing or hand stomps when sneaking / crawling.";
             const char* T1 = "Set the chance for a stomp action to be started.";
+            const char* T2 = "Set the chance to pefrom a grind animation when doing under stomps";
 
             if (ImGui::CollapsingHeader("Stomps",ImGuiTreeNodeFlags_None)) {
                 ImUtil::CheckBox("Enable Stomps", &Settings.Stomp.bEnableAction, T0);
                 ImUtil::SliderF("Stomp Probability", &Settings.Stomp.fProbability, 1.0f, 100.0f, T1, "%.0f%%",!Settings.Stomp.bEnableAction);
+                ImUtil::SliderF("Grind On Understomp Chance", &Settings.Stomp.fUnderstompGrindProbability, 0.0f, 100.0f, T2, "%.0f%%", !Settings.Stomp.bEnableAction);
                 ImGui::Spacing();
             }
         }
+
+        //---- KICK
 
         ImUtil_Unique{
 
@@ -104,6 +112,8 @@ namespace GTS {
                 ImGui::Spacing();
             }
         }
+
+        //---- THIGH SANDWICH
 
         ImUtil_Unique{
 
@@ -136,6 +146,8 @@ namespace GTS {
             }
         }
 
+        //---- THIGH CRUSH
+
         ImUtil_Unique{
 
             const char* T0 = "Enable thigh crush actions.";
@@ -166,6 +178,8 @@ namespace GTS {
                 ImGui::Spacing();
             }
         }
+
+        //---- HUGS
 
         ImUtil_Unique{
 
@@ -205,6 +219,8 @@ namespace GTS {
                 ImGui::Spacing();
             }
         }
+
+        //---- BUTT CRUSH
 
         ImUtil_Unique{
 
@@ -264,6 +280,8 @@ namespace GTS {
                 ImGui::Spacing();
             }
         }
+
+		//---- GRABS
 
         ImUtil_Unique{
 

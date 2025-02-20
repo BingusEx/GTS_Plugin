@@ -150,17 +150,18 @@ namespace GTS {
                 const char* T2 = "This mod introduces new subtle transition animations when entering/exiting sneak or crawl states.\n"
                                  "This toggle disables/enables them.";
 
-                ImUtil::CheckBox("Alternative Stomp Player", &Settings.bStompAlternative, T1);
-                ImUtil::CheckBox("Alternative Stomp NPCs", &Settings.bStomAlternativeOther, T2);
+                ImUtil::CheckBox("Alternative Stomp Player", &Settings.ActionSettings.bStompAlternative, T1);
+                ImUtil::CheckBox("Alternative Stomp NPCs", &Settings.ActionSettings.bStomAlternativeOther, T2);
                 ImGui::Spacing();
-                ImUtil::CheckBox("Sneak Transitions Player", &Settings.bSneakTransitions, T2);
-                ImUtil::CheckBox("Sneak Transitions NPCs", &Settings.bSneakTransitionsOther, T2);
+                ImUtil::CheckBox("Sneak Transitions Player", &Settings.ActionSettings.bSneakTransitions, T2);
+                ImUtil::CheckBox("Sneak Transitions NPCs", &Settings.ActionSettings.bSneakTransitionsOther, T2);
 
                 ImGui::Spacing();
             }
         }
 
         ImUtil_Unique{
+
             if (ImGui::CollapsingHeader("Vore Settings", ImGuiTreeNodeFlags_None)) {
 
                 const char* T1 = "Modify the amount of growth gained after vore.";
@@ -169,14 +170,24 @@ namespace GTS {
                 const char* T4 = "Allow voring spiders.";
                 const char* T5 = "Allow voring undead actors (like draugr).";
 
-                ImUtil::SliderF("Vore Gain Mult", &Settings.fVoreGainMult, 0.1f, 3.0f, T1, "%.1fx");
-                ImUtil::CheckBox("Enable FreeCam During Vore", &Settings.bVoreFreecam, T2);
-                ImUtil::CheckBox("Increase Character Weight After Vore", &Settings.bVoreWeightGain, T3);
-                ImUtil::CheckBox("Allow Spiders", &Settings.bAllowSpiders, T4);
-                ImUtil::CheckBox("Allow Undead", &Settings.bAllowUndead, T5);
+                ImUtil::SliderF("Vore Gain Mult", &Settings.ActionSettings.fVoreGainMult, 0.1f, 3.0f, T1, "%.1fx");
+                ImUtil::CheckBox("Enable FreeCam During Vore", &Settings.ActionSettings.bVoreFreecam, T2);
+                ImUtil::CheckBox("Increase Character Weight After Vore", &Settings.ActionSettings.bVoreWeightGain, T3);
+                ImUtil::CheckBox("Allow Spiders", &Settings.ActionSettings.bAllowSpiders, T4);
+                ImUtil::CheckBox("Allow Undead", &Settings.ActionSettings.bAllowUndead, T5);
 
                 ImGui::Spacing();
             }
+        }
+
+        ImUtil_Unique{
+
+	        if (ImGui::CollapsingHeader("Stomp Settings", ImGuiTreeNodeFlags_None)) {
+	            const char* T1 = "Increase/lower the chance to start a foot grinding animation when doing understomps.";
+	            ImUtil::SliderF("Foot Grind On Understomp Chance", &Settings.ActionSettings.fPlayerUnderstompGrindChance, 0.0f, 100.0f, T1, "%.0f%%");
+
+	            ImGui::Spacing();
+	        }
         }
 
         ImUtil_Unique{
@@ -185,7 +196,7 @@ namespace GTS {
                 const char* T1 = "Toggle whether non lethal hug actions\n"
                                  "like Hug-Heal or Hug-Shrink should start combat.";
 
-                ImUtil::CheckBox("Non Lethal Hugs Are Hostile", &Settings.bNonLethalHugsHostile, T1);
+                ImUtil::CheckBox("Non Lethal Hugs Are Hostile", &Settings.ActionSettings.bNonLethalHugsHostile, T1);
 
                 ImGui::Spacing();
             }
@@ -196,8 +207,8 @@ namespace GTS {
 
                 const char* T1 = "Modify the placement of actors during cleavage actions.";
 
-                ImUtil::SliderF("Forward/Back", &Settings.f2CleavageOffset.at(0), -10.0f, 10.0f, T1, "%.2f");
-                ImUtil::SliderF("Up/Down", &Settings.f2CleavageOffset.at(1), -10.0f, 10.0f, T1, "%.2f");
+                ImUtil::SliderF("Forward/Back", &Settings.ActionSettings.f2CleavageOffset.at(0), -10.0f, 10.0f, T1, "%.2f");
+                ImUtil::SliderF("Up/Down", &Settings.ActionSettings.f2CleavageOffset.at(1), -10.0f, 10.0f, T1, "%.2f");
 
                 ImGui::Spacing();
             }

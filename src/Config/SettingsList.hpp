@@ -89,6 +89,10 @@ enum class GameMode : uint8_t {
 //  (Not Directly Serialized, but used within other structs)
 //-------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
 //------------------------------------------- Gameplay
 struct GameplayActorSettings {
     // Basic settings
@@ -111,19 +115,43 @@ TOML_SERIALIZABLE(GameplayActorSettings);
 
 struct GameplayActionSettings {
 
-    //Player/AI
-    float fStartThighSandwichScale = 6.0f;  
-    float fStartStompScale = 10.0f;
-	float fStartButtCrushScale = 2.0f;
-	float fStartVoreScale = 8.0f;
-	float fStartGrabScale = 8.0f;
-	float fHugDropScale = 0.92f;
+	//Player/AI
+	//float fStartThighSandwichScale = 6.0f;  
+	//float fStartStompScale = 10.0f;
+	//float fStartButtCrushScale = 2.0f;
+	//float fStartVoreScale = 8.0f;
+	//float fStartGrabScale = 8.0f;
+	//float fHugDropScale = 0.92f;
 
     //AI
-    float fAIStartThighCrushScale = 4.0f;
+	//float fAIStartThighCrushScale = 4.0f;
+
+    // Animation options
+    bool bStompAlternative = false;
+    bool bStomAlternativeOther = false;
+    bool bSneakTransitions = true;
+    bool bSneakTransitionsOther = true;
+
+    // Vore-related settings
+    float fVoreGainMult = 1.0f;
+    bool bVoreFreecam = false;
+    bool bVoreWeightGain = false;
+    bool bAllowSpiders = false;
+    bool bAllowUndead = false;
+
+    //Stomp Settings
+    float fPlayerUnderstompGrindChance = 50.0f;
+
+    //Hug Settings
+    bool bNonLethalHugsHostile = true;
+
+    // Cleavage offset for forward/back and up/down adjustments
+    std::array<float, 2> f2CleavageOffset = { 0.0f, 0.0f };
 
 };
 TOML_SERIALIZABLE(GameplayActionSettings);
+
+
 
 
 //------------------------------------------- Camera
@@ -161,6 +189,7 @@ struct AIStatefullAction {
 };
 TOML_SERIALIZABLE(AIStatefullAction);
 
+
 // Complex action: Hug
 struct AIHugAction {
     // Basic toggle and overall probability
@@ -181,6 +210,13 @@ struct AIHugAction {
     float fInterval = 4.0f;
 };
 TOML_SERIALIZABLE(AIHugAction);
+
+struct AIStompAction {
+    bool bEnableAction = true;
+    float fProbability = 20.0f;
+    float fUnderstompGrindProbability = 20.0f;
+};
+TOML_SERIALIZABLE(AIStompAction);
 
 // Complex action: Butt Crush
 struct AIButtAction {
@@ -357,9 +393,7 @@ struct SettingsGameplay {
     // Gamemode settings for different actor types
     GameplayActorSettings GamemodePlayer = {};
     GameplayActorSettings GamemodeFollower = {};
-
-    //GameplayActionSettings ActionSettings = {};
-
+    GameplayActionSettings ActionSettings = {};
 
     // Size Effects
     bool bPlayerAnimEffects = true;
@@ -377,24 +411,6 @@ struct SettingsGameplay {
     bool bEnableGrowthOnHit = false;
     float fSizeConvLevelCap = 1.0f;
 
-    // Animation options
-    bool bStompAlternative = false;
-    bool bStomAlternativeOther = false;
-    bool bSneakTransitions = true;
-    bool bSneakTransitionsOther = true;
-
-    // Vore-related settings
-    float fVoreGainMult = 1.0f;
-    bool bVoreFreecam = false;
-    bool bVoreWeightGain = false;
-    bool bAllowSpiders = false;
-    bool bAllowUndead = false;
-
-    //Hug Settings
-    bool bNonLethalHugsHostile = true;
-
-    // Cleavage offset for forward/back and up/down adjustments
-    std::array<float,2> f2CleavageOffset = {0.0f, 0.0f};
 };
 TOML_SERIALIZABLE(SettingsGameplay);
 
@@ -483,7 +499,6 @@ struct SettingsAI {
 
     // Stateless Actions
     AIStatelessAction Vore = { .bEnableAction = true, .fProbability = 20.0f };
-    AIStatelessAction Stomp = { .bEnableAction = true, .fProbability = 20.0f };
     AIStatelessAction KickSwipe = { .bEnableAction = true, .fProbability = 20.0f };
 
     // Statefull Actions
@@ -491,9 +506,11 @@ struct SettingsAI {
     AIStatefullAction ThighSandwich = { .bEnableAction = true, .fProbability = 20.0f };
 
     // Complex Actions
+    AIStompAction Stomp = {};
     AIHugAction Hugs = {};
     AIButtAction ButtCrush = {};
     AIGrabAction Grab = {};
+
 
     // Additional AI toggles
     bool bPanic = true;
