@@ -4,6 +4,13 @@ This readme provides a reference for in-game console commands that can be used t
 
 ---
 
+## Usage Example:
+```bash
+player.sae GTSBEH_HeavyKickLow_R
+```
+
+---
+
 ## STOMPS:
 
 **Main Actions**
@@ -115,9 +122,3 @@ This readme provides a reference for in-game console commands that can be used t
 
 ---
 
-### Usage Example:
-```bash
-player.sae GTSBEH_HeavyKickLow_R
-```
-
-Note: Replace `player.sae` with the refid of the actor you want them to play on.
