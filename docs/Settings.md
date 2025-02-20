@@ -3,7 +3,7 @@
 All user modified settings are stored in Data/SKSE/Plugins/GTSPlugin/Settings.toml.
 The mod handles reading and writing to this file on its own, you no longer need to modify this file in order to change some of the mods settings.
 
-See [Config.hpp](https://github.com/sermitse/GTS_Plugin/blob/master/src/Config.hpp) for all current settings
+See [SettingsList](https://github.com/sermitse/GTS_Plugin/blob/master/src/Config/SettingsList.hpp) for all current settings
 
 To enable the advanced settings category add the following table to the begining of Settings.toml:
 
