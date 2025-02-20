@@ -18,6 +18,10 @@ using namespace GTS;
 
 namespace {
 
+	#ifdef GTSDEBUG
+		//#define GTSCONSOLE
+	#endif
+
 	void InitializeLogging() {
 		auto path = GTS::log_directory_fixed();
 
@@ -36,7 +40,7 @@ namespace {
 		}
 		else {
 
-			#ifdef GTSDEBUG
+			#ifdef GTSCONSOLE
 
 				auto file_sink = std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true);
 				file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
@@ -203,8 +207,11 @@ SKSEPluginLoad(const LoadInterface * a_skse){
 	//If you see a 32+ mb dll being built there's a 100% chance it will ctd at the first hook.
 	//"Normal" debug dlls should be around 10-13mb as of 15-02-2025
 
-	#ifdef GTSDEBUG
+	#ifdef GTSCONSOLE
 		AllocateConsole();
+    #endif
+
+	#ifdef GTSDEBUG
 		ReportInfo("GTSplugin Debug Build.\nAttach the debugger and press OK.");
 		std::cout << "GTSPlugin Debug Build" << '\n';
 	#endif

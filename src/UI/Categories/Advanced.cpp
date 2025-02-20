@@ -78,6 +78,10 @@ namespace GTS {
                     ImUtil::CheckBox("Show Metrics", &ImWindowManager::GetSingleton().ShowMetrics,T0);
                     ImUtil::CheckBox("Show Stack", &ImWindowManager::GetSingleton().ShowStack,T1);
                 }
+
+                if (ImUtil::Button("Quit", "This will immediatly close the game.", false, 1.0f)) {
+                    SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
+                }
             }
 
         }
@@ -101,9 +105,7 @@ namespace GTS {
 
         }
 
-        if (ImUtil::Button("Quit", "This will immediatly close the game.", false, 1.0f)) {
-            SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
-        }
+        
 
     }
 }
