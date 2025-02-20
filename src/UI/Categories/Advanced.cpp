@@ -52,9 +52,14 @@ namespace GTS {
                 const char* T1 = "Bypass action cooldowns.";
                 const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
 
+                const char* T3 = "Toggle whether to fully pause the game when the menu is open.\n"
+								 "It's heavily recomended that you don't disable this.\n"
+								 "Applies after closing and re-opening the menu.";
+
                 if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
                     ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
                     ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
+                    ImUtil::CheckBox("Pause Game", &Settings.bPauseGame, T3);
 
                     ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
                     ImUtil::SliderF("Animspeed Teammate", &Settings.fAnimSpeedAdjMultTeammate, 0.2f, 1.0f, T2);

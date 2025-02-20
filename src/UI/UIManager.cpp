@@ -13,25 +13,7 @@ namespace {
 
     void OpenSettingsImpl(bool a_IsConsole) {
 
-        if (!GTS::Plugin::Ready()) {
-
-            if (a_IsConsole) {
-                GTS::Cprint("Can not show the settings menu at this time.");
-            }
-
-            return;
-        }
-
-        if (GTS::Plugin::AnyMenuOpen() || (RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME) && !a_IsConsole)) {
-
-            if (a_IsConsole) {
-                GTS::Cprint("Can not show the settings menu at this time.");
-            }
-
-            return;
-        }
-
-        if (GTS::Plugin::AnyMenuOpen()) {
+        if (!GTS::Plugin::Ready() || GTS::Plugin::AnyMenuOpen() || (RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME) && !a_IsConsole)) {
 
             if (a_IsConsole) {
                 GTS::Cprint("Can not show the settings menu at this time.");
@@ -49,8 +31,14 @@ namespace {
             //Show Settings Window
             Window->Show = true;
 
-            //Freeze the game
-            RE::Main::GetSingleton()->freezeTime = true;
+            if (GTS::Config::GetAdvanced().bPauseGame) {
+                //Pause the game
+                RE::UI::GetSingleton()->numPausesGame++;
+                //Old method Only stops world update
+                //RE::Main::GetSingleton()->freezeTime = true;
+            }
+
+            RE::UIBlurManager::GetSingleton()->IncrementBlurCount();
 
             if (a_IsConsole) {
                 const auto msgQueue = RE::UIMessageQueue::GetSingleton();
@@ -75,7 +63,13 @@ namespace GTS {
         if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
             //Show Settings Window
             Window->Show = false;
-            RE::Main::GetSingleton()->freezeTime = false;
+
+            //Should be good enough of a check i guess?
+            if (RE::UI::GetSingleton()->numPausesGame > 0)
+            RE::UI::GetSingleton()->numPausesGame--;
+
+            //RE::Main::GetSingleton()->freezeTime = false;
+            RE::UIBlurManager::GetSingleton()->DecrementBlurCount();
         }
     }
 
@@ -130,7 +124,7 @@ namespace GTS {
     }
 
 
-    //Gets called last so it will overlay everything
+    //Called After RE::HUDMenu is drawn
     void UIManager::Update() {
         std::ignore = Profilers::Profile("UIManager::Update");
 

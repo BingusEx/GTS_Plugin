@@ -62,14 +62,14 @@ namespace GTS {
         const std::string pText = fmt::format("{}{}", sReal, sScale);
         ImUtil::CenteredProgress(CurrentScale / MaxScale, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : 160.0f, 0.0f), pText.c_str());
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSizePotion))
-            ImGui::Text("Bonus Size: %.2fx", _BonusSize);
-
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize))
 				ImGui::Text("Max Scale: %.2fx", MaxScale);
 
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowBonusSize))
+            ImGui::Text("Bonus Size: %.2fx", _BonusSize);
+
         if (a_Actor->formID == 0x14) {
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowPermanentSize))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowEssence))
                 ImGui::Text("Essence: +%.2fx", _Essence);
         }
 

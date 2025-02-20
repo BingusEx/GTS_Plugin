@@ -32,7 +32,7 @@ namespace Hooks {
 		UIManager::GetSingleton().Init();
 	}
 
-	//Register WndProc
+	//Register Window Class
 	WORD Hook_Renderer::RegisterClassA(WNDCLASSA* a_wndClass) {
 		_WndProcHandler = reinterpret_cast<uintptr_t>(a_wndClass->lpfnWndProc);
 		a_wndClass->lpfnWndProc = &WndProcHandler;
@@ -84,7 +84,7 @@ namespace Hooks {
 		//_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
 		//logger::info("Hooked DXGISwapchain Present");
 
-		//Updating Earliser in the render pass allows us to auto hide everything when
+		//Updatinge earlier in the render pass allows us to auto hide everything when
 		//skyrim is doing its fade to black
 		Hook_HUDMenu_Present::Install();
 

@@ -94,13 +94,6 @@ namespace GTS {
 			const char* T7 = "Toggle whether the stats widget fades if the players scale or max scale don't change for 8 seconds.";
 			const char* T8 = "Change how long the widget menu should be shown for after a value has changed.";
 
-			//Hack
-			if (Settings.StatusWindow.bEnableFade) {
-				if (auto ConfWindow = dynamic_cast<WindowStatus*>(ImWindowManager::GetSingleton().GetWindowByName("Status"))) {
-					ConfWindow->Show();
-				}
-			}
-
 	        if(ImGui::CollapsingHeader("Status Widget",ImUtil::HeaderFlags)){ 
 				ImUtil::CheckBox("Show Player Stats Widget", &Settings.StatusWindow.bVisible, T0);
 

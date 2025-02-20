@@ -23,8 +23,7 @@ namespace GTS {
             const char* THelp = "The GTS AI checks at a configurable time interval what GTS actions it can start.\n"
                                 "Whether the AI takes an action depends on said actions' probability settings.\n"
                                 "If its probability percentage is low, the action is less likely to be started.\n"
-                                "When all action chances are low, the AI is more likely to do simply \"Do nothing\",\n"
-                                "as the \"Do nothing\" action chance is inversly proportional.\n\n"
+                                "When all action chances are low, the AI is more likely to simply \"do nothing\".\n"
                                 "Some actions (like hugs or grabs) have their own actions (sub-actions) that work on the same idea but with their own settings\n"
                                 "whom you can modify on the right pane of this settings page.";
 

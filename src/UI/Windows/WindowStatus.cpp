@@ -1,10 +1,10 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/Windows/WindowStatus.hpp"
+#include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/GTSInfo.hpp"
-
-//categories
 #include "Config/ConfigUtil.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
+#include "UI/ImGui/ImWindowManager.hpp"
 
 namespace  {
 	bool AreEqual(float a, float b, float epsilon = std::numeric_limits<float>::epsilon()) {
@@ -19,8 +19,14 @@ namespace GTS {
 
     void WindowStatus::CheckFade(RE::Actor* a_actor) {
 
+        if (auto Window = dynamic_cast<WindowSettings*>(ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+            if (Window->Show) {
+                ShowImmediate();
+            }
+        }
+
         if (!Config::GetUI().StatusWindow.bEnableFade) {
-            AutoFadeAlpha = 1.0f;
+            ShowImmediate();
             return;
         }
 
@@ -57,6 +63,10 @@ namespace GTS {
         }
     }
 
+    void WindowStatus::ShowImmediate() {
+        LastData.LastWorldTime = Time::WorldTimeElapsed();
+        AutoFadeAlpha = 1.0;
+    }
 
     void WindowStatus::Show() {
 

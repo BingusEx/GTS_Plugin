@@ -1,4 +1,6 @@
 #include "UI/ImGui/ImWindowManager.hpp"
+
+#include "UI/UIManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
 
 namespace GTS {
@@ -19,6 +21,7 @@ namespace GTS {
         windows.push_back(std::move(a_window));
         logger::info("ImWindowManager::AddWindow {}", windows.back()->Name);
     }
+
 
     void ImWindowManager::Update() {
 
@@ -50,7 +53,7 @@ namespace GTS {
                     if (window->Name == "Settings" && window->Show) {
                         //If for some unexplicable reason a menu appears while the settings menu is open and frozen
                         //Explicitly disable freeze time as a precaution
-                        RE::Main::GetSingleton()->freezeTime = false;
+                        UIManager::CloseSettings();
                     }
 
                     window->Show = false;

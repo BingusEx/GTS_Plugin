@@ -39,9 +39,9 @@ namespace GTS {
 
 
         // Base color definitions
-        const ImVec4 textDisabled{ 0.5f, 0.5f, 0.5f, 1.0f };
-        const ImVec4 headerHovered{ 1.0f, 1.0f, 1.0f, 0.1f };
-        const ImVec4 tabHovered{ 0.2f, 0.2f, 0.2f, 1.0f };
+        constexpr ImVec4 textDisabled{ 0.5f, 0.5f, 0.5f, 1.0f };
+        constexpr ImVec4 headerHovered{ 1.0f, 1.0f, 1.0f, 0.1f };
+        constexpr ImVec4 tabHovered{ 0.2f, 0.2f, 0.2f, 1.0f };
 
         // Backgrounds
         colors[ImGuiCol_WindowBg] = { 0.0f, 0.0f, 0.0f, 0.85f };

@@ -21,12 +21,7 @@
 
 namespace GTS {
 
-	//This is bad... Should probably be disabled.
-	//We completely clobber the struct data when re-reading it from the toml's
-	//Just one poorly timed memory read and its joever.
-	//sadly i cant use atomic types or volatiles in the structs themselves.
 	void WindowSettings::AsyncLoad(){
-		Plugin::Live();
 
 	    if(!Settings.LoadSettings()){
 	        ErrorString = "Could Not Load Settings! Check GTSPlugin.log for more info";
@@ -47,7 +42,6 @@ namespace GTS {
 	    SaveLoadBusy.store(false);
 	}
 
-	//Saving doesn't have the same race condition issues that loading has.
 	void WindowSettings::AsyncSave(){
 	    if(!Settings.SaveSettings()){
 	        ErrorString = "Could Not Save Settings! Check GTSPlugin.log for more info.";
@@ -76,9 +70,9 @@ namespace GTS {
 	    Name = "Settings";
 	    Show = false;
 		ConsumeInput = true;
-	    flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoNavInputs;
+	    flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar  | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoScrollbar;
 
-	    //Add Categories
+	    //Add Categories, order here defines the order they'll be shown.
 	    CatMgr.AddCategory(std::make_shared<CategoryInfo>());
 	    CatMgr.AddCategory(std::make_shared<CategoryGeneral>());
 	    CatMgr.AddCategory(std::make_shared<CategoryGameplay>());
@@ -95,7 +89,7 @@ namespace GTS {
 
 	    auto& Categories = CatMgr.GetCategories();
 		ImGui::PushFont(ImFontManager::GetFont("footer"));
-	    const float Footer = ImGui::GetFrameHeightWithSpacing() + (ImGui::GetStyle().ItemSpacing.y * 4);  // text + separator
+	    const float Footer = ImGui::GetFrameHeightWithSpacing() + (ImGui::GetStyle().ItemSpacing.y * 4.0);  // text + separator
 		ImGui::PopFont();
 	    
 	    //Calc Button Width
@@ -131,8 +125,7 @@ namespace GTS {
 
 		{
 
-			ImGui::PushFont(ImFontManager::GetFont("sidebar"));
-			ImVec2 pos = ImVec2(ImGui::GetContentRegionAvail().x - (ImGui::GetStyle().FramePadding.x * 2 + ImGui::GetStyle().WindowPadding.x + ImGui::GetStyle().CellPadding.x), 20);
+			ImVec2 pos = ImVec2(ImGui::GetContentRegionAvail().x - (ImGui::GetStyle().FramePadding.x * 2 + ImGui::GetStyle().CellPadding.x), ImGui::GetStyle().FramePadding.y * 2 + ImGui::GetStyle().CellPadding.y);
 			ImGui::SetCursorPos(pos);
 
 			// Create the button
@@ -140,10 +133,10 @@ namespace GTS {
 				UIManager::CloseSettings();
 			}
 
-			ImGui::PopFont();
 		}
 
 		ImGui::SetCursorPos(OldPos);
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 4.0,0.0 });
 
 	    {  // Draw Title
 
@@ -152,10 +145,7 @@ namespace GTS {
 	        ImGui::PopFont();
 	    }
 
-
-		//ImGui::SameLine(ImGui::GetContentRegionAvail().x - (ImGui::CalcTextSize("Control Info (?)").x));
-
-	    {
+		{  //Draw Help text
 	        const char* THelp = "1. Holding Ctrl when clicking on a UI element (eg. slider) allows you to manually enter a value instead.\n\n"
 								"2. If the settings menu is behaving strangely and you can't select/change things try pressing the Tab key once.\n\n"
 	    						"3. You can also close this menu by pressing ESC.";
@@ -166,6 +156,7 @@ namespace GTS {
 	        }
 	    }
 
+		ImGui::PopStyleVar();
 	    ImUtil::SeperatorH();
 
 	    {  // Draw Sidebar
@@ -212,6 +203,7 @@ namespace GTS {
 
 	        ImGui::EndChild();
 	    }
+
 
 	    ImUtil::SeperatorH();
 	    ImGui::BeginDisabled(Disabled);

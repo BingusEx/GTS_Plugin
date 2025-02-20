@@ -226,6 +226,7 @@ struct SettingsAdvanced {
     bool bAllActorSizeEffects = false;
     bool bDamageAV = true;
     bool bCooldowns = true;
+    bool bPauseGame = true;
 
     float fAnimSpeedAdjMultPlayer = 1.0f;
     float fAnimSpeedAdjMultTeammate = 1.0f;

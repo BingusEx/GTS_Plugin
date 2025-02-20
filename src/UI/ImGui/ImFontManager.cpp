@@ -13,7 +13,7 @@ namespace GTS {
         AddFont(new FontData("errortext", _OpenSans_Regular, 22.0f));
         AddFont(new FontData("subscript", _OpenSans_Regular, 16.0f));
         AddFont(new FontData("widgetbody", _Jost_Regular, 21.0f));
-        AddFont(new FontData("widgettitle", _Jost_Light, 32.0f));
+        AddFont(new FontData("widgettitle", _Jost_Light, 34.0f));
 
         BuildFontsInt();
 

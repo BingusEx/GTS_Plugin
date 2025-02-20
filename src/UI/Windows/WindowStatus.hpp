@@ -10,6 +10,7 @@ namespace GTS {
         public:
 	    void CheckFade(RE::Actor* a_actor);
 	    void Show();
+	    void ShowImmediate();
 	    void StartFade();
 	    WindowStatus();
 
