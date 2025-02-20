@@ -137,14 +137,14 @@ namespace GTS {
 							 "Lower values increase the ammount of zoom steps,\n"
 	    					 "whilst higher values decrease them.\n";
 
-			const char* T4 = "Toggle wether this mod should override skyrim's defalt camera settings.\n"
-				"NOTE: Requires a game restart for the original values to be reapplied.";
+			const char* T4 = "Toggle wether this mod should override skyrim's camera settings.\n"
+				"Note: Requires a game restart after disabling for the original values to be reapplied.";
 
 	        const char* THelp = 
 	            "These are the same settings as can be found in skyrim.ini.\n"
 	            "They're added here for convenience.\n"
-	            "Note: These values are modified through hooks,\n"
-	            "so no matter what values you set in any ini file, they will be overridden by the offsets set here.";
+	            "Note: The settings here will continiously override the game's settings,\n"
+	            "so no matter what values you set in any ini file or if another mod changes them, they will be overridden by the values set here.";
 
 	        if (ImGui::CollapsingHeader("Skyrim Camera Settings", ImGuiTreeNodeFlags_None)) {
 	            ImGui::TextColored(ImUtil::ColorSubscript, "What is this (?)");
