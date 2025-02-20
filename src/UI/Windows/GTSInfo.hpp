@@ -14,7 +14,8 @@ namespace GTS {
         kShowJumpMult = (1 << 8),
         kShowDmgMult = (1 << 9),
         kAutoSize = (1 << 10),
-        kShowPermanentSize = (1 << 11)
+        kShowPermanentSize = (1 << 11),
+        kShowMaxSizePotion = (1 << 12)
     };
 
 

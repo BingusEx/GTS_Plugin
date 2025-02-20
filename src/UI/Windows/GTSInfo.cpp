@@ -33,9 +33,11 @@ namespace GTS {
         const float _aspectOfGTS = Ench_Aspect_GetPower(a_Actor) * 100.0f;
         const float _damageResist = (1.0f - Atrib.GetAttributeBonus(a_Actor, ActorValue::kHealth)) * 100.f;
 
-
+        float _BonusSize = 0.0f;
         float _carryWeight = 0.0f;
         if (auto transient = Transient::GetSingleton().GetData(a_Actor)) {
+
+            _BonusSize = transient->potion_max_size;
 
             //When in god mode carry weight gets 100x'ed for some reason
             if (a_Actor->formID == 0x14 && IsInGodMode(a_Actor)) {
@@ -43,7 +45,7 @@ namespace GTS {
             }
             else [[likely]] {
                 _carryWeight = transient->carryweight_boost;
-                }
+            }
         }
 
         const float _speed = (Atrib.GetAttributeBonus(a_Actor, ActorValue::kSpeedMult) - 1.0f) * 100.f;
@@ -52,7 +54,8 @@ namespace GTS {
 
 
         //TODO NEEDS TO BE CHANGED
-        const float _PotionSize = Runtime::GetGlobal("ExtraPotionSize")->value;
+        const float _Essence = Runtime::GetGlobal("ExtraPotionSize")->value;
+
 
         const std::string sScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";
         const std::string sReal = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitReal) ? GTS::GetFormatedHeight(a_Actor).c_str() : "";
@@ -61,6 +64,14 @@ namespace GTS {
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize))
 				ImGui::Text("Max Scale: %.2fx", MaxScale);
+
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSizePotion))
+        		ImGui::Text("Bonus Size: %.2fx", _BonusSize);
+
+        if (a_Actor->formID == 0x14) {
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowPermanentSize))
+                ImGui::Text("Essence: +%.2fx", _Essence);
+        }
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowWeight))
 				ImGui::Text("Weight: %s", GTS::GetFormatedWeight(a_Actor).c_str());
@@ -83,9 +94,5 @@ namespace GTS {
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgMult))
 				ImGui::Text("Bonus Damage: %.1f%%", _damage);
 
-        if (a_Actor->formID == 0x14) {
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowPermanentSize))
-            	ImGui::Text("Essense: +%.2fx", _PotionSize);
-        }
     }
 }
