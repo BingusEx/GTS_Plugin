@@ -8,11 +8,12 @@ namespace GTS {
 
         const char* T0 = "Select the game mode\n\n"
             "Basic:\n"
-            "- Grow: Slowly grow to the size limit specified below.\n"
-            "- Shrink: Slowly shrink back to the actor's natural scale.\n"
-            "- Combat Growth: Grow during combat and shrink outside of combat back to the natural scale.\n"
-            "- Slow Combat Growth: Slowly grow during combat and retain any size gain.\n\n"
+            "- Grow: Slowly grow to your size limit.\n"
+            "- Shrink: Slowly shrink back to your natural scale.\n"
+            "- Combat Growth: Grow during combat and shrink outside of combat back to your natural scale.\n"
+            "- Slow Combat Growth: Slowly grow during combat and retain any size gained.\n\n"
             "Curses:\n"
+            "- Curse of Growth: You will continiously grow in size like \"Grow\" but in spurts of varying strength up until the specified scale limit which you can change below.\n"
             "- Curse of the Giantess: You will rapidly grow to the specified size if you are smaller. Spells like \"Restore Size\" will not shrink you below this size.\n"
             "- Curse of Diminishing: You will slowly shrink to the target scale if too large.\n"
             "- Size Locked: Combines the effects of both curses. You will grow to the specified size and slowly shrink back to it if larger.";
@@ -20,10 +21,7 @@ namespace GTS {
         const char* T1 = "Modify the amount grown each tick.";
         const char* T2 = "Modify the amount shrunk each tick.";
 
-        const char* T3 = "Set the maximum size for the following game modes:\n"
-            "- Grow\n"
-            "- Combat Growth\n"
-            "- Slow Combat Growth";
+        const char* T3 = "Set the maximum size for the \"Curse of Growth\" game mode";
 
         const char* T4 = "Multiply the size-gain rate by 25%% of your current size.\n"
             "The amount gained caps out at 10x scale.";
@@ -237,37 +235,35 @@ namespace GTS {
             }
         }
 
-            // ImUtil_Unique {
-            //     //TODO Check for perk
-            //     const bool temp = true;
-            //     if (ImUtil::ConditionalHeader("Size Difference Thresholds", "Requires \"Colossal Growth\" Perk", temp,false)) {
+        // ImUtil_Unique {
+        //     //TODO Check for perk
+        //     const bool temp = true;
+        //     if (ImUtil::ConditionalHeader("Size Difference Thresholds", "Requires \"Colossal Growth\" Perk", temp,false)) {
 
-            //         const char* T0 = "Size difference required between the GTS and a target to start a vore action.";
-            //         const char* T1 = "Size difference required between the GTS and a target to start a butt crush action.";
-            //         const char* T2 = "Size difference required between the GTS and a target to start a grab action.";
-            //         const char* T3 = "Size difference required between the GTS and a target to start a thigh sandwich action.";
-            //         const char* T4 = "Size difference required between the GTS and a target for stomps to start doing significant damage.";
-            //         const char* T5 = "Size difference required between the GTS and a target to be able to keep perfoming hugs on them.";
-            //         const char* T6 = "Size difference required between the GTS AI and a target to start a thigh crush action.";
+        //         const char* T0 = "Size difference required between the GTS and a target to start a vore action.";
+        //         const char* T1 = "Size difference required between the GTS and a target to start a butt crush action.";
+        //         const char* T2 = "Size difference required between the GTS and a target to start a grab action.";
+        //         const char* T3 = "Size difference required between the GTS and a target to start a thigh sandwich action.";
+        //         const char* T4 = "Size difference required between the GTS and a target for stomps to start doing significant damage.";
+        //         const char* T5 = "Size difference required between the GTS and a target to be able to keep perfoming hugs on them.";
+        //         const char* T6 = "Size difference required between the GTS AI and a target to start a thigh crush action.";
 
-            //         ImGui::Text("Applies to both Player/Followers");
-            //         ImUtil::SliderF("Start Vore", &Settings.ActionSettings.fStartVoreScale, 4.0f, 10.0f, T0, "%.2fx");
-            //         ImUtil::SliderF("Start Butt Crush", &Settings.ActionSettings.fStartButtCrushScale, 1.5f, 5.0f, T1, "%.2fx");
-            //         ImUtil::SliderF("Start Grab", &Settings.ActionSettings.fStartGrabScale, 5.5f, 10.0f, T2, "%.2fx");
-            //         ImUtil::SliderF("Start Thigh Sandwich", &Settings.ActionSettings.fStartThighSandwichScale, 3.0f, 10.0f, T3, "%.2fx");
-            //         ImUtil::SliderF("Start Stomp", &Settings.ActionSettings.fStartStompScale, 5.0f, 4.0f, T4, "%.2fx");
-            //         ImUtil::SliderF("Hugs Max Size Difference", &Settings.ActionSettings.fHugDropScale, 0.7f, 1.1f, T5, "%.2fx");
+        //         ImGui::Text("Applies to both Player/Followers");
+        //         ImUtil::SliderF("Start Vore", &Settings.ActionSettings.fStartVoreScale, 4.0f, 10.0f, T0, "%.2fx");
+        //         ImUtil::SliderF("Start Butt Crush", &Settings.ActionSettings.fStartButtCrushScale, 1.5f, 5.0f, T1, "%.2fx");
+        //         ImUtil::SliderF("Start Grab", &Settings.ActionSettings.fStartGrabScale, 5.5f, 10.0f, T2, "%.2fx");
+        //         ImUtil::SliderF("Start Thigh Sandwich", &Settings.ActionSettings.fStartThighSandwichScale, 3.0f, 10.0f, T3, "%.2fx");
+        //         ImUtil::SliderF("Start Stomp", &Settings.ActionSettings.fStartStompScale, 5.0f, 4.0f, T4, "%.2fx");
+        //         ImUtil::SliderF("Hugs Max Size Difference", &Settings.ActionSettings.fHugDropScale, 0.7f, 1.1f, T5, "%.2fx");
 
-            //         ImGui::Text("Applies to followers only");
-            //         ImUtil::SliderF("Start Thigh Crush", &Settings.ActionSettings.fAIStartThighCrushScale, 3.0f, 10.0f, T6, "%.2fx");
+        //         ImGui::Text("Applies to followers only");
+        //         ImUtil::SliderF("Start Thigh Crush", &Settings.ActionSettings.fAIStartThighCrushScale, 3.0f, 10.0f, T6, "%.2fx");
 
-            //         ImGui::Spacing();
-            //     }
-            // }
+        //         ImGui::Spacing();
+        //     }
+        // }
 
-
-
-            //----------- Game Modes
+    	//----------- Game Modes
         ImUtil_Unique{
             GameModeOptions("Gamemode Player", &Settings.GamemodePlayer);
         }
