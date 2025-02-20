@@ -3,60 +3,6 @@
 #include "Config/ConfigUtil.hpp"
 #include "Config/SettingsList.hpp"
 
-//-------------------------------------------------------------------------------------------------------------------
-//  ENUMS ----- Assumed to be the reference values 
-//  magic_enum will use to convert an enum to a string representation for serialization (Saving The TOML)
-//-------------------------------------------------------------------------------------------------------------------
-
-//TODO THESE SHOULD NOT BE HERE
-enum class CameraTrackingUsr {
-    kNone,
-    kSpine,
-    kClavicle,
-    kBreasts_01,
-    kBreasts_02,
-    kBreasts_03, // 3BBB tip
-    kNeck,
-    kButt,
-};
-
-enum class CameraModeTP {
-    kDisabled,
-    kNormal,
-    kAlternative,
-    kFootLeft,
-    kFootRight,
-    kFeetCenter
-};
-
-enum class CameraModeFP {
-    kNormal,
-    kCombat,
-    kLoot
-};
-
-enum class DisplayUnit {
-    kMetric,
-    kImperial,
-    kMammoth
-};
-
-enum class SizeMode {
-    kNormal,
-    kMassBased
-};
-
-enum class GameMode {
-    kNone,
-    kGrow,
-    kShrink,
-    kCombatGrowth,
-    kSlowCombatGrowth,          //Curse of growth already exists as random growth, its superfluous
-    kCurseOfTheGiantess,        //<------- TODO Implement these... AKA: Just take them from my dll
-    kCurseOfDiminishing,
-    kSizeLocked //<-------------- Combines both
-};
-
 namespace GTS {
 
     class Config {

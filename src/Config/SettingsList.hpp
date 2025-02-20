@@ -31,6 +31,60 @@ Since all of this is just one big hack, there are some limitations present namel
 */
 
 //-------------------------------------------------------------------------------------------------------------------
+//  ENUMS ----- Assumed to be the reference values 
+//  magic_enum will use to convert an enum to a string representation for serialization (Saving The TOML)
+//-------------------------------------------------------------------------------------------------------------------
+
+enum class CameraTrackingUsr : uint8_t {
+    kNone,
+    kSpine,
+    kClavicle,
+    kBreasts_01,
+    kBreasts_02,
+    kBreasts_03, // 3BBB tip
+    kNeck,
+    kButt,
+};
+
+enum class CameraModeTP : uint8_t {
+    kDisabled,
+    kNormal,
+    kAlternative,
+    kFootLeft,
+    kFootRight,
+    kFeetCenter
+};
+
+enum class CameraModeFP : uint8_t {
+    kNormal,
+    kCombat,
+    kLoot
+};
+
+enum class DisplayUnit : uint8_t {
+    kMetric,
+    kImperial,
+    kMammoth
+};
+
+enum class SizeMode : uint8_t {
+    kNormal,
+    kMassBased
+};
+
+enum class GameMode : uint8_t {
+    kNone,
+    kGrow,
+    kShrink,
+    kCombatGrowth,
+    kSlowCombatGrowth,
+    kCurseOfGrowth,
+    kCurseOfTheGiantess,        //<------- TODO Implement these... AKA: Just take them from my dll
+    kCurseOfDiminishing,
+    kSizeLocked //<-------------- Combines both
+};
+
+//-------------------------------------------------------------------------------------------------------------------
 //  CHILD STRUCTS 
 //  (Not Directly Serialized, but used within other structs)
 //-------------------------------------------------------------------------------------------------------------------
@@ -202,7 +256,6 @@ TOML_SERIALIZABLE(WindowConfSettings);
 //  PARENT STRUCTS 
 //  (Serialized directly, with instances assumed in the config singleton)
 //-------------------------------------------------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------------------------------------------------
 //  HIDDEN
 //-------------------------------------------------------------------------------------------------------------------
