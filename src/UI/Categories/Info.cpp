@@ -40,6 +40,8 @@ namespace GTS {
 
                 ImGui::PushFont(ImFontManager::GetFont("widgetbody"));
                 DrawGTSInfo(static_cast<GTSInfoFeatures>(UINT32_MAX), RE::PlayerCharacter::GetSingleton());
+
+                ImGui::Spacing();
                 ImGui::PopFont();
             }
 
@@ -85,7 +87,10 @@ namespace GTS {
             ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal, 1.0f);
             ImGui::PopFont();
             ImGui::PushFont(ImFontManager::GetFont("widgetbody"));
+
             DrawGTSInfo(static_cast<GTSInfoFeatures>(UINT32_MAX), Follower);
+            ImGui::Spacing();
+
             ImGui::PopFont();
             ImGui::EndChild();
         }
