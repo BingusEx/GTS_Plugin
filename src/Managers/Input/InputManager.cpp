@@ -180,13 +180,12 @@ namespace GTS {
 		while (event != nullptr) {
 			bool shouldDispatch = true;
 			if (event->eventType == RE::INPUT_EVENT_TYPE::kButton) {
-				//none of the *event classes have virtuals so dynamic_cast will fail due to lack of rrti.
-				const auto button = static_cast<RE::ButtonEvent*>(event);
+				const auto button = skyrim_cast<RE::ButtonEvent*>(event);
 				if (button) {
 					uint32_t input = button->GetIDCode();
 					if (KeysToBlock.contains(input)) {
-						logger::debug("Blocked Input For Key {}", input);
-							shouldDispatch = false;
+						//logger::debug("Blocked Input For Key {}", input);
+						shouldDispatch = false;
 					}
 				}
 			}

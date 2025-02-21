@@ -197,12 +197,12 @@ namespace {
 
 SKSEPluginLoad(const LoadInterface * a_skse){
 
-	//This hack is needed because debug builds of commonlib combletly shit the bed during trampoline hooks
+	//This hack is needed because debug builds of commonlib combletly break during trampoline hooks.
 	//Destination pointers for write call and write branch suddenly forget to add offsets to skyrims base image address.
 	//Why??? who tf knows why...
 	//So we instead build with the relwithdebinfo preset when using the debug and debug-eha presets, but pass all debug flags to the compiler when doing so...
 	//This results in this dll being built with full debug options but commonlib and other libraries being built as release...
-	//I mean is this good? No. But does it finnaly allow us to propperly debug this dll? Yes.
+	//I mean is this good? No. But does it finnaly allow us to have working break points in the dll? Yes.
 
 	//If you see a 32+ mb dll being built there's a 100% chance it will ctd at the first hook.
 	//"Normal" debug dlls should be around 10-13mb as of 15-02-2025

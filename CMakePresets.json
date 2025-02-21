@@ -182,6 +182,28 @@
         "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
         "GTS_BUILDPRESET": "RelMaxAVX2"
       }
+    },
+    {
+      "name": "build-nodeb-maxopt-avx2",
+      "inherits": [
+        "base",
+        "vcpkg",
+        "win32-unicode",
+        "x64",
+        "ninja",
+        "msvc"
+      ],
+      "displayName": "RelMaxOpt-AVX2",
+      "binaryDir": "${sourceDir}/build/release-maxopt-avx2",
+      "description": "Release build with debug symbols and every compiler optimization turned on and AVX2 support",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Release"
+        },
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
+        "GTS_BUILDPRESET": "RelNoDBMaxAVX2"
+      }
     }
   ],
   "buildPresets": [
@@ -202,6 +224,12 @@
       "displayName": "RelMaxOpt-AVX2",
       "configurePreset": "build-maxopt-avx2",
       "description": "Release build With Debug Info And Maximum Optimizations And AVX2"
+    },
+    {
+      "name": "preset-nodeb-release-avx2",
+      "displayName": "RelNoDebMaxOpt-AVX2",
+      "configurePreset": "build-nodeb-maxopt-avx2",
+      "description": "Release build With No debug Info And Maximum Optimizations And AVX2"
     },
     {
       "name": "preset-debug",

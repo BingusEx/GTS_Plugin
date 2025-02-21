@@ -49,7 +49,6 @@ namespace Hooks {
 			}
 
 		private:
-
 			void Initialize(uintptr_t address, Return (*hook)(Args...)) {
 				_address = address;
 				uintptr_t base = REL::Module::get().base();

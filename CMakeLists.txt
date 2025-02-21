@@ -174,13 +174,17 @@ set_property(TARGET ${PROJECT_NAME}
 # if it is defined.
 if(DEFINED ENV{GTSPLUGIN_COPY_DIR})
   if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo|Release")
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy
-              $<TARGET_PDB_FILE:${PROJECT_NAME}>
-              "$ENV{GTSPLUGIN_COPY_DIR}/")
+	if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo")
+		add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+		  COMMAND ${CMAKE_COMMAND} -E copy
+				  $<TARGET_PDB_FILE:${PROJECT_NAME}>
+				  "$ENV{GTSPLUGIN_COPY_DIR}/")
+	endif()
+
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy
               $<TARGET_FILE:${PROJECT_NAME}>
               "$ENV{GTSPLUGIN_COPY_DIR}/")
+
   endif()
 endif()

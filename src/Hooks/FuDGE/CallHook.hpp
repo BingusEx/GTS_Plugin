@@ -52,7 +52,7 @@ namespace Hooks {
 			void Initialize(uintptr_t address, Return (*hook)(Args...)) {
 				_address = address;
 				uintptr_t base = REL::Module::get().base();
-				_trampoline.create(32);
+				_trampoline.create(14);
 				_original = _trampoline.write_call<5>(address, hook);
 			}
 
