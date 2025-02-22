@@ -51,17 +51,17 @@ namespace GTS {
 
 	        ImUtil_Unique {
 	            DrawCameraOffsets(
-	                "Offsets | Sneaking",
+	                "Offsets | Crawling",
 	                "Adjust camera offsets while sneaking, crawling, or prone.",
-	                &a_set->f3NormalSneak
+	                &a_set->f3NormalCrawl
 	            );
 	        }
 
 	        ImUtil_Unique {
 	            DrawCameraOffsets(
-	                "Offsets | Sneaking Combat",
+	                "Offsets | Crawling Combat",
 	                "Adjust camera offsets while sneaking, crawling, or prone and in combat.",
-	                &a_set->f3CombatSneak
+	                &a_set->f3CombatCrawl
 	            );
 	        }
 	        ImGui::Spacing();
@@ -119,10 +119,11 @@ namespace GTS {
 	            ImUtil::CheckBox("Collide With Terrain", &Settings.bCamCollideTerrain, T3);
 	            ImUtil::CheckBox("Collide With Statics", &Settings.bCamCollideStatics, T4);
 
-	            ImUtil::SliderF("Apply at Scale", &Settings.fModifyCamCollideAt, 1.0f, 50.0f, T5, "%.1fx");
+	            ImUtil::SliderF("Apply at Scale", &Settings.fModifyCamCollideAt, 0.0f, 50.0f, T5, "%.1fx");
 
 	        	ImGui::Spacing();
-				ImUtil::CheckBox("Dynamic Near Distance", &Settings.bEnableAutoFNearDist, T6);
+
+	        	ImUtil::CheckBox("Dynamic Near Distance", &Settings.bEnableAutoFNearDist, T6);
 
 	            ImGui::Spacing();
 	        }

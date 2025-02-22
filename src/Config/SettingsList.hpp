@@ -158,8 +158,8 @@ struct CameraOffsets {
     std::array<float, 3> f3CombatStand = {0.0f, 0.0f, 0.0f};
 
     // Sneak/Crawl offsets
-    std::array<float, 3> f3NormalSneak = {0.0f, 0.0f, 0.0f}; 
-    std::array<float, 3> f3CombatSneak = {0.0f, 0.0f, 0.0f};
+    std::array<float, 3> f3NormalCrawl = {0.0f, 0.0f, 0.0f}; 
+    std::array<float, 3> f3CombatCrawl = {0.0f, 0.0f, 0.0f};
 };
 TOML_SERIALIZABLE(CameraOffsets);
 

@@ -31,9 +31,9 @@ namespace GTS {
 	NiPoint3 Normal::GetOffsetProne(const NiPoint3& cameraPos) {
 
 		return {
-			CamSettings.f3NormalSneak[0],
-			CamSettings.f3NormalSneak[1],
-			CamSettings.f3NormalSneak[2],
+			CamSettings.f3NormalCrawl[0],
+			CamSettings.f3NormalCrawl[1],
+			CamSettings.f3NormalCrawl[2],
 		};
 
 	}
@@ -41,9 +41,9 @@ namespace GTS {
 	NiPoint3 Normal::GetCombatOffsetProne(const NiPoint3& cameraPos)  {
 
 		return {
-			CamSettings.f3CombatSneak[0],
-			CamSettings.f3CombatSneak[1],
-			CamSettings.f3CombatSneak[2],
+			CamSettings.f3CombatCrawl[0],
+			CamSettings.f3CombatCrawl[1],
+			CamSettings.f3CombatCrawl[2],
 		};
 
 	}

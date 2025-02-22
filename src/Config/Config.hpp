@@ -158,41 +158,5 @@ namespace GTS {
 
         void ResetToDefaults();
 
-        // Template function to update a single value in the specified table
-        template<typename T>
-        bool update_toml_value(const std::string& table_name, const std::string& key, const T& new_value) {
-            try {
-                // Parse the entire TOML file into a toml::value object.
-                toml::value data = toml::parse(ConfigFile);
-
-                // Access the top-level table as a std::map.
-                auto& top_table = data.as_table();
-
-                // Find the subtable by name.
-                auto table_it = top_table.find(table_name);
-                if (table_it == top_table.end()) {
-                    logger::error("TOML single value update Table {} doesnt exist.", table_name);
-                    return false;
-                }
-
-                // Access the subtable and update the key with the new value.
-                auto& subtable = table_it->second.as_table();
-                subtable[key] = new_value;
-
-                // Write the updated TOML data back to the file.
-                std::ofstream ofs(ConfigFile);
-                if (!ofs) {
-                    logger::error("TOML single value update can't open {}", ConfigFile.generic_string());
-                    return false;
-                }
-                ofs << data;
-                return true;
-            }
-            catch (const std::exception& ex) {
-                logger::error("TOML single value update exception {}", ex.what());
-                return false;
-            }
-        }
-
     };
 }
