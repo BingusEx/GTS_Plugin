@@ -1,4 +1,7 @@
 #include "Managers/AI/AI_Manager.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/AI/AI_SelectAction.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
@@ -20,7 +23,7 @@ namespace {
 	}
 
 	bool ProtectFollowers(Actor* giant, Actor* tiny) {
-		bool NPC = Persistent::GetSingleton().FollowerProtection;
+		bool NPC = Config::GetGeneral().bProtectFollowers;
 		bool hostile = IsHostile(giant, tiny);
 
 		if (tiny->formID != 0x14 && !hostile && NPC && (IsTeammate(giant)) && (IsTeammate(tiny))) {

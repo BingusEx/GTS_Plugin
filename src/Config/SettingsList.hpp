@@ -368,8 +368,6 @@ struct SettingsGeneral {
 
     // Miscellaneous
     bool bLayeredSneak = false;
-    bool bPlayerCrawling = true;
-    bool bFollowerCrawling = true;
 
     // Bone tracking for foot Animations
     bool bTrackBonesDuringAnim = true;

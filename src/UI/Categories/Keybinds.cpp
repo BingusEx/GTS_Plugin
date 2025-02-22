@@ -189,7 +189,7 @@ namespace GTS {
 
 	            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.7f);
 
-				const bool IsSettings = Event.Event == "OpenSettings";
+				const bool IsSettings = Event.Event == "OpenModSettings";
 
 				if (!IsSettings) {
 					ImUtil::CheckBox("Disabled", &Event.Disabled, T0);

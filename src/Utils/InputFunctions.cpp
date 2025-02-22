@@ -29,6 +29,7 @@ namespace {
 
 		float BB = GetSizeFromBoundingBox(actor);
 		if (enemy) {
+
 			Cprint("{} Bounding Box To Size: {:.2f}, GameScale: {:.2f}", 
 				actor->GetDisplayFullName(), 
 				BB, 
@@ -43,8 +44,8 @@ namespace {
 		else {
 			Cprint("{} Height: {} Weight: {}", 
 				actor->GetDisplayFullName(),
-				GetFormatedWeight(actor),
-				GetFormatedHeight(actor)
+				GetFormatedHeight(actor),
+				GetFormatedWeight(actor)
 			);
 		}
 
@@ -265,7 +266,7 @@ namespace {
 			if (Runtime::HasPerk(player, "SizeReserve")) {
 				float gigantism = 1.0f + Ench_Aspect_GetPower(player);
 				float Value = Cache->SizeReserve * gigantism;
-				Notify("Reserved Size: {:.2f}", Value);
+				Notify("Size Reserve: {:.2f}", Value);
 			}
 		}
 	}
@@ -304,7 +305,7 @@ namespace {
 		damagehp /= gigantism;
 
 		if (healthCur < damagehp * 1.10f) {
-			Notify("Your health is too low");
+			Notify("Your health is too low!");
 			return; // don't allow us to die from own shrinking
 		}
 
@@ -365,6 +366,65 @@ namespace {
 		Actor* player = PlayerCharacter::GetSingleton();
 		ForceFollowerAnimation(player, FollowerAnimType::Vore);
 	}
+
+	//True for player false for fol;
+	void ToggleCrawlImpl(const bool a_IsPlayer) {
+		auto& Persi = Persistent::GetSingleton();
+
+		if (a_IsPlayer) {
+			/// XOR Bit flip to toggle
+			Persi.EnableCrawlPlayer.value ^= true;
+
+			const std::string Msg = fmt::format("Player Crawl: {}", Persi.EnableCrawlPlayer.value ? "Enabled" : "Disabled");
+
+			
+
+			RE::DebugNotification(Msg.c_str(),nullptr,false);
+		}
+		else {
+			/// XOR Bit flip to toggle
+			Persi.EnableCrawlFollower.value ^= true;
+			const std::string Msg = fmt::format("Follower Crawl: {}", Persi.EnableCrawlPlayer.value ? "Enabled" : "Disabled");
+			RE::DebugNotification(Msg.c_str(),nullptr, false);
+		}
+
+
+	}
+
+	void ToggleCrawlImpl_Player(const ManagedInputEvent& data) {
+		ToggleCrawlImpl(true);
+	}
+
+	void ToggleCrawlImpl_Follower(const ManagedInputEvent& data) {
+		ToggleCrawlImpl(false);
+	}
+
+	void PrintQuickStats(Actor* a_Actor) {
+
+		if (!a_Actor) return;
+
+		const bool Mammoth = Config::GetUI().sDisplayUnits == "kMammoth";
+		float HH = HighHeelManager::GetBaseHHOffset(a_Actor)[2] / 100;
+		const std::string HHOffset = (HH > 0.0f && !Mammoth) ? fmt::format(" + {} From HH", GetFormatedHeight(HH)) : "";
+
+		Notify("{}: ({:2f}) {}{}",
+			a_Actor->GetName(),
+			get_visual_scale(a_Actor),
+			GetFormatedHeight(a_Actor),
+			HHOffset
+		);
+	}
+
+	void ShowQuickStats(const ManagedInputEvent& data) {
+		auto Player = PlayerCharacter::GetSingleton();
+		PrintQuickStats(Player);
+
+		for (auto TeamMate : FindTeammates()) {
+			PrintQuickStats(TeamMate);
+		}
+
+	}
+
 }
 
 namespace GTS {
@@ -390,5 +450,10 @@ namespace GTS {
 
 		InputManager::RegisterInputEvent("Vore", VoreInputEvent, VoreCondition);
 		InputManager::RegisterInputEvent("PlayerVore", VoreInputEvent_Follower, VoreCondition_Follower);
+
+		//Ported from papyrus
+		InputManager::RegisterInputEvent("TogglePlayerCrawl", ToggleCrawlImpl_Player);
+		InputManager::RegisterInputEvent("ToggleFollowerCrawl", ToggleCrawlImpl_Follower);
+		InputManager::RegisterInputEvent("ShowQuickStats", ShowQuickStats);
 	}
 }

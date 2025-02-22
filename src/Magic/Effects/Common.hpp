@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Config/Config.hpp"
+
 #include "Managers/ShrinkToNothingManager.hpp"
 #include "Managers/Animation/Utils/CooldownManager.hpp"
 
@@ -41,9 +43,13 @@ namespace GTS {
 		bool essential = IsEssential(giant, tiny);
 
 		if (essential) {
-			bool teammate = !IsHostile(giant, tiny) && IsTeammate(tiny) && Persistent::GetSingleton().FollowerProtection;
+
+			bool Teammate = !IsHostile(giant, tiny) && IsTeammate(tiny) && Config::GetGeneral().bProtectFollowers;
+
 			bool OnCooldown = IsActionOnCooldown(tiny, CooldownSource::Misc_ShrinkParticle_Animation);
-			bool icons_enabled = Persistent::GetSingleton().EnableIcons;
+
+			bool icons_enabled = Config::GetGeneral().bShowIcons;
+
 			if (giant->formID == 0x14 && !OnCooldown) { // player exclusive
 				if (icons_enabled) { 
 					auto node = find_node(tiny, "NPC Root [Root]");
@@ -55,10 +61,10 @@ namespace GTS {
 						pos.z += (bounding_z * size * 2.35f); // 2.35 to be slightly above the head
 						float iconScale = std::clamp(size, 1.0f, 9999.0f) * 2.4f;
 
-						SpawnParticle(tiny, 3.00f, GetIconPath(teammate), NiMatrix3(), pos, iconScale, 7, node);
+						SpawnParticle(tiny, 3.00f, GetIconPath(Teammate), NiMatrix3(), pos, iconScale, 7, node);
 					}
 				} else {
-					std::string message_1 = std::format("{} is {}", tiny->GetDisplayFullName(), GetAllyEssentialText(teammate));
+					std::string message_1 = std::format("{} is {}", tiny->GetDisplayFullName(), GetAllyEssentialText(Teammate));
 					std::string message_2 = "Immune to size magic and effects";
 					Notify(message_1);
 					Notify(message_2);

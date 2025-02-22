@@ -17,10 +17,7 @@ namespace {
 	inline const auto AllowInsectVoreRecord = _byteswap_ulong('AIVR');
 	inline const auto AllowUndeadVoreRecord = _byteswap_ulong('AUVR');
 	inline const auto AllowFollowerInteractions = _byteswap_ulong('AVFI');
-	inline const auto FollowerProtectionRecord = _byteswap_ulong('FPRD');
-	inline const auto DevourmentCompatRecord = _byteswap_ulong('DVCR');
 	inline const auto FeetTrackingRecord = _byteswap_ulong('FTRD');
-	inline const auto LessGoreRecord = _byteswap_ulong('LGRD');
 	inline const auto AllowStaggerRecord = _byteswap_ulong('ASRD');
 	inline const auto EditVoiceFrequency = _byteswap_ulong('EVFQ');
 	inline const auto VoreCombatOnlyRecord = _byteswap_ulong('VRCO');
@@ -45,7 +42,6 @@ namespace {
 	inline const auto CameraFovEdits = _byteswap_ulong('CFET');
 	inline const auto NPC_EffectImmunity = _byteswap_ulong('NPER');
 	inline const auto PC_EffectImmunity = _byteswap_ulong('PCER');
-	inline const auto Heart_Effects = _byteswap_ulong('HEFS');
 	inline const auto Balance_SGP = _byteswap_ulong('BMSP');
 	inline const auto Balance_SRB = _byteswap_ulong('BMSB');
 	inline const auto Balance_SRC = _byteswap_ulong('BMSC');
@@ -121,6 +117,9 @@ namespace GTS {
 		while (serde->GetNextRecordInfo(type, version, size)) {
 
 			Persi.TrackedCameraState.Load(serde, type, version, size);
+			Persi.EnableCrawlPlayer.Load(serde, type, version, size);
+			Persi.EnableCrawlFollower.Load(serde, type, version, size);
+
 
 			if (type == ActorDataRecord) {
 
@@ -452,30 +451,15 @@ namespace GTS {
 				serde->ReadRecordData(&FollowerInteractions, sizeof(FollowerInteractions));
 				GetSingleton().FollowerInteractions = FollowerInteractions;
 			}
-			else if (type == FollowerProtectionRecord) {
-				bool FollowerProtection;
-				serde->ReadRecordData(&FollowerProtection, sizeof(FollowerProtection));
-				GetSingleton().FollowerProtection = FollowerProtection;
-			}
 			else if (type == VoreCombatOnlyRecord) {
 				bool vore_combatonly;
 				serde->ReadRecordData(&vore_combatonly, sizeof(vore_combatonly));
 				GetSingleton().vore_combatonly = vore_combatonly;
 			}
-			else if (type == DevourmentCompatRecord) {
-				bool devourment_compatibility;
-				serde->ReadRecordData(&devourment_compatibility, sizeof(devourment_compatibility));
-				GetSingleton().devourment_compatibility = devourment_compatibility;
-			}
 			else if (type == FeetTrackingRecord) {
 				bool allow_feetracking;
 				serde->ReadRecordData(&allow_feetracking, sizeof(allow_feetracking));
 				GetSingleton().allow_feetracking = allow_feetracking;
-			}
-			else if (type == LessGoreRecord) {
-				bool less_gore;
-				serde->ReadRecordData(&less_gore, sizeof(less_gore));
-				GetSingleton().less_gore = less_gore;
 			}
 			else if (type == AllowStaggerRecord) {
 				bool allow_stagger;
@@ -609,11 +593,6 @@ namespace GTS {
 				serde->ReadRecordData(&Vore_Ai, sizeof(Vore_Ai));
 				GetSingleton().Vore_Ai = Vore_Ai;
 			}
-			else if (type == Heart_Effects) {
-				bool HeartEffects;
-				serde->ReadRecordData(&HeartEffects, sizeof(HeartEffects));
-				GetSingleton().HeartEffects = HeartEffects;
-			}
 			else if (type == Balance_SGP) {
 				float BalanceMode_SizeGain_Penalty;
 				serde->ReadRecordData(&BalanceMode_SizeGain_Penalty, sizeof(BalanceMode_SizeGain_Penalty));
@@ -638,11 +617,6 @@ namespace GTS {
 				bool PCEffectImmunity;
 				serde->ReadRecordData(&PCEffectImmunity, sizeof(PCEffectImmunity));
 				GetSingleton().PCEffectImmunity = PCEffectImmunity;
-			}
-			else if (type == EnableIconsRecord) {
-				bool EnableIcons;
-				serde->ReadRecordData(&EnableIcons, sizeof(EnableIcons));
-				GetSingleton().EnableIcons = EnableIcons;
 			}
 			else if (type == AllowWeightGainRecord) {
 				bool allow_weight_gain;
@@ -818,7 +792,6 @@ namespace GTS {
 			log::error("Unable to open high heel furniture record to write cosave data.");
 			return;
 		}
-
 		bool highheel_furniture = GetSingleton().highheel_furniture;
 		serde->WriteRecordData(&highheel_furniture, sizeof(highheel_furniture));
 
@@ -827,7 +800,6 @@ namespace GTS {
 			log::error("Unable to open Allow Player Vore record to write cosave data.");
 			return;
 		}
-
 		bool vore_allowplayervore = GetSingleton().vore_allowplayervore;
 		serde->WriteRecordData(&vore_allowplayervore, sizeof(vore_allowplayervore));
 
@@ -852,28 +824,13 @@ namespace GTS {
 		bool FollowerInteractions = GetSingleton().FollowerInteractions;
 		serde->WriteRecordData(&FollowerInteractions, sizeof(FollowerInteractions));
 
-		if (!serde->OpenRecord(FollowerProtectionRecord, 0)) {
-			log::error("Unable to open Follower Protection record to write cosave data.");
-			return;
-		}
-		bool FollowerProtection = GetSingleton().FollowerProtection;
-		serde->WriteRecordData(&FollowerProtection, sizeof(FollowerProtection));
 
 		if (!serde->OpenRecord(VoreCombatOnlyRecord, 0)) {
 			log::error("Unable to open Vore Combat Only record to write cosave data");
 			return;
 		}
-
 		bool vore_combatonly = GetSingleton().vore_combatonly;
 		serde->WriteRecordData(&vore_combatonly, sizeof(vore_combatonly));
-
-		if (!serde->OpenRecord(DevourmentCompatRecord, 0)) {
-			log::error("Unable to open Devourment Compatibility record to write cosave data");
-			return;
-		}
-
-		bool devourment_compatibility = GetSingleton().devourment_compatibility;
-		serde->WriteRecordData(&devourment_compatibility, sizeof(devourment_compatibility));
 
 		if (!serde->OpenRecord(AllowStaggerRecord, 1)) {
 			log::error("Unable to open Allow Stagger record to write cosave data");
@@ -888,13 +845,6 @@ namespace GTS {
 		}
 		bool edit_voice_frequency = GetSingleton().edit_voice_frequency;
 		serde->WriteRecordData(&edit_voice_frequency, sizeof(edit_voice_frequency));
-
-		if (!serde->OpenRecord(LessGoreRecord, 1)) {
-			log::error("Unable to open Less Gore record to write cosave data");
-			return;
-		}
-		bool less_gore = GetSingleton().less_gore;
-		serde->WriteRecordData(&less_gore, sizeof(less_gore));
 
 		if (!serde->OpenRecord(FeetTrackingRecord, 1)) {
 			log::error("Unable to open Feet Tracking record to write cosave data.");
@@ -1020,13 +970,6 @@ namespace GTS {
 		bool legacy_sounds = GetSingleton().legacy_sounds;
 		serde->WriteRecordData(&legacy_sounds, sizeof(legacy_sounds));
 
-		if (!serde->OpenRecord(Heart_Effects, 1)) {
-			log::error("Unable to open Heart Effects record to write cosave data");
-			return;
-		}
-
-		bool HeartEffects = GetSingleton().HeartEffects;
-		serde->WriteRecordData(&HeartEffects, sizeof(HeartEffects));
 
 		if (!serde->OpenRecord(Balance_SGP, 1)) {
 			log::error("Unable to open Balance Mode: Size Gain penalty record to write cosave data");
@@ -1066,14 +1009,6 @@ namespace GTS {
 		}
 		bool PCEffectImmunity = GetSingleton().PCEffectImmunity;
 		serde->WriteRecordData(&PCEffectImmunity, sizeof(PCEffectImmunity));
-
-		if (!serde->OpenRecord(EnableIconsRecord, 1)) {
-			log::error("Unable to open Toggle Icons record to write cosave data");
-			return;
-		}
-
-		bool EnableIcons = GetSingleton().EnableIcons;
-		serde->WriteRecordData(&EnableIcons, sizeof(EnableIcons));
 
 		if (!serde->OpenRecord(AllowWeightGainRecord, 1)) {
 			log::error("Unable to open Gain Weight Record to write cosave data");
@@ -1208,7 +1143,8 @@ namespace GTS {
 
 
 		Persi.TrackedCameraState.Save(serde);
-
+		Persi.EnableCrawlPlayer.Save(serde);
+		Persi.EnableCrawlFollower.Save(serde);
 
 	}
 

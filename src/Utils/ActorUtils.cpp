@@ -185,7 +185,7 @@ namespace {
 	};
 }
 
-RE::ExtraDataList::~ExtraDataList() = default;
+//RE::ExtraDataList::~ExtraDataList() = default;
 
 namespace GTS {
 
@@ -240,12 +240,14 @@ namespace GTS {
 		}
 		return actor.get().get();
 	}
+
 	Actor* GetActorPtr(const ActorHandle& actor) {
 		if (!actor) {
 			return nullptr;
 		}
 		return actor.get().get();
 	}
+
 	Actor* GetActorPtr(FormID formId) {
 		Actor* actor = TESForm::LookupByID<Actor>(formId);
 		if (!actor) {
@@ -366,7 +368,6 @@ namespace GTS {
 	//                                 G T S   ST A T E S  B O O L S                                                                      //
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
 
 	void Potion_SetMightBonus(Actor* giant, float value, bool add) {
 		auto transient = Transient::GetSingleton().GetData(giant);
@@ -574,24 +575,33 @@ namespace GTS {
 	}
 
 	bool IsEssential(Actor* giant, Actor* actor) {
-		bool essential = actor->IsEssential() && Runtime::GetBool("ProtectEssentials");
-		bool protectfollowers = Persistent::GetSingleton().FollowerProtection;
-		bool teammate = IsTeammate(actor);
+
+		auto& Settings = Config::GetGeneral();
+
+		const bool ProtectEssential = Settings.bProtectEssentials;
+		const bool ProtectFollowers = Settings.bProtectFollowers;
+		const bool Teammate = IsTeammate(actor);
+
 		if (actor->formID == 0x14) {
 			return false; // we don't want to make the player immune
-		} if (!teammate && essential) {
-			return true;
-		} else if (teammate && protectfollowers) {
-			if (IsHostile(giant, actor)) {
-				return false;
-			} else if (IsHostile(actor, giant)) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
 		}
+
+		//If Not a follower and protection is on.
+		if (!Teammate && ProtectEssential) {
+			return true;
+		}
+
+		//If Follower and protected
+		if (Teammate && ProtectFollowers) {
+
+			//If Actors are hostile to each other
+			if (IsHostile(giant, actor) || IsHostile(actor, giant)) {
+				return false;
+			}
+
+			return true;
+		}
+		return false;
 	}
 
 	bool IsHeadtracking(Actor* giant) { // Used to report True when we lock onto something, should be Player Exclusive.
@@ -744,11 +754,10 @@ namespace GTS {
 		return controlled;
 	}
 
-
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                 G T S   A C T O R   F U N C T I O N S                                                              //
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	float GetDamageSetting() {
 		return Persistent::GetSingleton().size_related_damage_mult;
 	}
@@ -791,6 +800,7 @@ namespace GTS {
 		float aspect = SizeManager::GetSingleton().GetEnchantmentBonus(giant) * 0.01f;
 		return aspect;
 	}
+
 	float Ench_Hunger_GetPower(Actor* giant) {
 		float hunger = SizeManager::GetSingleton().GetSizeHungerBonus(giant) * 0.01f;
 		return hunger;
@@ -929,7 +939,8 @@ namespace GTS {
 		if (!giant) {
 			return;
 		}
-		bool enabled = Persistent::GetSingleton().EnableIcons;
+		bool enabled = Config::GetGeneral().bShowIcons;
+
 		if (!enabled) {
 			return;
 		}
@@ -1052,6 +1063,7 @@ namespace GTS {
 			}
 		}
 	}
+
 	void override_actor_scale(Actor* giant, float amt, SizeEffectType type) { // This function overrides gts manager values. 
 	    // It ignores half-life, allowing more than 1 growth/shrink sources to stack nicely
 		auto Persistent = Persistent::GetSingleton().GetData(giant);
@@ -1129,12 +1141,14 @@ namespace GTS {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                 G T S   S T A T E S  S E T S                                                                       //
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void SetBeingHeld(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
 			transient->being_held = enable;
 		}
 	}
+
 	void SetProneState(Actor* giant, bool enable) {
 		if (giant->formID == 0x14) {
 			auto transient = Transient::GetSingleton().GetData(giant);
@@ -1143,18 +1157,21 @@ namespace GTS {
 			}
 		}
 	}
+
 	void SetBetweenBreasts(Actor* actor, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
 			transient->is_between_breasts = enable;
 		}
 	}
+
 	void SetBeingEaten(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
 			transient->about_to_be_eaten = enable;
 		}
 	}
+
 	void SetBeingGrinded(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
@@ -1242,8 +1259,6 @@ namespace GTS {
 		});
 	}
 
-
-
 	void UnDisintegrate(Actor* actor) {
 		//actor->GetActorRuntimeData().criticalStage.reset(ACTOR_CRITICAL_STAGE::kDisintegrateEnd);
 	}
@@ -1289,7 +1304,6 @@ namespace GTS {
 			}
 		}
 	}
-
 
 	std::vector<hkpRigidBody*> GetActorRB(Actor* actor) {
 		std::vector<hkpRigidBody*> results = {};
@@ -1404,9 +1418,11 @@ namespace GTS {
 			}
 		}
 	}
+
 	float GetHighHeelsBonusDamage(Actor* actor, bool multiply) {
 		return GetHighHeelsBonusDamage(actor, multiply, 1.0f);
 	}
+
 	float GetHighHeelsBonusDamage(Actor* actor, bool multiply, float adjust) {
 		auto profiler = Profilers::Profile("ActorUtils: GetHHBonusDamage");
 		float value = 0.0f;
@@ -1457,14 +1473,15 @@ namespace GTS {
 	}
 
 	bool AllowDevourment() {
-		return Persistent::GetSingleton().devourment_compatibility;
+		return Config::GetGeneral().bDevourmentCompat;
 	}
 
 	bool AllowCameraTracking() {
 		return Persistent::GetSingleton().allow_feetracking;
 	}
+
 	bool LessGore() {
-		return Persistent::GetSingleton().less_gore;
+		return Config::GetGeneral().bLessGore;
 	}
 
 	bool IsTeammate(Actor* actor) {
@@ -1519,6 +1536,7 @@ namespace GTS {
 		bool ragdoll = actor->IsInRagdollState();
 		return ragdoll;
 	}
+
 	bool IsGrowing(Actor* actor) {
 		bool Growing = false;
 		actor->GetGraphVariableBool("GTS_IsGrowing", Growing);
@@ -1653,7 +1671,6 @@ namespace GTS {
 		actor->GetGraphVariableBool("GTS_CanDoPaired", paired);
 		return paired;
 	}
-
 
 	bool IsThighCrushing(Actor* actor) { // Are we currently doing Thigh Crush?
 		int crushing = 0;
@@ -1808,12 +1825,9 @@ namespace GTS {
 		return false;
 	}
 
-
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                 G T S   ST A T E S  O T H E R                                                                      //
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 	bool IsGrowthSpurtActive(Actor* actor) {
 		if (!Runtime::HasPerkTeam(actor, "GrowthOfStrength")) {
@@ -1930,7 +1944,6 @@ namespace GTS {
 			}
 		}
 	}
-	
 
 	void CallVampire() {
 		auto progressionQuest = Runtime::GetQuest("MainQuest");
@@ -2264,6 +2277,7 @@ namespace GTS {
 	void DoDamageEffect(Actor* giant, float damage, float radius, int random, float bonedamage, FootEvent kind, float crushmult, DamageSource Cause) {
 		DoDamageEffect(giant, damage, radius, random, bonedamage, kind, crushmult, Cause, false);
 	}
+
 	void DoDamageEffect(Actor* giant, float damage, float radius, int random, float bonedamage, FootEvent kind, float crushmult, DamageSource Cause, bool ignore_rotation) {
 		if (kind == FootEvent::Left) {
 			CollisionDamage::GetSingleton().DoFootCollision(giant, damage, radius, random, bonedamage, crushmult, Cause, false, false, ignore_rotation, true);
@@ -2638,7 +2652,6 @@ namespace GTS {
 			return Utils_ManageTinyProtection(giant, true, Balance); // stop task, immunity has ended
 		});
 	}
-
 
 	bool HasSMT(Actor* giant) {
 		if (Runtime::HasMagicEffect(giant, "TinyCalamity")) {
@@ -3036,6 +3049,7 @@ namespace GTS {
 			}
 		}
 	}
+
 	void EnableCollisions(Actor* actor) {
 		if (actor) {
 			auto trans = Transient::GetSingleton().GetData(actor);
@@ -3154,7 +3168,6 @@ namespace GTS {
 			}
 		}
 	}
-
 
 	bool CanPerformAnimation(Actor* giant, AnimationCondition type) { // Needed for smooth animation unlocks during quest progression
 		// 0 = Hugs
@@ -3297,7 +3310,9 @@ namespace GTS {
 	}
 
 	void SpawnHearts(Actor* giant, Actor* tiny, float Z, float scale, bool hugs) {
-		bool Allow = Persistent::GetSingleton().HeartEffects;
+
+		bool Allow = Config::GetGeneral().bShowHearts;
+
 		if (Allow) {
 			NiPoint3 Position = GetHeartPosition(giant, tiny, hugs);
 
@@ -3399,6 +3414,7 @@ namespace GTS {
 			SkyrimSetCriticalStage(actor, stage);
 		}
 	}
+
 	void Attacked(Actor* victim, Actor* agressor) {
 		typedef void (*DefAttacked)(Actor* victim, Actor* agressor);
 		REL::Relocation<DefAttacked> SkyrimAttacked{ RELOCATION_ID(37672, 38626) }; // 6285A0 (SE) ; 64EE60 (AE)

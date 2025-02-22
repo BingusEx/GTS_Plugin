@@ -215,9 +215,6 @@ namespace GTS {
 			}
 		}
 	}
-		
-	
-		 
 
 	void Vore_AttachToRightHandTask(Actor* giant, Actor* tiny) {
 		std::string name = std::format("CrawlVore_{}_{}", giant->formID, tiny->formID);
@@ -674,7 +671,6 @@ namespace GTS {
 			return true;
 		});
 	}
-
 
 	void DoFootGrind(Actor* giant, Actor* tiny, bool Right) {
 		auto gianthandle = giant->CreateRefHandle();
@@ -1747,5 +1743,39 @@ namespace GTS {
 		float clamped_diff = std::clamp(difference, 1.0f, 100.0f);
 
 		return hp * clamped_diff;
+	}
+
+	bool SetCrawlAnimation(Actor* a_actor, const bool a_state) {
+
+		if (!a_actor) {
+			return false;
+		}
+
+		bool PrevState = false;
+		if (a_actor->GetGraphVariableBool("GTS_CrawlEnabled", PrevState)) {
+
+			if (PrevState == a_state) {
+				return false;
+			}
+
+			a_actor->SetGraphVariableBool("GTS_CrawlEnabled", a_state);
+
+			if (auto transient = Transient::GetSingleton().GetData(a_actor)) {
+				transient->FPCrawling = a_state;
+			}
+
+			if (a_actor->IsSneaking() && !IsProning(a_actor) && !IsGtsBusy(a_actor) && !IsTransitioning(a_actor)) {
+				return PrevState != a_state;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	void UpdateCrawlAnimations(Actor* a_actor, bool a_state) {
+
+		if (a_actor) {
+			AnimationManager::StartAnim(a_state ? "CrawlON" : "CrawlOFF", a_actor);
+		}
 	}
 }

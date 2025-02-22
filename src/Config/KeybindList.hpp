@@ -64,7 +64,7 @@ namespace GTS {
             //=======================================================
 
             {
-                .Event = "OpenSettings",
+                .Event = "OpenModSettings",
                 .Keys = {"F1"},
                 .Trigger = "Once",
                 .BlockInput = "Always"
@@ -226,11 +226,13 @@ namespace GTS {
             //========================================================
             //============ C R A W L I N G
             //========================================================
-
             {
-                .Event = "LightSwipeRight",
-                .Keys = {"LALT", "E"},
-                .Trigger = "Release",
+                .Event = "TogglePlayerCrawl",
+                .Keys = {"NUMPAD1"},
+            },
+            {
+                .Event = "ToggleFollowerCrawl",
+                .Keys = {"NUMPAD2"},
             },
             {
                 .Event = "LightSwipeLeft",
@@ -566,6 +568,11 @@ namespace GTS {
                 .Event = "PartyReport",
                 .Keys = {"LCONTROL"},
                 .Duration = 1.33f,
+                .BlockInput = "Never"
+            },
+            {
+                .Event = "ShowQuickStats",
+                .Keys = {"F1"},
                 .BlockInput = "Never"
             },
             {

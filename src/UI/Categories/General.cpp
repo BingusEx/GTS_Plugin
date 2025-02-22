@@ -78,14 +78,16 @@ namespace GTS {
 	                         "To go back up one state (e.g., from crawling to sneaking),\n"
 	                         "hold shift while pressing the sneak button.";
 
-	        const char* T1 = "Replace sneaking with crawling for the player only.";
-	        const char* T2 = "Replace sneaking with crawling for followers.";
+	        const char* T1 = "Replace sneaking with crawling for the player only.\n(Save specific setting)";
+	        const char* T2 = "Replace sneaking with crawling for followers.\n(Save specific setting)";
 
 	        if (ImGui::CollapsingHeader("Sneaking", ImUtil::HeaderFlags)) {
 	            ImUtil::CheckBox("Enable Layered Sneak", &Settings.bLayeredSneak, T0);
 
-	            ImUtil::CheckBox("Enable Player Crawling", &Settings.bPlayerCrawling, T1, Settings.bLayeredSneak);
-	            ImUtil::CheckBox("Enable Follower Crawling", &Settings.bFollowerCrawling, T2);
+				auto& Persi = Persistent::GetSingleton();
+
+	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1, Settings.bLayeredSneak);
+	            ImUtil::CheckBox("Enable Follower Crawling", &Persi.EnableCrawlFollower.value, T2);
 	            ImGui::Spacing();
 	        }
 	    }

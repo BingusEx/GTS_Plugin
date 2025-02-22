@@ -118,4 +118,16 @@ namespace GTS {
         else
             return FormatMetricHeight(GetActorGTSHeight(a_Actor));
     }
+
+    const inline std::string GetFormatedHeight(const float Value) {
+        std::string displayUnits = Config::GetUI().sDisplayUnits;
+        if (displayUnits == "kImperial")
+            return FormatImperialHeight(MetersToFeet(Value));
+
+        else if (displayUnits == "kMammoth")
+            return FormatMammothHeight(MetersToMammoth(Value));
+
+        else
+            return FormatMetricHeight(Value);
+    }
 }

@@ -136,7 +136,7 @@ namespace GTS {
 
         logger::info("ImGui Init OK");
 
-        InputManager::RegisterInputEvent("OpenSettings", OpenSettingsK);
+        InputManager::RegisterInputEvent("OpenModSettings", OpenSettingsK);
         ConsoleManager::RegisterCommand("menu", OpenSettingsC, "Open the settings menu");
     }
 

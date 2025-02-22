@@ -178,10 +178,6 @@ namespace {
 		Persistent::GetSingleton().Camera_PermitFovEdits = enabled;
 	}
 
-	void SetLessGore(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().less_gore = enabled;
-	}
-
 	void SetPlayerStagger(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().allow_stagger = enabled;
 	}
@@ -199,12 +195,10 @@ namespace {
 		Persistent::GetSingleton().PCEffectImmunity = enabled;
 	}
 
-	void SetToggleIcons(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().EnableIcons = enabled;
-	}
 	void SetWeightGain(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().allow_weight_gain = enabled;
 	}
+
 	void EnableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
 		if (!ref) {
 			return;
@@ -308,43 +302,6 @@ namespace {
 		}
 	}
 
-	void SetCrawlAnimation(StaticFunctionTag*, bool enabled, bool player) {
-		if (player) {
-			PlayerCharacter::GetSingleton()->SetGraphVariableBool("GTS_CrawlEnabled", enabled);
-			auto transient = Transient::GetSingleton().GetData(PlayerCharacter::GetSingleton());
-			if (transient) {
-				transient->FPCrawling = enabled;
-			}
-		} else if (!player) {
-			for (auto teammate: FindTeammates()) {
-				if (teammate && teammate != PlayerCharacter::GetSingleton()) {
-					teammate->SetGraphVariableBool("GTS_CrawlEnabled", enabled);
-				}
-			}
-		}
-	}
-
-	void UpdateCrawlAnimations(StaticFunctionTag*, bool enabled, bool player) {
-		auto pc = PlayerCharacter::GetSingleton();
-		if (player) {
-			if (enabled) {
-				AnimationManager::StartAnim("CrawlON", pc);
-			} else {
-				AnimationManager::StartAnim("CrawlOFF", pc);
-			}
-		} else if (!player) {
-			for (auto teammate: FindTeammates()) {
-				if (teammate && teammate != pc) {
-					if (enabled) {
-						AnimationManager::StartAnim("CrawlON", teammate);
-					} else {
-						AnimationManager::StartAnim("CrawlOFF", teammate);
-					}
-				}
-			}
-		}
-	}
-
 	void SetAlternativeLightStomp(StaticFunctionTag*, bool enable, bool player) {
 		if (player) {
 			PlayerCharacter::GetSingleton()->SetGraphVariableBool("GTS_EnableAlternativeStomp", enable);
@@ -364,10 +321,6 @@ namespace {
 				teammate->SetGraphVariableBool("GTS_DisableSneakTrans", !enable);
 			}
 		}
-	}
-
-	void PreventHeartEffects(StaticFunctionTag*, bool enable) {
-		Persistent::GetSingleton().HeartEffects = enable;
 	}
 
 	void AdjustBalanceMode(StaticFunctionTag*, int parameter, float modifier) {
@@ -400,9 +353,7 @@ namespace {
 	void SetFollowerInteractions(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().FollowerInteractions = enabled;
 	}
-	void SetFollowerProtection(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().FollowerProtection = enabled;
-	}
+
 	void SetVoreAi(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().Vore_Ai = enabled;
 	}
@@ -447,12 +398,9 @@ namespace {
 	}
 
 	bool GetDevourmentCompatibility(StaticFunctionTag*) {
-		return Persistent::GetSingleton().devourment_compatibility;
+		return Config::GetGeneral().bDevourmentCompat;
 	}
 
-	void SetDevourmentCompatibility(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().devourment_compatibility = enabled;
-	}
 
 	bool DragonCheck(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
@@ -548,12 +496,10 @@ namespace GTS {
 		vm->RegisterFunction("GtsBehaviorsInstalled", PapyrusClass, GtsBehaviorsInstalled);
 		vm->RegisterFunction("SetFeetTracking", PapyrusClass, SetFeetTracking);
 		vm->RegisterFunction("AllowCameraFOVEdits", PapyrusClass, AllowCameraFOVEdits);
-		vm->RegisterFunction("SetLessGore", PapyrusClass, SetLessGore);
 		vm->RegisterFunction("SetPlayerStagger", PapyrusClass, SetPlayerStagger);
 		vm->RegisterFunction("SetActorAudioOverride", PapyrusClass, SetActorAudioOverride);
 		vm->RegisterFunction("SetNPCProtection", PapyrusClass, SetNPCProtection);
 		vm->RegisterFunction("SetPCProtection", PapyrusClass, SetPCProtection);
-		vm->RegisterFunction("SetToggleIcons", PapyrusClass, SetToggleIcons);
 		vm->RegisterFunction("SetWeightGain", PapyrusClass, SetWeightGain);
 		vm->RegisterFunction("DisableCollisionLayerAndMotion", PapyrusClass, DisableCollisionLayerAndMotion);
 		vm->RegisterFunction("EnableCollisionLayerAndMotion", PapyrusClass, EnableCollisionLayerAndMotion);
@@ -563,17 +509,13 @@ namespace GTS {
 		vm->RegisterFunction("SetIsHighHeelEnabled", PapyrusClass, SetIsHighHeelEnabled);
 		vm->RegisterFunction("EnableRaycastSize", PapyrusClass, EnableRaycastSize);
 		vm->RegisterFunction("SetIsHHFurnitureEnabled", PapyrusClass, SetIsHHFurnitureEnabled);
-		vm->RegisterFunction("SetCrawlAnimation", PapyrusClass, SetCrawlAnimation);
-		vm->RegisterFunction("UpdateCrawlAnimations", PapyrusClass, UpdateCrawlAnimations);
 		vm->RegisterFunction("SetAlternativeLightStomp", PapyrusClass, SetAlternativeLightStomp);
 		vm->RegisterFunction("SetAlternativeSneakTransition", PapyrusClass, SetAlternativeSneakTransition);
-		vm->RegisterFunction("PreventHeartEffects", PapyrusClass, PreventHeartEffects);
 		vm->RegisterFunction("AdjustBalanceMode", PapyrusClass, AdjustBalanceMode);
 		vm->RegisterFunction("SetProgressionMultiplier", PapyrusClass, SetProgressionMultiplier);
 		vm->RegisterFunction("SetStompAi", PapyrusClass, SetStompAi);
 		vm->RegisterFunction("SetSandwichAi", PapyrusClass, SetSandwichAi);
 		vm->RegisterFunction("SetFollowerInteractions", PapyrusClass, SetFollowerInteractions);
-		vm->RegisterFunction("SetFollowerProtection", PapyrusClass, SetFollowerProtection);
 		vm->RegisterFunction("SetVoreAi", PapyrusClass, SetVoreAi);
 		vm->RegisterFunction("SetHugsAi", PapyrusClass, SetHugsAi);
 		vm->RegisterFunction("SetThighAi", PapyrusClass, SetThighAi);
@@ -591,9 +533,10 @@ namespace GTS {
 		vm->RegisterFunction("IncreaseMassLimit", PapyrusClass, IncreaseMassLimit);
 		vm->RegisterFunction("DisintegrateTarget", PapyrusClass, DisintegrateTarget);
 		vm->RegisterFunction("WasDragonEaten", PapyrusClass, WasDragonEaten);
+
 		vm->RegisterFunction("CallDevourmentCompatibility", PapyrusClass, CallDevourmentCompatibility);
 		vm->RegisterFunction("GetDevourmentCompatibility", PapyrusClass, GetDevourmentCompatibility);
-		vm->RegisterFunction("SetDevourmentCompatibility", PapyrusClass, SetDevourmentCompatibility);
+
 		vm->RegisterFunction("DragonCheck", PapyrusClass, DragonCheck);
 		vm->RegisterFunction("GetIsSpeedAdjusted", PapyrusClass, GetIsSpeedAdjusted);
 		vm->RegisterFunction("SetIsSpeedAdjusted", PapyrusClass, SetIsSpeedAdjusted);

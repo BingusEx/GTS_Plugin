@@ -13,6 +13,8 @@
 #include "Utils/DynamicScale.hpp"
 #include "AI/AIFunctions.hpp"
 
+#include "Animation/Utils/AnimationUtils.hpp"
+
 #include "Config/Config.hpp"
 
 #include "Hooks/Skyrim/Settings.hpp"
@@ -219,6 +221,7 @@ namespace {
 			}
 		}
 	}
+
 	void apply_height(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data, bool force = false) {
 		auto profiler = Profilers::Profile("Manager: apply_height");
 		if (!actor) {
@@ -317,6 +320,23 @@ namespace {
 		apply_height(actor, saved_data, temp_data, force);
 		apply_speed(actor, saved_data, temp_data, force);
 	}
+
+	void UpdateCrawlState(Actor* actor) {
+
+		if (!actor) {
+			return;
+		}
+
+		auto& Persi = Persistent::GetSingleton();
+
+		bool CrawlState = (actor->formID == 0x14) ? Persi.EnableCrawlPlayer.value : Persi.EnableCrawlFollower.value;
+
+		//SetCrawlAnimation Returns true if the state has changed
+		if (SetCrawlAnimation(actor, CrawlState)) {
+			UpdateCrawlAnimations(actor, CrawlState);
+		}
+
+	}
 }
 
 GtsManager& GtsManager::GetSingleton() noexcept {
@@ -356,12 +376,15 @@ void GtsManager::Update() {
 		if (actor) {
 
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
+
 				ClothManager::GetSingleton().CheckClothingRip(actor);
 				GameModeManager::GetSingleton().GameMode(actor); // Handle Game Modes
+
 				Foot_PerformIdleEffects_Main(actor); // Just idle zones for pushing away/dealing minimal damage
 				TinyCalamity_SeekActors(actor); // Active only on Player
 				SpawnActionIcon(actor); // Icons for interactions with others, Player only
 				ScareActors(actor);
+				UpdateCrawlState(actor);
 
 				if (IsCrawling(actor)) {
 					ApplyAllCrawlingDamage(actor, 1000, 0.25f);
