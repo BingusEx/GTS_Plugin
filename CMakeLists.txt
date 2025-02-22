@@ -162,6 +162,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
           "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Fonts"
           "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/GTSPlugin/Fonts")
 
+# Copy the contents from the config folder.
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Config"
+          "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Plugin-${BUILD_NAME}/GTSPlugin")
+
 file(GLOB_RECURSE OUTPUT_DLLS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.dll")
 file(GLOB_RECURSE OUTPUT_PDBS "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/**/*.pdb")
 

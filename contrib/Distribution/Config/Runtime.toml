@@ -89,10 +89,12 @@ NormalLand_Mega = "GTS.esp|61588D"
 
 [spellEffects]
 TinyCalamity = "GTS.esp|1A2568"
+
 # Explosive
 GrowthSpurt1 = "GTS.esp|007928"
 GrowthSpurt2 = "GTS.esp|1E42A5"
 GrowthSpurt3 = "GTS.esp|1E42A6"
+
 # Shrink
 ShrinkPCButton = "GTS.esp|10A6CF"
 RestoreSize = "GTS.esp|005369"
@@ -106,6 +108,7 @@ ShrinkEnemyAOE = "GTS.esp|0DCDC5"
 ShrinkEnemyAOEMast = "GTS.esp|0DCDCA"
 ShrinkBolt = "GTS.esp|3C5278"
 ShrinkStorm = "GTS.esp|3C527C"
+
 # Grow
 SwordEnchant = "GTS.esp|00FA9E"
 EnchGigantism = "GTS.esp|3EDAC5"
@@ -128,7 +131,6 @@ AbsorbMGEF = "GTS.esp|00B470"
 TrueAbsorb = "GTS.esp|22B0D5"
 
 # Potions
-
 EffectGrowthPotionWeak = "GTS.esp|3D4582"
 EffectGrowthPotionNormal = "GTS.esp|7C8F02"
 EffectGrowthPotionStrong = "GTS.esp|7C8F03"
@@ -172,13 +174,9 @@ AlchEffectEssence = "GTS.esp|89D947"
 AlchEffectMight = "GTS.esp|89D946"
 AlchResistShrink = "GTS.esp|89D949"
 
-
 # Crushing
 FakeCrushEffect = "GTS.esp|271EF9"
 HealthBoost = "GTS.esp|518645"
-
-
-
 
 [spells]
 GtsVoreFearSpell = "GTS.esp|026D15"
@@ -202,11 +200,9 @@ GtsBleedSpell = "GTS.esp|01CEA2"
 HealthBoost = "GTS.esp|518643"
 ShrinkStorm = "GTS.esp|3C527A"
 ShrinkBolt = "GTS.esp|3C5276"
-
 gtsProtectTiniesSpell = "GTS.esp|763ACF"
 
 # Survival
-
 Survival_HungerStage0 = "ccQDRSSE001-SurvivalMode.esl|000876"
 Survival_HungerStage1 = "ccQDRSSE001-SurvivalMode.esl|00087E"
 Survival_HungerStage2 = "ccQDRSSE001-SurvivalMode.esl|000880"
@@ -215,92 +211,82 @@ Survival_HungerStage4 = "ccQDRSSE001-SurvivalMode.esl|000886"
 Survival_HungerStage5 = "ccQDRSSE001-SurvivalMode.esl|000885"
 
 [perks]
-TalkToActor = "GTS.esp|5F7265"
-BendLifeless = "GTS.esp|7913D9"
-LifeSteal = "GTS.esp|2496E8"
-VorePerk = "GTS.esp|355C68"
-CalamityPerk = "GTS.esp|18E161"
-EternalCalamity = "GTS.esp|5ED064"
-WrathfulCalamity = "GTS.esp|856B3C"
-EnhancedCapacity = "GTS.esp|462228"
-GrowthOnHitPerk = "GTS.esp|30EE52"
-AdditionalGrowth = "GTS.esp|151518"
-StaggerImmunity = "GTS.esp|0AA3B2"
-FastShrink = "GTS.esp|16081F"
-LethalShrink = "GTS.esp|160820"
-ExtraGrowth = "GTS.esp|332563"
-ExtraGrowthMax = "GTS.esp|397972"
-HealthRegenPerk = "GTS.esp|18E160"
-RandomGrowth = "GTS.esp|35AD69"
-RandomGrowthAug = "GTS.esp|865E3E"
-RandomGrowthTerror = "GTS.esp|865E3F"
-Gluttony = "GTS.esp|33C764"
-SoulVorePerk = "GTS.esp|33C765"
-GrowthDesirePerk = "GTS.esp|128CF6"
-GrowthDesirePerkAug = "GTS.esp|829231"
-ColossalGrowth = "GTS.esp|128CF7"
-NoSpeedLoss = "GTS.esp|2E663B"
-SizeReserve = "GTS.esp|4204CE"
-SizeReserveAug = "GTS.esp|4C7638"
-SizeReserveAug2 = "GTS.esp|4255D0"
-OnTheEdge = "GTS.esp|4399E3"
-DevastatingSprint = "GTS.esp|123BEB"
-hhBonus = "GTS.esp|271EF1"
-GrowthOfStrength = "GTS.esp|151519"
-RumblingFeet = "GTS.esp|1CAD91"
-LaunchDamage = "GTS.esp|2496E9"
-TrueGiantess = "GTS.esp|128CF4"
-
-LifeAbsorption = "GTS.esp|87F341"
 Acceleration = "GTS.esp|87F342"
-ShrinkingGaze = "GTS.esp|889543"
-
-
-
-Breasts_Intro = "GTS.esp|898845"
-Breasts_Vore = "GTS.esp|856B38"
-Breasts_Suffocate = "GTS.esp|856B3A"
+AdditionalGrowth = "GTS.esp|151518"
+BendLifeless = "GTS.esp|7913D9"
 Breasts_Absorb = "GTS.esp|856B39"
+Breasts_Intro = "GTS.esp|898845"
 Breasts_Mastery = "GTS.esp|856B3B"
 Breasts_Predominance = "GTS.esp|856B3D"
-
-MightOfDragons = "GTS.esp|67FDAC"
-
-MightyLegs = "GTS.esp|123BE9"
-QuickApproach = "GTS.esp|123BEA"
+Breasts_Suffocate = "GTS.esp|856B3A"
+Breasts_Vore = "GTS.esp|856B38"
+ButtCrush_GrowingDisaster = "GTS.esp|5FC367"
+ButtCrush_KillerBooty = "GTS.esp|5FC366"
+ButtCrush_LoomingDoom = "GTS.esp|5FC369"
+ButtCrush_NoEscape = "GTS.esp|5FC36A"
+ButtCrush_UnstableGrowth = "GTS.esp|5FC368"
+CalamityPerk = "GTS.esp|18E161"
+ColossalGrowth = "GTS.esp|128CF7"
 Cruelty = "GTS.esp|128CF8"
-RealCruelty = "GTS.esp|142205"
-RavagingInjuries = "GTS.esp|128CF5"
-HealthGate = "GTS.esp|4E0B39"
-GrowingPressure = "GTS.esp|1E93A9"
-DestructionBasics = "GTS.esp|587C4A"
-KillerThighs = "GTS.esp|587C4B"
-
-HugCrush = "GTS.esp|60656E"
-HugCrush_Greed = "GTS.esp|606571"
-HugCrush_ToughGrip = "GTS.esp|606570"
-HugCrush_MightyCuddles = "GTS.esp|60656F"
-HugCrush_HugsOfDeath = "GTS.esp|629C98"
-HugCrush_LovingEmbrace = "GTS.esp|7598CE"
-
-SkilledGTS = "GTS.esp|61A996"
-DisastrousTremor = "GTS.esp|61FA97"
-
 DarkArts = "GTS.esp|64319B"
 DarkArts_Aug = "GTS.esp|64319C"
 DarkArts_Aug2 = "GTS.esp|64319D"
 DarkArts_Aug3 = "GTS.esp|19D462"
 DarkArts_Max = "GTS.esp|63E09A"
-
-ButtCrush_KillerBooty = "GTS.esp|5FC366"
-ButtCrush_GrowingDisaster = "GTS.esp|5FC367"
-ButtCrush_UnstableGrowth = "GTS.esp|5FC368"
-ButtCrush_LoomingDoom = "GTS.esp|5FC369"
-ButtCrush_NoEscape = "GTS.esp|5FC36A"
-
-SizeConversion = "GTS.esp|610774"
-
+DestructionBasics = "GTS.esp|587C4A"
+DevastatingSprint = "GTS.esp|123BEB"
+DisastrousTremor = "GTS.esp|61FA97"
+EnhancedCapacity = "GTS.esp|462228"
+EternalCalamity = "GTS.esp|5ED064"
+ExtraGrowth = "GTS.esp|332563"
+ExtraGrowthMax = "GTS.esp|397972"
+FastShrink = "GTS.esp|16081F"
+Gluttony = "GTS.esp|33C764"
+GrowingPressure = "GTS.esp|1E93A9"
+GrowthDesirePerk = "GTS.esp|128CF6"
+GrowthDesirePerkAug = "GTS.esp|829231"
+GrowthOfStrength = "GTS.esp|151519"
+GrowthOnHitPerk = "GTS.esp|30EE52"
+HealthGate = "GTS.esp|4E0B39"
+HealthRegenPerk = "GTS.esp|18E160"
+hhBonus = "GTS.esp|271EF1"
+HugCrush = "GTS.esp|60656E"
+HugCrush_Greed = "GTS.esp|606571"
+HugCrush_HugsOfDeath = "GTS.esp|629C98"
+HugCrush_LovingEmbrace = "GTS.esp|7598CE"
+HugCrush_MightyCuddles = "GTS.esp|60656F"
+HugCrush_ToughGrip = "GTS.esp|606570"
+KillerThighs = "GTS.esp|587C4B"
+LaunchDamage = "GTS.esp|2496E9"
+LethalShrink = "GTS.esp|160820"
+LifeAbsorption = "GTS.esp|87F341"
+LifeSteal = "GTS.esp|2496E8"
+MightOfDragons = "GTS.esp|67FDAC"
 MightOfGiants = "GTS.esp|6AD6B1"
+MightyLegs = "GTS.esp|123BE9"
+NoSpeedLoss = "GTS.esp|2E663B"
+OnTheEdge = "GTS.esp|4399E3"
+QuickApproach = "GTS.esp|123BEA"
+RandomGrowth = "GTS.esp|35AD69"
+RandomGrowthAug = "GTS.esp|865E3E"
+RandomGrowthTerror = "GTS.esp|865E3F"
+RavagingInjuries = "GTS.esp|128CF5"
+RealCruelty = "GTS.esp|142205"
+RumblingFeet = "GTS.esp|1CAD91"
+ShrinkingGaze = "GTS.esp|889543"
+SizeConversion = "GTS.esp|610774"
+SizeReserve = "GTS.esp|4204CE"
+SizeReserveAug = "GTS.esp|4C7638"
+SizeReserveAug2 = "GTS.esp|4255D0"
+SkilledGTS = "GTS.esp|61A996"
+SoulVorePerk = "GTS.esp|33C765"
+StaggerImmunity = "GTS.esp|0AA3B2"
+TalkToActor = "GTS.esp|5F7265"
+TrueGiantess = "GTS.esp|128CF4"
+VorePerk = "GTS.esp|355C68"
+WrathfulCalamity = "GTS.esp|856B3C"
+SizeManipulation = "GTS.esp|128CF2"
+ExpandedGrowth = "GTS.esp|128CF3"
 
 
 [explosions]
@@ -346,12 +332,9 @@ NPCSizeEffects = "GTS.esp|3D4587"
 CrushGrowthStorage = "GTS.esp|3D4588"
 ManualGrowthStorage = "GTS.esp|4162CB"
 BalanceMode = "GTS.esp|42F7D3"
-
 Cleavage_OffsetY = "GTS.esp|271EFF"
 Cleavage_OffsetZ = "GTS.esp|142206"
-
 ExtraPotionSize = "GTS.esp|15151C"
-
 FirstPersonMode = "GTS.esp|2B8D35"
 ProneOffsetFP = "GTS.esp|2C2F38"
 EnableCamera = "GTS.esp|290512"
@@ -387,32 +370,22 @@ bonusJumpHeightMultiplier = "GTS.esp|28B40A"
 bonusDamageMultiplier = "GTS.esp|28B409"
 bonusSpeedMultiplier = "GTS.esp|28B40B"
 bonusSpeedMax = "GTS.esp|28B40C"
-GtsEnableLooting = "GTS.esp|2EB748"
-GtsNPCEnableLooting = "GTS.esp|2EB749"
 NormalCameraTarget = "GTS.esp|4B8335"
 AltCameraTarget = "GTS.esp|4B8336"
-
 EnableColliders = "GTS.esp|42A6D2"
 EnableDebugOverlay = "GTS.esp|42A6D1"
-
 GtsSkillLevel = "GTS.esp|142200"
 GtsSkillRatio = "GTS.esp|142202"
 GtsSkillProgress = "GTS.esp|142201"
-
 ConversationCameraComp = "GTS.esp|50933F"
-
 LevelLimitModifier = "GTS.esp|151516"
 SizeLossModifier = "GTS.esp|1E429E"
-
 PreciseDamage = "GTS.esp|4F4F3A"
 PreciseDamageOthers = "GTS.esp|513540"
-
 HostileDamage = "GTS.esp|271EF2"
-
 GtsSkillPerkPoints = "GTS.esp|2352E1"
 
 # Survival Values
-
 Survival_HungerNeedMaxValue = "ccQDRSSE001-SurvivalMode.esl|00080C"
 Survival_HungerNeedValue = "ccQDRSSE001-SurvivalMode.esl|00081A"
 
@@ -422,6 +395,7 @@ Survival_HungerStage2Value = "ccQDRSSE001-SurvivalMode.esl|000802"
 Survival_HungerStage3Value = "ccQDRSSE001-SurvivalMode.esl|000803"
 Survival_HungerStage4Value = "ccQDRSSE001-SurvivalMode.esl|000804"
 Survival_HungerStage5Value = "ccQDRSSE001-SurvivalMode.esl|000805"
+
 # Toggle
 Survival_ModeEnabled = "ccQDRSSE001-SurvivalMode.esl|000826"
 
@@ -460,7 +434,6 @@ IcewraithRace = "Skyrim.esm|0131FE"
 MammothRace = "Skyrim.esm|0131FF"
 GiantRace = "Skyrim.esm|0131F9"
 
-
 [keywords]
 UndeadKeyword = "Skyrim.esm|013796"
 DwemerKeyword = "Skyrim.esm|01397A"
@@ -470,11 +443,9 @@ AnimalKeyword = "Skyrim.esm|013798"
 CreatureKeyword = "Skyrim.esm|013795"
 BlackListKeyword = "GTS.esp|6A85AF"
 CountAsFollower = "GTS.esp|88E644"
-
 DarkSouls = "Skyrim.esm|0C1E8F"
 SummonUndead = "Skyrim.esm|02482B"
 ActorTypeNPC = "Skyrim.esm|013794"
-
 
 [containers]
 Dropbox = "GTS.esp|6AD6B0"
@@ -485,6 +456,5 @@ Dropbox_Bug = "GTS.esp|6C1ABF"
 
 [levelitems]
 LootList_Master = "GTS.esp|7C3DFB"
-
 
 

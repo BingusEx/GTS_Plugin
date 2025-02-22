@@ -8,20 +8,13 @@ namespace {
 
 	inline const auto ActorDataRecord = _byteswap_ulong('ACTD');
 
-
-
-	inline const auto HighHeelCorrectionRecord = _byteswap_ulong('HHCO');
-	inline const auto HighHeelFurnitureRecord = _byteswap_ulong('HHFO');
-	inline const auto SizeRaycastRecord = _byteswap_ulong('SREB');
 	inline const auto AllowPlayerVoreRecord = _byteswap_ulong('APVR');
 	inline const auto AllowInsectVoreRecord = _byteswap_ulong('AIVR');
 	inline const auto AllowUndeadVoreRecord = _byteswap_ulong('AUVR');
 	inline const auto AllowFollowerInteractions = _byteswap_ulong('AVFI');
-	inline const auto FeetTrackingRecord = _byteswap_ulong('FTRD');
 	inline const auto AllowStaggerRecord = _byteswap_ulong('ASRD');
 	inline const auto EditVoiceFrequency = _byteswap_ulong('EVFQ');
 	inline const auto VoreCombatOnlyRecord = _byteswap_ulong('VRCO');
-	inline const auto IsSpeedAdjustedRecord = _byteswap_ulong('ANAJ');
 	inline const auto TremorScales = _byteswap_ulong('TREM');
 	inline const auto CamCollisions = _byteswap_ulong('CAMC');
 	inline const auto SizeDamageMult = _byteswap_ulong('SZDM');
@@ -39,13 +32,11 @@ namespace {
 	inline const auto LegacySounds = _byteswap_ulong('LGSD');
 	inline const auto ActorsPanic = _byteswap_ulong('ACTP');
 	inline const auto LaunchObjects = _byteswap_ulong('LOBj');
-	inline const auto CameraFovEdits = _byteswap_ulong('CFET');
 	inline const auto NPC_EffectImmunity = _byteswap_ulong('NPER');
 	inline const auto PC_EffectImmunity = _byteswap_ulong('PCER');
 	inline const auto Balance_SGP = _byteswap_ulong('BMSP');
 	inline const auto Balance_SRB = _byteswap_ulong('BMSB');
 	inline const auto Balance_SRC = _byteswap_ulong('BMSC');
-	inline const auto EnableIconsRecord = _byteswap_ulong('EIRC');
 	inline const auto AllowWeightGainRecord = _byteswap_ulong('AWGR');
 
 	inline const auto StolenAttributes = _byteswap_ulong('STAT');
@@ -416,21 +407,8 @@ namespace GTS {
 				}
 			}
 
-			else if (type == HighHeelCorrectionRecord) {
-				bool highheel_correction;
-				serde->ReadRecordData(&highheel_correction, sizeof(highheel_correction));
-				GetSingleton().highheel_correction = highheel_correction;
-			}
-			else if (type == SizeRaycastRecord) {
-				bool SizeRaycast_Enabled;
-				serde->ReadRecordData(&SizeRaycast_Enabled, sizeof(SizeRaycast_Enabled));
-				GetSingleton().SizeRaycast_Enabled = SizeRaycast_Enabled;
-			}
-			else if (type == HighHeelFurnitureRecord) {
-				bool highheel_furniture;
-				serde->ReadRecordData(&highheel_furniture, sizeof(highheel_furniture));
-				GetSingleton().highheel_furniture = highheel_furniture;
-			}
+			
+
 			else if (type == AllowPlayerVoreRecord) {
 				bool vore_allowplayervore;
 				serde->ReadRecordData(&vore_allowplayervore, sizeof(vore_allowplayervore));
@@ -455,11 +433,6 @@ namespace GTS {
 				bool vore_combatonly;
 				serde->ReadRecordData(&vore_combatonly, sizeof(vore_combatonly));
 				GetSingleton().vore_combatonly = vore_combatonly;
-			}
-			else if (type == FeetTrackingRecord) {
-				bool allow_feetracking;
-				serde->ReadRecordData(&allow_feetracking, sizeof(allow_feetracking));
-				GetSingleton().allow_feetracking = allow_feetracking;
 			}
 			else if (type == AllowStaggerRecord) {
 				bool allow_stagger;
@@ -495,11 +468,6 @@ namespace GTS {
 				bool launch_objects;
 				serde->ReadRecordData(&launch_objects, sizeof(launch_objects));
 				GetSingleton().launch_objects = launch_objects;
-			}
-			else if (type == CameraFovEdits) {
-				bool Camera_PermitFovEdits;
-				serde->ReadRecordData(&Camera_PermitFovEdits, sizeof(Camera_PermitFovEdits));
-				GetSingleton().Camera_PermitFovEdits = Camera_PermitFovEdits;
 			}
 			else if (type == StolenAttributes) {
 				float stolen_attributes;
@@ -622,24 +590,6 @@ namespace GTS {
 				bool allow_weight_gain;
 				serde->ReadRecordData(&allow_weight_gain, sizeof(allow_weight_gain));
 				GetSingleton().allow_weight_gain = allow_weight_gain;
-			}
-			else if (type == IsSpeedAdjustedRecord) {
-				bool is_speed_adjusted;
-				serde->ReadRecordData(&is_speed_adjusted, sizeof(is_speed_adjusted));
-				GetSingleton().is_speed_adjusted = is_speed_adjusted;
-				if (version >= 1) {
-					float k;
-					serde->ReadRecordData(&k, sizeof(k));
-					GetSingleton().speed_adjustment.k = k;
-					float n;
-					serde->ReadRecordData(&n, sizeof(n));
-					GetSingleton().speed_adjustment.n = n;
-					float s;
-					serde->ReadRecordData(&s, sizeof(s));
-					GetSingleton().speed_adjustment.s = s;
-					float o = 1.0f;
-					GetSingleton().speed_adjustment.o = o;
-				}
 			}
 			else if (type == ProgressionMult) {
 				float progression_multiplier;
@@ -773,29 +723,6 @@ namespace GTS {
 
 
 
-		if (!serde->OpenRecord(HighHeelCorrectionRecord, 0)) {
-			log::error("Unable to open high heel correction record to write cosave data.");
-			return;
-		}
-
-		bool highheel_correction = GetSingleton().highheel_correction;
-		serde->WriteRecordData(&highheel_correction, sizeof(highheel_correction));
-
-		if (!serde->OpenRecord(SizeRaycastRecord, 0)) {
-			log::error("Unable to open size raycast record to write cosave data.");
-			return;
-		}
-		bool SizeRaycast_Enabled = GetSingleton().SizeRaycast_Enabled;
-		serde->WriteRecordData(&SizeRaycast_Enabled, sizeof(SizeRaycast_Enabled));
-
-		if (!serde->OpenRecord(HighHeelFurnitureRecord, 0)) {
-			log::error("Unable to open high heel furniture record to write cosave data.");
-			return;
-		}
-		bool highheel_furniture = GetSingleton().highheel_furniture;
-		serde->WriteRecordData(&highheel_furniture, sizeof(highheel_furniture));
-
-
 		if (!serde->OpenRecord(AllowPlayerVoreRecord, 0)) {
 			log::error("Unable to open Allow Player Vore record to write cosave data.");
 			return;
@@ -846,13 +773,6 @@ namespace GTS {
 		bool edit_voice_frequency = GetSingleton().edit_voice_frequency;
 		serde->WriteRecordData(&edit_voice_frequency, sizeof(edit_voice_frequency));
 
-		if (!serde->OpenRecord(FeetTrackingRecord, 1)) {
-			log::error("Unable to open Feet Tracking record to write cosave data.");
-			return;
-		}
-		bool allow_feetracking = GetSingleton().allow_feetracking;
-		serde->WriteRecordData(&allow_feetracking, sizeof(allow_feetracking));
-
 		if (!serde->OpenRecord(StompAiRecord, 1)) {
 			log::error("Unable to open Stomp Ai record to write cosave data.");
 			return;
@@ -868,12 +788,6 @@ namespace GTS {
 		bool launch_objects = GetSingleton().launch_objects;
 		serde->WriteRecordData(&launch_objects, sizeof(launch_objects));
 
-		if (!serde->OpenRecord(CameraFovEdits, 1)) {
-			log::error("Unable to open Camera For Permission record to write cosave data");
-			return;
-		}
-		bool Camera_PermitFovEdits = GetSingleton().Camera_PermitFovEdits;
-		serde->WriteRecordData(&Camera_PermitFovEdits, sizeof(Camera_PermitFovEdits));
 
 		if (!serde->OpenRecord(StolenAttributes, 1)) {
 			log::error("Unable to open Stolen Attributes record to write cosave data");
@@ -1073,20 +987,6 @@ namespace GTS {
 
 		bool Vore_Ai = GetSingleton().Vore_Ai;
 		serde->WriteRecordData(&Vore_Ai, sizeof(Vore_Ai));
-
-		if (!serde->OpenRecord(IsSpeedAdjustedRecord, 1)) {
-			log::error("Unable to open is speed adjusted record to write cosave data.");
-			return;
-		}
-
-		bool is_speed_adjusted = GetSingleton().is_speed_adjusted;
-		serde->WriteRecordData(&is_speed_adjusted, sizeof(is_speed_adjusted));
-		float k = GetSingleton().speed_adjustment.k;
-		serde->WriteRecordData(&k, sizeof(k));
-		float n = GetSingleton().speed_adjustment.n;
-		serde->WriteRecordData(&n, sizeof(n));
-		float s = GetSingleton().speed_adjustment.s;
-		serde->WriteRecordData(&s, sizeof(s));
 
 		if (!serde->OpenRecord(ProgressionMult, 0)) {
 			log::error("Unable to open Progression mult record to write cosave data");

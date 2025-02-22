@@ -7,6 +7,9 @@
 #include "Managers/Animation/Stomp_Under_Slam.hpp"
 #include "Managers/Animation/Stomp_Under_Butt.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Animation/Grab_Sneak_Vore.hpp"
 #include "Managers/Animation/Sneak_KneeCrush.hpp"
 #include "Managers/Animation/CleavageEvents.hpp"
@@ -228,10 +231,13 @@ namespace GTS {
 	}
 
 	float AnimationManager::GetAnimSpeed(Actor* actor) {
+
 		float speed = 1.0f;
-		if (!Persistent::GetSingleton().is_speed_adjusted) {
+
+		if (!Config::GetGeneral().bDynamicAnimspeed) {
 			return 1.0f;
 		}
+
 		if (actor) {
 			auto saved_data = GTS::Persistent::GetSingleton().GetData(actor);
 			if (saved_data) {

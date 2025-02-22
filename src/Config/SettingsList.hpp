@@ -366,9 +366,6 @@ struct SettingsGeneral {
     bool bEnableMales = false;
     bool bEnableFOVEdits = false;
 
-    // Miscellaneous
-    bool bLayeredSneak = false;
-
     // Bone tracking for foot Animations
     bool bTrackBonesDuringAnim = true;
 

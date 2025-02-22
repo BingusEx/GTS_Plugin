@@ -167,17 +167,6 @@ namespace {
 		return format(number, sf);
 	}
 
-	void SetFeetTracking(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().allow_feetracking = enabled;
-		if (!enabled) {
-			ResetCameraTracking();
-		}
-	}
-
-	void AllowCameraFOVEdits(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Camera_PermitFovEdits = enabled;
-	}
-
 	void SetPlayerStagger(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().allow_stagger = enabled;
 	}
@@ -235,20 +224,8 @@ namespace {
 		return Ench_Aspect_GetPower(player);
 	}
 
-	bool GetIsHighHeelEnabled(StaticFunctionTag*) {
-		return Persistent::GetSingleton().highheel_correction;
-	}
-
 	bool GtsBehaviorsInstalled(StaticFunctionTag*, Actor* giant) {
 		return AnimationsInstalled(giant);
-	}
-
-	void SetIsHighHeelEnabled(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().highheel_correction = enabled;
-	}
-
-	void EnableRaycastSize(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().SizeRaycast_Enabled = enabled;
 	}
 
 	void SetAllowPlayerVore(StaticFunctionTag*, bool enabled) {
@@ -281,25 +258,6 @@ namespace {
 
 	void IncreaseMassLimit(StaticFunctionTag*, float value, Actor* caster) {
 		AdjustMassLimit(value, caster);
-	}
-
-	void SetIsHHFurnitureEnabled(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().highheel_furniture = enabled;
-		if (enabled == false) {
-			auto actors = find_actors();
-			for (auto actor: actors) {
-				if (!actor) {
-					return;
-				}
-				for (bool person: {false, true}) {
-					auto npc_root_node = find_node(actor, "NPC", person);
-					if (npc_root_node && actor->GetOccupiedFurniture()) {
-						npc_root_node->local.translate.z = 0.0f;
-						update_node(npc_root_node);
-					}
-				}
-			}
-		}
 	}
 
 	void SetAlternativeLightStomp(StaticFunctionTag*, bool enable, bool player) {
@@ -409,33 +367,6 @@ namespace {
 		return IsDragon(actor);
 	}
 
-	bool GetIsSpeedAdjusted(StaticFunctionTag*) {
-		return Persistent::GetSingleton().is_speed_adjusted;
-	}
-
-	void SetIsSpeedAdjusted(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().is_speed_adjusted = enabled;
-	}
-
-	void SetSpeedParameterK(StaticFunctionTag*, float k) {
-		Persistent::GetSingleton().speed_adjustment.k = k;
-	}
-	float GetSpeedParameterK(StaticFunctionTag*) {
-		return Persistent::GetSingleton().speed_adjustment.k;
-	}
-	void SetSpeedParameterN(StaticFunctionTag*, float n) {
-		Persistent::GetSingleton().speed_adjustment.n = n;
-	}
-	float GetSpeedParameterN(StaticFunctionTag*) {
-		return Persistent::GetSingleton().speed_adjustment.n;
-	}
-	void SetSpeedParameterS(StaticFunctionTag*, float s) {
-		Persistent::GetSingleton().speed_adjustment.s = s;
-	}
-	float GetSpeedParameterS(StaticFunctionTag*) {
-		return Persistent::GetSingleton().speed_adjustment.s;
-	}
-
 	bool IsJumping(StaticFunctionTag*, Actor* actor) {
 		return GTS::IsJumping(actor);
 	}
@@ -492,10 +423,7 @@ namespace GTS {
 		vm->RegisterFunction("GetGrowthHalfLife", PapyrusClass, GetGrowthHalfLife);
 		vm->RegisterFunction("SetAnimSpeed", PapyrusClass, SetAnimSpeed);
 		vm->RegisterFunction("SigFig", PapyrusClass, SigFig);
-		vm->RegisterFunction("GetIsHighHeelEnabled", PapyrusClass, GetIsHighHeelEnabled);
 		vm->RegisterFunction("GtsBehaviorsInstalled", PapyrusClass, GtsBehaviorsInstalled);
-		vm->RegisterFunction("SetFeetTracking", PapyrusClass, SetFeetTracking);
-		vm->RegisterFunction("AllowCameraFOVEdits", PapyrusClass, AllowCameraFOVEdits);
 		vm->RegisterFunction("SetPlayerStagger", PapyrusClass, SetPlayerStagger);
 		vm->RegisterFunction("SetActorAudioOverride", PapyrusClass, SetActorAudioOverride);
 		vm->RegisterFunction("SetNPCProtection", PapyrusClass, SetNPCProtection);
@@ -506,9 +434,6 @@ namespace GTS {
 		vm->RegisterFunction("ResetQuestProgression", PapyrusClass, ResetQuestProgression);
 		vm->RegisterFunction("Quest_GetProgression", PapyrusClass, Quest_GetProgression);
 		vm->RegisterFunction("GetAspectOfGiantessPower", PapyrusClass, GetAspectOfGiantessPower);
-		vm->RegisterFunction("SetIsHighHeelEnabled", PapyrusClass, SetIsHighHeelEnabled);
-		vm->RegisterFunction("EnableRaycastSize", PapyrusClass, EnableRaycastSize);
-		vm->RegisterFunction("SetIsHHFurnitureEnabled", PapyrusClass, SetIsHHFurnitureEnabled);
 		vm->RegisterFunction("SetAlternativeLightStomp", PapyrusClass, SetAlternativeLightStomp);
 		vm->RegisterFunction("SetAlternativeSneakTransition", PapyrusClass, SetAlternativeSneakTransition);
 		vm->RegisterFunction("AdjustBalanceMode", PapyrusClass, AdjustBalanceMode);
@@ -538,14 +463,6 @@ namespace GTS {
 		vm->RegisterFunction("GetDevourmentCompatibility", PapyrusClass, GetDevourmentCompatibility);
 
 		vm->RegisterFunction("DragonCheck", PapyrusClass, DragonCheck);
-		vm->RegisterFunction("GetIsSpeedAdjusted", PapyrusClass, GetIsSpeedAdjusted);
-		vm->RegisterFunction("SetIsSpeedAdjusted", PapyrusClass, SetIsSpeedAdjusted);
-		vm->RegisterFunction("SetSpeedParameterK", PapyrusClass, SetSpeedParameterK);
-		vm->RegisterFunction("GetSpeedParameterK", PapyrusClass, GetSpeedParameterK);
-		vm->RegisterFunction("SetSpeedParameterN", PapyrusClass, SetSpeedParameterN);
-		vm->RegisterFunction("GetSpeedParameterN", PapyrusClass, GetSpeedParameterN);
-		vm->RegisterFunction("SetSpeedParameterS", PapyrusClass, SetSpeedParameterS);
-		vm->RegisterFunction("GetSpeedParameterS", PapyrusClass, GetSpeedParameterS);
 		vm->RegisterFunction("IsJumping", PapyrusClass, IsJumping);
 		vm->RegisterFunction("IsInAir", PapyrusClass, IsInAir);
 		vm->RegisterFunction("GetTremorScale", PapyrusClass, GetTremorScale);

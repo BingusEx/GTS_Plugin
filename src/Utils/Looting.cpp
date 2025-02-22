@@ -1,4 +1,7 @@
 #include "Utils/Looting.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/AI/AIFunctions.hpp"
 #include "Rays/Raycast.hpp"
 #include "UI/DebugAPI.hpp"
@@ -115,8 +118,10 @@ namespace GTS {
 		double Start = Time::WorldTimeElapsed();
 		ActorHandle gianthandle = to->CreateRefHandle();
 		ActorHandle tinyhandle = from->CreateRefHandle();
-		bool PCLoot = Runtime::GetBool("GtsEnableLooting");
-		bool NPCLoot = Runtime::GetBool("GtsNPCEnableLooting");
+
+		const auto& Settings = Config::GetGeneral();
+		const bool PCLoot = Settings.bPlayerLootpiles;
+		const bool NPCLoot = Settings.bFollowerLootpiles;
 
 		double expectedtime = 0.15;
 		if (IsDragon(from)) {

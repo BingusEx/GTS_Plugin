@@ -1,5 +1,7 @@
 #include "Hooks/Skyrim/Damage.hpp"
 
+#include "Config/Config.hpp"
+
 #include "Managers/OverkillManager.hpp"
 #include "Managers/Animation/Grab.hpp"
 #include "Managers/Animation/HugShrink.hpp"
@@ -86,7 +88,7 @@ namespace GTS {
 			if (!camera) {
 				return;
 			}
-			auto AllowEdits = Persistent::GetSingleton().Camera_PermitFovEdits;
+			auto AllowEdits = Config::GetGeneral().bEnableFOVEdits;
 
 			auto tranData = Transient::GetSingleton().GetData(actor);
 			bool TP = camera->IsInThirdPerson();

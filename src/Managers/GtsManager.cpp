@@ -141,7 +141,12 @@ namespace {
 	}
 
 	void PerformRoofRaycastAdjustments(Actor* actor, float& target_scale, float currentOtherScale) {
-		if (SizeRaycastEnabled() && !actor->IsDead() && target_scale > 1.025f) {
+
+		const auto& Settings = Config::GetGeneral();
+		const bool DoRayCast = (actor->formID == 0x14) ? Settings.bDynamicSizePlayer : Settings.bDynamicSizeFollowers;
+
+		if (DoRayCast && !actor->IsDead() && target_scale > 1.025f) {
+
 			float room_scale = GetMaxRoomScale(actor);
 			if (room_scale > (currentOtherScale - 0.05f)) {
 				// Only apply room scale if room_scale > natural_scale
@@ -274,7 +279,7 @@ namespace {
 
 	void apply_speed(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data, bool force = false) {
 		auto profiler = Profilers::Profile("Manager: apply_speed");
-		if (!Persistent::GetSingleton().is_speed_adjusted) {
+		if (!Config::GetGeneral().bDynamicAnimspeed) {
 			return;
 		}
 		if (!actor) {

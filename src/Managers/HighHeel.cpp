@@ -3,13 +3,15 @@
 
 #include <nlohmann/json.hpp>
 
+#include "Config/Config.hpp"
+
 using json = nlohmann::json;
 using namespace GTS;
 
 namespace {
 	bool DisableHighHeels(Actor* actor) {
 		bool disable = (
-			AnimationManager::HHDisabled(actor) || !Persistent::GetSingleton().highheel_correction ||
+			AnimationManager::HHDisabled(actor) || !Config::GetGeneral().bEnableHighHeels ||
 			BehaviorGraph_DisableHH(actor) || IsCrawling(actor) || 
 			IsProning(actor)
 		);
@@ -78,10 +80,13 @@ namespace GTS {
 	void HighHeelManager::ApplyHH(Actor* actor, bool force) {
 		auto profiler = Profilers::Profile("HH: ApplyHH");
 		if (actor) {
+
 			if (actor->Is3DLoaded()) {
-				if (Persistent::GetSingleton().highheel_furniture == false && actor->AsActorState()->GetSitSleepState() == SIT_SLEEP_STATE::kIsSitting) {
+
+				if (Config::GetGeneral().bHighheelsFurniture == false && actor->AsActorState()->GetSitSleepState() == SIT_SLEEP_STATE::kIsSitting) {
 					return;
 				}
+
 				this->data.try_emplace(actor);
 				auto& hhData = this->data[actor];
 				float speedup = 1.0f;
@@ -102,7 +107,7 @@ namespace GTS {
 				}
 
 				NiPoint3 new_hh;
-				if (!Persistent::GetSingleton().highheel_correction) {
+				if (!Config::GetGeneral().bEnableHighHeels) {
 					return;
 				}
 				this->UpdateHHOffset(actor);

@@ -641,10 +641,6 @@ namespace GTS {
 		return tfc;
 	}
 
-	bool SizeRaycastEnabled() {
-		return Persistent::GetSingleton().SizeRaycast_Enabled;
-	}
-
 	bool IsDebugEnabled() {
 		return Config::GetAdvanced().bShowOverlay;
 	}
@@ -772,7 +768,7 @@ namespace GTS {
 		return fallmod;
 	}
 
-	std::vector<Actor*> Vore_GetMaxVoreCount(Actor* giant, std::vector<Actor*> actors) {
+	std::vector<Actor*> Vore_GetMaxVoreCount(Actor* giant, const std::vector<Actor*>& actors) {
 		float capacity = 1.0f;
 		std::vector<Actor*> vories = {};
 		if (Runtime::HasPerkTeam(giant, "EnhancedCapacity")) {
@@ -1477,7 +1473,7 @@ namespace GTS {
 	}
 
 	bool AllowCameraTracking() {
-		return Persistent::GetSingleton().allow_feetracking;
+		return Config::GetGeneral().bTrackBonesDuringAnim;
 	}
 
 	bool LessGore() {
@@ -2140,7 +2136,7 @@ namespace GTS {
 
 	float GetAnimationSlowdown(Actor* giant) {
 		if (giant) {
-			if (Persistent::GetSingleton().is_speed_adjusted) {
+			if (Config::GetGeneral().bDynamicAnimspeed) {
 				if (giant->AsActorState()->GetSitSleepState() != SIT_SLEEP_STATE::kNormal){
 					return 1.0f; // For some reason makes furniture angles funny if there's anim slowdown. So we prevent that
 				}

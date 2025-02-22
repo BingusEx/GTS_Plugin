@@ -143,22 +143,15 @@ namespace GTS {
 			ActorData* GetData(TESObjectREFR* refr);
 			ActorData* GetData(TESObjectREFR& refr);
 
-
 			BasicRecord<int, 'TCST'> TrackedCameraState = 0;
-
 			BasicRecord<bool, 'ECPL'> EnableCrawlPlayer = false;
 			BasicRecord<bool, 'ECFL'> EnableCrawlFollower = false;
 
-
-			bool highheel_correction = true;
-			bool highheel_furniture = false;
-			bool is_speed_adjusted = true;
 			bool vore_allowplayervore = false;
 			bool AllowInsectVore = true;
 			bool AllowUndeadVore = true;
 			bool FollowerInteractions = false;
 			bool vore_combatonly = true;
-			bool allow_feetracking = true;
 			bool allow_stagger = true;
 			bool edit_voice_frequency = true;
 			bool Vore_Ai = true;
@@ -173,8 +166,6 @@ namespace GTS {
 			bool legacy_sounds = false;
 			bool actors_panic = true;
 			bool launch_objects = true;
-			bool Camera_PermitFovEdits = true;
-			bool SizeRaycast_Enabled = true;
 			bool NPCEffectImmunity = false;
 			bool PCEffectImmunity = false;
 
@@ -205,14 +196,6 @@ namespace GTS {
 			float BalanceMode_SizeGain_Penalty = 1.0f;
 			float BalanceMode_ShrinkRate_Base = 1.0f;
 			float BalanceMode_ShrinkRate_Combat = 0.08f;
-
-			SoftPotential speed_adjustment { // USELESS
-				.k = 0.125f,//0.125
-				.n = 0.86f, //0.86
-				.s = 1.12f, //1.12
-				.o = 1.0f,
-				.a = 0.0f,  //Default is 0
-			};
 
 			SoftPotential MS_adjustment { //THIS SHOULD NOT BE HERE
 				.k = 0.132f, //0.132

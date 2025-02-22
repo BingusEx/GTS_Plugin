@@ -69,24 +69,13 @@ namespace GTS {
 
 	    ImUtil_Unique {
 
-	        const char* T0 = "Enable layered sneak mechanics (applies only to third person):\n"
-	                         "Layered sneak adds this mod's two extra sneak states\n"
-	                         "(crawl and prone) to the sneak key (CTRL).\n\n"
-	                         "Pressing the sneak button once while standing will activate normal sneak mode.\n"
-	                         "Pressing it again while already sneaking will activate crawl mode.\n"
-	                         "Pressing it a third time will activate prone mode.\n\n"
-	                         "To go back up one state (e.g., from crawling to sneaking),\n"
-	                         "hold shift while pressing the sneak button.";
-
 	        const char* T1 = "Replace sneaking with crawling for the player only.\n(Save specific setting)";
 	        const char* T2 = "Replace sneaking with crawling for followers.\n(Save specific setting)";
 
 	        if (ImGui::CollapsingHeader("Sneaking", ImUtil::HeaderFlags)) {
-	            ImUtil::CheckBox("Enable Layered Sneak", &Settings.bLayeredSneak, T0);
-
 				auto& Persi = Persistent::GetSingleton();
 
-	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1, Settings.bLayeredSneak);
+	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1);
 	            ImUtil::CheckBox("Enable Follower Crawling", &Persi.EnableCrawlFollower.value, T2);
 	            ImGui::Spacing();
 	        }
@@ -107,7 +96,13 @@ namespace GTS {
 	            ImUtil::CheckBox("Dynamic Size Followers", &Settings.bDynamicSizeFollowers, T0);
 	            ImUtil::CheckBox("Dynamic Animation Speed", &Settings.bDynamicAnimspeed, T1);
 	            ImUtil::CheckBox("Enable FOV Edits", &Settings.bEnableFOVEdits, T2);
-	            ImUtil::CheckBox("Track Bones During Actions", &Settings.bTrackBonesDuringAnim, T3);
+
+	            if (ImUtil::CheckBox("Track Bones During Actions", &Settings.bTrackBonesDuringAnim, T3)) {
+					if (!Settings.bTrackBonesDuringAnim) {
+						ResetCameraTracking();
+					}
+	            }
+
 	            ImGui::Spacing();
 	        }
 	    }
@@ -119,7 +114,27 @@ namespace GTS {
 
 	        if (ImGui::CollapsingHeader("High-Heels")) {
 	            ImUtil::CheckBox("Enable Height Adjustment", &Settings.bEnableHighHeels, T0);
-	            ImUtil::CheckBox("Disable When Using Furniture", &Settings.bHighheelsFurniture, T1);
+
+	        	if (ImUtil::CheckBox("Disable When Using Furniture", &Settings.bHighheelsFurniture, T1)){
+	            	if (!Settings.bHighheelsFurniture) {
+
+						auto actors = find_actors();
+
+						for (auto actor : actors) {
+							if (!actor) {
+								return;
+							}
+
+							for (bool person : {false, true}) {
+								auto npc_root_node = find_node(actor, "NPC", person);
+								if (npc_root_node && actor->GetOccupiedFurniture()) {
+									npc_root_node->local.translate.z = 0.0f;
+									update_node(npc_root_node);
+								}
+							}
+						}
+					}
+	            }
 	        }
 	    }
 
@@ -140,23 +155,27 @@ namespace GTS {
 
 	    ImUtil_Unique {
 
-	        const char* T0 = "Automatically complete this mods' quest.";
-	        const char* T1 = "Get the basic size manipulation spells before completing the quest.";
+	        const char* T0 = "Automatically complete this mod's quest.";
+			const char* T1 = "Get all of the mod's spells";
 	        const char* T2 = "Instantly complete the perk tree.";
 
 	        if (ImUtil::ConditionalHeader("Skip Progression","Balance Mode Active", !Config::GetBalance().bBalanceMode)) {
 
 	            if (ImUtil::Button("Skip Quest",T0)) {
 
-	            } //TODO Disable by checking quest state
-	            ImGui::SameLine();
-	            if (ImUtil::Button("Get Basic Spells",T1)) {
+	            }
 
-	            } //Disable by asking papyrus
 	            ImGui::SameLine();
+
+				if (ImUtil::Button("Get All Spells", T1)) {
+
+				} 
+
+	            ImGui::SameLine();
+
 	            if (ImUtil::Button("Get All Perks",T2)) {
 
-	            } //Disable by asking papyrus
+	            } 
 	        }
 	    }
 	}
