@@ -189,6 +189,9 @@ namespace GTS {
 
     bool Config::SaveSettings() {
 
+       // SKSE::GetSerializationInterface()->SetSaveCallback()
+
+
         if (!CheckFile(ConfigFile)) {
             return false;
         }

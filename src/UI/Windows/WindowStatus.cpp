@@ -2,7 +2,6 @@
 #include "UI/Windows/WindowStatus.hpp"
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/GTSInfo.hpp"
-#include "Config/ConfigUtil.hpp"
 #include "UI/ImGui/ImFontManager.hpp"
 #include "UI/ImGui/ImWindowManager.hpp"
 

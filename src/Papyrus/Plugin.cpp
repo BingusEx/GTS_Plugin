@@ -504,10 +504,12 @@ namespace {
 	}
 
 	void SetTremorScale(StaticFunctionTag*, float value) {
+		//UNUSED REMOVE ME
 		Persistent::GetSingleton().tremor_scale = value;
 	}
 
 	float GetTremorScaleNPC(StaticFunctionTag*) {
+		// UNUSED REMOVE ME
 		return Persistent::GetSingleton().npc_tremor_scale;
 	}
 

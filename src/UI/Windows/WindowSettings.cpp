@@ -14,7 +14,6 @@
 #include "UI/Categories/Balance.hpp"
 
 #include "UI/ImGui/ImUtil.hpp"
-#include "Config/ConfigUtil.hpp"
 #include "Managers/Input/InputManager.hpp"
 
 #include "UI/UIManager.hpp"

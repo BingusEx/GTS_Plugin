@@ -128,6 +128,28 @@ namespace ImUtil {
         return res;
     }
 
+    template <typename T>
+    bool IComboEx(const char* a_label, int* currentIndex, const char* a_Tooltip = nullptr, bool a_disabled = false, bool a_hasTotal = false) {
+        // Retrieve enum metadata
+        constexpr auto enumNames = magic_enum::enum_names<T>();
+        // No need for enumValues if you don't update a string
+
+        // Build the items string with pretty-printed names
+        std::ostringstream itemsStream;
+        const int offset = a_hasTotal ? 2 : 1;
+        for (size_t i = 0; i <= enumNames.size() - offset; i++) {
+            itemsStream << HumanizeString(enumNames[i]) << '\0';
+        }
+        std::string items = itemsStream.str();
+
+        ImGui::BeginDisabled(a_disabled);
+        bool res = ImGui::Combo(a_label, currentIndex, items.c_str());
+        Tooltip(a_Tooltip);
+        ImGui::EndDisabled();
+
+        return res;
+    }
+
     template <typename EnumT>
     void Bitfield(typename std::underlying_type<EnumT>::type* a_bitfield) {
         static_assert(std::is_enum<EnumT>::value, "EnumT must be an enum type");

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Config/ConfigUtil.hpp"
 #include "Config/KeybindList.hpp"
 
 //---------------

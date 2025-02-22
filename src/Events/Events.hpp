@@ -78,17 +78,6 @@ namespace GTS {
 		JumpFall,
 		HighHeel,
 	};
-	
-	enum class CameraTracking_MCM {
-		None,
-		Spine,
-		Clavicle,
-		Breasts_01,
-		Breasts_02,
-		Breasts_03, // 3BBB tip
-		Neck,
-		Butt,
-	};
 
 	enum class CameraTracking {
 		None,

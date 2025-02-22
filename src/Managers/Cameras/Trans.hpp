@@ -16,7 +16,7 @@ namespace GTS {
 
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPosLocal) override;
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPosLocal, bool IsCrawling) override;
-			virtual NiPoint3 GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal) override;
+			virtual NiPoint3 GetPlayerLocalOffsetCrawling(const NiPoint3& cameraPosLocal) override;
 
 			virtual bool PermitManualEdit() override;
 			virtual bool PermitTransition() override;

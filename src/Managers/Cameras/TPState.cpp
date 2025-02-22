@@ -1,4 +1,7 @@
 #include "Managers/Cameras/TPState.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Cameras/CamUtil.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "UI/DebugAPI.hpp"
@@ -31,7 +34,7 @@ namespace GTS {
 						auto playerTrans = rootModel->world;
 						playerTrans.scale = rootModel->parent ? rootModel->parent->world.scale : 1.0f;  // Only do translation/rotation
 						auto transform = playerTrans.Invert();
-						NiPoint3 lookAt = CompuleLookAt(boneTarget.zoomScale);
+						NiPoint3 lookAt = ComputeLookAt(boneTarget.zoomScale);
 						NiPoint3 localLookAt = transform*lookAt;
 						this->smoothScale.halflife = Modify_HalfLife();
 						this->smoothedBonePos.halflife = Modify_HalfLife();
@@ -71,22 +74,22 @@ namespace GTS {
 		return pos;
 	}
 
-	NiPoint3 ThirdPersonCameraState::GetPlayerLocalOffsetProne(const NiPoint3& cameraPos) {
+	NiPoint3 ThirdPersonCameraState::GetPlayerLocalOffsetCrawling(const NiPoint3& cameraPos) {
 		NiPoint3 pos = this->GetPlayerLocalOffset(cameraPos);
 		auto player = GetCameraActor();
 		if (player) {
 			auto scale = get_visual_scale(player);
-			pos += this->ProneAdjustment(cameraPos)*scale;
+			pos += this->CrawlAdjustment(cameraPos)*scale;
 		}
 		return pos;
 	}
 
 	BoneTarget ThirdPersonCameraState::GetBoneTarget() {
-		return BoneTarget();
+		return {};
 	}
 
-	NiPoint3 ThirdPersonCameraState::ProneAdjustment(const NiPoint3& cameraPos) {
-		float proneFactor = Runtime::GetFloat("CalcProne");
+	NiPoint3 ThirdPersonCameraState::CrawlAdjustment(const NiPoint3& cameraPos) {
+		float proneFactor = Config::GetCamera().fTPCrawlHeightMult;
 		auto player = PlayerCharacter::GetSingleton();
 		
 		NiPoint3 result = NiPoint3();

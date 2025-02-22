@@ -4,15 +4,6 @@
 
 namespace GTS {
 
-	
-
-	enum SizeMethod {
-		ModelScale = 0,
-		RootScale = 1,
-		Hybrid = 2,
-		RefScale = 3,
-	};
-
 	// @ Sermit, do not call Get_Other_Scale, call get_natural_scale instead
 	// get_natural_scale is much faster and safer as it uses the cache
 	float Get_Other_Scale(Actor* actor);

@@ -14,9 +14,9 @@ namespace GTS {
 	    const char* T1 = "Move the camera up or down.";
 	    const char* T2 = "Move the camera forward or backward.";
 
-	    ImUtil::SliderF("Left - Right", &a_offsets->at(0), -100.f, 100.f, T0, "%.1f");
-	    ImUtil::SliderF("Up - Down", &a_offsets->at(2), -200.f, 200.f, T1, "%.1f");
-	    ImUtil::SliderF("Forward - Back", &a_offsets->at(1), -200.f, 200.f, T2, "%.1f");
+	    ImUtil::SliderF("Left - Right", &a_offsets->at(0), -75.f, 75.f, T0, "%.1f");
+	    ImUtil::SliderF("Up - Down", &a_offsets->at(2), -75.f, 75.f, T1, "%.1f");
+	    ImUtil::SliderF("Forward - Back", &a_offsets->at(1), -300.f, 100.f, T2, "%.1f");
 
 	    ImGui::EndGroup();
 
@@ -31,7 +31,7 @@ namespace GTS {
 	    const char* T0 = "Select which biped skeleton bone the camera should track.";
 
 	    if (ImGui::CollapsingHeader(a_title, ImGuiTreeNodeFlags_None)) {
-	        ImUtil::ComboEx<CameraTrackingUsr>("Center On Bone", a_set->sCenterOnBone, T0);
+	        ImUtil::ComboEx<CameraTrackingSettings>("Center On Bone", a_set->sCenterOnBone, T0);
 
 	        ImUtil_Unique {
 	            DrawCameraOffsets(
@@ -86,7 +86,8 @@ namespace GTS {
 	    ImUtil_Unique {
 
 	        const char* T0 = "Change the height multiplier of the camera while crawling in first person.";
-	        const char* T1 = "Change the height multiplier of the camera while crawling in third person.";
+	        const char* T1 = "Change the height multiplier of the camera while crawling in third person.\n"
+	    					 "Note: This wont't work correctly if you are using smoothcam.";
 
 	        if (ImGui::CollapsingHeader("Crawl Height", ImUtil::HeaderFlags)) {
 	            ImUtil::SliderF("1st P. Crawl Height", &Settings.fFPCrawlHeightMult, 0.01f, 1.0f, T0, "%.1fx");
@@ -138,13 +139,20 @@ namespace GTS {
 	    					 "whilst higher values decrease them.\n";
 
 			const char* T4 = "Toggle wether this mod should override skyrim's camera settings.\n"
-				"Note: Requires a game restart after disabling for the original values to be reapplied.";
+							 "Note: Requires a game restart after disabling for the original values to be reapplied.\n\n"
+							 "Its reccomended to leave this enabled.";
 
 	        const char* THelp = 
-	            "These are the same settings as can be found in skyrim.ini.\n"
-	            "They're added here for convenience.\n"
-	            "Note: The settings here will continiously override the game's settings,\n"
-	            "so no matter what values you set in any ini file or if another mod changes them, they will be overridden by the values set here.";
+				             "These are the same settings as can be found in skyrim.ini.\n"
+				             "They're added here for convenience.\n\n"
+				             "Note 1: The settings here will continiously override the game's settings,\n"
+				             "so no matter what values you set in any ini file or if another mod changes them, they will be overridden by the values set here.\n\n"
+							 "Note 2: Its heavily recommended that you do not change the distance settings. This mod's camera system works best if these are left at their default values.\n\n"
+	    					 "Defaults:\n"
+	    					 " - Min: 150.0\n"
+							 " - Max: 600.0\n"
+							 " - Zoom: 0.8\n"
+							 " - Step: 0.075\n";
 
 	        if (ImGui::CollapsingHeader("Skyrim Camera Settings", ImGuiTreeNodeFlags_None)) {
 	            ImGui::TextColored(ImUtil::ColorSubscript, "What is this (?)");
@@ -174,14 +182,16 @@ namespace GTS {
 	void CategoryCamera::DrawRight() {
 	    ImUtil_Unique {
 	        const char* T0 = "Enable automatic camera.";
-	        const char* T1 = "Change the third-person camera mode.";
-	        const char* T2 = "Change the first-person camera mode.";
+
+	        const char* T1 = "Change the third-person camera mode.\n"
+	    					 "Note: This setting is save file specific.";
+
+			//Hack
+            auto CamState = std::bit_cast<int*>(&Persistent::GetSingleton().TrackedCameraState.value);
 
 	        if (ImGui::CollapsingHeader("Automatic Camera", ImUtil::HeaderFlags)) {
 	            ImUtil::CheckBox("Enable Automatic Camera", &Settings.bAutomaticCamera, T0);
-	            ImUtil::ComboEx<CameraModeTP>("TP Camera Mode", Settings.sAutoCameraModeTP, T1, !Settings.bAutomaticCamera);
-	            ImUtil::ComboEx<CameraModeFP>("FP Camera Mode", Settings.sAutoCameraModeFP, T2, !Settings.bAutomaticCamera);
-
+	            ImUtil::IComboEx<CameraModeTP>("Camera Mode", CamState, T1, !Settings.bAutomaticCamera);
 	            ImGui::Spacing();
 	        }
 	    }
@@ -194,16 +204,6 @@ namespace GTS {
 
 	    ImUtil_Unique {
 	        DrawCameraSettings(&Settings.OffsetsAlt, "Alternative Camera");
-	    }
-
-	    ImUtil_Unique {
-	        const char* T0 = "Offset the foot cameras forward or backward.";
-
-	        if (ImGui::CollapsingHeader("Foot Camera", ImGuiTreeNodeFlags_None)) {
-	            ImUtil::SliderF("Forward - Back", &Settings.fFootCameraFBOffset, -200.f, 200.f, T0, "%.1f");
-
-	            ImGui::Spacing();
-	        }
 	    }
 
 	    ImGui::EndDisabled();

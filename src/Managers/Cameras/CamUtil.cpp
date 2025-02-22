@@ -121,51 +121,51 @@ namespace {
 		return BoneTarget();
 	}
 
-	const BoneTarget GetBoneTarget_MCM(CameraTracking_MCM Camera_MCM) {
+	const BoneTarget GetBoneTargetFromSettings(CameraTrackingSettings a_CamSetting) {
 		if (HasFirstPersonBody()) {
 			return BoneTarget();
 		}
-		switch (Camera_MCM) {
-			case CameraTracking_MCM::None: {
+		switch (a_CamSetting) {
+			case CameraTrackingSettings::kNone: {
 				return BoneTarget();
 			}
-			case CameraTracking_MCM::Spine: {
+			case CameraTrackingSettings::kSpine: {
 				return BoneTarget {
 					.boneNames = {"NPC Spine2 [Spn2]","NPC Neck [Neck]",},
 					.zoomScale = ZoomIn_Cam_Spine,
 				};
 			}
-			case CameraTracking_MCM::Clavicle: {
+			case CameraTrackingSettings::kClavicle: {
 				return BoneTarget {
 					.boneNames = {"NPC R Clavicle [RClv]","NPC L Clavicle [LClv]",},
 					.zoomScale = ZoomIn_Cam_Clavicle,
 				};
 			}
-			case CameraTracking_MCM::Breasts_01: {
+			case CameraTrackingSettings::kBreasts_01: {
 				return BoneTarget {
 					.boneNames = {"NPC L Breast","NPC R Breast",},
 					.zoomScale = ZoomIn_Cam_Breasts_01,
 				};
 			}
-			case CameraTracking_MCM::Breasts_02: {
+			case CameraTrackingSettings::kBreasts_02: {
 				return BoneTarget {
 					.boneNames = {"L Breast02","R Breast02",},
 					.zoomScale = ZoomIn_Cam_Breasts_02,
 				};
 			}
-			case CameraTracking_MCM::Breasts_03: {
+			case CameraTrackingSettings::kBreasts_03: {
 				return BoneTarget {
 					.boneNames = {"L Breast03","R Breast03",},
 					.zoomScale = ZoomIn_Cam_Breasts_03,
 				};
 			}
-			case CameraTracking_MCM::Neck: {
+			case CameraTrackingSettings::kNeck: {
 				return BoneTarget {
 					.boneNames = {"NPC Neck [Neck]",},
 					.zoomScale = ZoomIn_Cam_Neck,
 				};
 			}
-			case CameraTracking_MCM::Butt: {
+			case CameraTrackingSettings::kButt: {
 				return BoneTarget {
 					.boneNames = {"NPC L Butt","NPC R Butt",},
 					.zoomScale = ZoomIn_Cam_Butt,
@@ -175,64 +175,64 @@ namespace {
 		return BoneTarget();
 	}
 
-	NiPoint3 CameraStateToCoords(Actor* giant) {
-		int cameraMode = Runtime::GetInt("CameraMode");
-		NiPoint3 result = NiPoint3();
-		switch (cameraMode) {
-			case 3: // Between Foot
-				for (auto Foot: {"NPC L Foot [Lft ]", "NPC R Foot [Rft ]"}) {
-					auto node = find_node(giant, Foot);
-					if (Foot) {
-						result += node->world.translate / 2;
-					}
-				}
-			break; 
-			case 4: { // Left Foot
-				auto node = find_node(giant, "NPC L Foot [Lft ]");
-				if (node) {
-					result = node->world.translate;
-				}
-			}
-			break;
-			case 5: { // Right Foot
-				auto node = find_node(giant, "NPC R Foot [Rft ]");
-				if (node) {
-					result = node->world.translate;
-				}
-			break;
-			}
-		}
-		return result;
-	}
+	//NiPoint3 CameraStateToCoords(Actor* giant) {
+	//	int cameraMode = Runtime::GetInt("CameraMode");
+	//	NiPoint3 result = NiPoint3();
+	//	switch (cameraMode) {
+	//		case 3: // Between Foot
+	//			for (auto Foot: {"NPC L Foot [Lft ]", "NPC R Foot [Rft ]"}) {
+	//				auto node = find_node(giant, Foot);
+	//				if (Foot) {
+	//					result += node->world.translate / 2;
+	//				}
+	//			}
+	//		break; 
+	//		case 4: { // Left Foot
+	//			auto node = find_node(giant, "NPC L Foot [Lft ]");
+	//			if (node) {
+	//				result = node->world.translate;
+	//			}
+	//		}
+	//		break;
+	//		case 5: { // Right Foot
+	//			auto node = find_node(giant, "NPC R Foot [Rft ]");
+	//			if (node) {
+	//				result = node->world.translate;
+	//			}
+	//		break;
+	//		}
+	//	}
+	//	return result;
+	//}
 
-	void UpdateNiFrustum(Actor* cameraActor, float hullMult) {
-		//TODO Wait For IC 2.0
-									
-		if (!IsFirstPerson() && !IsFakeFirstPerson()) {
-			if (get_visual_scale(cameraActor) < get_natural_scale(cameraActor)) {
-				auto niCamera = GetNiCamera();
-				if (niCamera) {
-					//CamHull Should be the same as FNearDistance
-					//TODO Find the Offset For that value and assign CamHull to it.
-					//TODO Also Connect this to the camera rotation matrix Z coord. it should be somethin like: camhullSize * (LookUpDownAngle Remaped to something like 0.8-1.0 * min(visual scale, 1.0)).
-					//TODO Also Move this to its own func.
-					niCamera->GetRuntimeData2().viewFrustum.fNear = camhullSize * hullMult;
-				}
-			}
-		}
-	}
+	//void UpdateNiFrustum(Actor* cameraActor, float hullMult) {
+	//	//TODO Wait For IC 2.0
+	//								
+	//	if (!IsFirstPerson() && !IsFakeFirstPerson()) {
+	//		if (get_visual_scale(cameraActor) < get_natural_scale(cameraActor)) {
+	//			auto niCamera = GetNiCamera();
+	//			if (niCamera) {
+	//				//CamHull Should be the same as FNearDistance
+	//				//TODO Find the Offset For that value and assign CamHull to it.
+	//				//TODO Also Connect this to the camera rotation matrix Z coord. it should be somethin like: camhullSize * (LookUpDownAngle Remaped to something like 0.8-1.0 * min(visual scale, 1.0)).
+	//				//TODO Also Move this to its own func.
+	//				niCamera->GetRuntimeData2().viewFrustum.fNear = camhullSize * hullMult;
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 namespace GTS {
 
-	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTracking_MCM Camera_MCM) {
+	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTrackingSettings Camera_MCM) {
 		if (HasFirstPersonBody()) {
 			return BoneTarget();
 		}
 		if (Camera_Anim != CameraTracking::None) { // must take priority
 			return GetBoneTarget_Anim(Camera_Anim);
 		} else {
-			return GetBoneTarget_MCM(Camera_MCM);
+			return GetBoneTargetFromSettings(Camera_MCM);
 		}
 	}
 
@@ -268,23 +268,6 @@ namespace GTS {
 			camera->UpdateThirdPerson(player->AsActorState()->IsWeaponDrawn());
 		}
 	}
-
-	//No longer needed
-	//void ResetIniSettings() {
-	//	EnsureINIFloat("fOverShoulderPosX:Camera", 30.0f);
-	//	EnsureINIFloat("fOverShoulderPosY:Camera", 30.0f);
-	//	EnsureINIFloat("fOverShoulderPosZ:Camera", -10.0f);
-	//	EnsureINIFloat("fOverShoulderCombatPosX:Camera", 0.0f);
-	//	EnsureINIFloat("fOverShoulderCombatPosY:Camera", 0.0f);
-	//	EnsureINIFloat("fOverShoulderCombatPosZ:Camera", 20.0f);
-
-	//	EnsureINIFloat("fVanityModeMaxDist:Camera", 600.0f);
-	//	EnsureINIFloat("fVanityModeMinDist:Camera", 155.0f);
-	//	EnsureINIFloat("fMouseWheelZoomSpeed:Camera", 0.8000000119f);
-	//	EnsureINIFloat("fMouseWheelZoomIncrement:Camera", 0.075000003f);
-
-	//	UpdateThirdPerson();
-	//}
 
 	NiCamera* GetNiCamera() {
 		auto camera = PlayerCamera::GetSingleton();
@@ -548,13 +531,12 @@ namespace GTS {
 		return 0.0f;
 	}
 
-	NiPoint3 CompuleLookAt(float zoomScale) {
+	NiPoint3 ComputeLookAt(float zoomScale) {
 		NiPoint3 cameraTrans = GetCameraPosition();
-
 		NiMatrix3 cameraRotMat = GetCameraRotation();
 
 		float zoomOffset = ZoomFactor() * (*Hooks::Camera::fVanityModeMaxDist) * zoomScale;
-		NiPoint3 zoomOffsetVec = NiPoint3(0.0f, zoomOffset, 0.0f);
+		NiPoint3 zoomOffsetVec = NiPoint3(0.0f, zoomOffset + (*Hooks::Camera::fVanityModeMinDist), 0.0f);
 		return cameraRotMat * zoomOffsetVec + cameraTrans;
 	}
 
@@ -628,4 +610,5 @@ namespace GTS {
 			}
 		}
 	}
+
 }

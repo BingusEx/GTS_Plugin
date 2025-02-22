@@ -55,13 +55,13 @@ namespace GTS {
 		return NiPoint3(0.0f, 0.0f, 0.0f);
 	}
 
-	NiPoint3 CameraState::GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal) {
+	NiPoint3 CameraState::GetPlayerLocalOffsetCrawling(const NiPoint3& cameraPosLocal) {
 		return this->GetPlayerLocalOffset(cameraPosLocal);
 	}
 
 	NiPoint3 CameraState::GetPlayerLocalOffset(const NiPoint3& cameraPosLocal, bool IsCrawling) {
 		if (IsCrawling) {
-			return this->GetPlayerLocalOffsetProne(cameraPosLocal);
+			return this->GetPlayerLocalOffsetCrawling(cameraPosLocal);
 		} else {
 			return this->GetPlayerLocalOffset(cameraPosLocal);
 		}

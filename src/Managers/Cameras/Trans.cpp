@@ -44,8 +44,8 @@ namespace GTS {
 		return this->stateB->GetPlayerLocalOffset(cameraPosLocal, IsCrawling) * std::clamp(this->smoothIn.value, 0.0f, 1.0f) + this->stateA->GetPlayerLocalOffset(cameraPosLocal, IsCrawling) * (1.0f - std::clamp(this->smoothIn.value, 0.0f, 1.0f));
 	}
 
-	NiPoint3 TransState::GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal) {
-		return this->stateB->GetPlayerLocalOffsetProne(cameraPosLocal) * std::clamp(this->smoothIn.value, 0.0f, 1.0f) + this->stateA->GetPlayerLocalOffsetProne(cameraPosLocal) * (1.0f - std::clamp(this->smoothIn.value, 0.0f, 1.0f));
+	NiPoint3 TransState::GetPlayerLocalOffsetCrawling(const NiPoint3& cameraPosLocal) {
+		return this->stateB->GetPlayerLocalOffsetCrawling(cameraPosLocal) * std::clamp(this->smoothIn.value, 0.0f, 1.0f) + this->stateA->GetPlayerLocalOffsetCrawling(cameraPosLocal) * (1.0f - std::clamp(this->smoothIn.value, 0.0f, 1.0f));
 	}
 
 	bool TransState::PermitManualEdit() {

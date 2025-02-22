@@ -167,6 +167,7 @@ namespace logger = SKSE::log;
 #include "git.h"
 
 //Own Includes
+#include "Config/ConfigUtil.hpp"
 #include "Constants.hpp"
 #include "Profiler/Profiler.hpp"
 #include "Events/Events.hpp"

@@ -1,6 +1,11 @@
 // Module that handles rumbling
 
+#include <algorithm>
+
 #include "Managers/Rumble.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Animation/AnimationManager.hpp"
 
 namespace GTS {
@@ -193,7 +198,7 @@ namespace GTS {
 			if (receiver) {
 				auto& persist = Persistent::GetSingleton();
 				
-				float tremor_scale = persist.npc_tremor_scale;
+				float tremor_scale = Config::GetCamera().fCameraShakeOther;
 				float might = 1.0f + Potion_GetMightBonus(caster); // Stronger, more impactful shake with Might potion
 				
 				float distance = (coords - receiver->GetPosition()).Length(); // In that case we apply shake based on actor distance
@@ -208,7 +213,7 @@ namespace GTS {
 
 				if (caster->formID == 0x14) {
 					distance = get_distance_to_camera(coords); // use player camera distance (for player only)
-					tremor_scale = persist.tremor_scale;
+					tremor_scale = Config::GetCamera().fCameraShakePlayer;
 					sizedifference = sourcesize;
 
 					if (HasSMT(caster)) {
@@ -223,9 +228,7 @@ namespace GTS {
 
 				if (sourcesize < 2.0f && !ignore_scaling) {  // slowly gain power of shakes
 					float reduction = (sourcesize - 1.0f);
-					if (reduction < 0.0f) {
-						reduction = 0.0f;
-					}
+					reduction = std::max(reduction, 0.0f);
 					modifier *= reduction;
 				}
 

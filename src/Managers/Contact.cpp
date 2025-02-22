@@ -1,4 +1,7 @@
 #include "Managers/Contact.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/GtsManager.hpp"
 
 using namespace REL;
@@ -288,56 +291,63 @@ namespace GTS {
 		if (!world) {
 			return;
 		}
+
 		PlayerCharacter* player = PlayerCharacter::GetSingleton();
 		if (!player) {
 			return;
 		}
+
 		auto player_data = Persistent::GetSingleton().GetData(player);
 		if (!player_data) {
 			return;
 		}
-		auto& camera_collisions = Persistent::GetSingleton().camera_collisions;
 
-		float scale = player_data->target_scale;
+		auto& camera_collisions = Persistent::GetSingleton().camera_collisions;
+		
 		BSWriteLockGuard lock(world->worldLock);
 
 		RE::bhkCollisionFilter* filter = static_cast<bhkCollisionFilter*>(world->GetWorld2()->collisionFilter);
 
-		if (!camera_collisions.enable_actor && scale >= camera_collisions.above_scale) {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
-		} else {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
-		}
-		if (!camera_collisions.enable_debris && scale >= camera_collisions.above_scale) {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kDebrisLarge));
-		} else {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kDebrisLarge));
-		}
-		if (!camera_collisions.enable_trees && scale >= camera_collisions.above_scale) {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kTrees));
-		} else {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kTrees));
-		}
-		if (!camera_collisions.enable_terrain && scale >= camera_collisions.above_scale) {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kTerrain));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kGround));
-		} else {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kTerrain));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kGround));
-		}
-		if (!camera_collisions.enable_static && scale >= camera_collisions.above_scale) {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kStatic));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] &= ~(static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kAnimStatic));
-		} else {
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kStatic));
-			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kAnimStatic));
-		}
+
+		float PlayerScale = player_data->target_scale;
+		auto& CamSettings = Config::GetCamera();
+
+		// Extract a reference to the camera's bitfield to avoid repeated indexing.
+		auto& cameraBitfield = filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCamera)];
+
+		// Helper lambda to update collision bits for one or more layers.
+		auto updateCollisionBits = [&](bool collisionEnabled, std::initializer_list<COL_LAYER> layers) {
+			// If the collision is disabled and the player scale meets the threshold, clear the bits.
+			bool disable = (!collisionEnabled && PlayerScale >= CamSettings.fModifyCamCollideAt);
+			for (COL_LAYER layer : layers) {
+				uint64_t mask = 1ULL << static_cast<uint64_t>(layer);
+				if (disable)
+					cameraBitfield &= ~mask;
+				else
+					cameraBitfield |= mask;
+			}
+		};
+
+		// Actor collision: update bits for both Biped and CharController.
+		updateCollisionBits(CamSettings.bCamCollideActor, { COL_LAYER::kBiped, COL_LAYER::kCharController });
+
+		// Debris collision.
+		updateCollisionBits(CamSettings.bCamCollideDebris, { COL_LAYER::kDebrisLarge });
+
+		// Tree collision.
+		updateCollisionBits(CamSettings.bCamCollideTree, { COL_LAYER::kTrees });
+
+		// Terrain collision: update bits for both Terrain and Ground.
+		updateCollisionBits(CamSettings.bCamCollideTerrain, { COL_LAYER::kTerrain, COL_LAYER::kGround });
+
+		// Statics collision: update bits for both Static and AnimStatic.
+		updateCollisionBits(CamSettings.bCamCollideStatics, { COL_LAYER::kStatic, COL_LAYER::kAnimStatic });
+
 	}
 
-	void ContactListener::enable_biped_collision() {
+	void ContactListener::enable_biped_collision() const {
 		auto& world = this->world;
+
 		// kBiped Collisions
 		//  - Collides with kAnimStatic
 		//  - Collides with kCamera
@@ -367,24 +377,27 @@ namespace GTS {
 		//  - Collides with kProps
 		//  - Collides with kSpell
 		//  - Collides with kWeapon
+
 		if (!world) {
 			return;
 		}
 		BSWriteLockGuard lock(world->worldLock);
 
-		RE::bhkCollisionFilter* filter = static_cast<bhkCollisionFilter*>(world->GetWorld2()->collisionFilter);
 
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
+		if (RE::bhkCollisionFilter* filter = skyrim_cast<bhkCollisionFilter*>(world->GetWorld2()->collisionFilter)){
 
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBiped)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
 
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
-		filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kBipedNoCC)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
+
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBiped));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kBipedNoCC));
+			filter->layerBitfields[static_cast<uint8_t>(COL_LAYER::kCharController)] |= (static_cast<uint64_t>(1) << static_cast<uint64_t>(COL_LAYER::kCharController));
+		}
 
 	}
 

@@ -4,7 +4,83 @@
 
 namespace GTS {
 
+	//namespace Experiments {
+
+		//static constexpr std::uint32_t fnv1a_32(const char* str, std::size_t length) {
+		//	std::uint32_t hash = 0x811c9dc5;
+		//	for (std::size_t i = 0; i < length; ++i) {
+		//		hash ^= static_cast<std::uint32_t>(str[i]);
+		//		hash *= 0x01000193;
+		//	}
+		//	return hash;
+		//}
+
+		template<typename T>
+		bool CheckFloat(T& value) {
+			if constexpr (std::is_floating_point_v<T>) {
+				if (std::isnan(value)) {
+					value = 0;
+					return true;
+				}
+			}
+			return false;
+		}
+
+		// Function to convert uint32_t to a string of 4 characters
+		static std::string Uint32ToStr(uint32_t value) {
+			char bytes[4];
+			bytes[0] = static_cast<char>((value >> 24) & 0xFF);
+			bytes[1] = static_cast<char>((value >> 16) & 0xFF);
+			bytes[2] = static_cast<char>((value >> 8) & 0xFF);
+			bytes[3] = static_cast<char>(value & 0xFF);
+			return std::string(bytes, 4);
+		}
+
+		template <typename T, const uint32_t uid, const uint32_t ver = 1>
+		struct BasicRecord {
+			T value;
+			static constexpr auto ID = std::byteswap(uid);
+
+			BasicRecord() = default;
+			BasicRecord(const T& val) : value(val) {}
+
+			void Load(SKSE::SerializationInterface* serializationInterface, std::uint32_t type, std::uint32_t version, uint32_t size) {
+
+				if (type == ID) {
+					logger::trace("Cosave record {} is being read", Uint32ToStr(ID));
+					if (version == ver && size == sizeof(T)) {
+						if (serializationInterface->ReadRecordData(&value, sizeof(T))) {
+							logger::trace("Cosave record {} was read", Uint32ToStr(ID));
+							if (CheckFloat(value)) {
+								logger::warn("Cosave record {} has been reset as it was of type float/double and was NaN!", Uint32ToStr(ID));
+							}
+
+							return;
+						}
+					}
+
+					logger::error("Cosave record {} Could not be loaded", Uint32ToStr(ID));
+
+				}
+			}
+
+			void Save(SKSE::SerializationInterface* serializationInterface) {
+				logger::trace("Cosave record {} is being saved", Uint32ToStr(ID));
+				if (serializationInterface->OpenRecord(ID, ver)) {
+					if (serializationInterface->WriteRecordData(&value, sizeof(T))) {
+						logger::trace("Cosave record {} save OK!", Uint32ToStr(ID));
+						return;
+					}
+				}
+
+				logger::error("Cosave record {} could not be saved", Uint32ToStr(ID));
+			}
+
+		};
+	//}
+
 	struct ActorData {
+
 		float native_scale;
 		float visual_scale;
 		float visual_scale_v;
@@ -13,23 +89,24 @@ namespace GTS {
 		float max_scale;
 		float half_life;
 		float anim_speed;
-		float effective_multi;
-		float bonus_hp;
-		float bonus_carry;
-		float bonus_max_size;
-		float smt_run_speed;
+		float effective_multi; //<----- UNUSED
+		float bonus_hp;        //<----- UNUSED
+		float bonus_carry;     //<----- UNUSED
+		float bonus_max_size;  //<----- UNUSED
+		float smt_run_speed;   //<----- Useless here only player has it
 
-		float NormalDamage; // 0
-		float SprintDamage; // 1
-		float FallDamage; // 2
-		float HHDamage; // 3
-		float SizeVulnerability;
+		float NormalDamage;
+		float SprintDamage;
+		float FallDamage;
+		float HHDamage;
+		float SizeVulnerability; //<----- UNUSED
 
 		float SizeReserve;
 
-		float AllowHitGrowth;
+		float AllowHitGrowth;    //<----- Useless here only player and or follower use this,
+								 //a npc specific toggle does not even exist
 
-		float scaleOverride;
+		float scaleOverride;     //WHY IS THE FP CAMERA SETTING STORED FOR EVERY SINGLE NPC!!!!
 
 		float stolen_attributes;
 
@@ -65,6 +142,9 @@ namespace GTS {
 			ActorData* GetActorData(Actor* actor);
 			ActorData* GetData(TESObjectREFR* refr);
 			ActorData* GetData(TESObjectREFR& refr);
+
+
+			BasicRecord<int, 'TCST'> TrackedCameraState = 0;
 
 			bool highheel_correction = true;
 			bool highheel_furniture = false;
@@ -128,14 +208,15 @@ namespace GTS {
 			float BalanceMode_ShrinkRate_Base = 1.0f;
 			float BalanceMode_ShrinkRate_Combat = 0.08f;
 
-			SoftPotential speed_adjustment {
+			SoftPotential speed_adjustment { // USELESS
 				.k = 0.125f,//0.125
 				.n = 0.86f, //0.86
 				.s = 1.12f, //1.12
 				.o = 1.0f,
 				.a = 0.0f,  //Default is 0
 			};
-			SoftPotential MS_adjustment {
+
+			SoftPotential MS_adjustment { //THIS SHOULD NOT BE HERE
 				.k = 0.132f, //0.132
 				.n = 0.86f,  //0.86
 				.s = 1.12f,  //1.12
@@ -143,11 +224,10 @@ namespace GTS {
 				.a = 0.0f, //Default is 0
 			};
 
-			SizeMethod size_method = SizeMethod::ModelScale;
 			CameraCollisions camera_collisions;
 		private:
-			Persistent() = default;
 
+			Persistent() = default;
 			mutable std::mutex _lock;
 			std::unordered_map<FormID, ActorData> _actor_data;
 	};

@@ -1,9 +1,10 @@
 #pragma once
+#include "Config/SettingsList.hpp"
 
 // #define ENABLED_SHADOW
 
 namespace GTS {
-	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTracking_MCM Camera_MCM);
+	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTrackingSettings Camera_MCM);
 
 	float HighHeelOffset();
 
@@ -44,7 +45,7 @@ namespace GTS {
 
 	float ZoomFactor();
 
-	NiPoint3 CompuleLookAt(float zoomScale = 0.95f);
+	NiPoint3 ComputeLookAt(float zoomScale = 0.95f);
 
 	// Get's camera position relative to the player
 	NiPoint3 GetCameraPosLocal();

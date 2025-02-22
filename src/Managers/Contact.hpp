@@ -20,7 +20,7 @@ namespace GTS {
 			void attach(NiPointer<bhkWorld> world);
 			void ensure_last();
 			void sync_camera_collision_groups();
-			void enable_biped_collision();
+			void enable_biped_collision() const;
 	};
 
 	class ContactManager : public EventListener {

@@ -35,7 +35,7 @@ Since all of this is just one big hack, there are some limitations present namel
 //  magic_enum will use to convert an enum to a string representation for serialization (Saving The TOML)
 //-------------------------------------------------------------------------------------------------------------------
 
-enum class CameraTrackingUsr : uint8_t {
+enum class CameraTrackingSettings : uint8_t {
     kNone,
     kSpine,
     kClavicle,
@@ -47,18 +47,11 @@ enum class CameraTrackingUsr : uint8_t {
 };
 
 enum class CameraModeTP : uint8_t {
-    kDisabled,
     kNormal,
     kAlternative,
     kFootLeft,
     kFootRight,
     kFeetCenter
-};
-
-enum class CameraModeFP : uint8_t {
-    kNormal,
-    kCombat,
-    kLoot
 };
 
 enum class DisplayUnit : uint8_t {
@@ -88,9 +81,6 @@ enum class GameMode : uint8_t {
 //  CHILD STRUCTS 
 //  (Not Directly Serialized, but used within other structs)
 //-------------------------------------------------------------------------------------------------------------------
-
-
-
 
 
 //------------------------------------------- Gameplay
@@ -428,22 +418,17 @@ struct SettingsCamera {
     // Offset settings (for first-person and third-person)
     CameraOffsets OffsetsNormal = {};
     CameraOffsets OffsetsAlt = {};
-
-    // Foot camera offset
-    float fFootCameraFBOffset = 0.0;
     
     // Automatic camera controls
     bool bAutomaticCamera = true;
-    std::string sAutoCameraModeFP = "kNormal";
-    std::string sAutoCameraModeTP = "kDisabled";
 
     // Distance and zoom controls
 
     bool bEnableSkyrimCameraAdjustments = false;
 
-    float fCameraDistMin = 50.0f;
-    float fCameraDistMax = 400.0f;
-    float fCameraZoomSpeed = 20.0f;
+    float fCameraDistMin = 150.0f;
+    float fCameraDistMax = 600.0f;
+    float fCameraZoomSpeed = 1.2f;
     float fCameraIncrement = 0.075f;
 
     // Collision settings

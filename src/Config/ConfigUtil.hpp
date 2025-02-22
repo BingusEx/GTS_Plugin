@@ -58,17 +58,6 @@ namespace toml {                                           \
 
 namespace GTS {
 
-    template<typename Enum>
-    [[nodiscard]] static inline Enum StringToEnum(const std::string& name) {
-        auto value = magic_enum::enum_cast<Enum>(name);
-        if (value.has_value()) {
-            return *value;
-        }
-        else {
-            throw std::invalid_argument("Invalid enum name: " + name);
-        }
-    }
-
     [[nodiscard]] static inline bool CheckFile(const std::filesystem::path& a_file) {
         try {
             // Check if the file exists

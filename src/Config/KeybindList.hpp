@@ -65,7 +65,7 @@ namespace GTS {
 
             {
                 .Event = "OpenSettings",
-                .Keys = {"LSHIFT", "F1"},
+                .Keys = {"F1"},
                 .Trigger = "Once",
                 .BlockInput = "Always"
             },
@@ -450,7 +450,7 @@ namespace GTS {
             //========================= C A M E R A
             //========================================================
 
-
+			
             {
                 .Event = "HorizontalCameraReset",
                 .Keys = {"RIGHT", "LEFT"},
@@ -481,6 +481,10 @@ namespace GTS {
                 .Keys = {"LALT", "DOWN"},
                 .Trigger = "Continuous",
             },
+            {
+                .Event = "SwitchCameraMode",
+                .Keys = {"F2"}
+            },
 
             //========================================================
             //========================= A N I M  S P E E D
@@ -510,8 +514,6 @@ namespace GTS {
                 .Event = "ShrinkOutburst",
                 .Keys = {"LSHIFT", "F"},
             },
-
-
             {
                 .Event = "SizeReserve",
                 .Keys = {"E"},

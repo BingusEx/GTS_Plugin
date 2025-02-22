@@ -129,41 +129,14 @@ namespace {
 		return result;
 	}
 
-	// Configurable scale
+	//STUBBED OUT
 	void SetScaleMethod(StaticFunctionTag*, int size_method) {
-		ResetScales(); // Must reset first
-		switch (size_method) {
-			case 0:
-				Persistent::GetSingleton().size_method = SizeMethod::ModelScale;
-				break;
-			case 1:
-				Persistent::GetSingleton().size_method = SizeMethod::RootScale;
-				break;
-			case 2:
-				Persistent::GetSingleton().size_method = SizeMethod::Hybrid;
-				break;
-			case 3:
-				Persistent::GetSingleton().size_method = SizeMethod::RefScale;
-				break;
-		}
+		return;
 	}
+
+	//STUBBED OUT
 	int GetScaleMethod(StaticFunctionTag*) {
-		switch (Persistent::GetSingleton().size_method) {
-			case SizeMethod::ModelScale:
-				return 0;
-				break;
-			case SizeMethod::RootScale:
-				return 1;
-				break;
-			case SizeMethod::Hybrid:
-				return 2;
-				break;
-			case SizeMethod::RefScale:
-				return 3;
-				break;
-		}
-		log::error("Scale method is invalid");
-		return Persistent::GetSingleton().size_method;
+		return 0;
 	}
 
 	bool SetScale(StaticFunctionTag*, Actor* actor, float scale) {

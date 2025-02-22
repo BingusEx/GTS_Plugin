@@ -2,11 +2,12 @@
 
 #include "Managers/Cameras/CamUtil.hpp"
 #include "Managers/Input/InputManager.hpp"
-
-#include "Utils/InputConditions.hpp"
 #include "API/SmoothCam.hpp"
 
-using namespace REL;
+#include "Config/Config.hpp"
+
+#include "UI/ImGui/ImUtil.hpp"
+
 using namespace GTS;
 
 namespace {
@@ -44,9 +45,31 @@ namespace {
 		float size = get_visual_scale(PlayerCharacter::GetSingleton());
 		camera.AdjustLeftRight(0.6f + (size * 0.05f - 0.05f));
 	}
+
+	void SwitchCameraMode(const ManagedInputEvent& data) {
+		int& Mode = Persistent::GetSingleton().TrackedCameraState.value;
+
+		// Increment by 1 and wrap around if we exceed the enum range
+		constexpr int totalModes = static_cast<int>(magic_enum::enum_count<CameraModeTP>());
+		Mode = (Mode + 1) % totalModes;
+
+		// Convert the integer mode to the corresponding enum value
+		auto currentMode = static_cast<CameraModeTP>(Mode);
+
+		// Use magic_enum to get the enum name and humanize it
+		const std::string Msg = fmt::format("Camera Mode: {}", ImUtil::HumanizeString(std::string(magic_enum::enum_name(currentMode))));
+
+		RE::DebugNotification(Msg.c_str());
+	}
+
+	bool AutoCamEnabledCondition() {
+		return Config::GetCamera().bAutomaticCamera;
+	}
+
 }
 
 namespace GTS {
+
 	CameraManager& CameraManager::GetSingleton() noexcept {
 		static CameraManager instance;
 		return instance;
@@ -57,17 +80,21 @@ namespace GTS {
 	}
 
 	void CameraManager::DataReady() {
-		InputManager::RegisterInputEvent("HorizontalCameraReset", HorizontalResetEvent, AlwaysBlock);
-		InputManager::RegisterInputEvent("VerticalCameraReset", VerticalResetEvent, AlwaysBlock);
+		InputManager::RegisterInputEvent("HorizontalCameraReset", HorizontalResetEvent, AutoCamEnabledCondition);
+		InputManager::RegisterInputEvent("VerticalCameraReset", VerticalResetEvent, AutoCamEnabledCondition);
 
-		InputManager::RegisterInputEvent("CameraUp", CamUpEvent, AlwaysBlock);
-		InputManager::RegisterInputEvent("CameraDown", CamDownEvent, AlwaysBlock);
-		InputManager::RegisterInputEvent("CameraLeft", CamLeftEvent, AlwaysBlock);
-		InputManager::RegisterInputEvent("CameraRight", CamRightEvent, AlwaysBlock);
+		InputManager::RegisterInputEvent("CameraUp", CamUpEvent, AutoCamEnabledCondition);
+		InputManager::RegisterInputEvent("CameraDown", CamDownEvent, AutoCamEnabledCondition);
+		InputManager::RegisterInputEvent("CameraLeft", CamLeftEvent, AutoCamEnabledCondition);
+		InputManager::RegisterInputEvent("CameraRight", CamRightEvent, AutoCamEnabledCondition);
+
+		//Ported From Papyrus
+		InputManager::RegisterInputEvent("SwitchCameraMode", SwitchCameraMode, AutoCamEnabledCondition);
+
 	}
 
 	void CameraManager::Start() {
-		//ResetIniSettings();
+
 	}
 
 	void CameraManager::CameraUpdate() {
@@ -175,30 +202,31 @@ namespace GTS {
 	}
 
 	CameraState* CameraManager::GetCameraStateTP() {
-		int cameraMode = Runtime::GetInt("CameraMode");
-		// Third Person states
-		// 0 is disabled
-		// 1 is normal
-		// 2 is alt camera
-		// 3 is Between Feet
-		// 4 is Left Feet
-		// 5 is Right Feet
-		switch (cameraMode) {
-			case 1: {
+
+		auto Mode = static_cast<CameraModeTP>(Persistent::GetSingleton().TrackedCameraState.value);
+
+		switch (Mode) {
+
+			case CameraModeTP::kNormal: {
 				return &this->normalState;
 			}
-			case 2: {
+
+			case CameraModeTP::kAlternative: {
 				return &this->altState;
 			}
-			case 3: {
+
+			case CameraModeTP::kFeetCenter: {
 				return &this->footState;
 			}
-			case 4: {
+
+			case CameraModeTP::kFootLeft: {
 				return &this->footLState;
 			}
-			case 5: {
+
+			case CameraModeTP::kFootRight: {
 				return &this->footRState;
 			}
+
 			default: {
 				return nullptr;
 			}
@@ -230,7 +258,7 @@ namespace GTS {
 	// Decide which camera state to use
 	CameraState* CameraManager::GetCameraState() {
 
-		if (!Runtime::GetBool("EnableCamera") || IsFreeCameraEnabled()) {
+		if (!Config::GetCamera().bAutomaticCamera || IsFreeCameraEnabled()) {
 			return nullptr;
 		}
 
@@ -239,7 +267,8 @@ namespace GTS {
 		if (!playerCamera) {
 			return nullptr;
 		}
-		if (Runtime::GetBool("ConversationCameraComp")) {
+
+		if (Config::GetGeneral().bConversationCamCompat) {
 			auto ui = RE::UI::GetSingleton();
 			if (ui) {
 				if (ui->IsMenuOpen(DialogueMenu::MENU_NAME)) {
@@ -247,6 +276,7 @@ namespace GTS {
 				}
 			}
 		}
+
 		auto playerCameraState = playerCamera->currentState;
 		if (!playerCameraState) {
 			return nullptr;

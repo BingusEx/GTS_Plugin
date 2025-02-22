@@ -7,7 +7,7 @@ namespace {
 
 namespace GTS {
 	NiPoint3 FootR::GetFootPos() {
-		const std::string_view rightFootLookup = "NPC R Foot [Rft ]";
+		constexpr std::string_view rightFootLookup = "NPC R Foot [Rft ]";
 		auto player = GetCameraActor();
 		if (player) {
 			auto rootModel = player->Get3D(false);
@@ -20,7 +20,6 @@ namespace GTS {
 					float playerScale = get_visual_scale(player);
 					auto rightPosLocal = transform * (rightFoot->world * NiPoint3());
 					this->smoothFootPos.target = rightPosLocal;
-
 					this->smoothFootPos.target.z += OFFSET*playerScale;
 				}
 			}

@@ -21,7 +21,7 @@ namespace GTS {
 
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPosLocal);
 			virtual NiPoint3 GetPlayerLocalOffset(const NiPoint3& cameraPosLocal, bool IsCrawling);
-			virtual NiPoint3 GetPlayerLocalOffsetProne(const NiPoint3& cameraPosLocal);
+			virtual NiPoint3 GetPlayerLocalOffsetCrawling(const NiPoint3& cameraPosLocal);
 
 			virtual bool PermitManualEdit();
 			virtual bool PermitTransition();

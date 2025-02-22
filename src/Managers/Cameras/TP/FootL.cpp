@@ -20,7 +20,6 @@ namespace GTS {
 					float playerScale = get_visual_scale(player);
 					auto leftPosLocal = transform * (leftFoot->world * NiPoint3());
 					this->smoothFootPos.target = leftPosLocal;
-
 					this->smoothFootPos.target.z += OFFSET*playerScale;
 				}
 			}

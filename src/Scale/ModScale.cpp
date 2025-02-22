@@ -124,29 +124,21 @@ namespace GTS {
 					set_npcnode_scale(actor, initScale.npc);
 				}
 			}
-		}catch (exception e) {
+		}catch (exception& e) {
 			log::error("ResetToInitScale Failed {}", e.what());
 		}
 	}
 
 	float GetInitialScale(Actor* actor) {
+
+
 		try {
 			auto& initScale = GetActorInitialScales(actor);
-			auto& size_method = Persistent::GetSingleton().size_method;
-			switch (size_method) {
-				// Only initial scales for these two methods since the racemenu
-				// and refscale one can edit on the character edit menu and setscale
-				case SizeMethod::ModelScale:
-					return initScale.model;
-				case SizeMethod::RootScale:
-					return initScale.npc;
-				default:
-					return 1.0f;
-				}
-			}
-		catch (exception e) {
+			return initScale.model;
+		}
+		catch (exception& e) {
 			log::error("GetInitialScale Failed {}", e.what());
-		return 1.0f;
+			return 1.0f;
 		}
 	}
 
@@ -291,26 +283,7 @@ namespace GTS {
 	}
 
 	float get_scale(Actor* actor) {
-		auto& size_method = Persistent::GetSingleton().size_method;
-		switch (size_method) {
-			case SizeMethod::ModelScale:
-				return get_model_scale(actor);
-				break;
-			case SizeMethod::RootScale:
-				return get_npcnode_scale(actor);
-				break;
-			case SizeMethod::RefScale:
-				return game_getactorscale(actor);
-				break;
-			case SizeMethod::Hybrid:
-				if (actor->formID == 0x14) {
-					return get_npcnode_scale(actor);
-				} else {
-					return get_model_scale(actor);
-				}
-			default:
-				return 1.0f;
-		}
+		return get_model_scale(actor);
 	}
 
 	float game_getactorscale(Actor* actor) {
@@ -336,26 +309,6 @@ namespace GTS {
 	}
 
 	bool update_model_visuals(Actor* actor, float scale) {
-		auto& size_method = Persistent::GetSingleton().size_method;
-		switch (size_method) {
-			case SizeMethod::ModelScale:
-				return set_model_scale(actor, scale);
-				break;
-			case SizeMethod::RootScale:
-				return set_npcnode_scale(actor, scale);
-				break;
-			case SizeMethod::RefScale:
-				set_ref_scale(actor, scale);
-				return true;
-				break;
-			case SizeMethod::Hybrid:
-				if (actor->formID == 0x14) {
-					return set_npcnode_scale(actor, scale);
-				} else {
-					return set_model_scale(actor, scale);
-				}
-				break;
-		}
-		return false;
+		return set_model_scale(actor, scale);
 	}
 }

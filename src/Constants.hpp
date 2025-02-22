@@ -366,11 +366,11 @@ namespace GTS {
     //////////////////
     constexpr float ZoomIn_Cam_Spine = 1.0f;
     constexpr float ZoomIn_Cam_Clavicle = 1.0f;
-    constexpr float ZoomIn_Cam_Breasts_01 = 0.8f;
-    constexpr float ZoomIn_Cam_Breasts_02 = 0.8f;
-    constexpr float ZoomIn_Cam_Breasts_03 = 0.8f;
+    constexpr float ZoomIn_Cam_Breasts_01 = 1.0f;
+    constexpr float ZoomIn_Cam_Breasts_02 = 1.0f;
+    constexpr float ZoomIn_Cam_Breasts_03 = 1.0f;
     constexpr float ZoomIn_Cam_Neck = 1.0f;
-    constexpr float ZoomIn_Cam_Butt = 0.8f;
+    constexpr float ZoomIn_Cam_Butt = 1.0f;
 
     //////////////////
     constexpr float ZoomIn_LookAt_BothFoot = 0.5f;

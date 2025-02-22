@@ -5,8 +5,11 @@
 
 namespace {
 
+
 	inline const auto ActorDataRecord = _byteswap_ulong('ACTD');
-	inline const auto ScaleMethodRecord = _byteswap_ulong('SCMD');
+
+
+
 	inline const auto HighHeelCorrectionRecord = _byteswap_ulong('HHCO');
 	inline const auto HighHeelFurnitureRecord = _byteswap_ulong('HHFO');
 	inline const auto SizeRaycastRecord = _byteswap_ulong('SREB');
@@ -42,13 +45,10 @@ namespace {
 	inline const auto CameraFovEdits = _byteswap_ulong('CFET');
 	inline const auto NPC_EffectImmunity = _byteswap_ulong('NPER');
 	inline const auto PC_EffectImmunity = _byteswap_ulong('PCER');
-
 	inline const auto Heart_Effects = _byteswap_ulong('HEFS');
-
 	inline const auto Balance_SGP = _byteswap_ulong('BMSP');
 	inline const auto Balance_SRB = _byteswap_ulong('BMSB');
 	inline const auto Balance_SRC = _byteswap_ulong('BMSC');
-
 	inline const auto EnableIconsRecord = _byteswap_ulong('EIRC');
 	inline const auto AllowWeightGainRecord = _byteswap_ulong('AWGR');
 
@@ -67,12 +67,12 @@ namespace {
 	inline const auto Record_GiantCount = _byteswap_ulong('QGCR');
 	//
 
-
 	constexpr float DEFAULT_MAX_SCALE = 65535.0f;
 	constexpr float DEFAULT_HALF_LIFE = 1.0f;
 }
 
 namespace GTS {
+
 
 	Persistent& Persistent::GetSingleton() noexcept {
 		static Persistent instance;
@@ -88,14 +88,14 @@ namespace GTS {
 		std::unique_lock lock(this->_lock);
 		this->_actor_data.clear();
 
-    // Ensure we reset them back to inital scales
-    // if they are loaded into game memory
-    // since skyrim only lazy loads actors
-    // that are already in memory it won't reload
-    // their nif scales otherwise
-    for (auto actor: find_actors()) {
-	      ResetToInitScale(actor);
-	    }
+	    // Ensure we reset them back to inital scales
+	    // if they are loaded into game memory
+	    // since skyrim only lazy loads actors
+	    // that are already in memory it won't reload
+	    // their nif scales otherwise
+	    for (auto actor: find_actors()) {
+			ResetToInitScale(actor);
+		}
 	}
 
 	void Persistent::OnRevert(SerializationInterface*) {
@@ -103,6 +103,7 @@ namespace GTS {
 	}
 
 	void Persistent::OnGameLoaded(SerializationInterface* serde) {
+
 		std::uint32_t type;
 		std::uint32_t size;
 		std::uint32_t version;
@@ -114,12 +115,23 @@ namespace GTS {
 
 		FixAnimationsAndCamera(); // Call it from ActorUtils, needed to fix Grab anim on save-reload
 
+
+		auto& Persi = Persistent::GetSingleton();
+
 		while (serde->GetNextRecordInfo(type, version, size)) {
+
+			Persi.TrackedCameraState.Load(serde, type, version, size);
+
 			if (type == ActorDataRecord) {
+
 				if (version >= 1) {
+
 					std::size_t count;
+
 					serde->ReadRecordData(&count, sizeof(count));
+
 					for (; count > 0; --count) {
+
 						RE::FormID actorFormID;
 						serde->ReadRecordData(&actorFormID, sizeof(actorFormID));
 						RE::FormID newActorFormID;
@@ -403,116 +415,124 @@ namespace GTS {
 				} else {
 					log::info("Disregarding version 0 cosave info.");
 				}
-			} else if (type == ScaleMethodRecord) {
-				int size_method;
-				serde->ReadRecordData(&size_method, sizeof(size_method));
-				switch (size_method) {
-					case 0:
-						GetSingleton().size_method = SizeMethod::ModelScale;
-						break;
-					case 1:
-						GetSingleton().size_method = SizeMethod::RootScale;
-						break;
-					case 2:
-						GetSingleton().size_method = SizeMethod::Hybrid;
-						break;
-					case 3:
-						GetSingleton().size_method = SizeMethod::RefScale;
-						break;
-				}
-			} else if (type == HighHeelCorrectionRecord) {
+			}
+
+			else if (type == HighHeelCorrectionRecord) {
 				bool highheel_correction;
 				serde->ReadRecordData(&highheel_correction, sizeof(highheel_correction));
 				GetSingleton().highheel_correction = highheel_correction;
-			} else if (type == SizeRaycastRecord) {
+			}
+			else if (type == SizeRaycastRecord) {
 				bool SizeRaycast_Enabled;
 				serde->ReadRecordData(&SizeRaycast_Enabled, sizeof(SizeRaycast_Enabled));
 				GetSingleton().SizeRaycast_Enabled = SizeRaycast_Enabled;
-			} else if (type == HighHeelFurnitureRecord) {
+			}
+			else if (type == HighHeelFurnitureRecord) {
 				bool highheel_furniture;
 				serde->ReadRecordData(&highheel_furniture, sizeof(highheel_furniture));
 				GetSingleton().highheel_furniture = highheel_furniture;
-			} else if (type == AllowPlayerVoreRecord) {
+			}
+			else if (type == AllowPlayerVoreRecord) {
 				bool vore_allowplayervore;
 				serde->ReadRecordData(&vore_allowplayervore, sizeof(vore_allowplayervore));
 				GetSingleton().vore_allowplayervore = vore_allowplayervore;
-			} else if (type == AllowInsectVoreRecord) {
+			}
+			else if (type == AllowInsectVoreRecord) {
 				bool AllowInsectVore;
 				serde->ReadRecordData(&AllowInsectVore, sizeof(AllowInsectVore));
 				GetSingleton().AllowInsectVore = AllowInsectVore;
-			} else if (type == AllowUndeadVoreRecord) {
+			}
+			else if (type == AllowUndeadVoreRecord) {
 				bool AllowUndeadVore;
 				serde->ReadRecordData(&AllowUndeadVore, sizeof(AllowUndeadVore));
 				GetSingleton().AllowUndeadVore = AllowUndeadVore;
-			} else if (type == AllowFollowerInteractions) {
+			}
+			else if (type == AllowFollowerInteractions) {
 				bool FollowerInteractions;
 				serde->ReadRecordData(&FollowerInteractions, sizeof(FollowerInteractions));
 				GetSingleton().FollowerInteractions = FollowerInteractions;
-			} else if (type == FollowerProtectionRecord) {
+			}
+			else if (type == FollowerProtectionRecord) {
 				bool FollowerProtection;
 				serde->ReadRecordData(&FollowerProtection, sizeof(FollowerProtection));
 				GetSingleton().FollowerProtection = FollowerProtection;
-			} else if (type == VoreCombatOnlyRecord) {
+			}
+			else if (type == VoreCombatOnlyRecord) {
 				bool vore_combatonly;
 				serde->ReadRecordData(&vore_combatonly, sizeof(vore_combatonly));
 				GetSingleton().vore_combatonly = vore_combatonly;
-			} else if (type == DevourmentCompatRecord) {
+			}
+			else if (type == DevourmentCompatRecord) {
 				bool devourment_compatibility;
 				serde->ReadRecordData(&devourment_compatibility, sizeof(devourment_compatibility));
 				GetSingleton().devourment_compatibility = devourment_compatibility;
-			} else if (type == FeetTrackingRecord) {
+			}
+			else if (type == FeetTrackingRecord) {
 				bool allow_feetracking;
 				serde->ReadRecordData(&allow_feetracking, sizeof(allow_feetracking));
 				GetSingleton().allow_feetracking = allow_feetracking;
-			} else if (type == LessGoreRecord) {
+			}
+			else if (type == LessGoreRecord) {
 				bool less_gore;
 				serde->ReadRecordData(&less_gore, sizeof(less_gore));
 				GetSingleton().less_gore = less_gore;
-			} else if (type == AllowStaggerRecord) {
+			}
+			else if (type == AllowStaggerRecord) {
 				bool allow_stagger;
 				serde->ReadRecordData(&allow_stagger, sizeof(allow_stagger));
 				GetSingleton().allow_stagger = allow_stagger;
-			} else if (type == EditVoiceFrequency) {
+			}
+			else if (type == EditVoiceFrequency) {
 				bool edit_voice_frequency;
 				serde->ReadRecordData(&edit_voice_frequency, sizeof(edit_voice_frequency));
 				GetSingleton().edit_voice_frequency = edit_voice_frequency;
-			} else if (type == StompAiRecord) {
+			}
+			else if (type == StompAiRecord) {
 				bool Stomp_Ai;
 				serde->ReadRecordData(&Stomp_Ai, sizeof(Stomp_Ai));
 				GetSingleton().Stomp_Ai = Stomp_Ai;
-			} else if (type == DeleteActors) {
+			}
+			else if (type == DeleteActors) {
 				bool delete_actors;
 				serde->ReadRecordData(&delete_actors, sizeof(delete_actors));
 				GetSingleton().delete_actors = delete_actors;
-			} else if (type == LegacySounds) {
+			}
+			else if (type == LegacySounds) {
 				bool legacy_sounds;
 				serde->ReadRecordData(&legacy_sounds, sizeof(legacy_sounds));
 				GetSingleton().legacy_sounds = legacy_sounds;
-			} else if (type == ActorsPanic) {
+			}
+			else if (type == ActorsPanic) {
 				bool actors_panic;
 				serde->ReadRecordData(&actors_panic, sizeof(actors_panic));
 				GetSingleton().actors_panic = actors_panic;
-			} else if (type == LaunchObjects) {
+			}
+			else if (type == LaunchObjects) {
 				bool launch_objects;
 				serde->ReadRecordData(&launch_objects, sizeof(launch_objects));
 				GetSingleton().launch_objects = launch_objects;
-			} else if (type == CameraFovEdits) {
+			}
+			else if (type == CameraFovEdits) {
 				bool Camera_PermitFovEdits;
 				serde->ReadRecordData(&Camera_PermitFovEdits, sizeof(Camera_PermitFovEdits));
 				GetSingleton().Camera_PermitFovEdits = Camera_PermitFovEdits;
-			} else if (type == StolenAttributes) {
+			}
+			else if (type == StolenAttributes) {
 				float stolen_attributes;
 				serde->ReadRecordData(&stolen_attributes, sizeof(stolen_attributes));
 				GetSingleton().stolen_attributes = stolen_attributes;
-			} else if (type == Att_HealthStorage) {
+			}
+			else if (type == Att_HealthStorage) {
 				float stolen_health;
 				serde->ReadRecordData(&stolen_health, sizeof(stolen_health));
 				GetSingleton().stolen_health = stolen_health;
-			} else if (type == Att_MagickStorage) {
+			}
+			else if (type == Att_MagickStorage) {
 				float stolen_magick;
 				serde->ReadRecordData(&stolen_magick, sizeof(stolen_magick));
 				GetSingleton().stolen_magick = stolen_magick;
-			} else if (type == Att_StaminStorage) {
+			}
+			else if (type == Att_StaminStorage) {
 				float stolen_stamin;
 				serde->ReadRecordData(&stolen_stamin, sizeof(stolen_stamin));
 				GetSingleton().stolen_stamin = stolen_stamin;
@@ -522,27 +542,33 @@ namespace GTS {
 				float StolenSize;
 				serde->ReadRecordData(&StolenSize, sizeof(StolenSize));
 				GetSingleton().StolenSize = StolenSize;
-			} else if (type == Record_CrushCount) { // stage 2
+			}
+			else if (type == Record_CrushCount) { // stage 2
 				float CrushCount;
 				serde->ReadRecordData(&CrushCount, sizeof(CrushCount));
 				GetSingleton().CrushCount = CrushCount;
-			} else if (type == Record_STNCount) { // stage 3
+			}
+			else if (type == Record_STNCount) { // stage 3
 				float STNCount;
 				serde->ReadRecordData(&STNCount, sizeof(STNCount));
 				GetSingleton().STNCount = STNCount;
-			} else if (type == Record_HugStealCount) { // stage 4
+			}
+			else if (type == Record_HugStealCount) { // stage 4
 				float HugStealCount;
 				serde->ReadRecordData(&HugStealCount, sizeof(HugStealCount));
 				GetSingleton().HugStealCount = HugStealCount;
-			} else if (type == Record_HandCrushed) { // stage 5
+			}
+			else if (type == Record_HandCrushed) { // stage 5
 				float HandCrushed;
 				serde->ReadRecordData(&HandCrushed, sizeof(HandCrushed));
 				GetSingleton().HandCrushed = HandCrushed;
-			} else if (type == Record_VoreCount) { // stage 6
+			}
+			else if (type == Record_VoreCount) { // stage 6
 				float VoreCount;
 				serde->ReadRecordData(&VoreCount, sizeof(VoreCount));
 				GetSingleton().VoreCount = VoreCount;
-			} else if (type == Record_GiantCount) { // stage 7
+			}
+			else if (type == Record_GiantCount) { // stage 7
 				float GiantCount;
 				serde->ReadRecordData(&GiantCount, sizeof(GiantCount));
 				GetSingleton().GiantCount = GiantCount;
@@ -552,63 +578,78 @@ namespace GTS {
 				bool hostile_toggle;
 				serde->ReadRecordData(&hostile_toggle, sizeof(hostile_toggle));
 				GetSingleton().hostile_toggle = hostile_toggle;
-			} else if (type == SandwichAiRecord) {
+			}
+			else if (type == SandwichAiRecord) {
 				bool Sandwich_Ai;
 				serde->ReadRecordData(&Sandwich_Ai, sizeof(Sandwich_Ai));
 				GetSingleton().Sandwich_Ai = Sandwich_Ai;
-			} else if (type == KickAiRecord) {
+			}
+			else if (type == KickAiRecord) {
 				bool Kick_Ai;
 				serde->ReadRecordData(&Kick_Ai, sizeof(Kick_Ai));
 				GetSingleton().Kick_Ai = Kick_Ai;
-			} else if (type == ButtAiRecord) {
+			}
+			else if (type == ButtAiRecord) {
 				bool Butt_Ai;
 				serde->ReadRecordData(&Butt_Ai, sizeof(Butt_Ai));
 				GetSingleton().Butt_Ai = Butt_Ai;
-			} else if (type == HugsAiRecord) {
+			}
+			else if (type == HugsAiRecord) {
 				bool Hugs_Ai;
 				serde->ReadRecordData(&Hugs_Ai, sizeof(Hugs_Ai));
 				GetSingleton().Hugs_Ai = Hugs_Ai;
-			} else if (type == ThighAiRecord) {
+			}
+			else if (type == ThighAiRecord) {
 				bool Thigh_Ai;
 				serde->ReadRecordData(&Thigh_Ai, sizeof(Thigh_Ai));
 				GetSingleton().Thigh_Ai = Thigh_Ai;
-			} else if (type == VoreAiRecord) {
+			}
+			else if (type == VoreAiRecord) {
 				bool Vore_Ai;
 				serde->ReadRecordData(&Vore_Ai, sizeof(Vore_Ai));
 				GetSingleton().Vore_Ai = Vore_Ai;
-			} else if (type == Heart_Effects) {
+			}
+			else if (type == Heart_Effects) {
 				bool HeartEffects;
 				serde->ReadRecordData(&HeartEffects, sizeof(HeartEffects));
 				GetSingleton().HeartEffects = HeartEffects;
-			} else if (type == Balance_SGP) {
+			}
+			else if (type == Balance_SGP) {
 				float BalanceMode_SizeGain_Penalty;
 				serde->ReadRecordData(&BalanceMode_SizeGain_Penalty, sizeof(BalanceMode_SizeGain_Penalty));
 				GetSingleton().BalanceMode_SizeGain_Penalty = BalanceMode_SizeGain_Penalty;
-			} else if (type == Balance_SRB) {
+			}
+			else if (type == Balance_SRB) {
 				float BalanceMode_ShrinkRate_Base;
 				serde->ReadRecordData(&BalanceMode_ShrinkRate_Base, sizeof(BalanceMode_ShrinkRate_Base));
 				GetSingleton().BalanceMode_ShrinkRate_Base = BalanceMode_ShrinkRate_Base;
-			} else if (type == Balance_SRC) {
+			}
+			else if (type == Balance_SRC) {
 				float BalanceMode_ShrinkRate_Combat;
 				serde->ReadRecordData(&BalanceMode_ShrinkRate_Combat, sizeof(BalanceMode_ShrinkRate_Combat));
 				GetSingleton().BalanceMode_ShrinkRate_Combat = BalanceMode_ShrinkRate_Combat;
-			} else if (type == NPC_EffectImmunity) {
+			}
+			else if (type == NPC_EffectImmunity) {
 				bool NPCEffectImmunity;
 				serde->ReadRecordData(&NPCEffectImmunity, sizeof(NPCEffectImmunity));
 				GetSingleton().NPCEffectImmunity = NPCEffectImmunity;
-			} else if (type == PC_EffectImmunity) {
+			}
+			else if (type == PC_EffectImmunity) {
 				bool PCEffectImmunity;
 				serde->ReadRecordData(&PCEffectImmunity, sizeof(PCEffectImmunity));
 				GetSingleton().PCEffectImmunity = PCEffectImmunity;
-			} else if (type == EnableIconsRecord) {
+			}
+			else if (type == EnableIconsRecord) {
 				bool EnableIcons;
 				serde->ReadRecordData(&EnableIcons, sizeof(EnableIcons));
 				GetSingleton().EnableIcons = EnableIcons;
-			} else if (type == AllowWeightGainRecord) {
+			}
+			else if (type == AllowWeightGainRecord) {
 				bool allow_weight_gain;
 				serde->ReadRecordData(&allow_weight_gain, sizeof(allow_weight_gain));
 				GetSingleton().allow_weight_gain = allow_weight_gain;
-			} else if (type == IsSpeedAdjustedRecord) {
+			}
+			else if (type == IsSpeedAdjustedRecord) {
 				bool is_speed_adjusted;
 				serde->ReadRecordData(&is_speed_adjusted, sizeof(is_speed_adjusted));
 				GetSingleton().is_speed_adjusted = is_speed_adjusted;
@@ -625,26 +666,33 @@ namespace GTS {
 					float o = 1.0f;
 					GetSingleton().speed_adjustment.o = o;
 				}
-			} else if (type == ProgressionMult) {
+			}
+			else if (type == ProgressionMult) {
 				float progression_multiplier;
 				serde->ReadRecordData(&progression_multiplier, sizeof(progression_multiplier));
 				GetSingleton().progression_multiplier = progression_multiplier;
-			} else if (type == SizeDamageMult) {
+			}
+			else if (type == SizeDamageMult) {
 				float size_related_damage_mult;
 				serde->ReadRecordData(&size_related_damage_mult, sizeof(size_related_damage_mult));
 				GetSingleton().size_related_damage_mult = size_related_damage_mult;
-			} else if (type == XpMult) {
+			}
+			else if (type == XpMult) {
 				float experience_mult;
 				serde->ReadRecordData(&experience_mult, sizeof(experience_mult));
 				GetSingleton().experience_mult = experience_mult;
-			} else if (type == TremorScales) {
+			}
+			else if (type == TremorScales) {
+
+				///UNUSED REMOVE THIS VALUE
 				float tremor_scale;
 				serde->ReadRecordData(&tremor_scale, sizeof(tremor_scale));
 				GetSingleton().tremor_scale = tremor_scale;
 				float npc_tremor_scale;
 				serde->ReadRecordData(&npc_tremor_scale, sizeof(npc_tremor_scale));
 				GetSingleton().npc_tremor_scale = npc_tremor_scale;
-			} else if (type == CamCollisions) {
+			}
+			else if (type == CamCollisions) {
 				bool enable_trees;
 				serde->ReadRecordData(&enable_trees, sizeof(enable_trees));
 				GetSingleton().camera_collisions.enable_trees = enable_trees;
@@ -665,7 +713,8 @@ namespace GTS {
 				float above_scale;
 				serde->ReadRecordData(&above_scale, sizeof(above_scale));
 				GetSingleton().camera_collisions.above_scale = above_scale;
-			} else {
+			}
+			else {
 				log::warn("Unknown record type in cosave.");
 				__assume(false);
 			}
@@ -680,9 +729,14 @@ namespace GTS {
 			return;
 		}
 
+
+		auto& Persi = Persistent::GetSingleton();
 		auto count = GetSingleton()._actor_data.size();
+
 		serde->WriteRecordData(&count, sizeof(count));
+
 		for (auto const& [form_id_t, data] : GetSingleton()._actor_data) {
+
 			FormID form_id = form_id_t;
 			float native_scale = data.native_scale;
 			float visual_scale = data.visual_scale;
@@ -743,13 +797,7 @@ namespace GTS {
 			serde->WriteRecordData(&stolen_stamin, sizeof(stolen_stamin));
 		}
 
-		if (!serde->OpenRecord(ScaleMethodRecord, 0)) {
-			log::error("Unable to open scale method record to write cosave data.");
-			return;
-		}
 
-		int size_method = GetSingleton().size_method;
-		serde->WriteRecordData(&size_method, sizeof(size_method));
 
 		if (!serde->OpenRecord(HighHeelCorrectionRecord, 0)) {
 			log::error("Unable to open high heel correction record to write cosave data.");
@@ -987,6 +1035,7 @@ namespace GTS {
 
 		float BalanceMode_SizeGain_Penalty = GetSingleton().BalanceMode_SizeGain_Penalty;
 		serde->WriteRecordData(&BalanceMode_SizeGain_Penalty, sizeof(BalanceMode_SizeGain_Penalty));
+		
 
 		if (!serde->OpenRecord(Balance_SRB, 1)) {
 			log::error("Unable to open Balance Mode: Shrink Rate Base record to write cosave data");
@@ -1143,6 +1192,7 @@ namespace GTS {
 			return;
 		}
 
+
 		bool enable_trees = GetSingleton().camera_collisions.enable_trees;
 		serde->WriteRecordData(&enable_trees, sizeof(enable_trees));
 		bool enable_debris = GetSingleton().camera_collisions.enable_debris;
@@ -1155,12 +1205,18 @@ namespace GTS {
 		serde->WriteRecordData(&enable_static, sizeof(enable_static));
 		float above_scale = GetSingleton().camera_collisions.above_scale;
 		serde->WriteRecordData(&above_scale, sizeof(above_scale));
+
+
+		Persi.TrackedCameraState.Save(serde);
+
+
 	}
 
 	ActorData::ActorData() {
 		// Uninit data
 		// Make sure it is set elsewhere
 	}
+
 	ActorData::ActorData(Actor* actor) {
 		// DEFAULT VALUES FOR NEW ACTORS
 		auto scale = 1.0f;//get_scale(actor);
@@ -1196,6 +1252,7 @@ namespace GTS {
 		}
 		return this->GetActorData(*actor);
 	}
+
 	ActorData* Persistent::GetActorData(Actor& actor) {
 		std::unique_lock lock(this->_lock);
 		auto key = actor.formID;
@@ -1223,6 +1280,7 @@ namespace GTS {
 		}
 		return this->GetData(*refr);
 	}
+
 	ActorData* Persistent::GetData(TESObjectREFR& refr) {
 		auto key = refr.formID;
 		ActorData* result = nullptr;

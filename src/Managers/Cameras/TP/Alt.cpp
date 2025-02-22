@@ -1,49 +1,57 @@
 #include "Managers/Cameras/TP/Alt.hpp"
 #include "Managers/Cameras/Camutil.hpp"
 #include "Managers/GtsSizeManager.hpp"
+#include "Config/Config.hpp"
 
 namespace GTS {
 
+	auto& CamSettings = Config::GetCamera().OffsetsAlt;
+
 	NiPoint3 Alt::GetOffset(const NiPoint3& cameraPos) {
-		return NiPoint3(
-			Runtime::GetFloat("cameraAlternateX"),
-			0, //Alt::ZOffset,
-			Runtime::GetFloat("cameraAlternateY")
-			);
+
+		return {
+			CamSettings.f3NormalStand[0],
+			CamSettings.f3NormalStand[1],
+			CamSettings.f3NormalStand[2],
+		};
+
 	}
 
 	NiPoint3 Alt::GetCombatOffset(const NiPoint3& cameraPos) {
-		return NiPoint3(
-			Runtime::GetFloat("combatCameraAlternateX"),
-			0, //Alt::ZOffset,
-			Runtime::GetFloat("combatCameraAlternateY")
-			);
+
+		return {
+			CamSettings.f3CombatStand[0],
+			CamSettings.f3CombatStand[1],
+			CamSettings.f3CombatStand[2],
+		};
+
 	}
 
 	NiPoint3 Alt::GetOffsetProne(const NiPoint3& cameraPos) {
-		return NiPoint3(
-			Runtime::GetFloat("proneCameraAlternateX"),
-			0, //Alt::ZOffset,
-			Runtime::GetFloat("proneCameraAlternateY")
-			);
+
+		return {
+			CamSettings.f3NormalSneak[0],
+			CamSettings.f3NormalSneak[1],
+			CamSettings.f3NormalSneak[2],
+		};
+
 	}
 
 	NiPoint3 Alt::GetCombatOffsetProne(const NiPoint3& cameraPos) {
-		return NiPoint3(
-			Runtime::GetFloat("proneCombatCameraAlternateX"),
-			0, //Alt::ZOffset,
-			Runtime::GetFloat("proneCombatCameraAlternateY")
-			);
+
+		return {
+			CamSettings.f3CombatSneak[0],
+			CamSettings.f3CombatSneak[1],
+			CamSettings.f3CombatSneak[2],
+		};
+
 	}
 
 	BoneTarget Alt::GetBoneTarget() {
 		auto player = PlayerCharacter::GetSingleton();
 		auto& sizemanager = SizeManager::GetSingleton();
 
-		int MCM_Mode = Runtime::GetInt("AltCameraTarget");
-		CameraTracking_MCM Camera_MCM = static_cast<CameraTracking_MCM>(MCM_Mode);
 		CameraTracking Camera_Anim = sizemanager.GetTrackedBone(player);
-
-		return GetBoneTargets(Camera_Anim, Camera_MCM);
+		return GetBoneTargets(Camera_Anim, StringToEnum<CameraTrackingSettings>(CamSettings.sCenterOnBone));
 	}
 }

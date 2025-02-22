@@ -144,6 +144,7 @@ namespace {
 		auto* serde = GetSerializationInterface();
 
 		serde->SetUniqueID(_byteswap_ulong('GTSP'));
+
 		serde->SetSaveCallback(Persistent::OnGameSaved);
 		serde->SetRevertCallback(Persistent::OnRevert);
 		serde->SetLoadCallback(Persistent::OnGameLoaded);

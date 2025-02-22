@@ -918,7 +918,8 @@ namespace GTS {
 		if (IsProning(player)) {
 			return 0.18f;
 		} else if (IsCrawling(player)) {
-			value = std::clamp(Runtime::GetFloat("ProneOffsetFP"), 0.10f, 1.0f);
+
+			value = Config::GetCamera().fFPCrawlHeightMult;
 		}
 		
 		return value;
