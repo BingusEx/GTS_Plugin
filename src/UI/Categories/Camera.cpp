@@ -105,6 +105,10 @@ namespace GTS {
 	        const char* T3 = "Enable camera collision with terrain.";
 	        const char* T4 = "Enable camera collision with statics (basically any solid, non-movable object).";
 	        const char* T5 = "Change the scale at which the above collision settings should apply.";
+			const char* T6 = "Dynamically change the camera near distance value to fix clipping issues when small.\n"
+	    				     "Starts applyng when smaller than 1.0x scale.\n"
+	    					 "Disables itself when past 1.0x scale\n\n"
+	    					 "Note: Can conflict with other mods that also change this value";
 
 	        if (ImGui::CollapsingHeader("Camera Collision", ImGuiTreeNodeFlags_None)) {
 	            ImUtil::CheckBox("Collide With Actors", &Settings.bCamCollideActor, T0);
@@ -116,6 +120,9 @@ namespace GTS {
 	            ImUtil::CheckBox("Collide With Statics", &Settings.bCamCollideStatics, T4);
 
 	            ImUtil::SliderF("Apply at Scale", &Settings.fModifyCamCollideAt, 1.0f, 50.0f, T5, "%.1fx");
+
+	        	ImGui::Spacing();
+				ImUtil::CheckBox("Dynamic Near Distance", &Settings.bEnableAutoFNearDist, T6);
 
 	            ImGui::Spacing();
 	        }

@@ -39,11 +39,15 @@ enum class CameraTrackingSettings : uint8_t {
     kNone,
     kSpine,
     kClavicle,
+    kBreasts,
+    kBreasts_00,
     kBreasts_01,
     kBreasts_02,
-    kBreasts_03, // 3BBB tip
+    kBreasts_03,
+    kBreasts_04,
     kNeck,
     kButt,
+	kGenitals
 };
 
 enum class CameraModeTP : uint8_t {
@@ -423,6 +427,8 @@ struct SettingsCamera {
     bool bAutomaticCamera = true;
 
     // Distance and zoom controls
+
+    bool bEnableAutoFNearDist = true;
 
     bool bEnableSkyrimCameraAdjustments = false;
 

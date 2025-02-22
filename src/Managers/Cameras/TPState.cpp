@@ -20,6 +20,7 @@ namespace {
 
 namespace GTS {
 
+
 	NiPoint3 ThirdPersonCameraState::GetPlayerLocalOffset(const NiPoint3& cameraPos) {
 		NiPoint3 pos = NiPoint3();
 		auto player = GetCameraActor();

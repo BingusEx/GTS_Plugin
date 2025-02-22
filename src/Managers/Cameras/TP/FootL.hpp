@@ -4,7 +4,11 @@
 
 namespace GTS {
 	class FootL : public Foot {
-		protected:
+		public:
+			BoneTarget GetBoneTarget() override;
 			virtual NiPoint3 GetFootPos() override;
+
+			private:
+			const BoneTarget FootTarget{ .boneNames = {"NPC L Calf [LClf]"} };
 	};
 }

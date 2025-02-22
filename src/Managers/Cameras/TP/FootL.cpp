@@ -6,6 +6,11 @@ namespace {
 }
 
 namespace GTS {
+
+	BoneTarget FootL::GetBoneTarget() {
+		return FootTarget;
+	}
+
 	NiPoint3 FootL::GetFootPos() {
 		constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
 		auto player = GetCameraActor();

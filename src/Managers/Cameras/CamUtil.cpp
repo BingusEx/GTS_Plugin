@@ -1,6 +1,8 @@
 #include "Managers/Cameras/CamUtil.hpp"
+#include "TPState.hpp"
+#include "Config/Config.hpp"
 #include "Hooks/Skyrim/Settings.hpp"
-
+#include "Managers/Camera.hpp"
 #include "Rays/raycast.hpp"
 #include "UI/DebugAPI.hpp"
 
@@ -126,9 +128,11 @@ namespace {
 			return BoneTarget();
 		}
 		switch (a_CamSetting) {
+
 			case CameraTrackingSettings::kNone: {
 				return BoneTarget();
 			}
+
 			case CameraTrackingSettings::kSpine: {
 				return BoneTarget {
 					.boneNames = {"NPC Spine2 [Spn2]","NPC Neck [Neck]",},
@@ -141,22 +145,43 @@ namespace {
 					.zoomScale = ZoomIn_Cam_Clavicle,
 				};
 			}
+			case CameraTrackingSettings::kBreasts:
+			{
+				return BoneTarget{
+					.boneNames = {"NPC L Breast01","NPC R Breast01",},
+					.zoomScale = ZoomIn_Cam_Breasts,
+				};
+			}
+			case CameraTrackingSettings::kBreasts_00:
+			{
+				return BoneTarget{
+					.boneNames = {"L Breast00","R Breast00",},
+					.zoomScale = ZoomIn_Cam_3BABreasts_00,
+				};
+			}
 			case CameraTrackingSettings::kBreasts_01: {
 				return BoneTarget {
-					.boneNames = {"NPC L Breast","NPC R Breast",},
-					.zoomScale = ZoomIn_Cam_Breasts_01,
+					.boneNames = {"L Breast01","R Breast01",},
+					.zoomScale = ZoomIn_Cam_3BABreasts_01,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_02: {
 				return BoneTarget {
 					.boneNames = {"L Breast02","R Breast02",},
-					.zoomScale = ZoomIn_Cam_Breasts_02,
+					.zoomScale = ZoomIn_Cam_3BABreasts_02,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_03: {
 				return BoneTarget {
 					.boneNames = {"L Breast03","R Breast03",},
-					.zoomScale = ZoomIn_Cam_Breasts_03,
+					.zoomScale = ZoomIn_Cam_3BABreasts_03,
+				};
+			}
+			case CameraTrackingSettings::kBreasts_04:
+			{
+				return BoneTarget{
+					.boneNames = {"L Breast04","R Breast04",},
+					.zoomScale = ZoomIn_Cam_3BABreasts_04,
 				};
 			}
 			case CameraTrackingSettings::kNeck: {
@@ -171,63 +196,49 @@ namespace {
 					.zoomScale = ZoomIn_Cam_Butt,
 				};
 			}
+			case CameraTrackingSettings::kGenitals:
+			{
+				return BoneTarget{
+					.boneNames = {"Genitals",},
+					.zoomScale = ZoomIn_Cam_Genitals,
+				};
+			}
 		}
 		return BoneTarget();
 	}
 
-	//NiPoint3 CameraStateToCoords(Actor* giant) {
-	//	int cameraMode = Runtime::GetInt("CameraMode");
-	//	NiPoint3 result = NiPoint3();
-	//	switch (cameraMode) {
-	//		case 3: // Between Foot
-	//			for (auto Foot: {"NPC L Foot [Lft ]", "NPC R Foot [Rft ]"}) {
-	//				auto node = find_node(giant, Foot);
-	//				if (Foot) {
-	//					result += node->world.translate / 2;
-	//				}
-	//			}
-	//		break; 
-	//		case 4: { // Left Foot
-	//			auto node = find_node(giant, "NPC L Foot [Lft ]");
-	//			if (node) {
-	//				result = node->world.translate;
-	//			}
-	//		}
-	//		break;
-	//		case 5: { // Right Foot
-	//			auto node = find_node(giant, "NPC R Foot [Rft ]");
-	//			if (node) {
-	//				result = node->world.translate;
-	//			}
-	//		break;
-	//		}
-	//	}
-	//	return result;
-	//}
 
-	//void UpdateNiFrustum(Actor* cameraActor, float hullMult) {
-	//	//TODO Wait For IC 2.0
-	//								
-	//	if (!IsFirstPerson() && !IsFakeFirstPerson()) {
-	//		if (get_visual_scale(cameraActor) < get_natural_scale(cameraActor)) {
-	//			auto niCamera = GetNiCamera();
-	//			if (niCamera) {
-	//				//CamHull Should be the same as FNearDistance
-	//				//TODO Find the Offset For that value and assign CamHull to it.
-	//				//TODO Also Connect this to the camera rotation matrix Z coord. it should be somethin like: camhullSize * (LookUpDownAngle Remaped to something like 0.8-1.0 * min(visual scale, 1.0)).
-	//				//TODO Also Move this to its own func.
-	//				niCamera->GetRuntimeData2().viewFrustum.fNear = camhullSize * hullMult;
-	//			}
-	//		}
-	//	}
-	//}
+	//https://www.desmos.com/calculator/5adrwyld6l
+	inline float CalcLOGFnear(float scale, const float a_ref = 15.0f) {
+		// Clamp scale between 0.05 and 1.0
+		scale = std::max(0.05f, std::min(scale, 1.0f));
+
+		// Normalize scale to [0, 1]
+		float t = (scale - 0.05f) / 0.95f;
+
+		// Exponential interpolation from 1.0 to 15.0
+		float result = std::pow(a_ref, t);
+		return result;
+	}
+
+	inline void CalcFNearDist(const float actorscale) {
+
+		if (!Config::GetCamera().bEnableAutoFNearDist || actorscale > 1.0f) return;
+
+		if (auto niCamera = GetNiCamera()) {
+
+			auto fnear = CalcLOGFnear(actorscale);
+
+			niCamera->GetRuntimeData2().viewFrustum.fNear = fnear;
+		}
+	}
 }
 
 namespace GTS {
 
 	BoneTarget GetBoneTargets(CameraTracking Camera_Anim, CameraTrackingSettings Camera_MCM) {
 		if (HasFirstPersonBody()) {
-			return BoneTarget();
+			return {};
 		}
 		if (Camera_Anim != CameraTracking::None) { // must take priority
 			return GetBoneTarget_Anim(Camera_Anim);
@@ -304,14 +315,6 @@ namespace GTS {
 			// Cache
 			sceneManager->cachedCameraPos = camLoc;
 
-			/*#ifdef ENABLED_SHADOW
-			   // Shadow Map
-			   auto shadowNode = sceneManager->shadowSceneNode;
-			   if (shadowNode) {
-			        shadowNode->GetRuntimeData().cameraPos = camLoc;
-			   }
-			 #endif*/
-
 			// Camera
 			auto niCamera = sceneManager->camera;
 			if (niCamera) {
@@ -324,13 +327,6 @@ namespace GTS {
 	void UpdateRenderManager(NiPoint3 camLoc) {
 		auto renderManager = UIRenderManager::GetSingleton();
 		if (renderManager) {
-			/*#ifdef ENABLED_SHADOW
-			   // Shadow Map
-			   auto shadowNode = renderManager->shadowSceneNode;
-			   if (shadowNode) {
-			        shadowNode->GetRuntimeData().cameraPos = camLoc;
-			   }
-			 #endif*/
 
 			// Camera
 			auto niCamera = renderManager->camera;
@@ -348,13 +344,6 @@ namespace GTS {
 			UpdateWorld2ScreetMat(niCamera);
 			update_node(niCamera);
 		}
-
-		/*#ifdef ENABLED_SHADOW
-		   auto shadowNode = GetShadowMap();
-		   if (shadowNode) {
-		        shadowNode->GetRuntimeData().cameraPos = camLoc;
-		   }
-		 #endif*/
 	}
 
 	static NiTransform GetCameraWorldTransform() {
@@ -365,7 +354,7 @@ namespace GTS {
 				return cameraRoot->world;
 			}
 		}
-		return NiTransform();
+		return {};
 	}
 
 	void UpdatePlayerCamera(NiPoint3 camLoc) {
@@ -467,7 +456,7 @@ namespace GTS {
 				}
 			}
 		}
-		return NiPoint3();
+		return {};
 	}
 
 	NiMatrix3 QuatToMatrix(const NiQuaternion& q){
@@ -496,11 +485,11 @@ namespace GTS {
 		float m21 = 2.0f * (tmp1 + tmp2)*invs;
 		float m12 = 2.0f * (tmp1 - tmp2)*invs;
 
-		return NiMatrix3(
+		return NiMatrix3{
 			NiPoint3(m00, m01, m02),
 			NiPoint3(m10, m11, m12),
 			NiPoint3(m20, m21, m22)
-			);
+		};
 	}
 
 	NiPoint3 FirstPersonPoint() {
@@ -538,6 +527,66 @@ namespace GTS {
 		float zoomOffset = ZoomFactor() * (*Hooks::Camera::fVanityModeMaxDist) * zoomScale;
 		NiPoint3 zoomOffsetVec = NiPoint3(0.0f, zoomOffset + (*Hooks::Camera::fVanityModeMinDist), 0.0f);
 		return cameraRotMat * zoomOffsetVec + cameraTrans;
+	}
+
+	static NiPoint3 GetAggregateBoneTarget(RE::Actor* a_actor) {
+
+		if (CameraState* CurrentState = CameraManager::GetSingleton().GetCameraState()) {
+			if (auto TPState = dynamic_cast<ThirdPersonCameraState*>(CurrentState)){
+
+				if (TPState->GetBoneTarget().boneNames.empty()) {
+
+					if (auto Node = find_node_any(a_actor, "NPC Neck [Neck]")) {
+						return Node->world.translate;
+					}
+
+					return {};
+				}
+
+				NiAVObject* RootModel = a_actor->Get3D(false);
+				NiTransform ActorTranslation = RootModel->world;
+				NiTransform transform = ActorTranslation.Invert();
+				ActorTranslation.scale = RootModel->parent ? RootModel->parent->world.scale : 1.0f;  // Only do translation/rotation
+
+				BoneTarget boneTarget = TPState->GetBoneTarget();
+
+				std::vector<NiAVObject*> bones = {};
+				for (auto bone_name : boneTarget.boneNames) {
+					NiAVObject* node = find_node(a_actor, bone_name);
+					if (node) {
+						bones.push_back(node);
+					}
+					else {
+						log::error("Bone not found for camera target: {}", bone_name);
+					}
+				}
+
+				NiPoint3 bonePos = NiPoint3();
+				auto bone_count = bones.size();
+				for (NiAVObject* bone : bones) {
+					NiPoint3 worldPos = bone->world.translate;
+					NiPoint3 localPos = transform * worldPos * get_visual_scale(a_actor);;
+					bonePos += localPos * (1.0f / bone_count);
+				}
+				NiPoint3 worldBonePos = ActorTranslation * bonePos;
+
+				if (IsDebugEnabled()) {
+					DebugAPI::DrawSphere(glm::vec3(worldBonePos.x, worldBonePos.y, worldBonePos.z), 1.0f, 10, { 0.5f, 1.0f, 0.0f, 1.0f }, 10.0f);
+				}
+
+				return worldBonePos;
+			}
+		}
+		return {};
+	}
+
+	float GetFnearDist() {
+		
+		if (auto niCamera = GetNiCamera()) {
+			return niCamera->GetRuntimeData2().viewFrustum.fNear;
+		}
+
+		return 15.0f;
 	}
 
 	void UpdateCamera(float scale, NiPoint3 cameraLocalOffset, NiPoint3 playerLocalOffset) {
@@ -580,27 +629,14 @@ namespace GTS {
 							NiTransform transform = parent->world.Invert();
 							auto localShifted = transform * worldShifted;
 
-							//Fix Camera Collision
-							//Anchor to Pelvis bone. Works Fine.
-							//This method relies on the camera having a target as we cast from the target to the camera
-							//upside this only needs 1 raycast, downside you need to have a target
-
-							if (auto node = find_node_any(cameraActor, "NPC Pelvis [Pelv]")) {
-								auto rayStart = node->world.translate;
-
-								auto hullMult = min(get_visual_scale(cameraActor), 1.0f);
-								//UpdateNiFrustum(cameraActor, hullMult);
-
-								//offset Height by camera hull size. Fixes cases where the bone is closer to the ground than the hull size.
-								rayStart.z += max(camhullSize * hullMult, 3.0f);
-
-								if (IsDebugEnabled()) {
-									DebugAPI::DrawSphere(glm::vec3(rayStart.x, rayStart.y, rayStart.z), 1.0f, 10, { 0.5f, 1.0f, 0.0f, 1.0f }, 10.0f);
-								}
-
-								//Cast a ray from the bone to the new camera pos in worldspace as the camera. If the ray hits move the camera to the pos of the hit
-								localShifted = ComputeRaycast(rayStart, localShifted, hullMult);
+							//Do camera colision raycasts
+							auto rayStart = GetAggregateBoneTarget(cameraActor);
+							if (rayStart != NiPoint3()) {
+								localShifted = ComputeRaycast(rayStart, localShifted);
 							}
+
+							//Change Fnear distance depending on scale.
+							CalcFNearDist(scale);
 
 							UpdatePlayerCamera(localShifted);
 							UpdateNiCamera(localShifted);

@@ -8,6 +8,10 @@ namespace {
 
 namespace GTS {
 
+
+	constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
+	constexpr std::string_view rightFootLookup = "NPC R Foot [Rft ]";
+
 	void Foot::EnterState() {
 		auto player = GetCameraActor();
 		if (player) {
@@ -18,6 +22,10 @@ namespace GTS {
 				this->smoothScale.velocity = 0.0f;
 			}
 		}
+	}
+
+	BoneTarget Foot::GetBoneTarget() {
+		return FootTarget;
 	}
 
 	NiPoint3 Foot::GetPlayerLocalOffset(const NiPoint3& cameraPos) {
@@ -47,8 +55,6 @@ namespace GTS {
 	}
 
 	NiPoint3 Foot::GetFootPos() {
-		constexpr std::string_view leftFootLookup = "NPC L Foot [Lft ]";
-		constexpr std::string_view rightFootLookup = "NPC R Foot [Rft ]";
 		auto player = GetCameraActor();
 		if (player) {
 			float playerScale = get_visual_scale(player);

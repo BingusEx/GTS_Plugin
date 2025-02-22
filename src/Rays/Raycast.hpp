@@ -47,7 +47,7 @@ namespace GTS {
 	constexpr float camhullSize = 15.0f;
 
 	//Camera
-	NiPoint3 ComputeRaycast(const NiPoint3& rayStart, const NiPoint3& rayEnd, const float hullMult);
+	NiPoint3 ComputeRaycast(const NiPoint3& rayStart, const NiPoint3& rayEnd, const float hullMult = -1.0f);
 	RayResult CastCamRay(glm::vec4 start, glm::vec4 end, float traceHullSize) noexcept;
 
 	NiPoint3 CastRay(TESObjectREFR* ref, const NiPoint3& origin, const NiPoint3& direction, const float& length, bool& success);

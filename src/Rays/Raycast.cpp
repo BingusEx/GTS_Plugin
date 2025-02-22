@@ -2,6 +2,7 @@
 #include "Rays/AllCollector.hpp"
 
 #include "UI/DebugAPI.hpp"
+#include "Managers/Cameras/CamUtil.hpp"
 
 using namespace GTS;
 
@@ -82,19 +83,47 @@ namespace GTS {
 
 	// Performs a ray cast and returns a new position based on the result
 	NiPoint3 ComputeRaycast(const NiPoint3& rayStart, const NiPoint3& rayEnd, const float hullMult) {
-		const auto rayStart4 = glm::vec4(rayStart.x, rayStart.y, rayStart.z, 0.0f);
-		const auto rayEnd4 = glm::vec4(rayEnd.x, rayEnd.y, rayEnd.z, 0.0f);
-		const auto result = CastCamRay(rayStart4, rayEnd4, camhullSize * hullMult);
+		// Determine hull size.
+		const float Hull = (hullMult < 0.0f) ? GetFnearDist() : camhullSize * hullMult;
+		NiPoint3 currentStart = rayStart;
 
+		//Recusrive version clobbers the stack sadly so for perf and CTD reasons do it via itterations
+		constexpr int maxIterations = 4;
+		int iterations = 0;
 
-		if (result.hit) {
+		while (iterations < maxIterations) {
+			// Convert current start to 4D vectors for the raycast.
+			const auto rayStart4 = glm::vec4(currentStart.x, currentStart.y, currentStart.z, 0.0f);
+			const auto rayEnd4 = glm::vec4(rayEnd.x, rayEnd.y, rayEnd.z, 0.0f);
+
+			const auto result = CastCamRay(rayStart4, rayEnd4, Hull);
+
+			// If no hit, return rayEnd.
+			if (!result.hit)
+				return rayEnd;
+
+			// Get hit position and normal.
 			NiPoint3 ResHit = { result.hitPos.x, result.hitPos.y, result.hitPos.z };
 			NiPoint3 ResNorm = { result.rayNormal.x, result.rayNormal.y, result.rayNormal.z };
-			return ResHit + (ResNorm * glm::min(result.rayLength, camhullSize * hullMult));
+
+			// Compute a new result point along the normal.
+			NiPoint3 Res = ResHit + (ResNorm * glm::min(result.rayLength, Hull));
+
+			// Check the distance from the original start.
+			float distance = Res.GetDistance(rayStart);
+			if (distance > Hull + 1.0f)
+				return Res;  // The hit is far enough.
+
+			// Otherwise, compute the extra offset needed.
+			float offset = (Hull + 1.0f) - distance;
+			// Nudge the start point further along the normal.
+			currentStart = Res + (ResNorm * offset);
+
+			++iterations;
 		}
-		else {
-			return rayEnd;
-		}
+
+		// If we exceed max iterations, return the last computed result.
+		return currentStart;
 	}
 
 	NiPoint3 CastRay(TESObjectREFR* ref, const NiPoint3& origin, const NiPoint3& direction, const float& length, bool& success) {
@@ -112,7 +141,7 @@ namespace GTS {
 		}
 
 		success = false;
-		return NiPoint3();
+		return {};
 	}
 
 	NiPoint3 CastRayStatics(TESObjectREFR* ref, const NiPoint3& origin, const NiPoint3& direction, const float& length, bool& success) {

@@ -16,16 +16,10 @@ namespace GTS {
 
 	void UpdateThirdPerson();
 
-	//void ResetIniSettings();
-
 	NiCamera* GetNiCamera();
 	void UpdateWorld2ScreetMat(NiCamera* niCamera);
 
 	Actor* GetCameraActor();
-
-	/*#ifdef ENABLED_SHADOW
-	   ShadowSceneNode* GetShadowMap();
-	 #endif*/
 
 	NiMatrix3 GetCameraRotation();
 
@@ -46,6 +40,8 @@ namespace GTS {
 	float ZoomFactor();
 
 	NiPoint3 ComputeLookAt(float zoomScale = 0.95f);
+
+	float GetFnearDist();
 
 	// Get's camera position relative to the player
 	NiPoint3 GetCameraPosLocal();
