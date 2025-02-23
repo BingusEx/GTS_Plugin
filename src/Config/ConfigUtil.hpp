@@ -1,4 +1,5 @@
 #pragma once
+#include "Utils/MessageboxUtil.hpp"
 
 /*
     TOML11 Reflection Macro & Templates. Based on https://github.com/ToruNiina/toml11/blob/main/examples/reflect/reflect.hpp
@@ -65,6 +66,15 @@ namespace GTS {
                 return true;
             }
 
+            // Create parent directories if they don't exist
+            if (std::filesystem::create_directories(a_file.parent_path())) {
+                logger::critical("Plugin folder was mising and was created, MOD BROKEN.");
+                ReportAndExit("The GTSPlugin folder was missing and had to be created.\n"
+                "This indicates that the mod was not installed correctly.\n"
+				"The mod will not work if the Font Folder and Runtime.toml are missing.\n"
+				"The game will now close");
+            }
+
             // Try to create the file
             std::ofstream file(a_file);
             file.exceptions(std::ofstream::failbit);
@@ -74,8 +84,7 @@ namespace GTS {
                 return true;
             }
 
-        	return false;
-
+            return false;
         }
         catch (const std::filesystem::filesystem_error& e) {
             logger::error("CheckFile() Filesystem error: {}", e.what());

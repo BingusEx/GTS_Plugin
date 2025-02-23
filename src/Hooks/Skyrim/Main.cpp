@@ -1,5 +1,4 @@
 #include "Hooks/Skyrim/Main.hpp"
-#include "Config/Config.hpp"
 #include "Data/Time.hpp"
 #include "Data/Plugin.hpp"
 
@@ -23,7 +22,7 @@ namespace Hooks {
 		REL::Relocation<uintptr_t> hook{REL::RelocationID(35565, 36564)}; 
 
 		// ^ 5B2FF0, 5DACE0, main update
-		log::info("Gts applying Main Update Hook at {:X}", hook.address());
+		log::info("Applying Main Update Hook at {:X}", hook.address());
 		_Update = trampoline.write_call<5>(hook.address() + RELOCATION_OFFSET(0x748, 0xC26), Update);
 
 	}
@@ -52,7 +51,7 @@ namespace Hooks {
 		}
 		Plugin::SetOnMainThread(false);
 
-		if (Config::GetAdvanced().bProfile) {
+		if (Profiler::ProfilerEnabled) {
 			static Timer timer = Timer(5.0);
 			if (timer.ShouldRun()) {
 				Profilers::Report();

@@ -34,7 +34,6 @@ namespace {
 
 	}
 
-	//Todo Find a way to not have to update this every frame.
 	void UpdateCameraINIs() {
 
 		auto& CamSettings = Config::GetCamera();
@@ -61,7 +60,7 @@ namespace {
 	}
 
 	void Foot_PerformIdle_Headtracking_Effects_Others(Actor* actor) {
-		if (actor && Runtime::GetBool("PreciseDamageOthers")) {
+		if (actor && Config::GetGeneral().bAllActorSizeEffects) {
 			auto& CollisionDamage = CollisionDamage::GetSingleton();
 			if (actor->formID != 0x14 && !IsTeammate(actor)) {
 				if (GetBusyFoot(actor) != BusyFoot::RightFoot) {

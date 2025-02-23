@@ -10,12 +10,25 @@ namespace GTS {
 
         ImUtil_Unique{
 
-            const char* T0 = "Enable the profiler to diagnose performance issues.";
+            const char* T0 = "Show or hide this page.\n"
+							 "After Disabling you have to re-add the option to the settings toml again if you want to re-enable it.";
+
+            if (ImGui::CollapsingHeader("Advanced",ImUtil::HeaderFlags)) {
+                ImUtil::CheckBox("Enable/Disable This Page", &Config::GetHidden().IKnowWhatImDoing, T0);
+            }
+        }
+
+        ImUtil_Unique{
+
+            const char* T0 = "Enable the profiler to diagnose performance issues.\n"
+        					 "Note: Needs a game restart to enable after setting it.";
             const char* T1 = "Enable the debug overlay.";
 
             const char* T2 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
 
             const char* T3 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
+
+
 
             if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
 
@@ -34,16 +47,6 @@ namespace GTS {
 
 			}
 
-        }
-
-        ImUtil_Unique {
-
-                const char* T0 = "Apply computationally expensive damage calculations to all actors.";
-
-                if (ImGui::CollapsingHeader("Mod Features",ImUtil::HeaderFlags)) {
-                    ImUtil::CheckBox("Apply Size Effects to all Actors",&Settings.bAllActorSizeEffects, T0);
-                    ImGui::Spacing();
-                }
         }
 
         ImUtil_Unique {

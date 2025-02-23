@@ -1,6 +1,12 @@
 #pragma once
 
 namespace GTS {
-	void SkipQuest();
-	bool IsQuestCompleted();
+
+	void SkipProgressionQuest();
+
+	void GiveAllPerksToPlayer();
+
+	bool ProgressionQuestCompleted();
+
+	void GiveAllSpellsToPlayer();
 }

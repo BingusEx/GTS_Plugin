@@ -42,9 +42,9 @@ namespace GTS {
 					if (auto MainWindow = ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
 						if (key == VK_ESCAPE && MainWindow->Show && !MainWindow->Busy) {
 							UIManager::CloseSettings();
+							continue;
 						}
 					}
-
 				}
 
 				io.AddKeyEvent(VirtualKeyToImGuiKey(key), event.IsPressed());
@@ -58,9 +58,18 @@ namespace GTS {
 				else if (key == VK_LMENU || key == VK_RMENU) {
 					io.AddKeyEvent(ImGuiMod_Alt, event.IsPressed());
 				}
+
+				//Enable Advanced Settings
+				if (io.KeyAlt && io.KeyShift && io.KeyCtrl && key == VK_F12) {
+
+					if (auto MainWindow = ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
+						if (MainWindow->Show && !MainWindow->Busy) {
+							Config::GetHidden().IKnowWhatImDoing = true;
+						}
+					}
+				}
 			}
 		}
-
 		KeyEventQueue.clear();
 	}
 

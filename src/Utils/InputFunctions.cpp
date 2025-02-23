@@ -405,9 +405,9 @@ namespace {
 
 		const bool Mammoth = Config::GetUI().sDisplayUnits == "kMammoth";
 		float HH = HighHeelManager::GetBaseHHOffset(a_Actor)[2] / 100;
-		const std::string HHOffset = (HH > 0.0f && !Mammoth) ? fmt::format(" + {} From HH", GetFormatedHeight(HH)) : "";
+		const std::string HHOffset = (HighHeelManager::IsWearingHH(a_Actor) && !Mammoth) ? fmt::format(" + {}", GetFormatedHeight(HH)) : "";
 
-		Notify("{}: ({:2f}) {}{}",
+		Notify("{}: ({:.2f}x) {}{}",
 			a_Actor->GetName(),
 			get_visual_scale(a_Actor),
 			GetFormatedHeight(a_Actor),
@@ -422,7 +422,19 @@ namespace {
 		for (auto TeamMate : FindTeammates()) {
 			PrintQuickStats(TeamMate);
 		}
+	}
 
+	void OpenSkillTree(const ManagedInputEvent& data) {
+
+		auto UI = UI::GetSingleton();
+		if (!UI) return;
+
+		if (!Plugin::AnyMenuOpen() && !UI->IsMenuOpen(DialogueMenu::MENU_NAME) && UI->IsMenuOpen(Console::MENU_NAME)) {
+			Notify("Close all menu's first before opening the skill tree");
+			return;
+		}
+
+		//TODO Call Papyrus Function here
 	}
 
 }
@@ -455,5 +467,6 @@ namespace GTS {
 		InputManager::RegisterInputEvent("TogglePlayerCrawl", ToggleCrawlImpl_Player);
 		InputManager::RegisterInputEvent("ToggleFollowerCrawl", ToggleCrawlImpl_Follower);
 		InputManager::RegisterInputEvent("ShowQuickStats", ShowQuickStats);
+		InputManager::RegisterInputEvent("OpenSkillTree", OpenSkillTree);
 	}
 }

@@ -65,7 +65,7 @@ namespace GTS {
 
 	void Profilers::Start(std::string_view name) {
 
-		if (Config::GetAdvanced().bProfile) {
+		if (Profiler::ProfilerEnabled) {
 			auto& me = Profilers::GetSingleton();
 			auto key = std::string(name);
 			me.profilers.try_emplace(key, name);
@@ -77,7 +77,7 @@ namespace GTS {
 	}
 
 	void Profilers::Stop(std::string_view name) {
-		if (Config::GetAdvanced().bProfile) {
+		if (Profiler::ProfilerEnabled) {
 			auto& me = Profilers::GetSingleton();
 			auto key = std::string(name);
 			me.profilers.try_emplace(key, name);
@@ -89,7 +89,7 @@ namespace GTS {
 	}
 
 	bool Profilers::AnyRunning() {
-		for (auto& [key, profiler]: this->profilers) {
+		for (auto& profiler : this->profilers | views::values) {
 			if (profiler.IsRunning()) {
 				return true;
 			}
@@ -105,11 +105,11 @@ namespace GTS {
 		}
 
 		std::string report = "Reporting Profilers:";
-		report += std::format("\n|{:20}|", "Name");
-		report += std::format("{:15s}|",                        "Seconds");
-		report += std::format("{:15s}|",                        "% OurCode");
-		report += std::format("{:15s}|",                        "s per frame");
-		report += std::format("{:15s}|",                        "% of frame");
+		report += fmt::format("\n|{:20}|", "Name");
+		report += fmt::format("{:15s}|",                        "Seconds");
+		report += fmt::format("{:15s}|",                        "% OurCode");
+		report += fmt::format("{:15s}|",                        "s per frame");
+		report += fmt::format("{:15s}|",                        "% of frame");
 		report += "\n------------------------------------------------------------------------------------------------";
 
 		static std::uint64_t last_report_frame = 0;

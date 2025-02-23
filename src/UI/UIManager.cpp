@@ -76,7 +76,12 @@ namespace {
 namespace GTS {
 
     void UIManager::CloseSettings() {
-        if (auto Window = GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings")) {
+        if (auto Window = dynamic_cast<WindowSettings*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+
+            if (Config::GetUI().bEnableAutoSaveOnClose) {
+                Window->AsyncSave();
+            }
+
             //Show Settings Window
             Window->Show = false;
 
@@ -87,6 +92,9 @@ namespace GTS {
             //RE::Main::GetSingleton()->freezeTime = false;
             RE::UIBlurManager::GetSingleton()->DecrementBlurCount();
             Hooks::Time::SGTM(1.0f);
+
+
+
         }
     }
 

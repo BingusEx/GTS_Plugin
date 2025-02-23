@@ -17,6 +17,8 @@ namespace GTS {
 
 			bool running = false;
 
+
+
 		public:
 			Profiler(std::string_view name);
 
@@ -33,6 +35,8 @@ namespace GTS {
 			double RunningTime();
 
 			std::string GetName();
+
+			static inline bool ProfilerEnabled = false;
 	};
 
 	class ProfilerHandle {

@@ -571,7 +571,7 @@ void DebugOverlayMenu::Init() {
 	}
 	auto scaleformManager = RE::BSScaleformManager::GetSingleton();
 	if (!scaleformManager) {
-		log::error("Gts: failed to initialize DebugOverlayMenu - ScaleformManager not found");
+		log::error("Failed to initialize DebugOverlayMenu - ScaleformManager not found");
 		return;
 	}
 
@@ -736,7 +736,7 @@ void DebugAPI::CacheMenuData()
 	ScreenResY = abs(rect.top - rect.bottom);
 
 	CachedMenuData = true;
-	log::info("Gts: DebugAPI::CacheMenuData");
+	log::info("DebugAPI::CacheMenuData");
 
 }
 

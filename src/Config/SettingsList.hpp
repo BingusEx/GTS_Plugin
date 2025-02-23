@@ -278,9 +278,10 @@ struct WindowConfSettings {
     std::array<float, 2> f2Offset = {0.0f, 0.0f};
     std::string sAnchor = "kCenter";
     float fWindowSize = 80.f;
+    float fAlpha = 1.0f;
+    float fBGAlphaMult = 0.8f;
 };
 TOML_SERIALIZABLE(WindowConfSettings);
-
 
 //-------------------------------------------------------------------------------------------------------------------
 //  PARENT STRUCTS 
@@ -306,7 +307,6 @@ struct SettingsAdvanced {
     // Toggles for advanced features
     bool bProfile = false;
     bool bShowOverlay = false;
-    bool bAllActorSizeEffects = false;
     bool bDamageAV = true;
     bool bCooldowns = true;
     bool bPauseGame = true;
@@ -364,6 +364,7 @@ struct SettingsGeneral {
     bool bEnableHighHeels = true;
     bool bHighheelsFurniture = true;
     bool bEnableMales = false;
+    bool bAllActorSizeEffects = false;
     bool bEnableFOVEdits = false;
 
     // Bone tracking for foot Animations
@@ -517,6 +518,8 @@ struct SettingsUI {
     float fScale = 1.0f;
     float fItemWidth = 0.55f;
     std::array<float, 3> f3AccentColor = {0.486f, 0.431f, 0.529f};
+
+    bool bEnableAutoSaveOnClose = true;
 
     // Window configurations
     WindowConfSettings SettingsWindow {};

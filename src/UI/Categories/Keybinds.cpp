@@ -231,7 +231,7 @@ namespace GTS {
 	                        }
 	                    }
 	            
-	                    const std::string ButtonText = IsRebinding ? (NumOfKeys ? "Confirm" : "Cancel") : "Rebind Action";
+	                    const std::string ButtonText = IsRebinding ? "Confirm" : "Rebind Action";
 	                    std::string InputText = VisualKeyString.empty() ? "Press any Key(s) or ESC To Cancel" : VisualKeyString;
 	                    constexpr float Pad = 4.0f;
 
@@ -252,23 +252,25 @@ namespace GTS {
 							MainWindow->SetDisabled(RebindIndex > 0);
 	                    }
 
+						//Set the busy flag so UIMain does not close the window when we press esc
 						SetWindowBusy(RebindIndex > 0);
 	                    
-	                    ImGui::BeginDisabled(TempKeys.empty() && IsRebinding);
+	                    ImGui::BeginDisabled((TempKeys.empty() && IsRebinding) );
 	                    if(ImUtil::Button(ButtonText.c_str(),T5)){
 	                        //Start new key rebind for this index.
 	                        RebindIndex = CurEventIndex;
 
-
-	                        if(IsRebinding && !TempKeys.empty()){
-	                            //Save new keybind
-	                            Event.Keys = TempKeys;
-	                            TempKeys.clear();
-	                            RebindIndex = 0;
-
-
-
-	                        }
+							if (IsRebinding) {
+								if (!TempKeys.empty()) {
+									//Save new keybind
+									Event.Keys = TempKeys;
+									TempKeys.clear();
+									RebindIndex = 0;
+								}
+								else {
+									RebindIndex = 0;
+								}
+							}
 	                    }
 	                    ImGui::EndDisabled();
 	                }
@@ -276,7 +278,7 @@ namespace GTS {
 	                {   //-- PARSE LOGIC
 
 	                    //If Escape Stop Rebind
-	                    if(ImGui::IsKeyDown(ImGuiKey_Escape)){
+	                    if(ImGui::IsKeyReleased(ImGuiKey_Escape)){
 	                        RebindIndex = 0;
 	                        TempKeys.clear();
 	                    }
@@ -288,6 +290,8 @@ namespace GTS {
 	                        //Go though all the imgui keys.
 	                        for (int key = ImGuiKey_NamedKey_BEGIN; key < ImGuiKey_NamedKey_END; key++){
 
+								if (key == ImGuiKey_Escape) continue;
+
 	                            // Detect a new key press
 	                            if (ImGui::IsKeyPressed(static_cast<ImGuiKey>(key))){
 
@@ -296,12 +300,12 @@ namespace GTS {
 	                                if(keyName == "INVALID") continue;
 
 	                                // Only append if it's not already in TempKeys.
-	                                if (std::find(TempKeys.begin(), TempKeys.end(), keyName) == TempKeys.end() && TempKeys.size() < 5){
+	                                if (ranges::find(TempKeys, keyName) == TempKeys.end() && TempKeys.size() < 5){
 	                                    TempKeys.push_back(keyName);
 	                                }
 
 	                                // Sort TempKeys in descending order based on string length.
-	                                std::sort(TempKeys.begin(), TempKeys.end(), [](const std::string &a, const std::string &b) {
+	                                ranges::sort(TempKeys, [](const std::string &a, const std::string &b) {
 	                                    return a.size() > b.size();
 	                                });
 	                            }

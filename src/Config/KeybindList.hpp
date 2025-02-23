@@ -12,13 +12,13 @@ struct GTSInputEvent {
 TOML_SERIALIZABLE(GTSInputEvent);
 
 
-enum class TriggerType {
+enum class TriggerType : uint8_t {
     Once,
     Continuous,
     Release,
 };
 
-enum class BlockInputTypes {
+enum class BlockInputTypes : uint8_t {
     Automatic,
     Always,
     Never,
@@ -66,6 +66,12 @@ namespace GTS {
             {
                 .Event = "OpenModSettings",
                 .Keys = {"F1"},
+                .Trigger = "Once",
+                .BlockInput = "Always"
+            },
+            {
+                .Event = "OpenSkillTree",
+                .Keys = {"LSHIFT","F4"},
                 .Trigger = "Once",
                 .BlockInput = "Always"
             },
@@ -572,7 +578,7 @@ namespace GTS {
             },
             {
                 .Event = "ShowQuickStats",
-                .Keys = {"F1"},
+                .Keys = {"F3"},
                 .BlockInput = "Never"
             },
             {

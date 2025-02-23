@@ -60,7 +60,7 @@ namespace GTS {
 			}
 		}
 
-		Cprint("Gts command not found type {} help for a list of commands.", me.Default_Preffix);
+		Cprint("Command not found type {} help for a list of commands.", me.Default_Preffix);
 		return true;
 	}
 

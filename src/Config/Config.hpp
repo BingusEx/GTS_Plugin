@@ -67,7 +67,8 @@ namespace GTS {
         public:
 
         //Static Accessors (Helpers)
-
+        //They're wrapped this way to ensure that the singleton has run first.
+        //Sideeffect is that if you call these in the singleton it will deadlock wating on the latch.
         [[nodiscard]] static inline SettingsGeneral& GetGeneral() {
             return GetSingleton().General;
         }
@@ -144,6 +145,14 @@ namespace GTS {
                 std::ignore = Instance.SaveSettings();
 
                 logger::info(".ctor Load OK");
+
+                //Don't Do this. This Deadlocks the The plugin on load
+				//Because its trying to call itself before its done initializing in the 1st place;
+                //Profiler::ProfilerEnabled = GetAdvanced().bProfile;
+
+                //Moved Here. So Its only set on startup. Enabling Mid Game Will Cause freezes.
+                Profiler::ProfilerEnabled = Instance.Advanced.bProfile;
+
 
                 Latch.count_down();
             }

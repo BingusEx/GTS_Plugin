@@ -47,7 +47,7 @@ namespace GTS {
 			}
 
 			auto get_actor = actorHandle.get().get();
-			ApplyHH(get_actor, true);
+			this->ApplyHH(get_actor, true);
 		});
 	}
 	void HighHeelManager::ActorLoaded(Actor* actor) {
@@ -60,7 +60,7 @@ namespace GTS {
 			}
 
 			auto get_actor = actorHandle.get().get();
-			ApplyHH(get_actor, true);
+			this->ApplyHH(get_actor, true);
 		});
 	}
 
@@ -95,6 +95,7 @@ namespace GTS {
 				} else if (!IsGtsBusy(actor)) {
 					speedup = 3.0f;
 				}
+
 				// Should disable HH?
 				bool disableHH = DisableHighHeels(actor);
 
@@ -106,14 +107,14 @@ namespace GTS {
 					hhData.multiplier.halflife = 1 / (AnimationManager::GetAnimSpeed(actor) * AnimationManager::GetHighHeelSpeed(actor) * speedup);
 				}
 
-				NiPoint3 new_hh;
 				if (!Config::GetGeneral().bEnableHighHeels) {
 					return;
 				}
-				this->UpdateHHOffset(actor);
+
+				GTS::HighHeelManager::UpdateHHOffset(actor);
 
 				// With model scale do it in unscaled coords
-				new_hh = this->GetBaseHHOffset(actor) * hhData.multiplier.value;
+				NiPoint3 new_hh = GTS::HighHeelManager::GetBaseHHOffset(actor) * hhData.multiplier.value;
 				
 				float hh_length = new_hh.Length();
 
@@ -241,6 +242,7 @@ namespace GTS {
 		auto& hhData = me.data[actor];
 		return hhData.multiplier.value;
 	}
+
 	bool HighHeelManager::IsWearingHH(Actor* actor) {
 		return HighHeelManager::GetBaseHHOffset(actor).Length() > 1e-3;
 	}

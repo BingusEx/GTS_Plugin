@@ -56,7 +56,7 @@ namespace Hooks
 
 	void Install(){
 
-		log::info("Gts applying hooks...");
+		log::info("Applying hooks");
 
 		auto& trampoline = SKSE::GetTrampoline();
 		trampoline.create(256);

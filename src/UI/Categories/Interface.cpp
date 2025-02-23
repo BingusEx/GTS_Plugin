@@ -47,16 +47,26 @@ namespace GTS {
 	        }
 	    }
 
-	    //Main Window Settings
+	    //------------  Main Window Settings
 	    ImUtil_Unique {
 
-	        const char* T0 = "Automatically handle positioning for this window. You can adjust the position and size offsets below.";
+	        const char* T0 = "Automatically handle positioning for this window.\n"
+							 "Disabling this allows you to move and resize the settings window manually.\n"
+							 "Otherwise, if left enabled you can adjust the position and window scale below.";
+
 	        const char* T1 = "Adjust the window size as a percentage of the screen.";
 	        const char* T2 = "Choose where to align the window on screen.";
 	        const char* T3 = "Adjust horizontal offset from the selected anchor point.";
 	        const char* T4 = "Adjust vertical offset from the selected anchor point.";
 
-	        if(ImGui::CollapsingHeader("Config Window", ImUtil::HeaderFlags)){ 
+			const char* T5 = "Adjust the opacity of the stats window.";
+			const char* T6 = "Adjust the opacity of the stats window's backround.";
+			const char* T7 = "Automatically save settings when closing the settings window.\n"
+	    					 "If disabled you have to manually press save each time you modify something for the changes to persist after restarting/reloading the game.";
+
+	        if(ImGui::CollapsingHeader("Config Window", ImUtil::HeaderFlags)){
+
+				ImUtil::CheckBox("Autosave On Close", &Settings.bEnableAutoSaveOnClose, T7);
 
 	            ImUtil::CheckBox("Lock Config Window Position", &Settings.SettingsWindow.bLock, T0);
 	            ImGui::BeginDisabled(!Settings.SettingsWindow.bLock);
@@ -71,13 +81,13 @@ namespace GTS {
 	                ImGui::EndDisabled();
 	            }
 
+				ImUtil::SliderF("Window Alpha", &Settings.SettingsWindow.fAlpha, 0.2f, 1.0f, T5, "%.1fx");
+				ImUtil::SliderF("Background Alpha", &Settings.SettingsWindow.fBGAlphaMult, 0.2f, 1.0f, T6, "%.1fx");
+
 	            ImGui::EndDisabled();
 	            ImGui::Spacing();
 	        }
 	    }
-
-	    
-
 	}
 
 	void CategoryInterface::DrawRight(){
@@ -86,7 +96,11 @@ namespace GTS {
 
 	        const char* T0 = "Toggle visibility extra information for the player character.";
 	        const char* T1 = "Adjust the opacity of the stats window.";
-	        const char* T2 = "Locks the stats window's position and size";
+
+	        const char* T2 = "Automatically handle positioning and size for the stats window.\n"
+							 "Disabling this allows you to move and resize the settings window manually.\n"
+							 "Otherwise, if left enabled you can adjust the position offsets below.";
+
 	        const char* T3 = "Choose the alignment point for the window on screen";
 	        const char* T4 = "Adjust horizontal offset from the selected anchor point.";
 	        const char* T5 = "Adjust vertical offset from the selected anchor point.";

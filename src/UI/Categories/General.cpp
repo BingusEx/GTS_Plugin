@@ -1,11 +1,20 @@
 #include "UI/Categories/General.hpp"
+
+#include "Config/Keybinds.hpp"
+
+#include "UI/UIManager.hpp"
 #include "UI/DearImGui/imgui.h"
+#include "UI/ImGUI/ImFontManager.hpp"
+#include "UI/ImGUI/ImStyleManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
+
+#include "Utils/QuestUtil.hpp"
 
 namespace GTS {
 
 	void CategoryGeneral::DrawLeft() {
 
+		//------ Protect Actors
 
 	    ImUtil_Unique {
 
@@ -18,6 +27,8 @@ namespace GTS {
 	            ImGui::Spacing();
 	        }
 	    }
+
+		//------ Compatibility
 
 	    ImUtil_Unique {
 
@@ -35,6 +46,8 @@ namespace GTS {
 	        }
 	    }
 
+		//------ Visuals
+
 	    ImUtil_Unique {
 
 	        const char* T0 = "Reduce the amount of gore in some sound and visual effects.";
@@ -50,6 +63,22 @@ namespace GTS {
 	        }
 	    }
 
+		ImUtil_Unique{
+
+			const char* T0 = "Open this mod's custom skill tree";
+
+			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlags)) {
+				if (ImUtil::Button("Open Skill Tree",T0)) {
+					UIManager::CloseSettings();
+					
+				}
+
+				ImGui::Spacing();
+			}
+		}
+
+		//------ Experimental
+
 	    ImUtil_Unique {
 
 	        const char* T0 = "Male Actor Support:\n"
@@ -59,8 +88,12 @@ namespace GTS {
 	                         "Animations may not look good and could cause issues even.\n"
 	                         "Use at your own risk.";
 
+			const char* T1 = "Apply computationally expensive damage calculations to all actors.";
+
 	        if (ImGui::CollapsingHeader("Experimental", ImUtil::HeaderFlags)) {
 	            ImUtil::CheckBox("Allow Male Actors", &Settings.bEnableMales, T0);
+				ImUtil::CheckBox("Apply Size Effects to all Actors", &Settings.bAllActorSizeEffects, T0);
+	        	ImGui::Spacing();
 	        }
 	    }
 	}
@@ -161,22 +194,48 @@ namespace GTS {
 
 	        if (ImUtil::ConditionalHeader("Skip Progression","Balance Mode Active", !Config::GetBalance().bBalanceMode)) {
 
-	            if (ImUtil::Button("Skip Quest",T0)) {
+				const auto Complete = ProgressionQuestCompleted();
 
+	            if (ImUtil::Button("Skip Quest",T0), Complete) {
+					SkipProgressionQuest();
 	            }
 
 	            ImGui::SameLine();
 
-				if (ImUtil::Button("Get All Spells", T1)) {
-
+				if (ImUtil::Button("Get All Spells", T1), !Complete) {
+					GiveAllSpellsToPlayer();
 				} 
 
 	            ImGui::SameLine();
 
-	            if (ImUtil::Button("Get All Perks",T2)) {
-
+	            if (ImUtil::Button("Get All Perks",T2), !Complete) {
+					GiveAllPerksToPlayer();
 	            } 
 	        }
 	    }
+
+		ImUtil_Unique{
+
+			const char* T0 = "Reset this mod's setting do their default values";
+
+			//Reset
+			if (ImGui::CollapsingHeader("Reset Settings", ImUtil::HeaderFlags)) {
+				if (ImUtil::Button("Reset Mod Settings", T0)) {
+
+					Config::GetSingleton().ResetToDefaults();
+					Keybinds::GetSingleton().ResetKeybinds();
+					ImStyleManager::GetSingleton().LoadStyle();
+					ImFontManager::GetSingleton().RebuildFonts();
+
+					spdlog::set_level(spdlog::level::from_str(Config::GetAdvanced().sLogLevel));
+					spdlog::flush_on(spdlog::level::from_str(Config::GetAdvanced().sFlushLevel));
+
+					//TODO Add More Stuff Here
+
+					Notify("Mod settins have been reset");
+					logger::info("All Mod Settings Reset");
+				}
+			}
+		}
 	}
 }

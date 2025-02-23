@@ -21,7 +21,7 @@ namespace GTS {
 			virtual void Update() override;
 
 			// Reapply changes (used after reload events)
-			void reapply(bool force = true);
-			void reapply_actor(Actor* actor, bool force = true);
+			static void reapply(bool force = true);
+			static void reapply_actor(Actor* actor, bool force = true);
 	};
 }

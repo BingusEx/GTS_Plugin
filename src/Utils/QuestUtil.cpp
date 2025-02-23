@@ -80,19 +80,29 @@ namespace {
 		"SizeManipulation",
 		"ExpandedGrowth"
 	};
+
+	const std::vector<std::string> AllSpells {
+
+	};
 }
 
 
 namespace GTS {
 
-	bool SetQuestStage(RE::TESQuest* quest, uint16_t stage) {
+	void SkipProgressionQuest() {
 
-		if (!quest) {
-			return false;
+		//Todo Call Papyrus Proxy Function
+	}
+
+	bool ProgressionQuestCompleted() {
+		auto Quest = Runtime::GetQuest("MainQuest");
+
+		if (Quest) {
+			return Quest->GetCurrentStageID() >= 200;
 		}
 
-		REL::Relocation<decltype(SetQuestStage)> func(REL::ID(24482));
-		return func(quest, stage);
+		return false;
+
 	}
 
 	void GiveAllPerksToPlayer() {
@@ -103,6 +113,22 @@ namespace GTS {
 		}
 
 		Notify("All Perks Have been given.");
+	}
+
+	void GiveAllSpellsToPlayer() {
+		auto Player = PlayerCharacter::GetSingleton();
+
+		for (auto& Perk : AllSpells) {
+			Runtime::AddSpell(Player, Perk);
+		}
+
+		Notify("All Spells Have been given.");
+	}
+
+
+	void OpenSkilLTree() {
 		
+
+		Notify("All Spells Have been given.");
 	}
 }

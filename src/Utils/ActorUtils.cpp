@@ -1495,7 +1495,7 @@ namespace GTS {
 			return false;
 		}
 		bool dead = giant->IsDead();
-		bool everyone = Runtime::GetBool("PreciseDamageOthers");
+		bool everyone = Config::GetGeneral().bAllActorSizeEffects;
 		if (!dead && everyone) {
 			return true;
 		} else {

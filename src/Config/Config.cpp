@@ -202,8 +202,8 @@ namespace GTS {
 
             //If Enabled Allow Saving Advanced Settings
             if (Hidden.IKnowWhatImDoing) {
-                UpdateRes &= UpdateTOMLFromStruct(TomlData, Advanced);
                 UpdateRes &= UpdateTOMLFromStruct(TomlData, Hidden);
+                UpdateRes &= UpdateTOMLFromStruct(TomlData, Advanced);
             }
 
             UpdateRes &= UpdateTOMLFromStruct(TomlData, General);
