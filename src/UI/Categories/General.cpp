@@ -63,20 +63,6 @@ namespace GTS {
 	        }
 	    }
 
-		ImUtil_Unique{
-
-			const char* T0 = "Open this mod's custom skill tree";
-
-			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlags)) {
-				if (ImUtil::Button("Open Skill Tree",T0)) {
-					UIManager::CloseSettings();
-					
-				}
-
-				ImGui::Spacing();
-			}
-		}
-
 		//------ Experimental
 
 	    ImUtil_Unique {
@@ -92,13 +78,16 @@ namespace GTS {
 
 	        if (ImGui::CollapsingHeader("Experimental", ImUtil::HeaderFlags)) {
 	            ImUtil::CheckBox("Allow Male Actors", &Settings.bEnableMales, T0);
-				ImUtil::CheckBox("Apply Size Effects to all Actors", &Settings.bAllActorSizeEffects, T0);
+				ImUtil::CheckBox("Apply Size Effects to all Actors", &Settings.bAllActorSizeEffects, T1);
 	        	ImGui::Spacing();
 	        }
 	    }
 	}
 
 	void CategoryGeneral::DrawRight() {
+
+
+		//----- Sneaking
 
 	    ImUtil_Unique {
 
@@ -113,6 +102,8 @@ namespace GTS {
 	            ImGui::Spacing();
 	        }
 	    }
+
+		//----- Misc
 
 	    ImUtil_Unique {
 
@@ -139,6 +130,8 @@ namespace GTS {
 	            ImGui::Spacing();
 	        }
 	    }
+
+		//----- HH
 
 	    ImUtil_Unique {
 
@@ -172,6 +165,8 @@ namespace GTS {
 	    }
 
 
+		//------------- Looting
+
 	    ImUtil_Unique {
 
 	        const char* T0 = "Toggle whether actions like vore, shrink to death, or crushing\n"
@@ -186,13 +181,31 @@ namespace GTS {
 	        }
 	    }
 
+		//----------- Skill Tree
+
+		ImUtil_Unique{
+
+			const char* T0 = "Open this mod's custom skill tree";
+
+			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlags)) {
+				if (ImUtil::Button("Open Skill Tree",T0)) {
+					UIManager::CloseSettings();
+
+				}
+
+				ImGui::Spacing();
+			}
+		}
+
+		//----------- Progress
+
 	    ImUtil_Unique {
 
 	        const char* T0 = "Automatically complete this mod's quest.";
 			const char* T1 = "Get all of the mod's spells";
 	        const char* T2 = "Instantly complete the perk tree.";
 
-	        if (ImUtil::ConditionalHeader("Skip Progression","Balance Mode Active", !Config::GetBalance().bBalanceMode)) {
+	        if (ImGui::CollapsingHeader("Skip Progression", ImUtil::HeaderFlags)) {
 
 				const auto Complete = ProgressionQuestCompleted();
 
@@ -214,12 +227,14 @@ namespace GTS {
 	        }
 	    }
 
+		//-------- Settings Reset
+
 		ImUtil_Unique{
 
 			const char* T0 = "Reset this mod's setting do their default values";
 
 			//Reset
-			if (ImGui::CollapsingHeader("Reset Settings", ImUtil::HeaderFlags)) {
+			if (ImGui::CollapsingHeader("Reset Settings")) {
 				if (ImUtil::Button("Reset Mod Settings", T0)) {
 
 					Config::GetSingleton().ResetToDefaults();
