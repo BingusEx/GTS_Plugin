@@ -68,7 +68,7 @@ namespace ImUtil {
     const bool SliderF2(const char* a_label, float* a_value, float a_min, float a_max, const char* a_Tooltip = nullptr, const char* fmt = "%.2f", const bool a_disabled = false);
     const bool SliderF3(const char* a_label, float* a_value, float a_min, float a_max, const char* a_Tooltip = nullptr, const char* fmt = "%.2f", const bool a_disabled = false);
     
-    void CenteredProgress(float fraction, const ImVec2& size_arg, const char* overlay = nullptr);
+    void CenteredProgress(float fraction, const ImVec2& size_arg, const char* overlay = nullptr, const float heightmult = 1.0f);
     
     void Bitfield(const char* a_label, uint32_t* a_bitfield);
 

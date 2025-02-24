@@ -59,12 +59,12 @@ namespace GTS {
 
         //TODO NEEDS TO BE CHANGED
         const float _Essence = Runtime::GetGlobal("ExtraPotionSize")->value;
-
+        const auto& Settings = Config::GetUI().StatusWindow;
 
         const std::string sScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";
         const std::string sReal = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitReal) ? GTS::GetFormatedHeight(a_Actor).c_str() : "";
         const std::string pText = fmt::format("{}{}", sReal, sScale);
-        ImUtil::CenteredProgress(CurrentScale / MaxScale, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : 160.0f, 0.0f), pText.c_str());
+        ImUtil::CenteredProgress(CurrentScale / MaxScale, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : Settings.fFixedWidth, 0.0f), pText.c_str(), Settings.fSizeBarHeightMult);
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize))
 				ImGui::Text("Max Scale: %.2fx", MaxScale);

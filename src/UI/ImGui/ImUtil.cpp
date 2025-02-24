@@ -158,7 +158,7 @@ namespace ImUtil {
         return final_result;
     }
 
-    void CenteredProgress(float fraction, const ImVec2& size_arg, const char* overlay) {
+    void CenteredProgress(float fraction, const ImVec2& size_arg, const char* overlay, const float heightmult) {
         ImGuiWindow* window = ImGui::GetCurrentWindow();
         if (window->SkipItems){
             return;
@@ -169,8 +169,15 @@ namespace ImUtil {
 
         // Calculate progress bar dimensions
         ImVec2 pos = window->DC.CursorPos;
-        ImVec2 size = ImGui::CalcItemSize(size_arg, ImGui::CalcItemWidth(), g.FontSize + style.FramePadding.y * 2.0f);
-        ImVec2 possize = {pos.x + size.x, pos.y + size.y};
+
+        const auto TextSize = ImGui::CalcTextSize(overlay);
+        const auto ItemWidth = ImGui::CalcItemWidth();
+        const float Width = ItemWidth > TextSize.x ? ItemWidth : TextSize.x;
+        ImVec2 ResultSize = { Width, TextSize.y };
+
+        ImVec2 size = ImGui::CalcItemSize(size_arg, ResultSize.x, ResultSize.y + style.FramePadding.y * 2.0f * heightmult);
+
+    	ImVec2 possize = {pos.x + size.x, pos.y + size.y};
         ImRect bb(pos, possize);
         
         // Register the item and handle clipping

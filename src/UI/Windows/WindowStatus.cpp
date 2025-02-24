@@ -18,20 +18,23 @@ namespace GTS {
         if (auto Window = dynamic_cast<WindowSettings*>(ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
             if (Window->Show) {
                 ShowImmediate();
+                return;
             }
         }
 
-        if (!Config::GetUI().StatusWindow.bEnableFade) {
+        const auto& Settings = Config::GetUI().StatusWindow;
+
+        if (!Settings.bEnableFade) {
             ShowImmediate();
             return;
         }
 
         if (a_actor) {
 
-            const GTSInfoFeatures flags = static_cast<GTSInfoFeatures>(Config::GetUI().StatusWindow.iFlags);
+            const GTSInfoFeatures flags = static_cast<GTSInfoFeatures>(Settings.iFlags);
 
             const float Scale = get_visual_scale(a_actor);
-            if (!AreEqual(LastData.Scale, Scale, 0.1f)) {
+            if (!AreEqual(LastData.Scale, Scale, Settings.fFadeDelta)) {
                 LastData.Scale = Scale;
                 Show();
                 return;

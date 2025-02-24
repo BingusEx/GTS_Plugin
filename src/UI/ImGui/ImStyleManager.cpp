@@ -44,6 +44,7 @@ namespace GTS {
         constexpr ImVec4 tabHovered{ 0.2f, 0.2f, 0.2f, 1.0f };
 
         // Backgrounds
+        
         colors[ImGuiCol_WindowBg] = { 0.0f, 0.0f, 0.0f, 0.85f };
         colors[ImGuiCol_ScrollbarBg] = ImVec4{};
         colors[ImGuiCol_ChildBg] = ImVec4{};
@@ -95,6 +96,11 @@ namespace GTS {
         colors[ImGuiCol_ScrollbarGrab] = AdjustAlpha(accentColor, 0.4f);
         colors[ImGuiCol_ScrollbarGrabHovered] = AdjustAlpha(accentColor, 0.6f);
         colors[ImGuiCol_ScrollbarGrabActive] = AdjustAlpha(accentColor, 1.0f);
+
+        //Titlebar
+        colors[ImGuiCol_TitleBg] = AdjustAlpha(accentColor, 0.8f);
+        colors[ImGuiCol_TitleBgActive] = AdjustAlpha(accentColor, 1.0f);
+        colors[ImGuiCol_TitleBgCollapsed] = AdjustAlpha(accentColor, 0.6f);
     }
 
     void ImStyleManager::SetupStyleImpl() const {

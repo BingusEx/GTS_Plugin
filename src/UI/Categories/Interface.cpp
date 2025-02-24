@@ -105,20 +105,24 @@ namespace GTS {
 	        const char* T4 = "Adjust horizontal offset from the selected anchor point.";
 	        const char* T5 = "Adjust vertical offset from the selected anchor point.";
 			const char* T6 = "Adjust the opacity of the stats window's backround.";
-			const char* T7 = "Toggle whether the stats widget fades if the players scale or max scale don't change for 8 seconds.";
+			const char* T7 = "Toggle whether the stats widget fades if the players scale or max scale don't change for a while.";
 			const char* T8 = "Change how long the widget menu should be shown for after a value has changed.";
+			const char* T9 = "Set the width of the stats window. Works only if Auto size is disabled.";
+			const char* T10 = "Set the height multiplier of the size bar.";
+			const char* T11 = "Set the required change (ie Delta) in size for the window to reappear if inactivity fade is enabled.";
 
 	        if(ImGui::CollapsingHeader("Status Widget",ImUtil::HeaderFlags)){ 
 				ImUtil::CheckBox("Show Player Stats Widget", &Settings.StatusWindow.bVisible, T0);
 
 				ImUtil::CheckBox("Inactivity Fade", &Settings.StatusWindow.bEnableFade,T7);
 				ImUtil::SliderF("Fade After", &Settings.StatusWindow.fFadeAfter, 0.5f, 10.0f, T8, "After %.1f Seconds", !Settings.StatusWindow.bEnableFade);
-
+				ImUtil::SliderF("Reappear Delta", &Settings.StatusWindow.fFadeDelta, 0.0, 0.5f, T11, "After a %.2fx Difference", !Settings.StatusWindow.bEnableFade);
 				ImGui::Spacing();
 
 	            ImUtil::SliderF("Widget Alpha", &Settings.StatusWindow.fAlpha, 0.1f, 1.0f, T1,"%.1fx");
 				ImUtil::SliderF("Widget BG Alpha", &Settings.StatusWindow.fBGAlphaMult, 0.0f, 1.0f, T6, "%.1fx");
-	            
+				ImUtil::SliderF("Widget Fixed Width", &Settings.StatusWindow.fFixedWidth, 120.0f, 600.0f, T9, "%.0f");
+				ImUtil::SliderF("Size Bar Height Mult", &Settings.StatusWindow.fSizeBarHeightMult, 0.1f, 2.5f, T10, "%.2fx");
 	            ImGui::Spacing();
 	            
 	            ImUtil::CheckBox("Lock Widget Position", &Settings.StatusWindow.bLock, T2);

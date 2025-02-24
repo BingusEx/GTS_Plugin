@@ -109,17 +109,6 @@ TOML_SERIALIZABLE(GameplayActorSettings);
 
 struct GameplayActionSettings {
 
-	//Player/AI
-	//float fStartThighSandwichScale = 6.0f;  
-	//float fStartStompScale = 10.0f;
-	//float fStartButtCrushScale = 2.0f;
-	//float fStartVoreScale = 8.0f;
-	//float fStartGrabScale = 8.0f;
-	//float fHugDropScale = 0.92f;
-
-    //AI
-	//float fAIStartThighCrushScale = 4.0f;
-
     // Animation options
     bool bStompAlternative = false;
     bool bStomAlternativeOther = false;
@@ -145,9 +134,6 @@ struct GameplayActionSettings {
 };
 TOML_SERIALIZABLE(GameplayActionSettings);
 
-
-
-
 //------------------------------------------- Camera
 struct CameraOffsets {
     // Bone to center on
@@ -163,9 +149,7 @@ struct CameraOffsets {
 };
 TOML_SERIALIZABLE(CameraOffsets);
 
-
 //------------------------------------------- AI
-
 // Stateless actions: simple probability-based triggers.
 struct AIStatelessAction {
     bool bEnableAction = true;
@@ -182,7 +166,6 @@ struct AIStatefullAction {
     float fInterval = 2.0f;
 };
 TOML_SERIALIZABLE(AIStatefullAction);
-
 
 // Complex action: Hug
 struct AIHugAction {
@@ -251,9 +234,7 @@ struct AIGrabAction {
 };
 TOML_SERIALIZABLE(AIGrabAction);
 
-
 //------------------------------------------- Interface/GtsUI
-
 struct WindowConfStatus {
     // Window lock and visibility
     bool bLock = true;
@@ -267,9 +248,12 @@ struct WindowConfStatus {
 
     bool bEnableFade = true;
     float fFadeAfter = 6.0f;
-
+    float fFixedWidth = 160.0f;
+    float fSizeBarHeightMult = 1.0f;
+    float fFadeDelta = 0.05f;
     // Display control
     uint32_t iFlags = 22;
+
 };
 TOML_SERIALIZABLE(WindowConfStatus);
 
@@ -375,7 +359,6 @@ struct SettingsGeneral {
 };
 TOML_SERIALIZABLE(SettingsGeneral);
 
-
 //-------------------------------------------------------------------------------------------------------------------
 //  GAMEPLAY
 //-------------------------------------------------------------------------------------------------------------------
@@ -403,7 +386,6 @@ struct SettingsGameplay {
 
 };
 TOML_SERIALIZABLE(SettingsGameplay);
-
 
 //-------------------------------------------------------------------------------------------------------------------
 //  CAMERA
