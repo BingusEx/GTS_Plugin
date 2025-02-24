@@ -699,7 +699,6 @@ namespace GTS {
 			}
 			else {
 				log::warn("Unknown record type in cosave.");
-				__assume(false);
 			}
 		}
 	}
@@ -740,7 +739,7 @@ namespace GTS {
 			float FallDamage = data.FallDamage;
 			float HHDamage = data.HHDamage;
 			float SizeVulnerability = data.SizeVulnerability;
-			float AllowHitGrowth = data.PAD_44;
+			//data.PAD_44;
 			float SizeReserve = data.SizeReserve;
 			float target_scale_v = data.target_scale_v;
 			float scaleOverride = data.scaleOverride;

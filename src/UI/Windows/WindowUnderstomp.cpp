@@ -14,24 +14,24 @@ namespace {
         return (fabs(a - b) <= epsilon * std::max(fabs(a), fabs(b)));
     }
 
-
+    //Yes i know this is bad and 75% of is redundant
     bool CalcUnderstomp(RE::Actor* giant, float& a_outangle) {
 
         if (giant->formID == 0x14 && GTS::IsFreeCameraEnabled()) {
             return false;
         }
         //Range is between -1 (looking down) and 1 (looking up)
-        //abs makes it become 1 -> 0 -> 1 for down -> middle -> up
+               //abs makes it become 1 -> 0 -> 1 for down -> middle -> up
         const float absPitch = abs(GTS::GetCameraRotation().entry[2][1]);
         //Remap our starting range
         constexpr float InvLookDownStartAngle = 0.9f; //Starting value of remap. Defines start angle for how down we are looking
-        const float InvLookdownIntensity = std::clamp(GTS::AnimationUnderStomp::Remap(absPitch, InvLookDownStartAngle, 1.0f, 0.0f, 1.0f), 0.0f, 1.0f);
+        const float InvLookdownIntensity = std::clamp(GTS::AnimationUnderStomp::Remap(absPitch, 1.0f, InvLookDownStartAngle, 0.0f, 1.0f), 0.0f, 1.0f);
 
         bool allow = absPitch > InvLookDownStartAngle;
         // Allow to stomp when looking from above or below
 
         if (allow) {
-            a_outangle = std::clamp(InvLookdownIntensity * 1.3f, 0.0f, 1.0f);
+            a_outangle = 1.0f - std::clamp(InvLookdownIntensity * 1.3f, 0.0f, 1.0f);
         }
 
         return allow;
@@ -144,9 +144,9 @@ namespace GTS {
 
             const std::string Text = fmt::format(
                 fmt::runtime([this]() -> std::string {
-                    if (Angle == 0.0f)
+                    if (AreEqual(Angle,0.0,0.01))
                         return "Far Stomp";
-                    if (Angle == 1.0f)
+                    if (AreEqual(Angle, 1.0, 0.01))
                         return "Under Stomp";
                     return "Angle {:.2f}x";
                 }()),
