@@ -40,7 +40,7 @@ namespace GTS {
 
 		result.insert(result.end(), high_actors.begin(), high_actors.end());
 
-		std::sort( result.begin(), result.end() );
+		ranges::sort(result);
 		return result;
 	}
 
@@ -48,8 +48,7 @@ namespace GTS {
 		vector<Actor*> result;
 
 		auto process_list = ProcessLists::GetSingleton();
-		for (ActorHandle actor_handle: process_list->highActorHandles)
-		{
+		for (const ActorHandle& actor_handle: process_list->highActorHandles){
 			if (!actor_handle) {
 				continue;
 			}
@@ -75,7 +74,7 @@ namespace GTS {
 		vector<Actor*> result;
 
 		auto process_list = ProcessLists::GetSingleton();
-		for (ActorHandle actor_handle: process_list->middleHighActorHandles)
+		for (const ActorHandle& actor_handle: process_list->middleHighActorHandles)
 		{
 			if (!actor_handle) {
 				continue;
@@ -98,7 +97,7 @@ namespace GTS {
 		vector<Actor*> result;
 
 		auto process_list = ProcessLists::GetSingleton();
-		for (ActorHandle actor_handle: process_list->middleLowActorHandles)
+		for (const ActorHandle& actor_handle: process_list->middleLowActorHandles)
 		{
 			if (!actor_handle) {
 				continue;
@@ -121,7 +120,7 @@ namespace GTS {
 		vector<Actor*> result;
 
 		auto process_list = ProcessLists::GetSingleton();
-		for (ActorHandle actor_handle: process_list->lowActorHandles)
+		for (const ActorHandle& actor_handle: process_list->lowActorHandles)
 		{
 			if (!actor_handle) {
 				continue;
@@ -154,7 +153,7 @@ namespace GTS {
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
 				finalActors.push_back(actor);
 				//log::info(" - Adding: {}", actor->GetDisplayFullName());
-			} else if ((data.previousActors.count(actor->formID) == 0) && (addedCount < howMany)) {
+			} else if (!data.previousActors.contains(actor->formID) && (addedCount < howMany)) {
 				// Other actors are only added if they are not in the previous actor list
 
 				//log::info(" - Adding: {}", actor->GetDisplayFullName());

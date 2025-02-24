@@ -1996,7 +1996,9 @@ namespace GTS {
 		if (giant->formID == 0x14) {
 			auto Persistent = Persistent::GetSingleton().GetData(giant);
 			if (Persistent) {
-				float modifier = Runtime::GetFloatOr("LevelLimitModifier", 1.0f);
+				
+				float modifier = Config::GetGameplay().fSizeConvLevelCap;
+
 				float& health = Persistent->stolen_health;
 				float& magick = Persistent->stolen_magick;
 				float& stamin = Persistent->stolen_stamin;
@@ -2054,7 +2056,7 @@ namespace GTS {
 	void DistributeStolenAttributes(Actor* giant, float value) {
 		if (value > 0 && giant->formID == 0x14 && Runtime::HasPerk(giant, "SizeConversion")) { // Permamently increases random AV after shrinking and stuff
 			float scale = std::clamp(get_visual_scale(giant), 0.01f, 999999.0f);
-			float modifier = Runtime::GetFloatOr("LevelLimitModifier", 1.0f);
+			float modifier = Config::GetGameplay().fSizeConvLevelCap;
 			float Storage = GetStolenAttributes(giant);
 			float limit = 2.0f * giant->GetLevel() * modifier;
 

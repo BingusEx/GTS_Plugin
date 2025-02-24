@@ -97,8 +97,20 @@ namespace GTS {
 	        if (ImGui::CollapsingHeader("Sneaking", ImUtil::HeaderFlags)) {
 				auto& Persi = Persistent::GetSingleton();
 
-	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1);
-	            ImUtil::CheckBox("Enable Follower Crawling", &Persi.EnableCrawlFollower.value, T2);
+				bool PlayerBusy = IsTransitioning(PlayerCharacter::GetSingleton());
+				bool FollowersBusy = false;
+
+				for (const auto& Fol : FindTeammates()) {
+					if (Fol) {
+						if (IsTransitioning(Fol)) {
+							FollowersBusy = true;
+							break;
+						}
+					}
+				}
+
+	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1, PlayerBusy);
+	            ImUtil::CheckBox("Enable Follower Crawling", &Persi.EnableCrawlFollower.value, T2, FollowersBusy);
 	            ImGui::Spacing();
 	        }
 	    }
@@ -190,7 +202,7 @@ namespace GTS {
 			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlags)) {
 				if (ImUtil::Button("Open Skill Tree",T0)) {
 					UIManager::CloseSettings();
-
+					Runtime::SetFloat("OpenGTSSkillMenu", 1.0);
 				}
 
 				ImGui::Spacing();
@@ -209,19 +221,19 @@ namespace GTS {
 
 				const auto Complete = ProgressionQuestCompleted();
 
-	            if (ImUtil::Button("Skip Quest",T0), Complete) {
+	            if (ImUtil::Button("Skip Quest",T0, Complete)) {
 					SkipProgressionQuest();
 	            }
 
 	            ImGui::SameLine();
 
-				if (ImUtil::Button("Get All Spells", T1), !Complete) {
+				if (ImUtil::Button("Get All Spells", T1, !Complete)) {
 					GiveAllSpellsToPlayer();
 				} 
 
 	            ImGui::SameLine();
 
-	            if (ImUtil::Button("Get All Perks",T2), !Complete) {
+	            if (ImUtil::Button("Get All Perks",T2, !Complete)) {
 					GiveAllPerksToPlayer();
 	            } 
 	        }

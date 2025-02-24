@@ -59,8 +59,12 @@ namespace {
 	}
 
 	void GrowAfterTheKill(Actor* caster, Actor* target, float power) { // called twice
-		if (Runtime::GetBool("GtsDecideGrowth") && !HasSMT(caster)) {
-			if (Runtime::HasPerkTeam(caster, "GrowthDesirePerk") && Runtime::GetInt("GtsDecideGrowth") >= 1) {
+
+		bool EnableCrushGrowth = Config::GetGameplay().bEnableCrushGrowth;
+
+		if (EnableCrushGrowth && !HasSMT(caster)) {
+
+			if (Runtime::HasPerkTeam(caster, "GrowthDesirePerk") && EnableCrushGrowth) {
 				float Rate = (0.00016f * get_visual_scale(target)) * 120 * power;
 				if (Runtime::HasPerkTeam(caster, "AdditionalGrowth")) {
 					Rate *= 2.0f;
@@ -70,6 +74,7 @@ namespace {
 			}
 		}
 	}
+
 	void MoanOrLaugh(Actor* giant, Actor* target) {
 		bool OnCooldown = IsActionOnCooldown(giant, CooldownSource::Emotion_Moan_Crush);
 		auto randomInt = RandomInt(0, 16);

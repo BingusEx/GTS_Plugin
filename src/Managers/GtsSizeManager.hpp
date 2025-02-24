@@ -51,9 +51,6 @@ namespace GTS {
 			float GetSizeVulnerability(Actor* actor);
 			void ModSizeVulnerability(Actor* actor, float amt);
 
-			float GetHitGrowth(Actor* actor);
-			void SetHitGrowth(Actor* actor, float allow);
-
 			CameraTracking GetPreviousBone(Actor* actor);
 			void SetPreviousBone(Actor* actor);
 		

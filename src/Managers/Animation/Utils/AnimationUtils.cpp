@@ -1745,6 +1745,43 @@ namespace GTS {
 		return hp * clamped_diff;
 	}
 
+
+	void SetAltFootStompAnimation(RE::Actor* a_actor, const bool a_state) {
+
+
+		if (!a_actor) {
+			return;
+		}
+
+		bool PrevState = false;
+		if (a_actor->GetGraphVariableBool("GTS_EnableAlternativeStomp", PrevState)) {
+
+			if (PrevState == a_state) {
+				return;
+			}
+
+			a_actor->SetGraphVariableBool("GTS_EnableAlternativeStomp", a_state);
+		}
+	}
+
+	void SetEnableSneakTransition(RE::Actor* a_actor, const bool a_state) {
+
+		if (!a_actor) {
+			return;
+		}
+
+		bool PrevState = false;
+		if (a_actor->GetGraphVariableBool("GTS_DisableSneakTrans", PrevState)) {
+
+			if (PrevState == a_state) {
+				return;
+			}
+
+			a_actor->SetGraphVariableBool("GTS_DisableSneakTrans", a_state);
+		}
+	}
+
+
 	bool SetCrawlAnimation(Actor* a_actor, const bool a_state) {
 
 		if (!a_actor) {

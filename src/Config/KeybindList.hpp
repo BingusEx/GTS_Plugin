@@ -127,7 +127,7 @@ namespace GTS {
             },
             {
                 .Event = "TrampleLeft",
-                .Keys = {"LSHIFT", "V"},
+                .Keys = {"LSHIFT", "Q"},
                 .Trigger = "Release",
                 .Duration = 0.20f,
             },

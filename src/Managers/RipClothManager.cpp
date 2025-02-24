@@ -220,8 +220,9 @@ namespace GTS {
 
 		if (!a_actor) return;
 
+		auto& Settings = Config::GetGameplay();
 
-		if (!Config::GetGameplay().bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return;
+		if (!Settings.bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return;
 
 		static Timer timer = Timer(1.2);
 		if (!timer.ShouldRunFrame()) return;
@@ -238,8 +239,8 @@ namespace GTS {
 			return;
 		}
 
-		const float rip_threshold = Config::GetGameplay().fClothRipStart;
-		const float rip_tooBig = Config::GetGameplay().fClothRipThreshold;
+		const float rip_threshold = Settings.fClothRipStart;
+		const float rip_tooBig = Settings.fClothRipThreshold;
 
 		if (CurrentScale < rip_threshold) {
 			//If Smaller than rip_Threshold but offset was > 0 means we shrunk back down, so reset the offset
@@ -284,29 +285,31 @@ namespace GTS {
 		//If anthing is invallid let the native code handle it.
 		if (!a_actor || !a_object) return false;
 
+		auto& Settings = Config::GetGameplay();
+
 		//Cached offset instead of getting the variable directly. 
 		//The Check can get spammed by the Equip hook when a lot of actors are around.
 		//If clothing rip is disabled or is not a follower, allow re-equip
-		if (!Config::GetGameplay().bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return false;
+		if (!Settings.bClothTearing || (!IsTeammate(a_actor) && a_actor->formID != 0x14)) return false;
 
-		const float rip_threshold = Config::GetGameplay().fClothRipStart;
+		const float rip_threshold = Settings.fClothRipStart;
 
 		//if smaller than rip_threhsold or target actor is the player allow re-equip
 		if (get_visual_scale(a_actor) < rip_threshold || a_actor->formID == 0x14) {
 			return false;
 		}
 
-		auto tesarmo = static_cast<TESObjectARMO*>(a_object);
+		TESObjectARMO* TESArmo = skyrim_cast<TESObjectARMO*>(a_object);
 
 		//if the item is not an armor, allow it
-		if (!tesarmo) return false;
+		if (!TESArmo) return false;
 		for (auto Slot : VallidSlots) {
 			//For each vallid slot check if the to be equiped slot cotains said slot
-			if (tesarmo->bipedModelData.bipedObjectSlots.any(Slot)) {
+			if (TESArmo->bipedModelData.bipedObjectSlots.any(Slot)) {
 
 				//if it does, check the keywords as a last resort
 				for (const auto& BKwd : KeywordBlackList) {
-					if (tesarmo->HasKeywordString(BKwd)) {
+					if (TESArmo->HasKeywordString(BKwd)) {
 						return false; //If blacklisted keyword is found do not strip
 					}
 				}

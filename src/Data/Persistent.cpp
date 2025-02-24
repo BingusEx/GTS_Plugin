@@ -73,7 +73,7 @@ namespace GTS {
 	void Persistent::Reset() {
 		//Plugin::SetInGame(false);
 		std::unique_lock lock(this->_lock);
-		this->_actor_data.clear();
+		this->ActorDataMap.clear();
 
 	    // Ensure we reset them back to inital scales
 	    // if they are loaded into game memory
@@ -88,6 +88,8 @@ namespace GTS {
 	void Persistent::OnRevert(SerializationInterface*) {
 		GetSingleton().Reset();
 	}
+
+
 
 	void Persistent::OnGameLoaded(SerializationInterface* serde) {
 
@@ -111,29 +113,38 @@ namespace GTS {
 			Persi.EnableCrawlPlayer.Load(serde, type, version, size);
 			Persi.EnableCrawlFollower.Load(serde, type, version, size);
 
+			//Dummy Float Used To Advance Actor Data Reads.
+			float PAD_DUMMY = 0.0;
 
 			if (type == ActorDataRecord) {
 
 				if (version >= 1) {
 
-					std::size_t count;
+					std::size_t RecordCount = 0;
+					serde->ReadRecordData(&RecordCount, sizeof(RecordCount));
 
-					serde->ReadRecordData(&count, sizeof(count));
+					for (; RecordCount > 0; --RecordCount) {
 
-					for (; count > 0; --count) {
+						// --------- VERSION 1 OF STRUCT DATA BEGINS HERE
+						// --------- ACTOR FORMID
 
-						RE::FormID actorFormID;
-						serde->ReadRecordData(&actorFormID, sizeof(actorFormID));
-						RE::FormID newActorFormID;
-						if (!serde->ResolveFormID(actorFormID, newActorFormID)) {
-							log::warn("Actor ID {:X} could not be found after loading the save.", actorFormID);
+						RE::FormID ReadFormID;        //FormID Stored in the Cosave;
+						RE::FormID NewActorFormID;    //Loadorder may have changed. This is the New FormID
+						serde->ReadRecordData(&ReadFormID, sizeof(ReadFormID));
+						if (!serde->ResolveFormID(ReadFormID, NewActorFormID)) {
+							log::warn("Actor FormID {:X} Not found in CoSave. Skipping...", ReadFormID);
 							continue;
 						}
+
+						// --------- NATIVE_SCALE
+
 						float native_scale;
 						serde->ReadRecordData(&native_scale, sizeof(native_scale));
 						if (std::isnan(native_scale)) {
 							native_scale = 1.0f;
 						}
+
+						// --------- VISUAL_SCALE
 
 						float visual_scale;
 						serde->ReadRecordData(&visual_scale, sizeof(visual_scale));
@@ -141,11 +152,15 @@ namespace GTS {
 							visual_scale = 1.0f;
 						}
 
+						// --------- VISUAL_SCALE_V
+
 						float visual_scale_v;
 						serde->ReadRecordData(&visual_scale_v, sizeof(visual_scale_v));
 						if (std::isnan(visual_scale_v)) {
 							visual_scale_v = 0.0f;
 						}
+
+						// --------- TARGET_SCALE
 
 						float target_scale;
 						serde->ReadRecordData(&target_scale, sizeof(target_scale));
@@ -153,11 +168,16 @@ namespace GTS {
 							target_scale = 1.0f;
 						}
 
+						// --------- MAX_SCALE
+
 						float max_scale;
 						serde->ReadRecordData(&max_scale, sizeof(max_scale));
 						if (std::isnan(max_scale)) {
 							max_scale = DEFAULT_MAX_SCALE;
 						}
+
+						// --------- VERSION 2 OF STRUCT DATA BEGINS HERE
+						// --------- HALF_LIFE
 
 						float half_life;
 						if (version >= 2) {
@@ -169,6 +189,9 @@ namespace GTS {
 							half_life = DEFAULT_HALF_LIFE;
 						}
 
+						// --------- VERSION 3 OF STRUCT DATA BEGINS HERE
+						// --------- ANIM_SPEED
+
 						float anim_speed;
 						if (version >= 3) {
 							serde->ReadRecordData(&anim_speed, sizeof(anim_speed));
@@ -178,6 +201,9 @@ namespace GTS {
 						if (std::isnan(anim_speed)) {
 							anim_speed = 1.0f;
 						}
+
+						// --------- VERSION 4 OF STRUCT DATA BEGINS HERE
+						// --------- EFFECTIVE_MULTI
 
 						float effective_multi;
 						if (version >= 4) {
@@ -189,6 +215,9 @@ namespace GTS {
 							effective_multi = 1.0f;
 						}
 
+						// --------- VERSION 5 OF STRUCT DATA BEGINS HERE
+						// --------- BONUS_HP
+
 						float bonus_hp;
 						if (version >= 5) {
 							serde->ReadRecordData(&bonus_hp, sizeof(bonus_hp));
@@ -198,6 +227,8 @@ namespace GTS {
 						if (std::isnan(bonus_hp)) {
 							bonus_hp = 0.0f;
 						}
+
+						// --------- BONUS_CARRY
 
 						float bonus_carry;
 						if (version >= 5) {
@@ -209,6 +240,8 @@ namespace GTS {
 							bonus_carry = 0.0f;
 						}
 
+						// --------- BONUS_MAX_SIZE
+
 						float bonus_max_size;
 						if (version >= 5) {
 							serde->ReadRecordData(&bonus_max_size, sizeof(bonus_max_size));
@@ -218,6 +251,10 @@ namespace GTS {
 						if (std::isnan(bonus_max_size)) {
 							bonus_max_size = 0.0f;
 						}
+
+						// --------- VERSION 6 OF STRUCT DATA BEGINS HERE
+						// --------- SMT_RUN_SPEED
+
 						float smt_run_speed;
 						if (version >= 6) {
 							serde->ReadRecordData(&smt_run_speed, sizeof(smt_run_speed));
@@ -227,6 +264,8 @@ namespace GTS {
 						if (std::isnan(smt_run_speed)) {
 							smt_run_speed = 0.0f;
 						}
+
+						// --------- NORMALDAMAGE
 
 						float NormalDamage; //0
 						if (version >= 6) {
@@ -238,6 +277,8 @@ namespace GTS {
 							NormalDamage = 0.0f;
 						}
 
+						// --------- SPRINTDAMAGE
+
 						float SprintDamage; //1
 						if (version >= 6) {
 							serde->ReadRecordData(&SprintDamage, sizeof(SprintDamage));
@@ -247,6 +288,8 @@ namespace GTS {
 						if (std::isnan(SprintDamage)) {
 							SprintDamage = 0.0f;
 						}
+
+						// --------- FALLDAMAGE
 
 						float FallDamage; //2
 						if (version >= 6) {
@@ -258,6 +301,8 @@ namespace GTS {
 							FallDamage = 0.0f;
 						}
 
+						// --------- HHDAMAGE
+
 						float HHDamage; //3
 						if (version >= 6) {
 							serde->ReadRecordData(&HHDamage, sizeof(HHDamage));
@@ -267,6 +312,8 @@ namespace GTS {
 						if (std::isnan(HHDamage)) {
 							HHDamage = 0.0f;
 						}
+
+						// --------- SIZEINVUNERABILITY
 
 						float SizeVulnerability;
 						if (version >= 6) {
@@ -278,15 +325,13 @@ namespace GTS {
 							SizeVulnerability = 0.0f;
 						}
 
-						float AllowHitGrowth;
+						// --------- UNUSED @ 0x48 OFFSET
+
 						if (version >= 6) {
-							serde->ReadRecordData(&AllowHitGrowth, sizeof(AllowHitGrowth));
-						} else {
-							AllowHitGrowth = 1.0f;
+							serde->ReadRecordData(&PAD_DUMMY, sizeof(PAD_DUMMY));
 						}
-						if (std::isnan(AllowHitGrowth)) {
-							AllowHitGrowth = 0.0f;
-						}
+
+						// --------- SIZERESERVE
 
 						float SizeReserve;
 						if (version >= 6) {
@@ -298,6 +343,8 @@ namespace GTS {
 							SizeReserve = 0.0f;
 						}
 
+						// --------- VERSION 7 OF STRUCT DATA BEGINS HERE
+						// --------- TARGET_SCALE_V
 
 						float target_scale_v;
 						if (version >= 7) {
@@ -309,6 +356,9 @@ namespace GTS {
 							target_scale_v = 0.0f;
 						}
 
+						// --------- VERSION 8 OF STRUCT DATA BEGINS HERE
+						// --------- SCALEOVVERIDE
+
 						float scaleOverride;
 						if (version >= 8) {
 							serde->ReadRecordData(&scaleOverride, sizeof(scaleOverride));
@@ -318,6 +368,8 @@ namespace GTS {
 						if (std::isnan(scaleOverride)) {
 							scaleOverride = -1.0f;
 						}
+
+						// --------- STOLLEN_ATTRIBUTES
 
 						float stolen_attributes;
 						if (version >= 8) {
@@ -329,6 +381,8 @@ namespace GTS {
 							stolen_attributes = 0.0f;
 						}
 
+						// --------- STOLEN_HEALTH
+
 						float stolen_health;
 						if (version >= 8) {
 							serde->ReadRecordData(&stolen_health, sizeof(stolen_health));
@@ -338,6 +392,8 @@ namespace GTS {
 						if (std::isnan(stolen_health)) {
 							stolen_health = 0.0f;
 						}
+
+						// --------- STOLEN_MAGICKA
 
 						float stolen_magick;
 						if (version >= 8) {
@@ -349,6 +405,7 @@ namespace GTS {
 							stolen_magick = 0.0f;
 						}
 
+						// --------- STOLEN_STAMINA
 
 						float stolen_stamin;
 						if (version >= 8) {
@@ -360,9 +417,13 @@ namespace GTS {
 							stolen_stamin = 0.0f;
 						}
 
+						// ----------- END OF COSAVE READS
+						// ----------------------------------------------------------------------------------------------------------------------
 
 						ActorData data = ActorData();
+
 						//log::info("Loading Actor {:X} with data, native_scale: {}, visual_scale: {}, visual_scale_v: {}, target_scale: {}, max_scale: {}, half_life: {}, anim_speed: {}, bonus_hp: {}, bonus_carry: {}", newActorFormID, native_scale, visual_scale, visual_scale_v, target_scale, max_scale, half_life, anim_speed, bonus_hp, bonus_carry);
+
 						data.native_scale = native_scale;
 						data.visual_scale = visual_scale;
 						data.visual_scale_v = visual_scale_v;
@@ -380,34 +441,37 @@ namespace GTS {
 						data.FallDamage = FallDamage;
 						data.HHDamage = HHDamage;
 						data.SizeVulnerability = SizeVulnerability;
-						data.AllowHitGrowth = AllowHitGrowth;
 						data.SizeReserve = SizeReserve;
 						data.target_scale_v = target_scale_v;
 						data.scaleOverride = scaleOverride;
-
 						data.stolen_attributes = stolen_attributes;
 						data.stolen_health = stolen_health;
 						data.stolen_magick = stolen_magick;
 						data.stolen_stamin = stolen_stamin;
 
-						TESForm* actor_form = TESForm::LookupByID<Actor>(newActorFormID);
+
+						TESForm* actor_form = TESForm::LookupByID<Actor>(NewActorFormID);
+
 						if (actor_form) {
+
 							Actor* actor = skyrim_cast<Actor*>(actor_form);
+
 							if (actor) {
-								GetSingleton()._actor_data.insert_or_assign(newActorFormID, data);
-							} else {
-								log::warn("Actor ID {:X} could not be found after loading the save.", newActorFormID);
+								Persistent::GetSingleton().ActorDataMap.insert_or_assign(NewActorFormID, data);
 							}
-						} else {
-							log::warn("Actor ID {:X} could not be found after loading the save.", newActorFormID);
+							else {
+								log::warn("Actor ID {:X} could not be found after loading the save.", NewActorFormID);
+							}
+						}
+						else {
+							log::warn("Actor ID {:X} could not be found after loading the save.", NewActorFormID);
 						}
 					}
-				} else {
+				}
+				else {
 					log::info("Disregarding version 0 cosave info.");
 				}
 			}
-
-			
 
 			else if (type == AllowPlayerVoreRecord) {
 				bool vore_allowplayervore;
@@ -463,11 +527,6 @@ namespace GTS {
 				bool actors_panic;
 				serde->ReadRecordData(&actors_panic, sizeof(actors_panic));
 				GetSingleton().actors_panic = actors_panic;
-			}
-			else if (type == LaunchObjects) {
-				bool launch_objects;
-				serde->ReadRecordData(&launch_objects, sizeof(launch_objects));
-				GetSingleton().launch_objects = launch_objects;
 			}
 			else if (type == StolenAttributes) {
 				float stolen_attributes;
@@ -655,11 +714,13 @@ namespace GTS {
 
 
 		auto& Persi = Persistent::GetSingleton();
-		auto count = GetSingleton()._actor_data.size();
+		auto count = GetSingleton().ActorDataMap.size();
 
 		serde->WriteRecordData(&count, sizeof(count));
 
-		for (auto const& [form_id_t, data] : GetSingleton()._actor_data) {
+		const float DUMMY_FLOAT = 0.0f;
+
+		for (auto const& [form_id_t, data] : GetSingleton().ActorDataMap) {
 
 			FormID form_id = form_id_t;
 			float native_scale = data.native_scale;
@@ -679,7 +740,7 @@ namespace GTS {
 			float FallDamage = data.FallDamage;
 			float HHDamage = data.HHDamage;
 			float SizeVulnerability = data.SizeVulnerability;
-			float AllowHitGrowth = data.AllowHitGrowth;
+			float AllowHitGrowth = data.PAD_44;
 			float SizeReserve = data.SizeReserve;
 			float target_scale_v = data.target_scale_v;
 			float scaleOverride = data.scaleOverride;
@@ -690,35 +751,35 @@ namespace GTS {
 			float stolen_stamin = data.stolen_stamin;
 
 			//log::info("Saving Actor {:X} with data, native_scale: {}, visual_scale: {}, visual_scale_v: {}, target_scale: {}, max_scale: {}, half_life: {}, anim_speed: {}, effective_multi: {}, effective_multi: {}, bonus_hp: {}, bonus_carry: {}, bonus_max_size: {}", form_id, native_scale, visual_scale, visual_scale_v, target_scale, max_scale, half_life, anim_speed, effective_multi, effective_multi, bonus_hp, bonus_carry, bonus_max_size);
-			serde->WriteRecordData(&form_id, sizeof(form_id));
-			serde->WriteRecordData(&native_scale, sizeof(native_scale));
-			serde->WriteRecordData(&visual_scale, sizeof(visual_scale));
-			serde->WriteRecordData(&visual_scale_v, sizeof(visual_scale_v));
-			serde->WriteRecordData(&target_scale, sizeof(target_scale));
-			serde->WriteRecordData(&max_scale, sizeof(max_scale));
-			serde->WriteRecordData(&half_life, sizeof(half_life));
-			serde->WriteRecordData(&anim_speed, sizeof(anim_speed));
-			serde->WriteRecordData(&effective_multi, sizeof(effective_multi));
-			serde->WriteRecordData(&bonus_hp, sizeof(bonus_hp));
-			serde->WriteRecordData(&bonus_carry, sizeof(bonus_carry));
-			serde->WriteRecordData(&bonus_max_size, sizeof(bonus_max_size));
-			serde->WriteRecordData(&smt_run_speed, sizeof(smt_run_speed));
+			serde->WriteRecordData(&form_id, sizeof(form_id));                    //0x00
+			serde->WriteRecordData(&native_scale, sizeof(native_scale));          //0x04
+			serde->WriteRecordData(&visual_scale, sizeof(visual_scale));          //0x08
+			serde->WriteRecordData(&visual_scale_v, sizeof(visual_scale_v));      //0x0C
+			serde->WriteRecordData(&target_scale, sizeof(target_scale));          //0x10
+			serde->WriteRecordData(&max_scale, sizeof(max_scale));                //0x14
+			serde->WriteRecordData(&half_life, sizeof(half_life));                //0x18
+			serde->WriteRecordData(&anim_speed, sizeof(anim_speed));              //0x1C
+			serde->WriteRecordData(&effective_multi, sizeof(effective_multi));    //0x20
+			serde->WriteRecordData(&bonus_hp, sizeof(bonus_hp));                  //0x24
+			serde->WriteRecordData(&bonus_carry, sizeof(bonus_carry));            //0x28
+			serde->WriteRecordData(&bonus_max_size, sizeof(bonus_max_size));      //0x2C
+			serde->WriteRecordData(&smt_run_speed, sizeof(smt_run_speed));        //0x30
 
-			serde->WriteRecordData(&NormalDamage, sizeof(NormalDamage));
-			serde->WriteRecordData(&SprintDamage, sizeof(SprintDamage));
-			serde->WriteRecordData(&FallDamage, sizeof(FallDamage));
-			serde->WriteRecordData(&HHDamage, sizeof(HHDamage));
-			serde->WriteRecordData(&SizeVulnerability, sizeof(SizeVulnerability));
-			serde->WriteRecordData(&AllowHitGrowth, sizeof(AllowHitGrowth));
-			serde->WriteRecordData(&SizeReserve, sizeof(SizeReserve));
+			serde->WriteRecordData(&NormalDamage, sizeof(NormalDamage));             //0x34
+			serde->WriteRecordData(&SprintDamage, sizeof(SprintDamage));             //0x38
+			serde->WriteRecordData(&FallDamage, sizeof(FallDamage));                 //0x3C
+			serde->WriteRecordData(&HHDamage, sizeof(HHDamage));                     //0x40
+			serde->WriteRecordData(&SizeVulnerability, sizeof(SizeVulnerability));   //0x44
+			serde->WriteRecordData(&DUMMY_FLOAT, sizeof(DUMMY_FLOAT));               //0x48
+			serde->WriteRecordData(&SizeReserve, sizeof(SizeReserve));               //0x4C
 
-			serde->WriteRecordData(&target_scale_v, sizeof(target_scale_v));
-			serde->WriteRecordData(&scaleOverride, sizeof(scaleOverride));
+			serde->WriteRecordData(&target_scale_v, sizeof(target_scale_v));         //0x50
+			serde->WriteRecordData(&scaleOverride, sizeof(scaleOverride));           //0x54
 
-			serde->WriteRecordData(&stolen_attributes, sizeof(stolen_attributes));
-			serde->WriteRecordData(&stolen_health, sizeof(stolen_health));
-			serde->WriteRecordData(&stolen_magick, sizeof(stolen_magick));
-			serde->WriteRecordData(&stolen_stamin, sizeof(stolen_stamin));
+			serde->WriteRecordData(&stolen_attributes, sizeof(stolen_attributes));   //0x58
+			serde->WriteRecordData(&stolen_health, sizeof(stolen_health));           //0x5C
+			serde->WriteRecordData(&stolen_magick, sizeof(stolen_magick));           //0x60
+			serde->WriteRecordData(&stolen_stamin, sizeof(stolen_stamin));           //0x64
 		}
 
 
@@ -779,14 +840,6 @@ namespace GTS {
 		}
 		bool Stomp_Ai = GetSingleton().Stomp_Ai;
 		serde->WriteRecordData(&Stomp_Ai, sizeof(Stomp_Ai));
-
-
-		if (!serde->OpenRecord(LaunchObjects, 1)) {
-			log::error("Unable to open Launch Objects record to write cosave data");
-			return;
-		}
-		bool launch_objects = GetSingleton().launch_objects;
-		serde->WriteRecordData(&launch_objects, sizeof(launch_objects));
 
 
 		if (!serde->OpenRecord(StolenAttributes, 1)) {
@@ -1072,7 +1125,7 @@ namespace GTS {
 		this->FallDamage = 1.0f;
 		this->HHDamage = 1.0f;
 		this->SizeVulnerability = 0.0f;
-		this->AllowHitGrowth = 1.0f;
+		this->PAD_44 = 1.0f;
 		this->SizeReserve = 0.0f;
 		this->scaleOverride = -1.0f;
 
@@ -1094,7 +1147,7 @@ namespace GTS {
 		auto key = actor.formID;
 		ActorData* result = nullptr;
 		try {
-			result = &this->_actor_data.at(key);
+			result = &this->ActorDataMap.at(key);
 		} catch (const std::out_of_range& oor) {
 			// Add new
 			if (!actor.Is3DLoaded()) {
@@ -1104,8 +1157,8 @@ namespace GTS {
 			if (scale < 0.0f) {
 				return nullptr;
 			}
-			this->_actor_data.try_emplace(key, &actor);
-			result = &this->_actor_data.at(key);
+			this->ActorDataMap.try_emplace(key, &actor);
+			result = &this->ActorDataMap.at(key);
 		}
 		return result;
 	}
@@ -1119,10 +1172,13 @@ namespace GTS {
 
 	ActorData* Persistent::GetData(TESObjectREFR& refr) {
 		auto key = refr.formID;
-		ActorData* result = nullptr;
+
+		ActorData* result;
+
 		try {
-			result = &this->_actor_data.at(key);
-		} catch (const std::out_of_range& oor) {
+			result = &this->ActorDataMap.at(key);
+		}
+		catch (const std::out_of_range& oor) {
 			return nullptr;
 		}
 		return result;
@@ -1151,7 +1207,7 @@ namespace GTS {
 			data->FallDamage = 1.0f;
 			data->HHDamage = 1.0f;
 			data->SizeVulnerability = 0.0f;
-			data->AllowHitGrowth = 1.0f;
+			data->PAD_44 = 1.0f;
 			data->SizeReserve = 0.0f;
 			data->scaleOverride = -1.0f;
 

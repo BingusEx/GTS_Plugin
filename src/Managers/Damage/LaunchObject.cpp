@@ -1,4 +1,7 @@
 #include "Managers/Damage/LaunchObject.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/HighHeel.hpp"
 #include "UI/DebugAPI.hpp"
 
@@ -89,10 +92,12 @@ namespace GTS {
 		}
 	}
 
-    void PushObjectsUpwards(Actor* giant, std::vector<NiPoint3> footPoints, float maxFootDistance, float power, bool IsFoot) {
+    void PushObjectsUpwards(Actor* giant, const std::vector<NiPoint3>& footPoints, float maxFootDistance, float power, bool IsFoot) {
 		auto profiler = Profilers::Profile("Other: Launch Objects");
-		bool AllowLaunch = Persistent::GetSingleton().launch_objects;
-		if (!AllowLaunch) {
+
+		const bool AllowLaunch = Config::GetGameplay().bLaunchObjects;
+
+    	if (!AllowLaunch) {
 			return;
 		}
 
@@ -172,12 +177,13 @@ namespace GTS {
     
             
     void PushObjectsTowards(Actor* giant, TESObjectREFR* object, NiAVObject* Bone, float power, float radius, bool Kick) {
-		auto profiler = Profilers::Profile("Other: Launch Objects");
-		bool AllowLaunch = Persistent::GetSingleton().launch_objects;
-		if (!AllowLaunch) {
+
+    	auto profiler = Profilers::Profile("Other: Launch Objects");
+		const bool AllowLaunch = Config::GetGameplay().bLaunchObjects;
+
+    	if (!AllowLaunch) {
 			return;
 		}
-
 		if (!Bone) {
 			return;
 		} 
@@ -264,7 +270,7 @@ namespace GTS {
 	}
 
 	std::vector<ObjectRefHandle> GetNearbyObjects(Actor* giant) {
-		bool AllowLaunch = Persistent::GetSingleton().launch_objects;
+		bool AllowLaunch = Config::GetGameplay().bLaunchObjects;
 		if (!AllowLaunch) {
 			return {};
 		}
@@ -275,13 +281,13 @@ namespace GTS {
 		std::vector<ObjectRefHandle> Objects = {};
 		NiPoint3 point = giant->GetPosition();
 
-		bool PreciseScan = Runtime::GetBoolOr("AccurateCellScan", false);
+		const bool PreciseScan = Config::GetGameplay().bLaunchAllCells;
 
 		if (!PreciseScan) { // Scan single cell only
 			TESObjectCELL* cell = giant->GetParentCell();
 			if (cell) {
 				auto data = cell->GetRuntimeData();
-				for (auto object: data.references) {
+				for (const auto& object: data.references) {
 					if (object) {
 						auto objectref = object.get();
 						if (objectref) {

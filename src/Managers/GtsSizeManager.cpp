@@ -1,5 +1,7 @@
 #include "Managers/GtsSizeManager.hpp"
 
+#include "Config/Config.hpp"
+
 using namespace GTS;
 using namespace REL;
 
@@ -215,42 +217,6 @@ namespace GTS {
 			}
 		}
 	}
-	//===============Size-Vulnerability
-
-	//===============Hit Growth
-
-	float SizeManager::GetHitGrowth(Actor* actor) {
-		if (!actor) {
-			return 0.0f;
-		}
-		auto Persistent = Persistent::GetSingleton().GetData(actor);
-		if (!Persistent) {
-			return 0.0f;
-		}
-		
-		return Persistent->AllowHitGrowth;
-	}
-
-	void SizeManager::SetHitGrowth(Actor* actor, float allow) {
-		if (!actor) {
-			return;
-		}
-		auto Persistent = Persistent::GetSingleton().GetData(actor);
-		if (Persistent) {
-			for (auto follower: FindTeammates()) {
-				if (follower) {
-					auto TeammateData = Persistent::GetSingleton().GetData(follower);
-					if (TeammateData) {
-						TeammateData->AllowHitGrowth = allow; // Affect teammates as well
-					}
-				}
-			}
-
-			Persistent->AllowHitGrowth = allow; // Affect the player
-		}
-	}
-
-	//===============Size-Vulnerability
 
 	//===============Camera Stuff
 	CameraTracking SizeManager::GetPreviousBone(Actor* actor) {

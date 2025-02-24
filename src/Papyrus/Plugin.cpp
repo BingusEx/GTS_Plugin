@@ -107,17 +107,6 @@ namespace {
 		return false;
 	}
 
-	float GetHitGrowth(StaticFunctionTag*, Actor* actor) {
-		return SizeManager::GetSingleton().GetHitGrowth(actor);
-	}
-	bool SetHitGrowth(StaticFunctionTag*, Actor* actor, float allow) {
-		if (actor) {
-			SizeManager::GetSingleton().SetHitGrowth(actor, allow);
-			return true;
-		}
-		return false;
-	}
-
 	bool SetGrowthHalfLife(StaticFunctionTag*, Actor* actor, float halflife) {
 		if (actor) {
 			auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -248,37 +237,12 @@ namespace {
 		Persistent::GetSingleton().vore_combatonly = enabled;
 	}
 
-	void SetLaunchObjects(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().launch_objects = enabled;
-	}
-
 	void IncreaseSizeLimit(StaticFunctionTag*, float value, Actor* caster) {
 		AdjustSizeLimit(value, caster);
 	}
 
 	void IncreaseMassLimit(StaticFunctionTag*, float value, Actor* caster) {
 		AdjustMassLimit(value, caster);
-	}
-
-	void SetAlternativeLightStomp(StaticFunctionTag*, bool enable, bool player) {
-		if (player) {
-			PlayerCharacter::GetSingleton()->SetGraphVariableBool("GTS_EnableAlternativeStomp", enable);
-		} else {
-			for (auto teammate: FindTeammates()) {
-				if (teammate && teammate != PlayerCharacter::GetSingleton()) {
-					teammate->SetGraphVariableBool("GTS_EnableAlternativeStomp", enable);
-				}
-			}
-		}
-	}
-
-	void SetAlternativeSneakTransition(StaticFunctionTag*, bool enable) {
-		PlayerCharacter::GetSingleton()->SetGraphVariableBool("GTS_DisableSneakTrans", !enable);
-		for (auto teammate: FindTeammates()) {
-			if (teammate && teammate != PlayerCharacter::GetSingleton()) {
-				teammate->SetGraphVariableBool("GTS_DisableSneakTrans", !enable);
-			}
-		}
 	}
 
 	void AdjustBalanceMode(StaticFunctionTag*, int parameter, float modifier) {
@@ -417,8 +381,6 @@ namespace GTS {
 		vm->RegisterFunction("GetStolenAttribute", PapyrusClass, GetStolenAttribute);
 		vm->RegisterFunction("GetAttributeBonus", PapyrusClass, GetAttributeBonus);
 		vm->RegisterFunction("GetFlatAttributeBonus", PapyrusClass, GetFlatAttributeBonus);
-		vm->RegisterFunction("GetHitGrowth", PapyrusClass, GetHitGrowth);
-		vm->RegisterFunction("SetHitGrowth", PapyrusClass, SetHitGrowth);
 		vm->RegisterFunction("SetGrowthHalfLife", PapyrusClass, SetGrowthHalfLife);
 		vm->RegisterFunction("GetGrowthHalfLife", PapyrusClass, GetGrowthHalfLife);
 		vm->RegisterFunction("SetAnimSpeed", PapyrusClass, SetAnimSpeed);
@@ -434,8 +396,6 @@ namespace GTS {
 		vm->RegisterFunction("ResetQuestProgression", PapyrusClass, ResetQuestProgression);
 		vm->RegisterFunction("Quest_GetProgression", PapyrusClass, Quest_GetProgression);
 		vm->RegisterFunction("GetAspectOfGiantessPower", PapyrusClass, GetAspectOfGiantessPower);
-		vm->RegisterFunction("SetAlternativeLightStomp", PapyrusClass, SetAlternativeLightStomp);
-		vm->RegisterFunction("SetAlternativeSneakTransition", PapyrusClass, SetAlternativeSneakTransition);
 		vm->RegisterFunction("AdjustBalanceMode", PapyrusClass, AdjustBalanceMode);
 		vm->RegisterFunction("SetProgressionMultiplier", PapyrusClass, SetProgressionMultiplier);
 		vm->RegisterFunction("SetStompAi", PapyrusClass, SetStompAi);
@@ -453,7 +413,6 @@ namespace GTS {
 		vm->RegisterFunction("SetUndeadVore", PapyrusClass, SetUndeadVore);
 		vm->RegisterFunction("DistributeRandomItems", PapyrusClass, DistributeRandomItems);
 		vm->RegisterFunction("SetOnlyCombatVore", PapyrusClass, SetOnlyCombatVore);
-		vm->RegisterFunction("SetLaunchObjects", PapyrusClass, SetLaunchObjects);
 		vm->RegisterFunction("IncreaseSizeLimit", PapyrusClass, IncreaseSizeLimit);
 		vm->RegisterFunction("IncreaseMassLimit", PapyrusClass, IncreaseMassLimit);
 		vm->RegisterFunction("DisintegrateTarget", PapyrusClass, DisintegrateTarget);

@@ -1,4 +1,7 @@
 #include "Managers/Tremor.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Rumble.hpp"
 
 using namespace GTS;
@@ -84,8 +87,8 @@ namespace GTS {
 
 						for (NiAVObject* node: impact.nodes) {
 							if (node) {
-								bool npcEffects = Runtime::GetBoolOr("NPCSizeEffects", true);
-								bool pcEffects = Runtime::GetBoolOr("PCAdditionalEffects", true);
+								const bool npcEffects = Config::GetGameplay().bNPCAnimEffects;
+								const bool pcEffects = Config::GetGameplay().bPlayerAnimEffects;
 
 								if (actor->formID == 0x14 && pcEffects) {
 									if (impact.kind == FootEvent::JumpLand) { // let Rumble Manager handle it.

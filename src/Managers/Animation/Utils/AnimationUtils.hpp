@@ -79,7 +79,9 @@ namespace GTS {
 	float GetHugCrushThreshold(Actor* giant, Actor* tiny, bool check_size);
 
 	bool SetCrawlAnimation(Actor* a_actor, const bool a_state);
-
 	void UpdateCrawlAnimations(Actor* a_actor, bool a_state);
+
+	void SetAltFootStompAnimation(RE::Actor* a_actor, const bool a_state);
+	void SetEnableSneakTransition(RE::Actor* a_actor, const bool a_state);
 	
 }

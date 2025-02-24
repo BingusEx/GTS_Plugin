@@ -33,10 +33,7 @@ namespace {
 	}
 
 	bool Hit_ShouldGrow(Actor* receiver) {
-		auto& sizemanager = SizeManager::GetSingleton();
-		float BalanceMode = sizemanager.BalancedMode();
-
-		bool GrowthEnabled = sizemanager.GetHitGrowth(PlayerCharacter::GetSingleton()) >= 1.0f;
+		bool GrowthEnabled = Config::GetGameplay().bEnableGrowthOnHit;
 		bool HasPerk = Runtime::HasPerkTeam(receiver, "GrowthOnHitPerk");
 		bool Teammate = IsTeammate(receiver) && IsFemale(receiver, true);
 		bool IsPlayer = receiver->formID == 0x14;

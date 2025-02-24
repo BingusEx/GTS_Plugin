@@ -13,9 +13,6 @@ namespace  {
 
 namespace GTS {
 
-    //Do All your Init Stuff here
-    //Note: Dont do any calls to the imgui api here as the window is not yet created
-
     void WindowStatus::CheckFade(RE::Actor* a_actor) {
 
         if (auto Window = dynamic_cast<WindowSettings*>(ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
@@ -31,22 +28,24 @@ namespace GTS {
 
         if (a_actor) {
 
+            const GTSInfoFeatures flags = static_cast<GTSInfoFeatures>(Config::GetUI().StatusWindow.iFlags);
+
             const float Scale = get_visual_scale(a_actor);
-            if (!AreEqual(LastData.Scale, Scale)) {
+            if (!AreEqual(LastData.Scale, Scale, 0.1f)) {
                 LastData.Scale = Scale;
                 Show();
                 return;
             }
 
             const float MaxScale = get_max_scale(a_actor);
-            if (!AreEqual(LastData.MaxScale, MaxScale)) {
+            if (!AreEqual(LastData.MaxScale, MaxScale, 0.1f) && hasFlag(flags, GTSInfoFeatures::kShowMaxSize)) {
                 LastData.MaxScale = MaxScale;
                 Show();
                 return;
             }
 
             const float Ench = Ench_Aspect_GetPower(a_actor);
-            if (!AreEqual(LastData.Aspect, Ench)) {
+            if (!AreEqual(LastData.Aspect, Ench) && hasFlag(flags, GTSInfoFeatures::kShowAspect)) {
                 LastData.Aspect = Ench;
                 Show();
                 return;

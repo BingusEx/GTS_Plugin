@@ -1,4 +1,7 @@
 #include "Managers/Animation/Sneak_Slam_FingerGrind.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Animation/AnimationManager.hpp"
 
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
@@ -45,10 +48,10 @@ namespace {
 					explosion_pos = node_location;
 					explosion_pos.z = giant->GetPosition().z;
 				}
-				if (giant->formID == 0x14 && Runtime::GetBool("PCAdditionalEffects")) {
+				if (giant->formID == 0x14 && Config::GetGameplay().bPlayerAnimEffects) {
 					SpawnParticle(giant, 4.60f, "GTS/Effects/Footstep.nif", NiMatrix3(), explosion_pos, (scale * multiplier) * 1.8f, 7, nullptr);
 				}
-				if (giant->formID != 0x14 && Runtime::GetBool("NPCSizeEffects")) {
+				if (giant->formID != 0x14 && Config::GetGameplay().bNPCAnimEffects) {
 					SpawnParticle(giant, 4.60f, "GTS/Effects/Footstep.nif", NiMatrix3(), explosion_pos, (scale * multiplier) * 1.8f, 7, nullptr);
 				}
 			}

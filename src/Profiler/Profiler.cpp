@@ -65,7 +65,7 @@ namespace GTS {
 
 	void Profilers::Start(std::string_view name) {
 
-		if (Profiler::ProfilerEnabled) {
+		[[unlikely]] if (Profiler::ProfilerEnabled) {
 			auto& me = Profilers::GetSingleton();
 			auto key = std::string(name);
 			me.profilers.try_emplace(key, name);
@@ -77,7 +77,7 @@ namespace GTS {
 	}
 
 	void Profilers::Stop(std::string_view name) {
-		if (Profiler::ProfilerEnabled) {
+		[[unlikely]] if (Profiler::ProfilerEnabled) {
 			auto& me = Profilers::GetSingleton();
 			auto key = std::string(name);
 			me.profilers.try_emplace(key, name);

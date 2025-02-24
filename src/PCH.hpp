@@ -1,6 +1,12 @@
 #pragma once
 #define _USE_MATH_DEFINES
 
+//Sanity checks incase the compiler decides to be funny
+static_assert(sizeof(bool) == 1, "Assumed sizeof bool is incorrect. This will break Serde!");
+static_assert(sizeof(short) == 2, "Assumed sizeof short is incorrect. This will break Serde!");
+static_assert(sizeof(float) == 4, "Assumed sizeof float is incorrect. This will break Serde!");
+static_assert(sizeof(double) == 8, "Assumed sizeof double is incorrect. This will break Serde!");
+
 #include <cassert>
 #include <cctype>
 #include <cerrno>

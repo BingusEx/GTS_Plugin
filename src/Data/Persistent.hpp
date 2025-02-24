@@ -4,116 +4,120 @@
 
 namespace GTS {
 
-	//namespace Experiments {
-
-		//static constexpr std::uint32_t fnv1a_32(const char* str, std::size_t length) {
-		//	std::uint32_t hash = 0x811c9dc5;
-		//	for (std::size_t i = 0; i < length; ++i) {
-		//		hash ^= static_cast<std::uint32_t>(str[i]);
-		//		hash *= 0x01000193;
-		//	}
-		//	return hash;
-		//}
-
-		template<typename T>
-		bool CheckFloat(T& value) {
-			if constexpr (std::is_floating_point_v<T>) {
-				if (std::isnan(value)) {
-					value = 0;
-					return true;
-				}
+	template<typename T>
+	bool CheckFloat(T& value) {
+		if constexpr (std::is_floating_point_v<T>) {
+			if (std::isnan(value)) {
+				value = 0;
+				return true;
 			}
-			return false;
 		}
+		return false;
+	}
 
-		// Function to convert uint32_t to a string of 4 characters
-		static std::string Uint32ToStr(uint32_t value) {
-			char bytes[4];
-			bytes[0] = static_cast<char>((value >> 24) & 0xFF);
-			bytes[1] = static_cast<char>((value >> 16) & 0xFF);
-			bytes[2] = static_cast<char>((value >> 8) & 0xFF);
-			bytes[3] = static_cast<char>(value & 0xFF);
-			return std::string(bytes, 4);
-		}
+	// Function to convert uint32_t to a string of 4 characters
+	static std::string Uint32ToStr(uint32_t value) {
+		char bytes[4];
+		bytes[0] = static_cast<char>((value >> 24) & 0xFF);
+		bytes[1] = static_cast<char>((value >> 16) & 0xFF);
+		bytes[2] = static_cast<char>((value >> 8) & 0xFF);
+		bytes[3] = static_cast<char>(value & 0xFF);
+		return std::string(bytes, 4);
+	}
 
-		template <typename T, const uint32_t uid, const uint32_t ver = 1>
-		struct BasicRecord {
-			T value;
-			static constexpr auto ID = std::byteswap(uid);
+	template <typename T, const uint32_t uid, const uint32_t ver = 1>
+	struct BasicRecord {
+		T value;
+		static constexpr auto ID = std::byteswap(uid);
 
-			BasicRecord() = default;
-			BasicRecord(const T& val) : value(val) {}
+		BasicRecord() = default;
+		BasicRecord(const T& val) : value(val) {}
 
-			void Load(SKSE::SerializationInterface* serializationInterface, std::uint32_t type, std::uint32_t version, uint32_t size) {
+		void Load(SKSE::SerializationInterface* serializationInterface, std::uint32_t type, std::uint32_t version, uint32_t size) {
 
-				if (type == ID) {
-					logger::trace("Cosave record {} is being read", Uint32ToStr(ID));
-					if (version == ver && size == sizeof(T)) {
-						if (serializationInterface->ReadRecordData(&value, sizeof(T))) {
-							logger::trace("Cosave record {} was read", Uint32ToStr(ID));
-							if (CheckFloat(value)) {
-								logger::warn("Cosave record {} has been reset as it was of type float/double and was NaN!", Uint32ToStr(ID));
-							}
-
-							return;
+			if (type == ID) {
+				logger::trace("Cosave record {} is being read", Uint32ToStr(ID));
+				if (version == ver && size == sizeof(T)) {
+					if (serializationInterface->ReadRecordData(&value, sizeof(T))) {
+						logger::trace("Cosave record {} was read", Uint32ToStr(ID));
+						if (CheckFloat(value)) {
+							logger::warn("Cosave record {} has been reset as it was of type float/double and was NaN!", Uint32ToStr(ID));
 						}
-					}
 
-					logger::error("Cosave record {} Could not be loaded", Uint32ToStr(ID));
-
-				}
-			}
-
-			void Save(SKSE::SerializationInterface* serializationInterface) {
-				logger::trace("Cosave record {} is being saved", Uint32ToStr(ID));
-				if (serializationInterface->OpenRecord(ID, ver)) {
-					if (serializationInterface->WriteRecordData(&value, sizeof(T))) {
-						logger::trace("Cosave record {} save OK!", Uint32ToStr(ID));
 						return;
 					}
 				}
 
-				logger::error("Cosave record {} could not be saved", Uint32ToStr(ID));
+				logger::error("Cosave record {} Could not be loaded", Uint32ToStr(ID));
+
+			}
+		}
+
+		void Save(SKSE::SerializationInterface* serializationInterface) {
+			logger::trace("Cosave record {} is being saved", Uint32ToStr(ID));
+			if (serializationInterface->OpenRecord(ID, ver)) {
+				if (serializationInterface->WriteRecordData(&value, sizeof(T))) {
+					logger::trace("Cosave record {} save OK!", Uint32ToStr(ID));
+					return;
+				}
 			}
 
-		};
-	//}
+			logger::error("Cosave record {} could not be saved", Uint32ToStr(ID));
+		}
+
+	};
+
+	//AS OF Version 8 actor data is 100 bytes (0x64) + 4 to store the formid
+	//Each actordata cosave entry is thus 104 bytes.
 
 	struct ActorData {
 
+		/// --------- V1
 		float native_scale;
 		float visual_scale;
 		float visual_scale_v;
 		float target_scale;
-		float target_scale_v;
 		float max_scale;
-		float half_life;
-		float anim_speed;
-		float effective_multi; //<----- UNUSED
-		float bonus_hp;        //<----- UNUSED
-		float bonus_carry;     //<----- UNUSED
-		float bonus_max_size;  //<----- UNUSED
-		float smt_run_speed;   //<----- Useless here only player has it
 
+		/// --------- V2
+		float half_life;
+
+		/// --------- V3
+		float anim_speed;
+
+		/// --------- V4
+		float effective_multi; //UNUSED
+
+		/// --------- V5
+		float bonus_hp;        //UNUSED
+		float bonus_carry;     //UNUSED
+		float bonus_max_size;  //UNUSED
+
+		/// --------- V6
+		float smt_run_speed;   //Useless here only player has it
 		float NormalDamage;
 		float SprintDamage;
 		float FallDamage;
 		float HHDamage;
-		float SizeVulnerability; //<----- UNUSED
-
+		float SizeVulnerability; //UNUSED
+		float PAD_44;            //UNUSED
 		float SizeReserve;
 
-		float AllowHitGrowth;    //<----- Useless here only player and or follower use this,
-								 //a npc specific toggle does not even exist
+		/// --------- V7
+		float target_scale_v;
 
+		/// --------- V8
 		float scaleOverride;     //WHY IS THE FP CAMERA SETTING STORED FOR EVERY SINGLE NPC!!!!
-
 		float stolen_attributes;
-
 		float stolen_health;
 		float stolen_magick;
 		float stolen_stamin;
 
+		/// --------- V9
+		//Add New Stuff Here if needed / PAD data is all used up.
+		//Must Be Read and written in the same order as found here
+
+		//These don't add any size
 		ActorData();
 		explicit ActorData(Actor* actor);
 	};
@@ -143,6 +147,11 @@ namespace GTS {
 			ActorData* GetData(TESObjectREFR* refr);
 			ActorData* GetData(TESObjectREFR& refr);
 
+			//bool -> 1 byte
+			//int -> 4 bytes
+			//float -> 4 bytes
+			//double -> 8 bytes
+
 			BasicRecord<int, 'TCST'> TrackedCameraState = 0;
 			BasicRecord<bool, 'ECPL'> EnableCrawlPlayer = false;
 			BasicRecord<bool, 'ECFL'> EnableCrawlFollower = false;
@@ -165,7 +174,6 @@ namespace GTS {
 			bool hostile_toggle = true;
 			bool legacy_sounds = false;
 			bool actors_panic = true;
-			bool launch_objects = true;
 			bool NPCEffectImmunity = false;
 			bool PCEffectImmunity = false;
 
@@ -210,6 +218,6 @@ namespace GTS {
 
 			Persistent() = default;
 			mutable std::mutex _lock;
-			std::unordered_map<FormID, ActorData> _actor_data;
+			std::unordered_map<FormID, ActorData> ActorDataMap;
 	};
 }

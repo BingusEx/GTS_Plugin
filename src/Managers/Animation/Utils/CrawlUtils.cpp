@@ -1,5 +1,7 @@
 #include "Managers/Animation/Utils/CrawlUtils.hpp"
 
+#include "Config/Config.hpp"
+
 #include "Managers/Damage/CollisionDamage.hpp"
 #include "Managers/Damage/LaunchActor.hpp"
 #include "Managers/Audio/Footstep.hpp"
@@ -104,10 +106,10 @@ namespace GTS {
 				explosion_pos = node_location;
 				explosion_pos.z = actor->GetPosition().z;
 			}
-			if (actor->formID == 0x14 && Runtime::GetBool("PCAdditionalEffects")) {
+			if (actor->formID == 0x14 && Config::GetGameplay().bPlayerAnimEffects) {
 				SpawnCrawlParticle(actor, scale * multiplier, explosion_pos);
 			}
-			if (actor->formID != 0x14 && Runtime::GetBool("NPCSizeEffects")) {
+			if (actor->formID != 0x14 && Config::GetGameplay().bNPCAnimEffects) {
 				SpawnCrawlParticle(actor, scale * multiplier, explosion_pos);
 			}
 		}

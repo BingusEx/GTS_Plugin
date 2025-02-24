@@ -2,6 +2,19 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 
+
+
+namespace {
+
+    
+    const std::string CollossalGrowthPerk = "ColossalGrowth"; //AKA GtsTotalSizeControl
+    const std::string PleasurableGrowthPerk = "RandomGrowth"; //AKA GtsCrushGrowthAug
+    const std::string CrushGrowthAugmetationPerk = "GrowthDesirePerk";
+    const std::string GrowOnHitPerk = "GrowthOnHitPerk";
+
+}
+
+
 namespace GTS {
 
     void CategoryGameplay::GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings) {
@@ -34,8 +47,8 @@ namespace GTS {
         const char* T6 = "Change how often the curse effects should be applied.\n"
             "The value you select is offset by +/- 10%% each time.";
 
-        // TODO Check for perk
-        bool HasPerk = true;
+
+        bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CollossalGrowthPerk);
 
         const char* Reason;
         if (Config::GetBalance().bBalanceMode) {
@@ -73,9 +86,9 @@ namespace GTS {
             if (ImGui::CollapsingHeader("Perk Settings", ImUtil::HeaderFlags)) {
 
                 // TODO Add Perk References
-                const bool PerkCondCrush = true;
-                const bool PerkCondHit = true;
-                const bool PerkCondAtribCap = true;
+                const bool PerkCondCrush = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CrushGrowthAugmetationPerk);
+                const bool PerkCondHit = Runtime::HasPerk(PlayerCharacter::GetSingleton(), GrowOnHitPerk);
+                const bool PerkCondAtribCap = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CrushGrowthAugmetationPerk);;
 
                 const char* T1 = "Upon crushing someone: Grow in size.\n"
                                  "Applies to both the player and followers.";
@@ -218,9 +231,11 @@ namespace GTS {
     void CategoryGameplay::DrawRight() {
 
         ImUtil_Unique{
-            //TODO Check for perk
-            bool HasPerk = true;
+
+            bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), PleasurableGrowthPerk);;
+
             const char* Reason;
+
             if (Config::GetBalance().bBalanceMode) {
                 Reason = "Balance Mode Active";
                 HasPerk = false;

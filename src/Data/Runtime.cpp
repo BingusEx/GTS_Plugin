@@ -718,124 +718,141 @@ namespace GTS {
 	}
 
 	void Runtime::DataReady() {
-		const auto data = toml::parse(R"(Data\SKSE\Plugins\GtsRuntime.toml)");
-		RuntimeConfig config(data);
 
-		for (auto &[key, value]: config.sounds) {
-			auto form = find_form<BGSSoundDescriptorForm>(value);
-			if (form) {
-				this->sounds.try_emplace(key, form);
-			} else if (!Runtime::Logged("sond", key)) {
-				log::warn("SoundDescriptorform not found for {}", key);
+		try {
+			const auto data = toml::parse(R"(Data\SKSE\Plugins\GTSPlugin\Runtime.toml)");
+			RuntimeConfig config(data);
+
+			for (auto &[key, value]: config.sounds) {
+				auto form = find_form<BGSSoundDescriptorForm>(value);
+				if (form) {
+					this->sounds.try_emplace(key, form);
+				} else if (!Runtime::Logged("sond", key)) {
+					log::warn("SoundDescriptorform not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.spellEffects) {
+				auto form = find_form<EffectSetting>(value);
+				if (form) {
+					this->spellEffects.try_emplace(key, form);
+				} else if (!Runtime::Logged("mgef", key)) {
+					log::warn("EffectSetting form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.spells) {
+				auto form = find_form<SpellItem>(value);
+				if (form) {
+					this->spells.try_emplace(key, form);
+				} else if (!Runtime::Logged("spel", key)) {
+					log::warn("SpellItem form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.perks) {
+				auto form = find_form<BGSPerk>(value);
+				if (form) {
+					this->perks.try_emplace(key, form);
+				} else if (!Runtime::Logged("perk", key)) {
+					log::warn("Perk form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.explosions) {
+				auto form = find_form<BGSExplosion>(value);
+				if (form) {
+					this->explosions.try_emplace(key, form);
+				} else if (!Runtime::Logged("expl", key)) {
+					log::warn("Explosion form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.globals) {
+				auto form = find_form<TESGlobal>(value);
+				if (form) {
+					this->globals.try_emplace(key, form);
+				} else if (!Runtime::Logged("glob", key)) {
+					log::warn("Global form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.quests) {
+				auto form = find_form<TESQuest>(value);
+				if (form) {
+					this->quests.try_emplace(key, form);
+				} else if (!Runtime::Logged("qust", key)) {
+					log::warn("Quest form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.factions) {
+				auto form = find_form<TESFaction>(value);
+				if (form) {
+					this->factions.try_emplace(key, form);
+				} else if (!Runtime::Logged("facn", key)) {
+					log::warn("FactionData form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.impacts) {
+				auto form = find_form<BGSImpactDataSet>(value);
+				if (form) {
+					this->impacts.try_emplace(key, form);
+				} else if (!Runtime::Logged("impc", key)) {
+					log::warn("ImpactData form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.races) {
+				auto form = find_form<TESRace>(value);
+				if (form) {
+					this->races.try_emplace(key, form);
+				} else if (!Runtime::Logged("race", key)) {
+					log::warn("RaceData form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.keywords) {
+				auto form = find_form<BGSKeyword>(value);
+				if (form) {
+					this->keywords.try_emplace(key, form);
+				} else if (!Runtime::Logged("kywd", key)) {
+					log::warn("Keyword form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.containers) {
+				auto form = find_form<TESObjectCONT>(value);
+				if (form) {
+					this->containers.try_emplace(key, form);
+				} else if (!Runtime::Logged("cont", key)) {
+					log::warn("Container form not found for {}", key);
+				}
+			}
+
+			for (auto &[key, value]: config.levelitems) {
+				auto form = find_form<TESLevItem>(value);
+				if (form) {
+					this->levelitems.try_emplace(key, form);
+				} else if (!Runtime::Logged("cont", key)) {
+					log::warn("Item form not found for {}", key);
+				}
 			}
 		}
-
-		for (auto &[key, value]: config.spellEffects) {
-			auto form = find_form<EffectSetting>(value);
-			if (form) {
-				this->spellEffects.try_emplace(key, form);
-			} else if (!Runtime::Logged("mgef", key)) {
-				log::warn("EffectSetting form not found for {}", key);
-			}
+		catch (toml::exception &e) {
+			logger::critical("Runtime.toml load error {}", e.what());
+			ReportAndExit("The runtime file is either missing or corrupt.\n"
+						  "Please verify that the mod is intalled correctly.\n"
+						  "The game will now close."
+			);
 		}
-
-		for (auto &[key, value]: config.spells) {
-			auto form = find_form<SpellItem>(value);
-			if (form) {
-				this->spells.try_emplace(key, form);
-			} else if (!Runtime::Logged("spel", key)) {
-				log::warn("SpellItem form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.perks) {
-			auto form = find_form<BGSPerk>(value);
-			if (form) {
-				this->perks.try_emplace(key, form);
-			} else if (!Runtime::Logged("perk", key)) {
-				log::warn("Perk form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.explosions) {
-			auto form = find_form<BGSExplosion>(value);
-			if (form) {
-				this->explosions.try_emplace(key, form);
-			} else if (!Runtime::Logged("expl", key)) {
-				log::warn("Explosion form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.globals) {
-			auto form = find_form<TESGlobal>(value);
-			if (form) {
-				this->globals.try_emplace(key, form);
-			} else if (!Runtime::Logged("glob", key)) {
-				log::warn("Global form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.quests) {
-			auto form = find_form<TESQuest>(value);
-			if (form) {
-				this->quests.try_emplace(key, form);
-			} else if (!Runtime::Logged("qust", key)) {
-				log::warn("Quest form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.factions) {
-			auto form = find_form<TESFaction>(value);
-			if (form) {
-				this->factions.try_emplace(key, form);
-			} else if (!Runtime::Logged("facn", key)) {
-				log::warn("FactionData form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.impacts) {
-			auto form = find_form<BGSImpactDataSet>(value);
-			if (form) {
-				this->impacts.try_emplace(key, form);
-			} else if (!Runtime::Logged("impc", key)) {
-				log::warn("ImpactData form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.races) {
-			auto form = find_form<TESRace>(value);
-			if (form) {
-				this->races.try_emplace(key, form);
-			} else if (!Runtime::Logged("race", key)) {
-				log::warn("RaceData form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.keywords) {
-			auto form = find_form<BGSKeyword>(value);
-			if (form) {
-				this->keywords.try_emplace(key, form);
-			} else if (!Runtime::Logged("kywd", key)) {
-				log::warn("Keyword form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.containers) {
-			auto form = find_form<TESObjectCONT>(value);
-			if (form) {
-				this->containers.try_emplace(key, form);
-			} else if (!Runtime::Logged("cont", key)) {
-				log::warn("Container form not found for {}", key);
-			}
-		}
-
-		for (auto &[key, value]: config.levelitems) {
-			auto form = find_form<TESLevItem>(value);
-			if (form) {
-				this->levelitems.try_emplace(key, form);
-			} else if (!Runtime::Logged("cont", key)) {
-				log::warn("Item form not found for {}", key);
-			}
+		catch (...) {
+			logger::critical("Runtime.toml Unknown exception error");
+			ReportAndExit("The runtime file is either missing or corrupt.\n"
+				"Please verify that the mod is intalled correctly.\n"
+				"The game will now close."
+			);
 		}
 	}
 }

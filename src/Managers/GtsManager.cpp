@@ -24,6 +24,8 @@ using namespace GTS;
 
 namespace {
 
+	const auto& GameplaySettings = Config::GetGameplay();
+
 	constexpr float ini_adjustment = 65535.f; //High Value
 
 	void FixEmotionsRange() {
@@ -341,6 +343,26 @@ namespace {
 		}
 
 	}
+
+	void UpdateFootStompType(RE::Actor* a_actor) {
+		if (!a_actor) {
+			return;
+		}
+
+		auto& ActionS = Config::GetGameplay().ActionSettings;
+		bool StompState = (a_actor->formID == 0x14) ? ActionS.bStompAlternative : ActionS.bStomAlternativeOther;
+		SetAltFootStompAnimation(a_actor, StompState);
+	}
+
+	void UpdateSneakTransition(RE::Actor* a_actor) {
+		if (!a_actor) {
+			return;
+		}
+
+		auto& ActionS = Config::GetGameplay().ActionSettings;
+		bool SneaktState = (a_actor->formID == 0x14) ? ActionS.bSneakTransitions : ActionS.bSneakTransitionsOther;
+		SetEnableSneakTransition(a_actor, !SneaktState);
+	}
 }
 
 GtsManager& GtsManager::GetSingleton() noexcept {
@@ -388,7 +410,11 @@ void GtsManager::Update() {
 				TinyCalamity_SeekActors(actor); // Active only on Player
 				SpawnActionIcon(actor); // Icons for interactions with others, Player only
 				ScareActors(actor);
+
+				//Ported from papyrus
 				UpdateCrawlState(actor);
+				UpdateFootStompType(actor);
+				UpdateSneakTransition(actor);
 
 				if (IsCrawling(actor)) {
 					ApplyAllCrawlingDamage(actor, 1000, 0.25f);

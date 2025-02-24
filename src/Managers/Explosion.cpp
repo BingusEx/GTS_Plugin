@@ -1,4 +1,7 @@
 #include "Managers/Explosion.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/HighHeel.hpp"
 #include "Rays/Raycast.hpp"
 
@@ -113,9 +116,9 @@ namespace GTS {
 						explosion_pos.z -= 3.0f * scale;
 					}
 				}
-				if (actor->formID == 0x14 && Runtime::GetBool("PCAdditionalEffects")) {
+				if (actor->formID == 0x14 && Config::GetGameplay().bPlayerAnimEffects) {
 					make_explosion_at(impact.kind, actor, explosion_pos, scale);
-				} else if (actor->formID != 0x14 && Runtime::GetBool("NPCSizeEffects")) {
+				} else if (actor->formID != 0x14 && Config::GetGameplay().bNPCAnimEffects) {
 					make_explosion_at(impact.kind, actor, explosion_pos, scale);
 				}
 			}
