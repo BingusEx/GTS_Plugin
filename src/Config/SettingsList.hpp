@@ -123,7 +123,7 @@ struct GameplayActionSettings {
     bool bAllowUndead = false;
 
     //Stomp Settings
-    float fPlayerUnderstompGrindChance = 50.0f;
+    float fPlayerUnderstompGrindChance = 20.0f;
 
     //Hug Settings
     bool bNonLethalHugsHostile = true;
@@ -235,7 +235,7 @@ struct AIGrabAction {
 TOML_SERIALIZABLE(AIGrabAction);
 
 //------------------------------------------- Interface/GtsUI
-struct WindowConfStatus {
+struct WindowConfWidget {
     // Window lock and visibility
     bool bLock = true;
     bool bVisible = false;
@@ -253,17 +253,16 @@ struct WindowConfStatus {
     float fFadeDelta = 0.05f;
     // Display control
     uint32_t iFlags = 22;
-
 };
-TOML_SERIALIZABLE(WindowConfStatus);
+TOML_SERIALIZABLE(WindowConfWidget);
 
 struct WindowConfSettings {
     bool bLock = true;
     std::array<float, 2> f2Offset = {0.0f, 0.0f};
     std::string sAnchor = "kCenter";
-    float fWindowSize = 80.f;
+    float fWindowSize = 90.f;
     float fAlpha = 1.0f;
-    float fBGAlphaMult = 0.8f;
+    float fBGAlphaMult = 0.45f;
 };
 TOML_SERIALIZABLE(WindowConfSettings);
 
@@ -349,7 +348,7 @@ struct SettingsGeneral {
     bool bHighheelsFurniture = true;
     bool bEnableMales = false;
     bool bAllActorSizeEffects = false;
-    bool bEnableFOVEdits = false;
+    bool bEnableFOVEdits = true;
 
     // Bone tracking for foot Animations
     bool bTrackBonesDuringAnim = true;
@@ -371,17 +370,17 @@ struct SettingsGameplay {
     // Size Effects
     bool bPlayerAnimEffects = true;
     bool bNPCAnimEffects = true;
-    bool bLaunchObjects = false;
+    bool bLaunchObjects = true;
     bool bLaunchAllCells = false;
 
     // Cloth Tearing parameters
-    bool bClothTearing = true;
+    bool bClothTearing = false;
     float fClothRipStart = 1.5f;
     float fClothRipThreshold = 2.2f;
 
     // Perk settings
     bool bEnableCrushGrowth = true;
-    bool bEnableGrowthOnHit = false;
+    bool bEnableGrowthOnHit = true;
     float fSizeConvLevelCap = 1.0f;
 
 };
@@ -408,7 +407,7 @@ struct SettingsCamera {
 
     bool bEnableAutoFNearDist = true;
 
-    bool bEnableSkyrimCameraAdjustments = false;
+    bool bEnableSkyrimCameraAdjustments = true;
 
     float fCameraDistMin = 150.0f;
     float fCameraDistMax = 600.0f;
@@ -499,12 +498,48 @@ struct SettingsUI {
     std::string sDisplayUnits = "kMetric";
     float fScale = 1.0f;
     float fItemWidth = 0.55f;
-    std::array<float, 3> f3AccentColor = {0.486f, 0.431f, 0.529f};
+    std::array<float, 3> f3AccentColor = { 0.81834f, 0.797923f, 0.834302f };
+    //std::array<float, 3> f3AccentColor = {0.486f, 0.431f, 0.529f};
 
     bool bEnableAutoSaveOnClose = true;
 
     // Window configurations
     WindowConfSettings SettingsWindow {};
-    WindowConfStatus StatusWindow {};
+
+
+    WindowConfWidget StatusWindow = {
+
+        .bLock = true,
+        .bVisible = true,
+    	.f2Offset = {860.0f, 28.5f},
+    	.sAnchor = "kBottomLeft",
+        .fAlpha = 1.0f,
+        .fBGAlphaMult = 0.0f,
+        .bEnableFade = true,
+        .fFadeAfter = 1.8f,
+        .fFixedWidth = 150.0f,
+        .fSizeBarHeightMult = 0.1f,
+        .fFadeDelta = 0.01f,
+        .iFlags = 3,
+
+    };
+
+    WindowConfWidget UnderstompWindow = {
+
+	    .bLock = true,
+	    .bVisible = true,
+	    .f2Offset = {875.0f, 60.0f},
+	    .sAnchor = "kBottomLeft",
+	    .fAlpha = 1.0f,
+	    .fBGAlphaMult = 0.0f,
+	    .bEnableFade = true,
+	    .fFadeAfter = 1.8f,
+	    .fFixedWidth = 120.0f,
+	    .fSizeBarHeightMult = 0.1f,
+	    .fFadeDelta = 0.05f,
+	    .iFlags = 0,
+
+    };
+
 };
 TOML_SERIALIZABLE(SettingsUI);

@@ -12,6 +12,8 @@
 #include "UI/Windows/WindowStatus.hpp"
 #include "Managers/Input/InputManager.hpp"
 
+#include "Windows/WindowUnderstomp.hpp"
+
 namespace {
 
     void OpenSettingsImpl(bool a_IsConsole) {
@@ -75,6 +77,22 @@ namespace {
 
 namespace GTS {
 
+
+    void UIManager::ShowInfos() {
+        if (auto Window = dynamic_cast<WindowStatus*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+            if (Window->ShouldDraw()) {
+                Window->Show();
+            }
+        	
+        }
+
+        if (auto Window = dynamic_cast<WindowUnderstomp*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+            if (Window->ShouldDraw()) {
+                Window->Show();
+            }
+        }
+    }
+
     void UIManager::CloseSettings() {
         if (auto Window = dynamic_cast<WindowSettings*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
 
@@ -123,7 +141,13 @@ namespace GTS {
 
         ImGuiIO& io = ImGui::GetIO();
         io.IniFilename = ImGuiINI.data();
-        io.DisplaySize = { static_cast<float>(SwapChainDesc.BufferDesc.Width), static_cast<float>(SwapChainDesc.BufferDesc.Height) };
+
+        io.DisplaySize = {
+        	static_cast<float>(SwapChainDesc.BufferDesc.Width),
+        	static_cast<float>(SwapChainDesc.BufferDesc.Height)
+        };
+
+        io.ConfigNavCaptureKeyboard = false;
         io.ConfigNavEscapeClearFocusWindow = false;
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
         
@@ -139,6 +163,7 @@ namespace GTS {
 
         WinMgr.AddWindow(std::make_unique<WindowSettings>());
         WinMgr.AddWindow(std::make_unique<WindowStatus>());
+        WinMgr.AddWindow(std::make_unique<WindowUnderstomp>());
 
         Initialized.store(true);
 

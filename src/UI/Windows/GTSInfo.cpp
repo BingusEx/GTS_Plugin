@@ -1,10 +1,7 @@
 #include "UI/Windows/GTSInfo.hpp"
 #include "UI/ImGui/ImUtil.hpp"
 #include "UI/DearImGui/imgui.h"
-
 #include "Managers/Attributes.hpp"
-#include "Managers/Animation/Utils/AnimationUtils.hpp"
-
 #include "Utils/UnitConverter.hpp"
 
 namespace GTS {

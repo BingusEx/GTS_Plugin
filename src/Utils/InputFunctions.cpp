@@ -11,6 +11,7 @@
 
 #include "Magic/Effects/Common.hpp"
 
+#include "UI/UIManager.hpp"
 
 
 using namespace GTS;
@@ -403,6 +404,8 @@ namespace {
 
 		if (!a_Actor) return;
 
+		UIManager::ShowInfos();
+
 		const bool Mammoth = Config::GetUI().sDisplayUnits == "kMammoth";
 		float HH = HighHeelManager::GetBaseHHOffset(a_Actor)[2] / 100;
 		const std::string HHOffset = (HighHeelManager::IsWearingHH(a_Actor) && !Mammoth) ? fmt::format(" + {}", GetFormatedHeight(HH)) : "";
@@ -434,7 +437,7 @@ namespace {
 			return;
 		}
 
-		//TODO Call Papyrus Function here
+		Runtime::SetFloat("OpenGTSSkillMenu", 1.0);
 	}
 
 }

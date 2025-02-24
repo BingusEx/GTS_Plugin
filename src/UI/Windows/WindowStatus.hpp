@@ -16,6 +16,17 @@ namespace GTS {
 
         void Draw() override;
 
+        inline bool ShouldDraw() override {
+            return sUI.bVisible;
+        }
+
+        inline float GetAlphaMult() override {
+            return sUI.fAlpha * AutoFadeAlpha;
+        }
+
+        inline float GetBGAlphaMult() override {
+            return sUI.fBGAlphaMult;
+        }
         private:
 
         float AutoFadeAlpha = 1.0f;
@@ -37,18 +48,8 @@ namespace GTS {
 
         Config& Settings = Config::GetSingleton();
         const SettingsHidden& sHidden = Config::GetHidden();
-        const WindowConfStatus& sUI= Config::GetUI().StatusWindow;
+        const WindowConfWidget& sUI= Config::GetUI().StatusWindow;
 
-        inline bool ShouldShow() override {
-            return sUI.bVisible;
-        }
 
-        inline float GetAlphaMult() override {
-            return sUI.fAlpha * AutoFadeAlpha;
-        }
-
-        inline float GetBGAlphaMult() override {
-            return sUI.fBGAlphaMult;
-        }
     };
 }

@@ -70,10 +70,6 @@ namespace {
 }
 namespace GTS {
 
-    static inline float Remap(float x, float in_min, float in_max, float out_min, float out_max) {
-        return out_min + (x - in_min) * (out_max - out_min) / (in_max - in_min);
-    }
-
     bool AnimationUnderStomp::ShouldStompUnder_NPC(Actor* giant, float distance) {
         //log::info("Distance of {} is {}", giant->GetDisplayFullName(), distance);
         constexpr float min_distance = 37.5f;

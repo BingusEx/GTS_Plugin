@@ -213,10 +213,6 @@ namespace {
 		return Ench_Aspect_GetPower(player);
 	}
 
-	bool GtsBehaviorsInstalled(StaticFunctionTag*, Actor* giant) {
-		return AnimationsInstalled(giant);
-	}
-
 	void SetAllowPlayerVore(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().vore_allowplayervore = enabled;
 	}
@@ -385,7 +381,6 @@ namespace GTS {
 		vm->RegisterFunction("GetGrowthHalfLife", PapyrusClass, GetGrowthHalfLife);
 		vm->RegisterFunction("SetAnimSpeed", PapyrusClass, SetAnimSpeed);
 		vm->RegisterFunction("SigFig", PapyrusClass, SigFig);
-		vm->RegisterFunction("GtsBehaviorsInstalled", PapyrusClass, GtsBehaviorsInstalled);
 		vm->RegisterFunction("SetPlayerStagger", PapyrusClass, SetPlayerStagger);
 		vm->RegisterFunction("SetActorAudioOverride", PapyrusClass, SetActorAudioOverride);
 		vm->RegisterFunction("SetNPCProtection", PapyrusClass, SetNPCProtection);

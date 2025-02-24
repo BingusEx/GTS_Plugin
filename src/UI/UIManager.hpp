@@ -27,6 +27,7 @@ namespace GTS {
 			return Instance;
 		}
 
+		static void ShowInfos();
 		static void CloseSettings();
 		void Init();
 		void Update();

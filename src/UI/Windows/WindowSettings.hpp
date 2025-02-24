@@ -18,7 +18,7 @@ namespace GTS {
 
         void Draw() override;
 
-        inline bool ShouldShow() override {
+        inline bool ShouldDraw() override {
             return this->Show;
         }
 

@@ -47,7 +47,7 @@ namespace GTS {
         int RebindIndex = 0;
         int CurEventIndex = 1000;
         float Width = 0.0f;
-        bool DrawInputEvent(GTSInputEvent& Event, std::string a_name);
+        bool DrawInputEvent(GTSInputEvent& Event, const std::string& a_name);
         const int HeaderFlags =  ImGuiChildFlags_AutoResizeY | ImGuiChildFlags_AutoResizeX ;
 
     };

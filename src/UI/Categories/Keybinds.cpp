@@ -130,7 +130,7 @@ namespace GTS {
 	    ImGui::EndChild();
 	}
 
-	bool CategoryKeybinds::DrawInputEvent(GTSInputEvent& Event, std::string a_name){
+	bool CategoryKeybinds::DrawInputEvent(GTSInputEvent& Event, const std::string& a_name){
 
 	    const char* T0 = "Disable this input event.\n"
 	                     "Disabled events are completely ignored by the game and will never trigger.";
@@ -153,12 +153,12 @@ namespace GTS {
 	    const char* T4 = "This adds a time delay before an action gets triggerd if its keys are pressed.\n"
 	                     "(eg. if the trigger type is once and this value is set to 1.0 you'd need to hold the correct key combination for atleast 1 second before this event's action will fire.)";
 	    
-	    const char* T5 = "Here you can see the current key combination required to trigger an action as well as modify it.\n"
-	                     "Pressing \"Rebind Action\" Will allow you to enter a new key combination for this action.\n"
-	                     "You don't have to hold down the keys if creating a key combination. Pressing a key once will append it to the list\n."
-	                     "After entering the new key combination press \"Confirm\" to apply it.\n\n"
-	                     "IMPORTANT: You NEED to press the \"Save\" button at the bottom to be able to make use of the changes you've made\n"
-	                     "If not done the key combination to trigger the action will not change and any changes made here will be lost if you restart the game or reload your save.";
+		const char* T5 = "Here you can see the current key combination required to trigger an action as well as modify it.\n"
+			"Pressing \"Rebind Action\" Will allow you to enter a new key combination for this action.\n"
+			"You don't have to hold down the keys if creating a key combination. Pressing a key once will append it to the list\n."
+			"After entering the new key combination press \"Confirm\" to apply it.\n\n"
+			"Note: You NEED to press the \"Save\" button at the bottom if you have autosave disabled to be able to make use of the changes you've made";
+	                    
 
 	    ImGui::BeginChild(CurEventIndex++, {Width/Div, 0.0f}, ImGuiChildFlags_AlwaysAutoResize | ImGuiChildFlags_AutoResizeY | ImGuiChildFlags_AutoResizeX);
 
@@ -188,29 +188,22 @@ namespace GTS {
 	            }
 
 	            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.7f);
+	        	ImUtil::CheckBox("Disabled", &Event.Disabled, T0);
 
-				const bool IsSettings = Event.Event == "OpenModSettings";
-
-				if (!IsSettings) {
-					ImUtil::CheckBox("Disabled", &Event.Disabled, T0);
-				}
-	            
 	            //If Disabled: Don't draw at all.
 	            if(!Event.Disabled){
 
 	                {   //-- Basic Controls
-						//We don't want users breaking the settings menu...
-						if (!IsSettings) {
-							ImGui::BeginDisabled(IsRebinding);
-							ImUtil::CheckBox("Exclusive", &Event.Exclusive, T1);
-							ImUtil::ComboEx<TriggerType>("Trigger Type", Event.Trigger, T2);
-							ImUtil::ComboEx<BlockInputTypes>("Block Input", Event.BlockInput, T3);
+						ImGui::BeginDisabled(IsRebinding);
+						ImUtil::CheckBox("Exclusive", &Event.Exclusive, T1);
+						ImUtil::ComboEx<TriggerType>("Trigger Type", Event.Trigger, T2);
+						ImUtil::ComboEx<BlockInputTypes>("Block Input", Event.BlockInput, T3);
 
-							ImGui::InputFloat("Trigger After", &Event.Duration, 0.1f, 0.01f, "%.2f Seconds");
-							ImUtil::Tooltip(T4);
-							Event.Duration = std::clamp(Event.Duration, 0.0f, 10.0f);
-							ImGui::EndDisabled();
-						}
+						ImGui::InputFloat("Trigger After", &Event.Duration, 0.1f, 0.01f, "%.2f Seconds");
+						ImUtil::Tooltip(T4);
+						Event.Duration = std::clamp(Event.Duration, 0.0f, 10.0f);
+						ImGui::EndDisabled();
+						
 	                }
 
 	                

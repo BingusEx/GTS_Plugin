@@ -65,7 +65,7 @@ namespace GTS {
 
             for (const auto& window : windows) {
 
-                if (window->ShouldShow()) {
+                if (window->ShouldDraw()) {
 
                     const float BGAlpha = window->GetBGAlphaMult();
                     const float AlphaMult = window->GetAlphaMult();

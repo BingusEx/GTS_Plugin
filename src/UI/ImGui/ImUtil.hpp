@@ -29,6 +29,7 @@ namespace ImUtil {
 
     //Predefined colors {R, G, B, A} (0.0 to 1.0f)
     constexpr ImVec4 ColorError = {1.0f, 0.35f, 0.30f, 0.9f};
+    constexpr ImVec4 ColorOK = { 0.30f, 1.0f, 0.35f, 0.9f };
     constexpr ImVec4 ColorSubscript = {1.0f, 1.0f, 1.0f, 0.5f};
 
     constexpr uint32_t HeaderFlags = ImGuiTreeNodeFlags_DefaultOpen;

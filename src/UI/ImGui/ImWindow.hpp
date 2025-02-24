@@ -39,7 +39,7 @@ namespace GTS {
         virtual ~ImWindow() noexcept = default;
 
         virtual void Draw() = 0;
-        virtual inline bool ShouldShow() = 0;
+        virtual inline bool ShouldDraw() = 0;
         virtual inline float GetAlphaMult() = 0;
         virtual inline float GetBGAlphaMult() = 0;
 

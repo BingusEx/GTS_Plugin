@@ -1,18 +1,68 @@
 #include "UI/Categories/General.hpp"
-
 #include "Config/Keybinds.hpp"
-
+#include "Managers/Animation/AnimationManager.hpp"
 #include "UI/UIManager.hpp"
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGUI/ImFontManager.hpp"
 #include "UI/ImGUI/ImStyleManager.hpp"
 #include "UI/ImGui/ImUtil.hpp"
-
 #include "Utils/QuestUtil.hpp"
+
 
 namespace GTS {
 
 	void CategoryGeneral::DrawLeft() {
+
+		ImUtil_Unique {
+
+			const char* T0 = "The automatic check can sometimes be unreliable.\n"
+							 "By pressing this you can forcefully try play an animation.\n"
+							 "A messagebox should appear stating wether the animation was successfully played or not.";
+
+			if (ImGui::CollapsingHeader("Animations Check", ImUtil::HeaderFlags)) {
+				const auto Player = PlayerCharacter::GetSingleton();
+				const bool WorkingAnims = AnimationsInstalled(Player);
+
+				ImGui::PushFont(ImFontManager::GetFont("widgettitle"));
+				ImGui::Text("Animations Installed: ");
+				if (WorkingAnims) {
+					ImGui::SameLine(0,1);
+					ImGui::TextColored(ImUtil::ColorOK,"Yes");
+				}
+				else {
+					ImGui::SameLine(0);
+					ImGui::TextColored(ImUtil::ColorError, "No");
+				}
+
+				ImGui::PopFont();
+
+				if (ImUtil::Button("Manualy Test Animations", T0)) {
+
+					TaskManager::Run("AnimTestTask", [=](auto& progressData) {
+
+						GTS::UIManager::CloseSettings();
+
+						if (progressData.runtime > 0.2) {
+
+							GTS::AnimationManager::StartAnim("StrongStompRight", Player);
+
+							if (progressData.runtime > 0.5) {
+
+								if (GTS::IsGtsBusy(Player)) {
+									RE::DebugMessageBox("Animations are working.");
+								}
+								else {
+									RE::DebugMessageBox("Animations are NOT working.");
+								}
+								return false;
+							}
+						}
+						return true;
+					});
+				}
+				ImGui::Spacing();
+			}
+		}
 
 		//------ Protect Actors
 

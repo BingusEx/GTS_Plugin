@@ -124,11 +124,4 @@ namespace GTS {
 
 		Notify("All Spells Have been given.");
 	}
-
-
-	void OpenSkilLTree() {
-		
-
-		Notify("All Spells Have been given.");
-	}
 }

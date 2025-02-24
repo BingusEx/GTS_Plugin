@@ -578,7 +578,7 @@ namespace GTS {
 
 		auto& Settings = Config::GetGeneral();
 
-		const bool ProtectEssential = Settings.bProtectEssentials;
+		const bool ProtectEssential = actor->IsEssential() && Settings.bProtectEssentials;
 		const bool ProtectFollowers = Settings.bProtectFollowers;
 		const bool Teammate = IsTeammate(actor);
 
@@ -618,8 +618,8 @@ namespace GTS {
 
 	bool AnimationsInstalled(Actor* giant) {
 		bool installed = false;
-		giant->GetGraphVariableBool("GTS_Installed", installed);
-		return installed;
+		return giant->GetGraphVariableBool("GTS_Installed", installed);
+		//return installed;
 	}
 
 	bool IsInGodMode(Actor* giant) {
