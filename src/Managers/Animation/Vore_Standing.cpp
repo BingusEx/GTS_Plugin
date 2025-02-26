@@ -1,4 +1,7 @@
 #include "Managers/Animation/Vore_Standing.hpp"
+
+#include "config/Config.hpp"
+
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
@@ -117,12 +120,19 @@ namespace {
 			DisableCollisions(tiny, giant);
 			SetBeingHeld(tiny, true);
 		}
-		if (Runtime::GetBool("FreeLookOnVore") && giant->formID == 0x14) {
-			EnableFreeCamera();
+
+		if (giant->formID == 0x14) {
+
+			const bool Freelook = Config::GetGameplay().ActionSettings.bVoreFreecam;
+
+			if (Freelook) {
+				EnableFreeCamera();
+			}
+			else {
+				ManageCamera(giant, true, CameraTracking::Hand_Right);
+			}
 		}
-		if (!Runtime::GetBool("FreeLookOnVore") && giant->formID == 0x14) {
-			ManageCamera(giant, true, CameraTracking::Hand_Right);
-		}
+
 		StartBodyRumble("BodyRumble", data.giant, 0.15f, 0.10f, false);
 
 		Task_HighHeel_SyncVoreAnim(giant);
@@ -171,7 +181,7 @@ namespace {
 			tiny->NotifyAnimationGraph("JumpFall");
 			Attacked(tiny, giant);
 		}
-		if (!Runtime::GetBool("FreeLookOnVore") && giant->formID == 0x14) {
+		if (Config::GetGameplay().ActionSettings.bVoreFreecam && giant->formID == 0x14) {
 			ManageCamera(giant, false, CameraTracking::Hand_Right);
 			ManageCamera(giant, true, CameraTracking::VoreHand_Right);
 		}
@@ -280,7 +290,7 @@ namespace {
 	void GTSvore_standup_start(AnimationEventData& data) {
 		auto giant = &data.giant;
 		StartBodyRumble("BodyRumble", data.giant, 0.15f, 0.10f, false);
-		if (!Runtime::GetBool("FreeLookOnVore") && giant->formID == 0x14) {
+		if (Config::GetGameplay().ActionSettings.bVoreFreecam && giant->formID == 0x14) {
 			ManageCamera(giant, false, CameraTracking::Hand_Right);
 			ManageCamera(giant, false, CameraTracking::VoreHand_Right);
 		}
@@ -299,7 +309,7 @@ namespace {
 		auto giant = &data.giant;
 		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
 		VoreData.ReleaseAll();
-		if (Runtime::GetBool("FreeLookOnVore") && giant->formID == 0x14) {
+		if (Config::GetGameplay().ActionSettings.bVoreFreecam && giant->formID == 0x14) {
 			EnableFreeCamera();
 		}
 		Rumbling::Stop("BodyRumble", &data.giant);

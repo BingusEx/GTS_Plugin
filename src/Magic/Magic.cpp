@@ -117,30 +117,30 @@ namespace GTS {
 		}
 	}
 
-	Actor* Magic::GetTarget() {
+	Actor* Magic::GetTarget() const {
 		return this->target;
 	}
 
-	Actor* Magic::GetCaster() {
+	Actor* Magic::GetCaster() const {
 		return this->caster;
 	}
 
-	ActiveEffect* Magic::GetActiveEffect() {
+	ActiveEffect* Magic::GetActiveEffect() const {
 		return this->activeEffect;
 	}
 
-	EffectSetting* Magic::GetBaseEffect() {
+	EffectSetting* Magic::GetBaseEffect() const {
 		return this->effectSetting;
 	}
 
-	void Magic::Dispel() {
+	void Magic::Dispel() const {
 		if (this->activeEffect) {
 			this->activeEffect->Dispel(false); // Not forced
 			// Seems to be CTD prone for some reason, best to not use it
 		}
 	}
 
-	bool Magic::IsDualCasting() {
+	bool Magic::IsDualCasting() const {
 		if (this->caster) {
 			auto casting_type = GetActiveEffect()->castingSource;
 			if (casting_type == MagicSystem::CastingSource::kLeftHand || casting_type == MagicSystem::CastingSource::kRightHand) {

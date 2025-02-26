@@ -42,8 +42,7 @@ namespace {
 		for (auto& ray_result: collector->GetHits()) {
 			ray_result.position = meter_to_unit(origin + normed * length * ray_result.hitFraction);
 		}
-		std::ranges::sort(collector->GetHits(), [](const AllRayCollectorOutput &a, const AllRayCollectorOutput &b)
-		{
+		std::ranges::sort(collector->GetHits(), [](const AllRayCollectorOutput &a, const AllRayCollectorOutput &b){
 			return a.hitFraction < b.hitFraction;
 		});
 	}
@@ -81,26 +80,45 @@ namespace GTS {
 		return res;
 	}
 
-	// Performs a ray cast and returns a new position based on the result
 	NiPoint3 ComputeRaycast(const NiPoint3& rayStart, const NiPoint3& rayEnd, const float hullMult) {
 		// Determine hull size.
 		const float Hull = (hullMult < 0.0f) ? GetFnearDist() : camhullSize * hullMult;
 		NiPoint3 currentStart = rayStart;
+		// Default to rayEnd if no hit occurs
+		NiPoint3 lastValidResult = rayEnd;
 
-		//Recusrive version clobbers the stack sadly so for perf and CTD reasons do it via itterations
-		constexpr int maxIterations = 4;
+		// Perform an UPWARD ray cast (along Z-axis) to find ground level ABOVE rayStart's XY position.
+		NiPoint3 upwardRayStart = currentStart;
+		NiPoint3 upwardRayEnd = currentStart;
+
+		upwardRayEnd.z += Hull;
+
+		// Convert to 4D vectors for raycast.
+		const auto upwardRayStart4 = glm::vec4(upwardRayStart.x, upwardRayStart.y, upwardRayStart.z, 0.0f);
+		const auto upwardRayEnd4 = glm::vec4(upwardRayEnd.x, upwardRayEnd.y, upwardRayEnd.z, 0.0f);
+
+		auto groundResult = CastCamRay(upwardRayStart4, upwardRayEnd4, 1.0); // Hull size doesn't matter much for ground check
+
+		if (groundResult.hit) {
+			// Ground hit detected *above*. Adjust currentStart (rayStart) Z position to be at ground level (plus a small offset).
+			currentStart.z = groundResult.hitPos.z + 5.0f; 
+		}
+
+		constexpr int maxIterations = 2;
 		int iterations = 0;
+
+		auto ShiftedStart = currentStart;
 
 		while (iterations < maxIterations) {
 			// Convert current start to 4D vectors for the raycast.
 			const auto rayStart4 = glm::vec4(currentStart.x, currentStart.y, currentStart.z, 0.0f);
 			const auto rayEnd4 = glm::vec4(rayEnd.x, rayEnd.y, rayEnd.z, 0.0f);
-
 			const auto result = CastCamRay(rayStart4, rayEnd4, Hull);
 
 			// If no hit, return rayEnd.
-			if (!result.hit)
+			if (!result.hit) {
 				return rayEnd;
+			}
 
 			// Get hit position and normal.
 			NiPoint3 ResHit = { result.hitPos.x, result.hitPos.y, result.hitPos.z };
@@ -109,22 +127,27 @@ namespace GTS {
 			// Compute a new result point along the normal.
 			NiPoint3 Res = ResHit + (ResNorm * glm::min(result.rayLength, Hull));
 
+			// Store this as our latest valid result
+			lastValidResult = Res;
+
 			// Check the distance from the original start.
-			float distance = Res.GetDistance(rayStart);
-			if (distance > Hull + 1.0f)
+			float distance = Res.GetDistance(ShiftedStart); // Use the *original* rayStart for distance check
+			if (distance > Hull * 2.0f) {
 				return Res;  // The hit is far enough.
+			}
 
 			// Otherwise, compute the extra offset needed.
-			float offset = (Hull + 1.0f) - distance;
+			float offset = (Hull * 2.0f) - distance;
+
 			// Nudge the start point further along the normal.
 			currentStart = Res + (ResNorm * offset);
-
 			++iterations;
 		}
 
-		// If we exceed max iterations, return the last computed result.
-		return currentStart;
+		// If we exceed max iterations, return the last computed valid result.
+		return lastValidResult;
 	}
+
 
 	NiPoint3 CastRay(TESObjectREFR* ref, const NiPoint3& origin, const NiPoint3& direction, const float& length, bool& success) {
 		auto collector = AllRayCollector::Create();

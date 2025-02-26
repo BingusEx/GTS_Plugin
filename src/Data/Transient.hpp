@@ -93,20 +93,27 @@ namespace GTS {
 		float rip_offset;
 
 		float breast_size_buff;
+
+		//0 Timers dont Run.
+		Timer GameModeIntervalTimer = Timer(0);
+
 	};
 
 	class Transient : public EventListener {
+
 		public:
+
 			[[nodiscard]] static Transient& GetSingleton() noexcept;
 
 			TempActorData* GetData(TESObjectREFR* object);
 			TempActorData* GetActorData(Actor* actor);
-			std::vector<FormID> GetForms();
+			std::vector<FormID> GetForms() const;
 
 			virtual std::string DebugName() override;
 			virtual void Update() override;
 			virtual void Reset() override;
 			virtual void ResetActor(Actor* actor) override;
+
 		private:
 
 			mutable std::mutex _lock;

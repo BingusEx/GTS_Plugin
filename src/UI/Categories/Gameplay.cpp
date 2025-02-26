@@ -28,7 +28,7 @@ namespace GTS {
             "Curses:\n"
             "- Curse of Growth: You will continiously grow in size like \"Grow\" but in spurts of varying strength up until the specified scale limit which you can change below.\n"
             "- Curse of the Giantess: You will rapidly grow to the specified size if you are smaller. Spells like \"Restore Size\" will not shrink you below this size.\n"
-            "- Curse of Diminishing: You will slowly shrink to the target scale if too large.\n"
+            "- Curse of Diminishing: When not in combat or when not performing any giantess actions. You will slowly shrink to the target scale if too large.\n"
             "- Size Locked: Combines the effects of both curses. You will grow to the specified size and slowly shrink back to it if larger.";
 
         const char* T1 = "Modify the amount grown each tick.";
@@ -61,21 +61,24 @@ namespace GTS {
 
         if (ImUtil::ConditionalHeader(a_title, Reason, HasPerk, false)) {
 
-            ImUtil::ComboEx<GameMode>("Game Mode", a_Settings->sGameMode, T0);
+            ImUtil::ComboEx<SelectedGameMode>("Game Mode", a_Settings->sGameMode, T0);
+
+            ImGui::BeginDisabled(a_Settings->sGameMode == "kNone");
 
             ImGui::Spacing();
             ImGui::Text("Basic Game Modes");
             ImUtil::SliderF("Growth Rate", &a_Settings->fGrowthRate, 0.001f, 0.2f, T1, "%.3fx");
             ImUtil::SliderF("Shrink Rate", &a_Settings->fShrinkRate, 0.001f, 0.2f, T2, "%.3fx");
-            ImUtil::SliderF("Scale Limit", &a_Settings->fGrowthSizeLimit, 1.1f, 50.0f, T3, "%.2fx");
+
             ImUtil::CheckBox("Multiply Rates", &a_Settings->bMultiplyGrowthrate, T4);
 
             ImGui::Spacing();
             ImGui::Text("Curse Game Modes");
+            ImUtil::SliderF("Curse Update Interval", &a_Settings->fGameModeUpdateInterval, 2.0f, 10.0f, T6, "Every %.2f Seconds");
+            ImUtil::SliderF("Curse of Growth Limit", &a_Settings->fCurseGrowthSizeLimit, 1.1f, 50.0f, T3, "%.2fx");
+        	ImUtil::SliderF("Target Scale", &a_Settings->fCurseTargetScale, 1.1f, 2.0f, T5, "%.2fx");
 
-            ImUtil::SliderF("Target Scale", &a_Settings->fCurseTargetScale, 1.1f, 2.0f, T5, "%.2fx");
-            ImUtil::SliderF("Curse Update Interval", &a_Settings->fUpdateInterval, 2.0f, 10.0f, T6, "Every %.2f Seconds");
-
+            ImGui::EndDisabled();
             ImGui::Spacing();
         }
     }
@@ -180,13 +183,13 @@ namespace GTS {
                 const char* T1 = "Modify the amount of growth gained after vore.";
                 const char* T2 = "Enable Skyrim's free camera when doing any vore actions.";
                 const char* T3 = "Increase vanilla character weight after vore.";
-                const char* T4 = "Allow voring spiders.";
+                const char* T4 = "Allow voring insects.";
                 const char* T5 = "Allow voring undead actors (like draugr).";
 
                 ImUtil::SliderF("Vore Gain Mult", &Settings.ActionSettings.fVoreGainMult, 0.1f, 3.0f, T1, "%.1fx");
                 ImUtil::CheckBox("Enable FreeCam During Vore", &Settings.ActionSettings.bVoreFreecam, T2);
                 ImUtil::CheckBox("Increase Character Weight After Vore", &Settings.ActionSettings.bVoreWeightGain, T3);
-                ImUtil::CheckBox("Allow Spiders", &Settings.ActionSettings.bAllowSpiders, T4);
+                ImUtil::CheckBox("Allow Insects", &Settings.ActionSettings.bAllowInsects, T4);
                 ImUtil::CheckBox("Allow Undead", &Settings.ActionSettings.bAllowUndead, T5);
 
                 ImGui::Spacing();

@@ -298,12 +298,32 @@ namespace GTS {
 		float target_scale = get_target_scale(actor);
 		float natural_scale = get_natural_scale(actor, true); // get_neutral_scale(actor) 
 
-		if (target_scale < natural_scale) { // NOLINT
+		const auto& Settings = Config::GetGameplay();
+
+		if (actor->formID == 0x14) {
+			const auto Mode = StringToEnum<SelectedGameMode>(Settings.GamemodePlayer.sGameMode);
+			if (Mode == SelectedGameMode::kSizeLocked ||
+				Mode == SelectedGameMode::kCurseOfDiminishing ||
+				Mode == SelectedGameMode::kCurseOfTheGiantess) {
+				natural_scale = Settings.GamemodePlayer.fCurseTargetScale;
+			}
+		}
+		else if (IsTeammate(actor)) {
+			const auto Mode = StringToEnum<SelectedGameMode>(Settings.GamemodeFollower.sGameMode);
+			if (Mode == SelectedGameMode::kSizeLocked ||
+				Mode == SelectedGameMode::kCurseOfDiminishing ||
+				Mode == SelectedGameMode::kCurseOfTheGiantess) {
+				natural_scale = Settings.GamemodeFollower.fCurseTargetScale;
+			}
+		}
+
+		if (target_scale < natural_scale) {
 			set_target_scale(actor, natural_scale); // Without GetScale multiplier
 			return false;
-		} else {
-			update_target_scale(actor, -amount, SizeEffectType::kNeutral);
 		}
+
+		update_target_scale(actor, -amount, SizeEffectType::kNeutral);
+		
 		return true;
 	}
 

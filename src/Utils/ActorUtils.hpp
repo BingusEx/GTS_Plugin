@@ -47,7 +47,7 @@ namespace GTS {
 	bool Potion_IsUnderGrowthPotion(RE::Actor* actor);
 	
 	bool IsInsect(RE::Actor* actor, bool performcheck);
-	bool IsFemale(RE::Actor* actor, bool check_config = false);
+	bool IsFemale(RE::Actor* a_Actor, bool AllowOverride = false);
 	bool IsDragon(RE::Actor* actor);
 	bool IsGiant(RE::Actor* actor);
 	bool IsMammoth(RE::Actor* actor);
@@ -250,7 +250,7 @@ namespace GTS {
 	void DoDamageEffect(Actor* giant, float damage, float radius, int random, float bonedamage, FootEvent kind, float crushmult, DamageSource Cause, bool ignore_rotation);
 
 	void PushTowards(Actor* giantref, Actor* tinyref, std::string_view bone, float power, bool sizecheck);
-	void PushTowards_Task(ActorHandle giantHandle, ActorHandle tinyHandle, const NiPoint3& startCoords, const NiPoint3& endCoords, std::string_view TaskName, float power, bool sizecheck);
+	void PushTowards_Task(const ActorHandle& giantHandle, const ActorHandle& tinyHandle, const NiPoint3& startCoords, const NiPoint3& endCoords, std::string_view TaskName, float power, bool sizecheck);
 	void PushTowards(Actor* giantref, Actor* tinyref, NiAVObject* bone, float power, bool sizecheck);
 	void PushForward(Actor* giantref, Actor* tinyref, float power);
 	void TinyCalamityExplosion(Actor* giant, float radius);

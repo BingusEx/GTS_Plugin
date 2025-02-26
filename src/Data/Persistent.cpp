@@ -9,8 +9,6 @@ namespace {
 	inline const auto ActorDataRecord = _byteswap_ulong('ACTD');
 
 	inline const auto AllowPlayerVoreRecord = _byteswap_ulong('APVR');
-	inline const auto AllowInsectVoreRecord = _byteswap_ulong('AIVR');
-	inline const auto AllowUndeadVoreRecord = _byteswap_ulong('AUVR');
 	inline const auto AllowFollowerInteractions = _byteswap_ulong('AVFI');
 	inline const auto AllowStaggerRecord = _byteswap_ulong('ASRD');
 	inline const auto EditVoiceFrequency = _byteswap_ulong('EVFQ');
@@ -31,13 +29,11 @@ namespace {
 	inline const auto HostileToggle = _byteswap_ulong('HTTL');
 	inline const auto LegacySounds = _byteswap_ulong('LGSD');
 	inline const auto ActorsPanic = _byteswap_ulong('ACTP');
-	inline const auto LaunchObjects = _byteswap_ulong('LOBj');
 	inline const auto NPC_EffectImmunity = _byteswap_ulong('NPER');
 	inline const auto PC_EffectImmunity = _byteswap_ulong('PCER');
 	inline const auto Balance_SGP = _byteswap_ulong('BMSP');
 	inline const auto Balance_SRB = _byteswap_ulong('BMSB');
 	inline const auto Balance_SRC = _byteswap_ulong('BMSC');
-	inline const auto AllowWeightGainRecord = _byteswap_ulong('AWGR');
 
 	inline const auto StolenAttributes = _byteswap_ulong('STAT');
 	inline const auto Att_HealthStorage = _byteswap_ulong('HTSG');
@@ -478,16 +474,7 @@ namespace GTS {
 				serde->ReadRecordData(&vore_allowplayervore, sizeof(vore_allowplayervore));
 				GetSingleton().vore_allowplayervore = vore_allowplayervore;
 			}
-			else if (type == AllowInsectVoreRecord) {
-				bool AllowInsectVore;
-				serde->ReadRecordData(&AllowInsectVore, sizeof(AllowInsectVore));
-				GetSingleton().AllowInsectVore = AllowInsectVore;
-			}
-			else if (type == AllowUndeadVoreRecord) {
-				bool AllowUndeadVore;
-				serde->ReadRecordData(&AllowUndeadVore, sizeof(AllowUndeadVore));
-				GetSingleton().AllowUndeadVore = AllowUndeadVore;
-			}
+
 			else if (type == AllowFollowerInteractions) {
 				bool FollowerInteractions;
 				serde->ReadRecordData(&FollowerInteractions, sizeof(FollowerInteractions));
@@ -645,11 +632,6 @@ namespace GTS {
 				serde->ReadRecordData(&PCEffectImmunity, sizeof(PCEffectImmunity));
 				GetSingleton().PCEffectImmunity = PCEffectImmunity;
 			}
-			else if (type == AllowWeightGainRecord) {
-				bool allow_weight_gain;
-				serde->ReadRecordData(&allow_weight_gain, sizeof(allow_weight_gain));
-				GetSingleton().allow_weight_gain = allow_weight_gain;
-			}
 			else if (type == ProgressionMult) {
 				float progression_multiplier;
 				serde->ReadRecordData(&progression_multiplier, sizeof(progression_multiplier));
@@ -790,19 +772,6 @@ namespace GTS {
 		bool vore_allowplayervore = GetSingleton().vore_allowplayervore;
 		serde->WriteRecordData(&vore_allowplayervore, sizeof(vore_allowplayervore));
 
-		if (!serde->OpenRecord(AllowInsectVoreRecord, 0)) {
-			log::error("Unable to open Allow Insect Vore record to write cosave data.");
-			return;
-		}
-		bool AllowInsectVore = GetSingleton().AllowInsectVore;
-		serde->WriteRecordData(&AllowInsectVore, sizeof(AllowInsectVore));
-
-		if (!serde->OpenRecord(AllowUndeadVoreRecord, 0)) {
-			log::error("Unable to open Allow Undead Vore record to write cosave data.");
-			return;
-		}
-		bool AllowUndeadVore = GetSingleton().AllowUndeadVore;
-		serde->WriteRecordData(&AllowUndeadVore, sizeof(AllowUndeadVore));
 
 		if (!serde->OpenRecord(AllowFollowerInteractions, 0)) {
 			log::error("Unable to open Follower Interactions record to write cosave data.");
@@ -975,14 +944,6 @@ namespace GTS {
 		}
 		bool PCEffectImmunity = GetSingleton().PCEffectImmunity;
 		serde->WriteRecordData(&PCEffectImmunity, sizeof(PCEffectImmunity));
-
-		if (!serde->OpenRecord(AllowWeightGainRecord, 1)) {
-			log::error("Unable to open Gain Weight Record to write cosave data");
-			return;
-		}
-		
-		bool allow_weight_gain = GetSingleton().allow_weight_gain;
-		serde->WriteRecordData(&allow_weight_gain, sizeof(allow_weight_gain));
 
 		if (!serde->OpenRecord(HostileToggle, 1)) {
 			log::error("Unable to open Hostile Toggle Actors record to write cosave data");

@@ -157,8 +157,6 @@ namespace GTS {
 			BasicRecord<bool, 'ECFL'> EnableCrawlFollower = false;
 
 			bool vore_allowplayervore = false;
-			bool AllowInsectVore = true;
-			bool AllowUndeadVore = true;
 			bool FollowerInteractions = false;
 			bool vore_combatonly = true;
 			bool allow_stagger = true;
@@ -176,8 +174,6 @@ namespace GTS {
 			bool actors_panic = true;
 			bool NPCEffectImmunity = false;
 			bool PCEffectImmunity = false;
-
-			bool allow_weight_gain = true;
 
 			float tremor_scale = 1.0f;
 			float npc_tremor_scale = 1.0f;

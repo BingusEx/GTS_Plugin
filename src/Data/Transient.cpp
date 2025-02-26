@@ -7,39 +7,54 @@ namespace GTS {
 	}
 
 	TempActorData* Transient::GetData(TESObjectREFR* object) {
+
 		if (!object) {
 			return nullptr;
 		}
+
 		auto key = object->formID;
 		TempActorData* result = nullptr;
+
 		try {
 			result = &this->_actor_data.at(key);
-		} catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			return nullptr;
 		}
+
 		return result;
 	}
 
 	TempActorData* Transient::GetActorData(Actor* actor) {
+
 		std::unique_lock lock(this->_lock);
+
 		if (!actor) {
 			return nullptr;
 		}
+
 		auto key = actor->formID;
+
 		try {
-			auto no_discard = this->_actor_data.at(key);
-		} catch (const std::out_of_range& oor) {
+			return &this->_actor_data.at(key);
+		}
+		catch (const std::out_of_range& oor) {
+
 			// Try to add
 			if (!actor) {
 				return nullptr;
 			}
-			TempActorData result;
+
+			TempActorData NewTempActorData = {};
+
 			auto bound_values = get_bound_values(actor);
 			auto scale = get_scale(actor);
+
 			if (scale < 0.0f) {
 				log::info("Scale of {} is < 0", actor->GetDisplayFullName());
 				return nullptr;
 			}
+
 			float base_height_unit = bound_values[2] * scale;
 			float base_height_meters = unit_to_meter(base_height_unit);
 			float fall_start = actor->GetPosition()[2];
@@ -131,111 +146,116 @@ namespace GTS {
 			float base_volume = bound_values[0] * bound_values[1] * bound_values[2] * scale * scale * scale;
 			float base_volume_meters = unit_to_meter(base_volume);
 
-			const float rip_initScale = -1.0f;
+			constexpr float rip_initScale = -1.0f;
 			float breast_size_buff = 0.0f;
 
-			result.base_height = base_height_meters;
-			result.base_volume = base_volume_meters;
+			NewTempActorData.base_height = base_height_meters;
+			NewTempActorData.base_volume = base_volume_meters;
 
 			auto shoe = actor->GetWornArmor(BGSBipedObjectForm::BipedObjectSlot::kFeet);
+
 			float shoe_weight = 1.0f;
+
 			if (shoe) {
 				shoe_weight = shoe->weight;
 			}
-			result.shoe_weight = shoe_weight;
-			result.char_weight = actor->GetWeight();
-			result.fall_start = fall_start;
-			result.last_set_fall_start = last_set_fall_start;
-			result.carryweight_boost = carryweight_boost;
-			result.health_boost = health_boost;
-			result.SMT_Bonus_Duration = SMT_Bonus_Duration;
-			result.SMT_Penalty_Duration = SMT_Penalty_Duration;
-			result.FallTimer = FallTimer;
-			result.Hug_AnimSpeed = Hug_AnimSpeed;
-			result.Throw_Speed = Throw_Speed;
-			result.potion_max_size = potion_max_size;
-			result.buttcrush_max_size = buttcrush_max_size;
-			result.buttcrush_start_scale = buttcrush_start_scale;
-			result.SizeVulnerability = SizeVulnerability;
 
-			result.push_force = push_force;
-			result.can_do_vore = can_do_vore;
-			result.Throw_WasThrown = Throw_WasThrown;
-			result.can_be_crushed = can_be_crushed;
-			result.being_held = being_held;
-			result.is_between_breasts = is_between_breasts;
-			result.about_to_be_eaten = about_to_be_eaten;
-			result.being_foot_grinded = being_foot_grinded;
-			result.SMT_ReachedFullSpeed = SMT_ReachedFullSpeed;
-			result.dragon_was_eaten = dragon_was_eaten;
-			result.can_be_vored = can_be_vored;
-			result.disable_collision_with = disable_collision_with;
-			result.Throw_Offender = Throw_Offender;
-			result.AttachmentNode = AttachmentNode;
-			result.FootInUse = FootInUse;
-			result.otherScales = otherScales;
-			result.vore_recorded_scale = vore_recorded_scale;
-			result.WorldFov_Default = WorldFov_Default;
-			result.FpFov_Default = FpFov_Default;
-			result.ButtCrushGrowthAmount = ButtCrushGrowthAmount;
-			result.MovementSlowdown = MovementSlowdown;
-			result.ShrinkResistance = ShrinkResistance;
-			result.MightValue = MightValue;
-			result.Shrink_Ticks = Shrink_Ticks;
-			result.Shrink_Ticks_Calamity = Shrink_Ticks_Calamity;
+			NewTempActorData.shoe_weight = shoe_weight;
+			NewTempActorData.char_weight = actor->GetWeight();
+			NewTempActorData.fall_start = fall_start;
+			NewTempActorData.last_set_fall_start = last_set_fall_start;
+			NewTempActorData.carryweight_boost = carryweight_boost;
+			NewTempActorData.health_boost = health_boost;
+			NewTempActorData.SMT_Bonus_Duration = SMT_Bonus_Duration;
+			NewTempActorData.SMT_Penalty_Duration = SMT_Penalty_Duration;
+			NewTempActorData.FallTimer = FallTimer;
+			NewTempActorData.Hug_AnimSpeed = Hug_AnimSpeed;
+			NewTempActorData.Throw_Speed = Throw_Speed;
+			NewTempActorData.potion_max_size = potion_max_size;
+			NewTempActorData.buttcrush_max_size = buttcrush_max_size;
+			NewTempActorData.buttcrush_start_scale = buttcrush_start_scale;
+			NewTempActorData.SizeVulnerability = SizeVulnerability;
 
-			result.Perk_BonusActionSpeed = Perk_BonusActionSpeed;
-			result.Perk_lifeForceStolen = Perk_lifeForceStolen;
-			result.Perk_lifeForceStacks = Perk_lifeForceStacks;
+			NewTempActorData.push_force = push_force;
+			NewTempActorData.can_do_vore = can_do_vore;
+			NewTempActorData.Throw_WasThrown = Throw_WasThrown;
+			NewTempActorData.can_be_crushed = can_be_crushed;
+			NewTempActorData.being_held = being_held;
+			NewTempActorData.is_between_breasts = is_between_breasts;
+			NewTempActorData.about_to_be_eaten = about_to_be_eaten;
+			NewTempActorData.being_foot_grinded = being_foot_grinded;
+			NewTempActorData.SMT_ReachedFullSpeed = SMT_ReachedFullSpeed;
+			NewTempActorData.dragon_was_eaten = dragon_was_eaten;
+			NewTempActorData.can_be_vored = can_be_vored;
+			NewTempActorData.disable_collision_with = disable_collision_with;
+			NewTempActorData.Throw_Offender = Throw_Offender;
+			NewTempActorData.AttachmentNode = AttachmentNode;
+			NewTempActorData.FootInUse = FootInUse;
+			NewTempActorData.otherScales = otherScales;
+			NewTempActorData.vore_recorded_scale = vore_recorded_scale;
+			NewTempActorData.WorldFov_Default = WorldFov_Default;
+			NewTempActorData.FpFov_Default = FpFov_Default;
+			NewTempActorData.ButtCrushGrowthAmount = ButtCrushGrowthAmount;
+			NewTempActorData.MovementSlowdown = MovementSlowdown;
+			NewTempActorData.ShrinkResistance = ShrinkResistance;
+			NewTempActorData.MightValue = MightValue;
+			NewTempActorData.Shrink_Ticks = Shrink_Ticks;
+			NewTempActorData.Shrink_Ticks_Calamity = Shrink_Ticks_Calamity;
 
-			result.CrushedTinies = CrushedTinies;
+			NewTempActorData.Perk_BonusActionSpeed = Perk_BonusActionSpeed;
+			NewTempActorData.Perk_lifeForceStolen = Perk_lifeForceStolen;
+			NewTempActorData.Perk_lifeForceStacks = Perk_lifeForceStacks;
 
-			result.BoundingBox_Cache = BoundingBox_Cache;
+			NewTempActorData.CrushedTinies = CrushedTinies;
 
-			result.OverrideCamera = OverrideCamera;
-			result.WasReanimated = WasReanimated;
-			result.FPCrawling = FPCrawling;
-			result.FPProning = FPProning;
-			result.Overkilled = Overkilled;
-			result.Protection = Protection;
-			result.GrowthPotion = GrowthPotion;
+			NewTempActorData.BoundingBox_Cache = BoundingBox_Cache;
 
-			result.Devourment_Devoured = Devourment_Devoured;
-			result.Devourment_Eaten = Devourment_Eaten;
+			NewTempActorData.OverrideCamera = OverrideCamera;
+			NewTempActorData.WasReanimated = WasReanimated;
+			NewTempActorData.FPCrawling = FPCrawling;
+			NewTempActorData.FPProning = FPProning;
+			NewTempActorData.Overkilled = Overkilled;
+			NewTempActorData.Protection = Protection;
+			NewTempActorData.GrowthPotion = GrowthPotion;
 
-			result.disable_collision = disable_collision;
-			result.was_sneaking = was_sneaking;
+			NewTempActorData.Devourment_Devoured = Devourment_Devoured;
+			NewTempActorData.Devourment_Eaten = Devourment_Eaten;
 
-			result.emotion_modifier_busy = emotion_modifier_busy;
-			result.emotion_phenome_busy = emotion_phenome_busy;
+			NewTempActorData.disable_collision = disable_collision;
+			NewTempActorData.was_sneaking = was_sneaking;
 
-			result.IsNotImmune = IsNotImmune;
+			NewTempActorData.emotion_modifier_busy = emotion_modifier_busy;
+			NewTempActorData.emotion_phenome_busy = emotion_phenome_busy;
 
-			result.POS_Last_Leg_L = POS_Last_Leg_L;
-			result.POS_Last_Leg_R = POS_Last_Leg_R;
-			result.POS_Last_Hand_L = POS_Last_Hand_L;
-			result.POS_Last_Hand_R = POS_Last_Hand_R;
+			NewTempActorData.IsNotImmune = IsNotImmune;
 
-			result.shrinkies = shrinkies;
-			result.shrink_until = shrink_until;
+			NewTempActorData.POS_Last_Leg_L = POS_Last_Leg_L;
+			NewTempActorData.POS_Last_Leg_R = POS_Last_Leg_R;
+			NewTempActorData.POS_Last_Hand_L = POS_Last_Hand_L;
+			NewTempActorData.POS_Last_Hand_R = POS_Last_Hand_R;
 
-			result.IsInControl = IsInControl;
+			NewTempActorData.shrinkies = shrinkies;
+			NewTempActorData.shrink_until = shrink_until;
+
+			NewTempActorData.IsInControl = IsInControl;
 		
-			result.rip_lastScale = rip_initScale;
-			result.rip_offset = rip_initScale;
+			NewTempActorData.rip_lastScale = rip_initScale;
+			NewTempActorData.rip_offset = rip_initScale;
 
-			result.breast_size_buff = breast_size_buff;
+			NewTempActorData.breast_size_buff = breast_size_buff;
+			NewTempActorData.GameModeIntervalTimer = Timer(0);
 
-			this->_actor_data.try_emplace(key, result);
+			this->_actor_data.try_emplace(key, NewTempActorData);
+
+			return &this->_actor_data.at(key);
 		}
-		return &this->_actor_data[key];
 	}
 
-	std::vector<FormID> Transient::GetForms() {
+	std::vector<FormID> Transient::GetForms() const {
 		std::vector<FormID> keys;
 		keys.reserve(this->_actor_data.size());
-		for(auto kv : this->_actor_data) {
-			keys.push_back(kv.first);
+		for(const auto data : this->_actor_data | views::keys) {
+			keys.push_back(data);
 		}
 		return keys;
 	}
@@ -246,38 +266,45 @@ namespace GTS {
 	}
 
 	void Transient::Update() {
+
 		for (auto actor: find_actors()) {
+
 			if (!actor) {
 				continue;
 			}
+
 			if (!actor->Is3DLoaded()) {
 				continue;
 			}
 
 			auto key = actor->formID;
 			std::unique_lock lock(this->_lock);
+
 			try {
 				auto data = this->_actor_data.at(key);
 				auto shoe = actor->GetWornArmor(BGSBipedObjectForm::BipedObjectSlot::kFeet);
 				float shoe_weight = 1.0f;
+
 				if (shoe) {
 					shoe_weight = shoe->weight;
 				}
-				data.shoe_weight = shoe_weight;
 
+				data.shoe_weight = shoe_weight;
 				data.char_weight = actor->GetWeight();
 
-
-			} catch (const std::out_of_range& oor) {
-				continue;
+			}
+			catch (const std::out_of_range& oor) {
+				logger::warn("Transient::Update exception: {}", oor.what());
 			}
 		}
 	}
+
 	void Transient::Reset() {
 		log::info("Transient was reset");
 		std::unique_lock lock(this->_lock);
 		this->_actor_data.clear();
 	}
+
 	void Transient::ResetActor(Actor* actor) {
 		std::unique_lock lock(this->_lock);
 		if (actor) {

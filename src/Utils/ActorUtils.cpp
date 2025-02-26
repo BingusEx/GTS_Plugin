@@ -434,7 +434,8 @@ namespace GTS {
 	}
 
 	bool IsInsect(Actor* actor, bool performcheck) {
-		bool Check = Persistent::GetSingleton().AllowInsectVore;
+		bool Check = Config::GetGameplay().ActionSettings.bAllowInsects;
+
 		if (performcheck && Check) {
 			return false;
 		}
@@ -456,8 +457,8 @@ namespace GTS {
 		return false;
 	}
 
-	bool IsFemale(Actor* actor, bool check_config) {
-		if (check_config) {
+	bool IsFemale(Actor* a_Actor, bool AllowOverride) {
+		if (AllowOverride) {
 			auto profiler = Profilers::Profile("ActorUtils: FemaleCheck");
 
 			if (Config::GetGeneral().bEnableMales) {
@@ -465,7 +466,7 @@ namespace GTS {
 			}
 		}
 
-		auto base = actor->GetActorBase();
+		auto base = a_Actor->GetActorBase();
 		int sex = 0;
 		if (base) {
 			if (base->GetSex()) {
@@ -511,7 +512,7 @@ namespace GTS {
 
 	bool IsUndead(Actor* actor, bool PerformCheck) {
 		bool IsDraugr = Runtime::HasKeyword(actor, "UndeadKeyword");
-		bool Check = Persistent::GetSingleton().AllowUndeadVore;
+		bool Check = Config::GetGameplay().ActionSettings.bAllowUndead;
 		if (Check && PerformCheck) {
 			return false;
 		}
@@ -1916,7 +1917,9 @@ namespace GTS {
 	}
 
 	void GainWeight(Actor* giant, float value) {
-		if (Persistent::GetSingleton().allow_weight_gain) {
+
+		if (Config::GetGameplay().ActionSettings.bVoreWeightGain) {
+
 			if (giant->formID == 0x14) {
 				std::string_view name = "Vore_Weight";
 				auto gianthandle = giant->CreateRefHandle();
@@ -2298,7 +2301,7 @@ namespace GTS {
 		}
 	}
 
-	void PushTowards_Task(ActorHandle giantHandle, ActorHandle tinyHandle, const NiPoint3& startCoords, const NiPoint3& endCoords, std::string_view TaskName, float power, bool sizecheck) {
+	void PushTowards_Task(const ActorHandle& giantHandle, const ActorHandle& tinyHandle, const NiPoint3& startCoords, const NiPoint3& endCoords, std::string_view TaskName, float power, bool sizecheck) {
 
 		double startTime = Time::WorldTimeElapsed();
 

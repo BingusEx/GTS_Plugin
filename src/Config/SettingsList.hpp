@@ -47,7 +47,8 @@ enum class CameraTrackingSettings : uint8_t {
     kBreasts_04,
     kNeck,
     kButt,
-	kGenitals
+	kGenitals,
+    kBelly,
 };
 
 enum class CameraModeTP : uint8_t {
@@ -69,7 +70,7 @@ enum class SizeMode : uint8_t {
     kMassBased
 };
 
-enum class GameMode : uint8_t {
+enum class SelectedGameMode : uint8_t {
     kNone,
     kGrow,
     kShrink,
@@ -96,13 +97,13 @@ struct GameplayActorSettings {
     // Growth/Shrink parameters
     float fGrowthRate = 0.001f;
     float fShrinkRate = 0.001f;
-    float fGrowthSizeLimit = 25.0f;
+    float fCurseGrowthSizeLimit = 25.0f;
 
     // Curse-related settings
     float fCurseTargetScale = 1.5f;
 
     // Update settings
-    float fUpdateInterval = 3.0f;
+    float fGameModeUpdateInterval = 3.0f;
     bool bMultiplyGrowthrate = false;
 };
 TOML_SERIALIZABLE(GameplayActorSettings);
@@ -119,7 +120,7 @@ struct GameplayActionSettings {
     float fVoreGainMult = 1.0f;
     bool bVoreFreecam = false;
     bool bVoreWeightGain = false;
-    bool bAllowSpiders = false;
+    bool bAllowInsects = false;
     bool bAllowUndead = false;
 
     //Stomp Settings
@@ -402,6 +403,7 @@ struct SettingsCamera {
     
     // Automatic camera controls
     bool bAutomaticCamera = true;
+    float fCameraInterpolationFactor = 0.35f;
 
     // Distance and zoom controls
 

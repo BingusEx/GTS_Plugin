@@ -1,5 +1,7 @@
 #pragma once
 
+#include "config/Config.hpp"
+
 #include "Managers/HighHeel.hpp"
 #include "Rays/Raycast.hpp"
 #include "UI/DebugAPI.hpp"
@@ -381,8 +383,12 @@ namespace GTS {
 
 		// Manual offsets
 		float difference = GetSizeDifference(giant, tiny, SizeType::GiantessScale, false, false) * 0.15f;
-		float offset_Y = Runtime::GetFloatOr("Cleavage_OffsetY", 1.0f) * get_visual_scale(giant);
-		float offset_Z = Runtime::GetFloatOr("Cleavage_OffsetZ", 1.0f) * get_visual_scale(giant);
+
+		const auto Offsets = Config::GetGameplay().ActionSettings.f2CleavageOffset;
+
+		float offset_Z = Offsets.at(0) * get_visual_scale(giant);
+		float offset_Y = Offsets.at(1) * get_visual_scale(giant);
+
 
 		// FIX tiny falling into breasts based on size
 		offset_Y += difference;

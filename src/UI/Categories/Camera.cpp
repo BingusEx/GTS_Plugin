@@ -194,13 +194,17 @@ namespace GTS {
 	        const char* T1 = "Change the third-person camera mode.\n"
 	    					 "Note: This setting is save file specific.";
 
+			const char* T2 = "Change how the camera's linerar interpolation behaves.\n"
+	    					 "Lower values smooth harder while higher values smooth less";
+
 			//Hack
             auto CamState = std::bit_cast<int*>(&Persistent::GetSingleton().TrackedCameraState.value);
 
 	        if (ImGui::CollapsingHeader("Automatic Camera", ImUtil::HeaderFlags)) {
 	            ImUtil::CheckBox("Enable Automatic Camera", &Settings.bAutomaticCamera, T0);
 	            ImUtil::IComboEx<CameraModeTP>("Camera Mode", CamState, T1, !Settings.bAutomaticCamera);
-	            ImGui::Spacing();
+				ImUtil::SliderF("Interpolation Factor", &Settings.fCameraInterpolationFactor, 0.01f, 1.0f, T2, "%.2fx", !Settings.bAutomaticCamera);
+	        	ImGui::Spacing();
 	        }
 	    }
 

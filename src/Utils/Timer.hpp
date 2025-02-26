@@ -5,11 +5,12 @@ namespace GTS {
 	class Timer {
 
 		public:
-		Timer(double delta);
+		explicit Timer(double delta);
 		bool ShouldRun();
+		void UpdateDelta(float a_delta);
 		double TimeDelta() const;
 		bool ShouldRunFrame();
-		std::uint64_t FrameDelta();
+		std::uint64_t FrameDelta() const;
 		void Reset();
 
 		private:

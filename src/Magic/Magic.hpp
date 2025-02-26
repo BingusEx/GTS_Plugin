@@ -28,14 +28,14 @@ namespace GTS {
 
 			void poll();
 
-			Actor* GetTarget();
-			Actor* GetCaster();
+			Actor* GetTarget() const;
+			Actor* GetCaster() const;
 
-			ActiveEffect* GetActiveEffect();
-			EffectSetting* GetBaseEffect();
+			ActiveEffect* GetActiveEffect() const;
+			EffectSetting* GetBaseEffect() const;
 
-			void Dispel();
-			bool IsDualCasting();
+			void Dispel() const;
+			bool IsDualCasting() const;
 			inline bool DualCasted() {
 				return this->dual_casted;
 			}

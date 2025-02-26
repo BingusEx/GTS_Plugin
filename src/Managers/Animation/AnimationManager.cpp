@@ -64,9 +64,9 @@ namespace GTS {
 
 	AnimationEventData::AnimationEventData(Actor& giant, TESObjectREFR* tiny) : giant(giant), tiny(tiny) {}
 
-	AnimationEvent::AnimationEvent(std::function<void(AnimationEventData&)> a_callback,  std::string a_group) : callback(a_callback), group(a_group) {}
+	AnimationEvent::AnimationEvent(const std::function<void(AnimationEventData&)>& a_callback, const std::string& a_group) : callback(a_callback), group(a_group) {}
 
-	TriggerData::TriggerData( std::vector< std::string_view> behavors,  std::string_view group) : behavors({}), group(group) {
+	TriggerData::TriggerData(const std::vector< std::string_view>& behavors,  std::string_view group) : behavors({}), group(group) {
 		for (auto& sv: behavors) {
 			this->behavors.push_back(std::string(sv));
 		}
@@ -199,10 +199,12 @@ namespace GTS {
 	float AnimationManager::GetHighHeelSpeed(Actor* actor) {
 		float Speed = 1.0f;
 		try {
-			for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(actor)) {
+			for (auto& data : AnimationManager::GetSingleton().data.at(actor) | views::values) {
 				Speed *= data.HHspeed;
 			}
-		} catch (std::out_of_range& e) {
+		}
+		catch (std::out_of_range& e) {
+
 		}
 		return Speed;
 	}
@@ -210,18 +212,18 @@ namespace GTS {
 	float AnimationManager::GetBonusAnimationSpeed(Actor* actor) {
 		float totalSpeed = 1.0f;
 		try {
-			for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(actor)) {
+			for (auto& data : AnimationManager::GetSingleton().data.at(actor) | views::values) {
 				totalSpeed *= data.animSpeed;
 			}
-		} catch (std::out_of_range& e) {
 		}
+		catch (std::out_of_range& e) {}
 		return totalSpeed;
 	}
 
 	void AnimationManager::AdjustAnimSpeed(float bonus) {
 		auto player = PlayerCharacter::GetSingleton();
 		try {
-			for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(player)) {
+			for (auto& data : AnimationManager::GetSingleton().data.at(player) | views::values) {
 				if (data.canEditAnimSpeed) {
 					data.animSpeed += (bonus*GetAnimationSlowdown(player));
 				}
@@ -248,7 +250,7 @@ namespace GTS {
 
 			try {
 				float totalSpeed = 1.0f;
-				for (auto& [tag, data]: AnimationManager::GetSingleton().data.at(actor)) {
+				for (auto& data : AnimationManager::GetSingleton().data.at(actor) | views::values) {
 					totalSpeed *= data.animSpeed;
 				}
 				speed *= totalSpeed;
@@ -403,7 +405,7 @@ namespace GTS {
 		try {
 			auto& me = AnimationManager::GetSingleton();
 			auto& actorData = me.data.at(&actor);
-			for ( auto &[group, data]: actorData) {
+			for (auto& data : actorData | views::values) {
 				if (data.disableHH) {
 					return true;
 				}

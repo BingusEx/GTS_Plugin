@@ -18,6 +18,7 @@
 using namespace GTS;
 
 namespace {
+
 	bool CanHugCrush(Actor* giant, Actor* huggedActor) {
 		bool ForceCrush = Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles");
 		float staminapercent = GetStaminaPercentage(giant);
@@ -141,7 +142,10 @@ namespace {
 		auto huggedActor = HugShrink::GetHuggiesActor(giant);
 		if (huggedActor) {
 			if (!IsTeammate(huggedActor)) {
-				Attacked(huggedActor, giant);
+
+				if (!IsTeammate(huggedActor) || !Config::GetGameplay().ActionSettings.bNonLethalHugsHostile) {
+					Attacked(huggedActor, giant);
+				}
 			}
 
 			HugShrink::ShrinkOtherTask(giant, huggedActor);
@@ -179,9 +183,10 @@ namespace {
 		auto huggedActor = HugShrink::GetHuggiesActor(giant);
 		if (huggedActor) {
 			auto scale = get_visual_scale(huggedActor);
-			float sizedifference = get_visual_scale(giant)/scale;
 
-			Attacked(huggedActor, giant);
+			if (!IsTeammate(huggedActor) || !Config::GetGameplay().ActionSettings.bNonLethalHugsHostile) {
+				Attacked(huggedActor, giant);
+			}
 
 			ShrinkPulse_DecreaseSize(huggedActor, scale);
 			ShrinkPulse_GainSize(giant, huggedActor, false);
@@ -451,7 +456,7 @@ namespace GTS {
 
 		UpdateFriendlyHugs(giant, tiny, true);
 
-		const float duration = 2.0f;
+		constexpr float duration = 2.0f;
 		TaskManager::RunFor(name, duration, [=](auto& progressData) {
 			if (!gianthandle) {
 				return false;
@@ -483,7 +488,11 @@ namespace GTS {
 			
 			TransferSize(giantref, tinyref, false, shrink, steal, false, ShrinkSource::Hugs); // Shrink foe, enlarge gts
 			ModSizeExperience(giantref, 0.00020f);
-			Attacked(tinyref, giantref); // make it look like we attack the tiny
+
+			if (!Config::GetGameplay().ActionSettings.bNonLethalHugsHostile) {
+				Attacked(tinyref, giantref); // make it look like we attack the tiny
+			}
+
 			Rumbling::Once("HugSteal", giantref, Rumble_Hugs_Shrink, 0.12f, "NPC COM [COM ]", 0.0f);
 			
 			return true;

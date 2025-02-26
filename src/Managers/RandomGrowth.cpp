@@ -33,10 +33,12 @@ namespace {
 	}
 
 	bool ShouldGrow(Actor* actor) {
-		float MultiplySlider = Runtime::GetFloat("RandomGrowthMultiplyPC");
+
+		float MultiplySlider = Config::GetGameplay().GamemodePlayer.fRandomGrowthDelay;
 		if (IsTeammate(actor)) {
-			MultiplySlider = Runtime::GetFloat("RandomGrowthMultiplyNPC");
+			MultiplySlider = Config::GetGameplay().GamemodeFollower.fRandomGrowthDelay;
 		}
+
 		if (!Runtime::HasPerkTeam(actor, "RandomGrowth") || MultiplySlider <= 0.0f) {
 			return false;
 		}
@@ -53,7 +55,7 @@ namespace {
 		}
 		float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 		int Requirement = static_cast<int>((300 * MultiplySlider * SizeManager::GetSingleton().BalancedMode()) / Gigantism); // Doubles random in Balance Mode
-		Requirement = static_cast<int>(Requirement * Get_size_penalty(actor));
+		Requirement *= Get_size_penalty(actor);
 		int random = RandomInt(1, Requirement);
 		int chance = 1;
 		if (random <= chance) {

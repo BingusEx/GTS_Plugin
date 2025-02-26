@@ -1,10 +1,8 @@
 #include "Utils/VoreUtils.hpp"
 #include "Utils/SurvivalMode.hpp"
-
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Rumble.hpp"
 #include "Managers/Animation/Controllers/VoreController.hpp"
-
 #include "Magic/Effects/Common.hpp"
 
 using namespace GTS;
@@ -156,6 +154,9 @@ namespace GTS {
 
         float size_gain = sizePower * 0.5f * GetGrowthFormula(get_visual_scale(giant), tinySize, Devourment);
 
+		//Multiply vore gain
+		size_gain *= Config::GetGameplay().ActionSettings.fVoreGainMult;
+
         if (giant) {
             GainWeight(giant, 3.0f * tinySize * amount_of_tinies * multiplier); // Self explanatory
             ModSizeExperience(giant, 0.20f * multiplier + (tinySize * 0.02f)); // Gain Size Mastery XP
@@ -196,6 +197,8 @@ namespace GTS {
 
 			float formula = GetGrowthFormula(giantSize, tinySize, false);
 			float size_gain = (sizePower * formula * TimeScale()) / 5000;
+
+
 
 			TaskManager::Run(name, [=](auto& progressData) {
 				if (!gianthandle) {

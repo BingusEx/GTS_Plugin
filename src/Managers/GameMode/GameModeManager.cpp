@@ -1,4 +1,5 @@
 #include "Managers/GameMode/GameModeManager.hpp"
+#include "config/Config.hpp"
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Rumble.hpp"
@@ -7,28 +8,319 @@ using namespace GTS;
 
 namespace {
 
+	constexpr float EPS = 1e-7f;
+
 	float GetShrinkPenalty(float size) {
 		// https://www.desmos.com/calculator/pqgliwxzi2
-		SoftPotential launch {
+
+		SoftPotential launch{
 			.k = 0.98f,
 			.n = 0.82f,
 			.s = 0.70f,
-			.a = 0.0f,
+			.a = 0.0f
 		};
-		float balance = GameModeManager::GetSingleton().GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Base) * 1.6f;
+
+		float balance = GameModeManager::GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Base) * 1.6f;
 		float power = soft_power(size, launch) * balance;
 		return power;
 	}
 
 	float Aspect_GetEfficiency(float aspect) {
+
 		float k = 0.75f;
 		float a = 0.0f;
 		float n = 0.85f;
 		float s = 1.0f;
+
 		// https://www.desmos.com/calculator/ygoxbe7hjg
 		float result = k*pow(s*(aspect-a), n);
+
 		return result;
 	}
+
+	// ---------- Quest Shrink
+
+	void QuestShrink(RE::Actor* a_Actor, const float a_ShrinkRate, const float a_TargetScale, const float a_NaturalScale) {
+
+		const float ModAmmount = -a_ShrinkRate * Time::WorldTimeDelta();
+		if (fabs(a_ShrinkRate) < EPS) {
+			return;
+		}
+
+		float EnchantmentPower = Ench_Aspect_GetPower(a_Actor);
+		float Gigantism = Aspect_GetEfficiency(EnchantmentPower) * 0.5f;
+		float DefaultScale = a_NaturalScale * (1.0f + Gigantism);
+
+		if ((a_TargetScale + ModAmmount) > DefaultScale) {
+			update_target_scale(a_Actor, ModAmmount, SizeEffectType::kShrink);
+		}
+		else if (a_TargetScale > DefaultScale) {
+			set_target_scale(a_Actor, DefaultScale);
+		}
+	}
+
+
+	// ---------- Grow
+
+	void Grow(RE::Actor* a_Actor, const float a_CurrentScale, const float a_GrowthRate, const float a_TargetScale, const float a_MaxScale, const float a_Mult = 1.0f) {
+
+		const float ModAmmount = a_CurrentScale * (0.00010f + a_GrowthRate * 0.25f) * 60 * Time::WorldTimeDelta() * a_Mult;
+
+		if (fabs(a_GrowthRate) < EPS) {
+			return;
+		}
+
+		if (a_TargetScale + ModAmmount < a_MaxScale) {
+			update_target_scale(a_Actor, ModAmmount, SizeEffectType::kGrow);
+		}
+
+		else if (a_TargetScale < a_MaxScale) {
+			set_target_scale(a_Actor, a_MaxScale);
+		} 
+
+	}
+
+	// ---------- Shrink
+
+	void Shrink(RE::Actor* a_Actor, const float a_CurrentScale, const float a_ShrinkRate, const float a_TargetScale, const float a_NaturalScale, const float a_Mult = 1.0f) {
+
+		const float ModAmmount = -(0.00025f + (a_ShrinkRate * 0.25f) * a_CurrentScale) * 60 * Time::WorldTimeDelta() * a_Mult;
+
+		if (fabs(a_ShrinkRate) < EPS) {
+			return;
+		}
+
+		if (a_TargetScale + ModAmmount > a_NaturalScale) {
+			update_target_scale(a_Actor, ModAmmount, SizeEffectType::kShrink);
+		}
+
+		else if (a_TargetScale > a_NaturalScale || a_TargetScale < a_NaturalScale) {
+			set_target_scale(a_Actor, a_NaturalScale);
+		} 
+	}
+
+	// ---------- Combat Growth
+
+	void CombatGrowth(RE::Actor* a_Actor, const float a_CurrentScale, const float a_GrowthRate, const float a_ShrinkRate, const float a_TargetScale, const float a_NaturalScale, const float a_MaxScale) {
+		constexpr float Mult = 1.5f;
+		if (a_Actor->IsInCombat()) {
+			Grow(a_Actor, a_CurrentScale, a_GrowthRate, a_TargetScale, a_MaxScale, Mult);
+		}
+		else {
+			Shrink(a_Actor, a_CurrentScale, a_ShrinkRate, a_TargetScale, a_NaturalScale, Mult);
+		}
+	}
+
+	// ---------- Slow Combat Growth
+
+	void SlowCombatGrowth(RE::Actor* a_Actor, const float a_CurrentScale, const float a_GrowthRate, const float a_TargetScale, const float a_MaxScale) {
+		constexpr float Mult = 0.6f;
+		if (a_Actor->IsInCombat()) {
+			Grow(a_Actor, a_CurrentScale, a_GrowthRate, a_TargetScale, a_MaxScale, Mult);
+		}
+	}
+
+	// ---------- Curse Of Growth
+
+	void CurseOfGrowth(RE::Actor* a_Actor,  const float a_CurrentTargetScale, const float a_MaxScale) {
+
+		// Slider that determines max size cap.
+		float CurseOfGrowthMaxSize;
+		constexpr float SkillLevel = 100.f; //Its locked behind a level 100 perk anyways
+		//Get the actor's Gamemode Timer From Transient and set a random value to it.
+
+		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
+		if (!ActorData) return;
+
+		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		if (!IntervalTimer) return;
+
+		//Set Values based on Settings and actor type.
+		if (a_Actor->formID == 0x14) {
+			const auto& Settings =  Config::GetGameplay().GamemodePlayer;
+
+			//SkillLevel = GetGtsSkillLevel(a_Actor);
+			CurseOfGrowthMaxSize = Settings.fCurseGrowthSizeLimit;
+			const float RandomDelay = Settings.fGameModeUpdateInterval;
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay/10, RandomDelay / 10));
+		}
+		else if (IsTeammate(a_Actor)) {
+			const auto& Settings = Config::GetGameplay().GamemodeFollower;
+
+			//NPC's Set it trough alteration
+			//SkillLevel = GetAV(a_Actor, ActorValue::kAlteration);
+			CurseOfGrowthMaxSize = Settings.fCurseGrowthSizeLimit;
+			const float RandomDelay = Settings.fGameModeUpdateInterval;
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+		}
+		else {
+			return;
+		}
+
+		const float CurseTargetScale = std::clamp(1.0f * (SkillLevel / 100.0f * CurseOfGrowthMaxSize), 1.0f, CurseOfGrowthMaxSize);
+
+		//10/5% Chance
+		const bool DoStrongGrowth = RandomBool(10.0f);
+		const int DoMegaGrowth = RandomBool(5.0f);
+		const int Random = RandomInt(1, 20);
+		float GrowthPower = SkillLevel * 0.00220f / static_cast<float>(Random);                                           
+
+		if (IntervalTimer->ShouldRun() && RandomBool(66.0f)) {
+
+			//If the target scale > than the actors max scale return
+			if (a_CurrentTargetScale >= a_MaxScale) {
+				return;
+			}
+
+			if (DoStrongGrowth && DoMegaGrowth) {
+				GrowthPower *= 4.0f;
+			}
+
+			if (DoStrongGrowth) {
+				GrowthPower *= 4.0f;
+			}
+
+			Rumbling::Once("CurseOfGrowth", a_Actor, GrowthPower * 20, 0.10f);
+			Runtime::PlaySoundAtNode("growthSound", a_Actor, GrowthPower * 2, 1.0f, "NPC Pelvis [Pelv]");
+
+			//If the Growth event would make the actor larger than the target scale set it to target scale.
+			if (a_CurrentTargetScale + GrowthPower >= CurseTargetScale) {
+				set_target_scale(a_Actor, CurseTargetScale);
+				return;
+			}
+
+			update_target_scale(a_Actor, GrowthPower, SizeEffectType::kGrow);
+
+			if (((DoStrongGrowth && Random >= 15) || (DoStrongGrowth && DoMegaGrowth)) && Config::GetAudio().bSlowGrowMoans) {
+				PlayMoanSound(a_Actor, a_CurrentTargetScale / 4);
+				Task_FacialEmotionTask_Moan(a_Actor, 2.0f, "GameMode");
+			}
+		}
+	}
+
+	// ---------- Curse Of The Giantess
+
+	void CurseOfTheGiantess(Actor* a_Actor, const float a_CurrentTargetScale, const float a_MaxScale) {
+
+		// Slider that determines max size cap.
+		float CurseTargetScale;
+
+		//Get the actor's Gamemode Timer From Transient and set a random value to it.
+		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
+		if (!ActorData) return;
+
+		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		if (!IntervalTimer) return;
+
+		//Set Values based on Settings and actor type.
+		if (a_Actor->formID == 0x14) {
+			const auto& Settings = Config::GetGameplay().GamemodePlayer;
+
+			//SkillLevel = GetGtsSkillLevel(a_Actor);
+			CurseTargetScale = Settings.fCurseTargetScale;
+			const float RandomDelay = Settings.fGameModeUpdateInterval;
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+		}
+		else if (IsTeammate(a_Actor)) {
+			const auto& Settings = Config::GetGameplay().GamemodeFollower;
+
+			//NPC's Set it trough alteration
+			//SkillLevel = GetAV(a_Actor, ActorValue::kAlteration);
+			CurseTargetScale = Settings.fCurseTargetScale;
+			const float RandomDelay = Settings.fGameModeUpdateInterval;
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+		}
+		else {
+			return;
+		}
+
+		//If the target scale > than the actors max scale return
+		if (a_CurrentTargetScale >= a_MaxScale) {
+			return;
+		}
+
+		if (IntervalTimer->ShouldRun()) {
+
+			if (a_CurrentTargetScale >= CurseTargetScale) {
+				return;
+			}
+
+			const float GrowthPower = std::clamp(RandomFloatGauss(0.30f, 0.1f), 0.1f, 0.5f);
+
+			if (a_CurrentTargetScale + GrowthPower >= CurseTargetScale) {
+				set_target_scale(a_Actor, CurseTargetScale);
+				return;
+			}
+
+			if (RandomBool(33.0)) {
+				PlayMoanSound(a_Actor, a_CurrentTargetScale / 4);
+				Task_FacialEmotionTask_Moan(a_Actor, 2.0f, "CurseOfTheGiantess");
+			}
+
+			update_target_scale(a_Actor, GrowthPower, SizeEffectType::kGrow);
+			Runtime::PlaySoundAtNode("growthSound", a_Actor, GrowthPower * 2.0f, 1.0f, "NPC Pelvis [Pelv]");
+		}
+	}
+
+	// ---------- Curse Of Diminishing
+
+	void CurseOfDiminishing(Actor* a_Actor, const float a_CurrentTargetScale) {
+
+		if (GetCombatState(a_Actor) > 0 || IsGtsBusy(a_Actor)) return;
+
+		// Slider that determines max size cap.
+		float CurseTargetScale;
+
+		//Get the actor's Gamemode Timer From Transient and set a random value to it.
+		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
+		if (!ActorData) return;
+
+		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		if (!IntervalTimer) return;
+
+		//Set Values based on Settings and actor type.
+		if (a_Actor->formID == 0x14) {
+			const auto& Settings = Config::GetGameplay().GamemodePlayer;
+
+			//SkillLevel = GetGtsSkillLevel(a_Actor);
+			CurseTargetScale = Settings.fCurseTargetScale;
+			//The larger the actor the faster they shrink
+			const float RandomDelay = Settings.fGameModeUpdateInterval / RandomFloat(1.0, a_CurrentTargetScale / 2.0);
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+		}
+		else if (IsTeammate(a_Actor)) {
+			const auto& Settings = Config::GetGameplay().GamemodeFollower;
+
+			//NPC's Set it trough alteration
+			//SkillLevel = GetAV(a_Actor, ActorValue::kAlteration);
+			CurseTargetScale = Settings.fCurseTargetScale;
+			//The larger the actor the faster they shrink
+			const float RandomDelay = Settings.fGameModeUpdateInterval / RandomFloat(1.0, a_CurrentTargetScale / 2.0);
+			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+		}
+		else {
+			return;
+		}
+
+		if (a_CurrentTargetScale > CurseTargetScale + EPS) {
+
+			if (IntervalTimer->ShouldRunFrame()) {
+
+				float ModAmmount = (0.025f * (RandomFloat(1, 4.5) * a_CurrentTargetScale));
+
+				Runtime::PlaySoundAtNode("shrinkSound", a_Actor, ModAmmount * 2.0f, 1.0, "NPC Pelvis [Pelv]");
+
+				if (a_CurrentTargetScale + ModAmmount < CurseTargetScale) {
+					set_target_scale(a_Actor, CurseTargetScale);
+					return;
+				}
+
+				update_target_scale(a_Actor, -ModAmmount, SizeEffectType::kShrink);
+
+			}
+		}
+	}
+
 }
 
 namespace GTS {
@@ -51,149 +343,79 @@ namespace GTS {
 				return Persist.BalanceMode_ShrinkRate_Base;
 			case BalanceModeInfo::ShrinkRate_Combat: // 0.08
 				return Persist.BalanceMode_ShrinkRate_Combat;
-			break;
 		}
 			
 		return 1.0f;
 	}
 
-	void GameModeManager::ApplyGameMode(Actor* actor, const ChosenGameMode& game_mode, const float& GrowthRate, const float& ShrinkRate)  {
+	void GameModeManager::ApplyGameMode(Actor* a_Actor, const SelectedGameMode& a_SelectedGameMode, const float& a_GrowthRate, const float& a_ShrinkRate)  {
 
 		auto profiler = Profilers::Profile("Manager: ApplyGameMode");
-		constexpr float EPS = 1e-7f;
 
-		if (game_mode != ChosenGameMode::None) {
-			auto player = PlayerCharacter::GetSingleton();
-			float natural_scale = get_natural_scale(actor, true);
 
-			float Scale = std::clamp(get_visual_scale(actor) * 0.25f, 1.0f, 10.0f);
-			
-			float targetScale = get_target_scale(actor);
-			float maxScale = get_max_scale(actor);
-			
-			if (IsFemale(actor, true)) {
-				if (Runtime::GetFloat("MultiplyGameModePC") == 0 && actor == player) {
-					Scale = 1.0f;
+		if (a_SelectedGameMode == SelectedGameMode::kNone) {
+			return;
+		}
+
+		auto& Settings = Config::GetGameplay();
+		float NaturalScale = get_natural_scale(a_Actor, true);
+		float TargetScale = get_target_scale(a_Actor);
+		float MaxScale = get_max_scale(a_Actor);
+		float RateMultiplier = 1.0f;
+
+		if (IsFemale(a_Actor, true)) {
+
+			if (Settings.GamemodePlayer.bMultiplyGrowthrate && a_Actor->formID == 0x14) {
+				RateMultiplier = clamp(get_visual_scale(a_Actor) * 0.25f, 1.0f, 10.0f);
+			}
+			else if (Settings.GamemodeFollower.bMultiplyGrowthrate && IsTeammate(a_Actor)) {
+				RateMultiplier = clamp(get_visual_scale(a_Actor) * 0.25f, 1.0f, 10.0f);
+			}
+
+			switch (a_SelectedGameMode) {
+
+				case SelectedGameMode::kNone: {
+					return;
 				}
-				if (Runtime::GetFloat("MultiplyGameModeNPC") == 0 && actor != player) {
-					Scale = 1.0f;
+
+				case SelectedGameMode::kGrow: {
+					Grow(a_Actor,RateMultiplier,a_GrowthRate, TargetScale, MaxScale);
+					return;
 				}
 
-				switch (game_mode) {
-					case ChosenGameMode::Grow: {
-						float modAmount = Scale * (0.00010f + (GrowthRate * 0.25f)) * 60 * Time::WorldTimeDelta();
-						if (fabs(GrowthRate) < EPS) {
-							return;
-						}
-						if ((targetScale + modAmount) < maxScale) {
-							update_target_scale(actor, modAmount, SizeEffectType::kGrow);
-						} else if (targetScale < maxScale) {
-							set_target_scale(actor, maxScale);
-						} // else let spring handle it
-						break;
-					}
-					case ChosenGameMode::Shrink: {
-						float modAmount = -(0.00025f + (ShrinkRate * 0.25f) * Scale) * 60 * Time::WorldTimeDelta();
-						if (fabs(ShrinkRate) < EPS) {
-							return;
-						}
-						if ((targetScale + modAmount) > natural_scale) {
-							update_target_scale(actor, modAmount, SizeEffectType::kShrink);
-						} else if (targetScale > natural_scale || targetScale < natural_scale) {
-							set_target_scale(actor, natural_scale);
-						} // Need to have size restored by someone
-						break;
-					}
-					case ChosenGameMode::Standard: {
-						if (actor->IsInCombat()) {
-							float modAmount = Scale * (0.00008f + (GrowthRate * 0.17f)) * 60 * Time::WorldTimeDelta();
-							if (fabs(GrowthRate) < EPS) {
-								return;
-							}
-							if ((targetScale + modAmount) < maxScale) {
-								update_target_scale(actor, modAmount, SizeEffectType::kGrow);
-							} else if (targetScale < maxScale) {
-								set_target_scale(actor, maxScale);
-							} // else let spring handle it
-						} else {
-							float modAmount = Scale * -(0.00029f + (ShrinkRate * 0.34f)) * 60 * Time::WorldTimeDelta();
-							if (fabs(ShrinkRate) < EPS) {
-								return;
-							}
-							if ((targetScale + modAmount) > natural_scale) {
-								update_target_scale(actor, modAmount, SizeEffectType::kShrink);
-							} else if (targetScale > natural_scale) {
-								set_target_scale(actor, natural_scale);
-							} // Need to have size restored by someone
-						}
-						break;
-					}
-					case ChosenGameMode::StandardNoShrink: {
-						if (actor->IsInCombat()) {
-							float modAmount = Scale * (0.00008f + (GrowthRate * 0.17f)) * 60 * Time::WorldTimeDelta();
-							if (fabs(GrowthRate) < EPS) {
-								return;
-							}
-							if ((targetScale + modAmount) < maxScale) {
-								update_target_scale(actor, modAmount * 0.33f, SizeEffectType::kGrow);
-							} else if (targetScale < maxScale) {
-								set_target_scale(actor, maxScale);
-							} // else let spring handle it
-						}
-						break;
-					}
-					case ChosenGameMode::CurseOfGrowth: {
-						float GtsSkillLevel = GetGtsSkillLevel(actor);                                                   // Based on GTS skill level
-						float MaxSize = Runtime::GetFloat("CurseOfGrowthMaxSize");                                       // Slider that determines max size cap.
-						float sizelimit = std::clamp(1.0f * (GtsSkillLevel/100.0f * MaxSize), 1.0f, MaxSize);            // Size limit between 1 and [Slider]], based on GTS Skill. Cap is Slider value.
-						int Random = RandomInt(1, 20);                                                                   // Randomize power
-						int GrowthTimer = RandomInt(1, 6);                                                               // Randomize 're-trigger' delay, kinda
-						int StrongGrowthChance = RandomInt(0, 6);                                                        // Self-explanatory
-						int MegaGrowth = RandomInt(0, 20);                                                               // A chance to multiply growth again
-						float GrowthPower = GtsSkillLevel*0.00240f / Random;                                              // Randomized strength of growth
-						static Timer timer = Timer(1.40 * GrowthTimer);                                                  // How often it procs
-						if (targetScale >= sizelimit || Random <= 0 || GrowthTimer <= 0) {
-							return; // Protections against infinity
-						}
-						if (timer.ShouldRunFrame()) {
-							if (StrongGrowthChance >= 19 && MegaGrowth >= 19.0f) {
-								GrowthPower *= 4.0f;                                                                       // Proc super growth if conditions are met
-							}
-							if (StrongGrowthChance >= 19.0f) {
-								GrowthPower *= 4.0f;                                                                       // Stronger growth if procs
-								Rumbling::Once("CurseOfGrowth", actor, GrowthPower * 40, 0.10f);
-							}
-							if (targetScale >= sizelimit) {
-								set_target_scale(actor, sizelimit);
-							}
-							if (((StrongGrowthChance >= 19 && Random >= 19.0f) || (StrongGrowthChance >= 19 && MegaGrowth >= 19.0f)) && Runtime::GetFloat("AllowMoanSounds") == 1.0f) {
-								PlayMoanSound(actor, targetScale/4);
-								Task_FacialEmotionTask_Moan(actor, 2.0f, "GameMode");
-							}
-							if (targetScale < maxScale) {
-								update_target_scale(actor, GrowthPower, SizeEffectType::kGrow);
-								Rumbling::Once("CurseOfGrowth", actor, GrowthPower * 20, 0.10f);
-								Runtime::PlaySoundAtNode("growthSound", actor, GrowthPower * 6, 1.0f, "NPC Pelvis [Pelv]");
-							}
-						}
-						break;
-					}
-					case ChosenGameMode::Quest: {
-						float modAmount = -ShrinkRate * Time::WorldTimeDelta();
-						if (fabs(ShrinkRate) < EPS) {
-							return;
-						}
+				case SelectedGameMode::kShrink: {
+					Shrink(a_Actor, RateMultiplier, a_ShrinkRate, TargetScale, NaturalScale);
+					return;
+				}
 
-						float Aspect = Ench_Aspect_GetPower(actor);
-						float gigantism = Aspect_GetEfficiency(Aspect) * 0.5f;
-						float default_scale = natural_scale * (1.0f + gigantism);
-						
-						if ((targetScale + modAmount) > default_scale) {
-							update_target_scale(actor, modAmount, SizeEffectType::kShrink);
-						} else if (targetScale > default_scale) {
-							set_target_scale(actor, default_scale);
-						} // Need to have size restored by something
-					}
+				case SelectedGameMode::kSlowCombatGrowth: {
+					SlowCombatGrowth(a_Actor, RateMultiplier, a_GrowthRate, TargetScale, MaxScale);
+					return;
+				}
+
+				case SelectedGameMode::kCombatGrowth: {
+					CombatGrowth(a_Actor, RateMultiplier, a_GrowthRate, a_ShrinkRate, TargetScale, NaturalScale, MaxScale);
+					return;
+				}
+
+				case SelectedGameMode::kCurseOfGrowth: {
+					CurseOfGrowth(a_Actor, TargetScale, MaxScale);
+					return;
+				}
+
+				case SelectedGameMode::kCurseOfTheGiantess: {
+					CurseOfTheGiantess(a_Actor, TargetScale, MaxScale);
+					return;
+				}
+
+				case SelectedGameMode::kCurseOfDiminishing: {
+					CurseOfDiminishing(a_Actor, TargetScale);
+					return;
+				}
+
+				case SelectedGameMode::kSizeLocked: {
+					CurseOfTheGiantess(a_Actor, TargetScale, MaxScale);
+					CurseOfDiminishing(a_Actor, TargetScale);
 					break;
 				}
 			}
@@ -202,82 +424,102 @@ namespace GTS {
 
 	void GameModeManager::GameMode(Actor* actor)  {
 		auto profiler = Profilers::Profile("Manager: GameMode");
+
 		if (!actor) {
 			return;
 		}
 
-		ChosenGameMode gameMode = ChosenGameMode::None;
-
-		float growthRate = 0.0f;
-		float shrinkRate = 0.0f;
-		int game_mode_int = 0;
-		float QuestStage = Runtime::GetStage("MainQuest");
-		float BalanceMode = SizeManager::GetSingleton().BalancedMode();
-		float scale = get_visual_scale(actor);
+		float BaseGrowhtRate = 0.0f;
+		float BaseShrinkRate = 0.0f;
 		float BonusShrink = 7.4f;
-		float bonus = 1.0f;
+		float BonusGrowth = 1.0f;
+		uint16_t QuestStage = Runtime::GetStage("MainQuest");
+
+		const bool BalanceModeEnabled = Config::GetBalance().bBalanceMode;
+
+		float CurrentScale = get_visual_scale(actor);
+		bool DoQuestShrink = false;
+		SelectedGameMode GameMode = SelectedGameMode::kNone;
 		
-		if (BalanceMode >= 2.0f) {
-			BonusShrink *= GetShrinkPenalty(scale);
+		if (BalanceModeEnabled) {
+			BonusShrink *= GetShrinkPenalty(CurrentScale);
 		}
 
-		if (QuestStage < 100.0f || BalanceMode >= 2.0f) {
+		if (QuestStage < 100 || BalanceModeEnabled) {
+
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
-				game_mode_int = 6; // QuestMode
+
+				DoQuestShrink = true;
+
 				if (QuestStage < 40) {
-					shrinkRate = 0.00086f * BonusShrink * 2.0f;
-				} else if (QuestStage >= 40 && QuestStage < 80) {
-					shrinkRate = 0.00086f * BonusShrink * 1.6f;
-				} else if (BalanceMode >= 2.0f && QuestStage >= 80) {
-					shrinkRate = 0.00086f * BonusShrink * 1.40f;
+					BaseShrinkRate = 0.00086f * BonusShrink * 2.0f;
+				}
+				else if (QuestStage >= 40 && QuestStage < 80) {
+					BaseShrinkRate = 0.00086f * BonusShrink * 1.6f;
+				}
+				else if (BalanceModeEnabled && QuestStage >= 80) {
+					BaseShrinkRate = 0.00086f * BonusShrink * 1.40f;
 				}
 
-				shrinkRate *= Potion_GetShrinkResistance(actor);
-				shrinkRate /= (1.0f + Ench_Aspect_GetPower(actor));
+				BaseShrinkRate *= Potion_GetShrinkResistance(actor);
+				BaseShrinkRate /= 1.0f + Ench_Aspect_GetPower(actor);
 
 				if (Potion_IsUnderGrowthPotion(actor)) {
-					shrinkRate *= 0.0f; // prevent shrinking in that case
+					BaseShrinkRate *= 0.0f; // prevent shrinking in that case
 				} 
 				if (HasGrowthSpurt(actor)) {
-					shrinkRate *= 0.25f;
+					BaseShrinkRate *= 0.25f;
 				}
-				if (actor->IsInCombat() && BalanceMode == 1.0f) {
-					shrinkRate = 0.0f;
-				} else if (SizeManager::GetSingleton().GetGrowthSpurt(actor) > 0.01f) {
-					shrinkRate = 0.0f;
-				} else if (actor->IsInCombat() && BalanceMode >= 2.0f) {
-					shrinkRate *= GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Combat); // shrink at 6% rate
+				if (actor->IsInCombat() && !BalanceModeEnabled) {
+					BaseShrinkRate = 0.0f;
+				}
+				else if (SizeManager::GetSingleton().GetGrowthSpurt(actor) > 0.01f) {
+					BaseShrinkRate = 0.0f;
+				}
+				else if (actor->IsInCombat() && BalanceModeEnabled) {
+					BaseShrinkRate *= GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Combat); // shrink at 6% rate
 				}
 
-				if (fabs(shrinkRate) <= 1e-6) {
-					game_mode_int = 0; // Nothing to do
+				if (fabs(BaseShrinkRate) <= 1e-6) {
+					DoQuestShrink = false; // Nothing to do
 				}
 			}
-		} else if (QuestStage > 100.0f && BalanceMode <= 1.0f) {
+		}
+
+		else if (QuestStage > 100 && !BalanceModeEnabled) {
+
+			const auto& Settings = Config::GetGameplay();
+
 			if (actor->formID == 0x14) {
-				if (Runtime::HasMagicEffect(PlayerCharacter::GetSingleton(), "EffectSizeAmplifyPotion")) {
-					bonus = scale * 0.25f + 0.75f;
-				}
-				game_mode_int = Runtime::GetInt("ChosenGameMode");
-				growthRate = Runtime::GetFloat("GrowthModeRate");
-				shrinkRate = Runtime::GetFloat("ShrinkModeRate");
 
-			} else if (actor->formID != 0x14 && IsTeammate(actor)) {
-				if (Runtime::HasMagicEffect(actor, "EffectSizeAmplifyPotion")) {
-					bonus = scale * 0.25f + 0.75f;
+				if (Runtime::HasMagicEffect(PlayerCharacter::GetSingleton(), "EffectSizeAmplifyPotion")) {
+					BonusGrowth = CurrentScale * 0.25f + 0.75f;
 				}
-				game_mode_int = Runtime::GetInt("ChosenGameModeNPC");
-				growthRate = Runtime::GetFloat("GrowthModeRateNPC") * bonus;
-				shrinkRate = Runtime::GetFloat("ShrinkModeRateNPC");
+
+				BaseGrowhtRate = Settings.GamemodePlayer.fGrowthRate * BonusGrowth;
+				BaseShrinkRate = Settings.GamemodePlayer.fShrinkRate;
+				GameMode = StringToEnum<SelectedGameMode>(Settings.GamemodePlayer.sGameMode);
+			}
+			else if (IsTeammate(actor)) {
+
+				if (Runtime::HasMagicEffect(actor, "EffectSizeAmplifyPotion")) {
+					BonusGrowth = CurrentScale * 0.25f + 0.75f;
+				}
+				GameMode = StringToEnum<SelectedGameMode>(Settings.GamemodeFollower.sGameMode);
+
+				BaseGrowhtRate = Settings.GamemodePlayer.fGrowthRate * BonusGrowth;
+				BaseShrinkRate = Settings.GamemodePlayer.fShrinkRate;
 			}
 		}
 
-		if (game_mode_int >=0 && game_mode_int <= 6) {
-			gameMode = static_cast<ChosenGameMode>(game_mode_int);
+		BaseShrinkRate *= Perk_GetSprintShrinkReduction(actor); // up to 20% reduction
+
+		if (DoQuestShrink) {
+			QuestShrink(actor, BaseShrinkRate, get_target_scale(actor), get_natural_scale(actor));
+			return;
 		}
 
-		shrinkRate *= Perk_GetSprintShrinkReduction(actor); // up to 20% reduction
+		ApplyGameMode(actor, GameMode, BaseGrowhtRate / 2, BaseShrinkRate);
 
-		ApplyGameMode(actor, gameMode, growthRate/2, shrinkRate);
 	}
 }

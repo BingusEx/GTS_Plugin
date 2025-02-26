@@ -41,7 +41,7 @@ namespace GTS {
 		//  At every stage this data will be passed to any animation registered with this groupname for an actor
 		std::string group;
 
-		AnimationEvent(std::function<void(AnimationEventData&)> callback, std::string group);
+		AnimationEvent(const std::function<void(AnimationEventData&)>& a_callback, const std::string& a_group);
 	};
 
 	// Holds data that links a trigger to a behaviour and group
@@ -53,7 +53,7 @@ namespace GTS {
 		// The name of the data to be created
 		std::string group;
 
-		TriggerData(std::vector<std::string_view> behavors, std::string_view group);
+		TriggerData(const std::vector<std::string_view>& behavors, std::string_view group);
 	};
 
 	class AnimationManager : public EventListener

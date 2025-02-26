@@ -92,7 +92,8 @@ namespace GTS {
 				float speedup = 1.0f;
 				if (IsCrawling(actor) || IsProning(actor) || BehaviorGraph_DisableHH(actor)) {
 					speedup = 4.0f; // To shift down a lot faster
-				} else if (!IsGtsBusy(actor)) {
+				}
+				else if (!IsGtsBusy(actor)) {
 					speedup = 3.0f;
 				}
 
@@ -104,7 +105,9 @@ namespace GTS {
 					hhData.multiplier.halflife = 1 / (AnimationManager::GetAnimSpeed(actor) * AnimationManager::GetHighHeelSpeed(actor) * speedup);
 				} else {
 					hhData.multiplier.target = 1.0f;
-					hhData.multiplier.halflife = 1 / (AnimationManager::GetAnimSpeed(actor) * AnimationManager::GetHighHeelSpeed(actor) * speedup);
+					hhData.multiplier.halflife = 0.0f;
+					//AnimationManager::GetHighHeelSpeed(actor) throws an exception that returns 1 if we aren't wearing heels. So instead of spamming the exception handler just put a 1.0 in its place
+					hhData.multiplier.halflife = 1 / (AnimationManager::GetAnimSpeed(actor) * 1.0f * speedup);
 				}
 
 				if (!Config::GetGeneral().bEnableHighHeels) {
@@ -115,8 +118,6 @@ namespace GTS {
 
 				// With model scale do it in unscaled coords
 				NiPoint3 new_hh = GTS::HighHeelManager::GetBaseHHOffset(actor) * hhData.multiplier.value;
-				
-				float hh_length = new_hh.Length();
 
 				for (bool person: {false, true}) {
 					auto npc_root_node = find_node(actor, "NPC", person);

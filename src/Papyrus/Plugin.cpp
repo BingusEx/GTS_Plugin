@@ -173,10 +173,6 @@ namespace {
 		Persistent::GetSingleton().PCEffectImmunity = enabled;
 	}
 
-	void SetWeightGain(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().allow_weight_gain = enabled;
-	}
-
 	void EnableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
 		if (!ref) {
 			return;
@@ -185,7 +181,7 @@ namespace {
 		if (!current3D) {
 			return; // Retry next frame
 		}
-		current3D->SetMotionType((uint32_t)hkpMotion::MotionType::kCharacter, true, true, true);
+		current3D->SetMotionType(static_cast<uint32_t>(hkpMotion::MotionType::kCharacter), true, true, true);
 		current3D->SetCollisionLayer(COL_LAYER::kCharController);
 	}
 	void DisableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
@@ -196,7 +192,7 @@ namespace {
 		if (!current3D) {
 			return; // Retry next frame
 		}
-		current3D->SetMotionType((uint32_t)hkpMotion::MotionType::kKeyframed, true, true, true);
+		current3D->SetMotionType(static_cast<uint32_t>(hkpMotion::MotionType::kKeyframed), true, true, true);
 		current3D->SetCollisionLayer(COL_LAYER::kNonCollidable);
 	}
 
@@ -215,14 +211,6 @@ namespace {
 
 	void SetAllowPlayerVore(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().vore_allowplayervore = enabled;
-	}
-
-	void SetInsectVore(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().AllowInsectVore = enabled;
-	}
-
-	void SetUndeadVore(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().AllowUndeadVore = enabled;
 	}
 
 	void DistributeRandomItems(StaticFunctionTag*) {
@@ -385,7 +373,6 @@ namespace GTS {
 		vm->RegisterFunction("SetActorAudioOverride", PapyrusClass, SetActorAudioOverride);
 		vm->RegisterFunction("SetNPCProtection", PapyrusClass, SetNPCProtection);
 		vm->RegisterFunction("SetPCProtection", PapyrusClass, SetPCProtection);
-		vm->RegisterFunction("SetWeightGain", PapyrusClass, SetWeightGain);
 		vm->RegisterFunction("DisableCollisionLayerAndMotion", PapyrusClass, DisableCollisionLayerAndMotion);
 		vm->RegisterFunction("EnableCollisionLayerAndMotion", PapyrusClass, EnableCollisionLayerAndMotion);
 		vm->RegisterFunction("ResetQuestProgression", PapyrusClass, ResetQuestProgression);
@@ -404,8 +391,6 @@ namespace GTS {
 		vm->RegisterFunction("SetActorPanic", PapyrusClass, SetActorPanic);
 		vm->RegisterFunction("ToggleHostileDamage", PapyrusClass, ToggleHostileDamage);
 		vm->RegisterFunction("SetAllowPlayerVore", PapyrusClass, SetAllowPlayerVore);
-		vm->RegisterFunction("SetInsectVore", PapyrusClass, SetInsectVore);
-		vm->RegisterFunction("SetUndeadVore", PapyrusClass, SetUndeadVore);
 		vm->RegisterFunction("DistributeRandomItems", PapyrusClass, DistributeRandomItems);
 		vm->RegisterFunction("SetOnlyCombatVore", PapyrusClass, SetOnlyCombatVore);
 		vm->RegisterFunction("IncreaseSizeLimit", PapyrusClass, IncreaseSizeLimit);

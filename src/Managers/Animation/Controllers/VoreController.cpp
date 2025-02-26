@@ -382,7 +382,7 @@ namespace GTS {
 		auto& voreData = this->GetVoreData(pred);
 		voreData.AddTiny(prey);
 
-		AnimationManager::GetSingleton().StartAnim("StartVore", pred);
+		AnimationManager::StartAnim("StartVore", pred);
 	}
 
 	void Vore::RecordOriginalScale(Actor* tiny) {

@@ -135,72 +135,79 @@ namespace {
 
 			case CameraTrackingSettings::kSpine: {
 				return BoneTarget {
-					.boneNames = {"NPC Spine2 [Spn2]","NPC Neck [Neck]",},
+					.boneNames = {"NPC Spine2 [Spn2]","NPC Neck [Neck]"},
 					.zoomScale = ZoomIn_Cam_Spine,
 				};
 			}
 			case CameraTrackingSettings::kClavicle: {
 				return BoneTarget {
-					.boneNames = {"NPC R Clavicle [RClv]","NPC L Clavicle [LClv]",},
+					.boneNames = {"NPC R Clavicle [RClv]","NPC L Clavicle [LClv]"},
 					.zoomScale = ZoomIn_Cam_Clavicle,
 				};
 			}
 			case CameraTrackingSettings::kBreasts:
 			{
 				return BoneTarget{
-					.boneNames = {"NPC L Breast01","NPC R Breast01",},
+					.boneNames = {"NPC L Breast01","NPC R Breast01"},
 					.zoomScale = ZoomIn_Cam_Breasts,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_00:
 			{
 				return BoneTarget{
-					.boneNames = {"L Breast00","R Breast00",},
+					.boneNames = {"L Breast00","R Breast00"},
 					.zoomScale = ZoomIn_Cam_3BABreasts_00,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_01: {
 				return BoneTarget {
-					.boneNames = {"L Breast01","R Breast01",},
+					.boneNames = {"L Breast01","R Breast01"},
 					.zoomScale = ZoomIn_Cam_3BABreasts_01,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_02: {
 				return BoneTarget {
-					.boneNames = {"L Breast02","R Breast02",},
+					.boneNames = {"L Breast02","R Breast02"},
 					.zoomScale = ZoomIn_Cam_3BABreasts_02,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_03: {
 				return BoneTarget {
-					.boneNames = {"L Breast03","R Breast03",},
+					.boneNames = {"L Breast03","R Breast03"},
 					.zoomScale = ZoomIn_Cam_3BABreasts_03,
 				};
 			}
 			case CameraTrackingSettings::kBreasts_04:
 			{
 				return BoneTarget{
-					.boneNames = {"L Breast04","R Breast04",},
+					.boneNames = {"L Breast04","R Breast04"},
 					.zoomScale = ZoomIn_Cam_3BABreasts_04,
 				};
 			}
 			case CameraTrackingSettings::kNeck: {
 				return BoneTarget {
-					.boneNames = {"NPC Neck [Neck]",},
+					.boneNames = {"NPC Neck [Neck]"},
 					.zoomScale = ZoomIn_Cam_Neck,
 				};
 			}
 			case CameraTrackingSettings::kButt: {
 				return BoneTarget {
-					.boneNames = {"NPC L Butt","NPC R Butt",},
+					.boneNames = {"NPC L Butt","NPC R Butt"},
 					.zoomScale = ZoomIn_Cam_Butt,
 				};
 			}
 			case CameraTrackingSettings::kGenitals:
 			{
 				return BoneTarget{
-					.boneNames = {"Genitals",},
+					.boneNames = {"Genitals"},
 					.zoomScale = ZoomIn_Cam_Genitals,
+				};
+			}
+			case CameraTrackingSettings::kBelly:
+			{
+				return BoneTarget{
+					.boneNames = {"NPC Belly"},
+					.zoomScale = ZoomIn_Cam_Belly,
 				};
 			}
 		}
@@ -232,6 +239,10 @@ namespace {
 			niCamera->GetRuntimeData2().viewFrustum.fNear = fnear;
 		}
 	}
+
+	static NiPoint3 previousCameraPosition;
+	 // Adjust this value to control the smoothness of interpolation (0.0 to 1.0)
+
 }
 
 namespace GTS {
@@ -242,7 +253,8 @@ namespace GTS {
 		}
 		if (Camera_Anim != CameraTracking::None) { // must take priority
 			return GetBoneTarget_Anim(Camera_Anim);
-		} else {
+		}
+		else {
 			return GetBoneTargetFromSettings(Camera_MCM);
 		}
 	}
@@ -589,6 +601,9 @@ namespace GTS {
 		return 15.0f;
 	}
 
+	// Add a global variable or class member to store the previous camera position
+
+
 	void UpdateCamera(float scale, NiPoint3 cameraLocalOffset, NiPoint3 playerLocalOffset) {
 		auto camera = PlayerCamera::GetSingleton();
 		auto& cameraRoot = camera->cameraRoot;
@@ -616,7 +631,7 @@ namespace GTS {
 							adjustments.translate = playerLocalOffset;
 
 							// Get Scaled Camera Location
-							auto targetLocationWorld = playerTrans*(adjustments*(playerTransInve*cameraLocation));
+							auto targetLocationWorld = playerTrans * (adjustments * (playerTransInve * cameraLocation));
 
 							// Get shifted Camera Location
 							cameraWorldTranform.translate = targetLocationWorld; // Update with latest position
@@ -632,7 +647,22 @@ namespace GTS {
 							//Do camera colision raycasts
 							auto rayStart = GetAggregateBoneTarget(cameraActor);
 							if (rayStart != NiPoint3()) {
-								localShifted = ComputeRaycast(rayStart, localShifted);
+								NiPoint3 raycastResult = ComputeRaycast(rayStart, localShifted);
+
+								float interpolationFactor = Config::GetCamera().fCameraInterpolationFactor;
+
+								// Linear Interpolation
+								NiPoint3 interpolatedPosition;
+								if (previousCameraPosition == NiPoint3()) {
+									interpolatedPosition = raycastResult; // If no previous position, directly set to raycast result for first frame
+								}
+								else {
+									interpolatedPosition.x = previousCameraPosition.x + (raycastResult.x - previousCameraPosition.x) * interpolationFactor;
+									interpolatedPosition.y = previousCameraPosition.y + (raycastResult.y - previousCameraPosition.y) * interpolationFactor;
+									interpolatedPosition.z = previousCameraPosition.z + (raycastResult.z - previousCameraPosition.z) * interpolationFactor;
+								}
+								localShifted = interpolatedPosition; // Use interpolated position
+
 							}
 
 							//Change Fnear distance depending on scale.
@@ -640,6 +670,8 @@ namespace GTS {
 
 							UpdatePlayerCamera(localShifted);
 							UpdateNiCamera(localShifted);
+
+							previousCameraPosition = localShifted; // Store current position for next frame interpolation
 						}
 					}
 				}

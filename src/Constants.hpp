@@ -373,6 +373,7 @@ namespace GTS {
     constexpr float ZoomIn_Cam_3BABreasts_03 = 1.0f;
     constexpr float ZoomIn_Cam_3BABreasts_04 = 1.0f;
     constexpr float ZoomIn_Cam_Genitals = 1.0f;
+    constexpr float ZoomIn_Cam_Belly = 1.0f;
     constexpr float ZoomIn_Cam_Neck = 1.0f;
     constexpr float ZoomIn_Cam_Butt = 1.0f;
 
