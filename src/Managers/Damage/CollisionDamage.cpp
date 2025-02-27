@@ -280,7 +280,7 @@ namespace GTS {
 				float damagebonus = HighHeels_PerkDamage(giant, Cause); // 15% bonus HH damage if we have perk
 
 				float vulnerability = 1.0f + sizemanager.GetSizeVulnerability(tiny); // Get size damage debuff from enemy
-				float normaldamage = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal) * 0.30f, 0.30f, 999999.0f);
+				float normaldamage = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal) * 0.30f, 0.30f, 1000000.0f);
 
 				float highheelsdamage = 1.0f;
 				if (ApplyHighHeelBonus(giant, Cause)) {

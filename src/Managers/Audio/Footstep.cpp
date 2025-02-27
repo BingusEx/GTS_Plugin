@@ -1,4 +1,7 @@
 #include "Managers/Audio/Footstep.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Audio/AudioObtainer.hpp"
 #include "Managers/Highheel.hpp"
 
@@ -112,7 +115,7 @@ namespace GTS {
 				scale *= 2.5f; // Affect Sound threshold itself
 			}
 
-			bool LegacySounds = Persistent::GetSingleton().legacy_sounds;  // Determine if we should play old pre 2.00 update sounds
+			const bool LegacySounds = Config::GetAudio().bUseOldSounds;  // Determine if we should play old pre 2.00 update sounds
 			// ^ Currently forced to true: there's not a lot of sounds yet.
 			bool WearingHighHeels = HighHeelManager::IsWearingHH(actor);
 			if (scale > 1.2f && !actor->AsActorState()->IsSwimming()) {
@@ -120,8 +123,10 @@ namespace GTS {
 				float modifier = Volume_Multiply_Function(actor, impact.kind) * impact.modifier; // Affects the volume only!
 				FootEvent foot_kind = impact.kind;
 				
-				if (Runtime::GetBool("EnableGiantSounds")) {
+				if (Config::GetAudio().bFootstepSounds) {
+
 					for (NiAVObject* foot: impact.nodes) {
+
 						if (foot) {
 							FootStepManager::PlayLegacySounds(modifier, foot, foot_kind, scale);
 							return; // New sounds are disabled for now

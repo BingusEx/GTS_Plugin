@@ -25,12 +25,12 @@ namespace {
 		if (caster && caster->formID == 0x14) {
 			float scale = get_visual_scale(caster);
 
-			TESGlobal* BonusSize = Runtime::GetGlobal("ExtraPotionSize"); 
+			auto& BonusSize = Persistent::GetSingleton().GTSExtraPotionSize;
+
 			// Bonus size is added on top of all size calculations through this global
 			// Applied inside GtsManager.cpp (script)
-			if (BonusSize) {
-				BonusSize->value += power/Characters_AssumedCharSize; // convert to m
-			}
+			
+			BonusSize.value += power/Characters_AssumedCharSize; // convert to m
 
 			SpawnCustomParticle(caster, ParticleType::Red, NiPoint3(), "NPC COM [COM ]", scale * ((power < 0.10 ? power : 0.08f) * 25)); // Just some nice visuals
 			shake_screen_do_moan(caster, power < 0.10 ? power : 0.08f);

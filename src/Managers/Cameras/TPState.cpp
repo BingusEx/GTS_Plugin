@@ -90,9 +90,12 @@ namespace GTS {
 	}
 
 	NiPoint3 ThirdPersonCameraState::CrawlAdjustment(const NiPoint3& cameraPos) {
-		float proneFactor = Config::GetCamera().fTPCrawlHeightMult;
-		auto player = PlayerCharacter::GetSingleton();
-		
+		float proneFactor = 0.0;
+
+		if (GetBoneTarget().boneNames.empty()) {
+			proneFactor = Config::GetCamera().fTPCrawlHeightMult;
+		}
+
 		NiPoint3 result = NiPoint3();
 		result.z = -cameraPos.z * proneFactor;
 		return result;

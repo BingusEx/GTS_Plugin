@@ -313,13 +313,6 @@ struct SettingsAudio {
     bool bSlowGrowMoans = true;
     bool bEnableVoiceOverride = true;
     float fMaxVoiceFrequency = 1.0f;
-
-    // Volume levels
-    float fVolumeVoice = 1.0f;
-    float fVolumeEffects = 1.0f;
-    float fVolumeFootstep = 1.0f;
-    float fVolumeFootstepEffects = 1.0f;
-    float fVolumeImpacts = 1.0f;
 };
 TOML_SERIALIZABLE(SettingsAudio);
 
@@ -437,6 +430,7 @@ struct SettingsBalance {
     float fSizeDamageMult = 1.0f;
     float fExpMult = 1.0f;
     float fStatBonusDamageMult = 1.0f;
+    float fStatBonusCarryWeightMult = 1.0f;
 
     // Friendly interaction settings
     bool bPlayerFriendlyImmunity = false;
@@ -445,9 +439,10 @@ struct SettingsBalance {
     bool bAllowOthersStagger = true;
 
     // Size limits
-    float fMaxPlayerSize = 0.0f;
+    float fMaxPlayerSizeOverride = 0.0f;
     float fMaxFollowerSize = 0.0f;
     float fMaxOtherSize = 0.0f;
+
     
     // Balance mode adjustments
     bool bBalanceMode = false;

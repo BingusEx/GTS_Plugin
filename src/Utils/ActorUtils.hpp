@@ -170,7 +170,6 @@ namespace GTS {
 	bool IsFootGrinding(Actor* actor);
 	bool IsProning(Actor* actor);
 	bool IsCrawling(Actor* actor);
-	bool IsInBalanceMode();
 	bool IsHugCrushing(Actor* actor);
 	bool IsHugHealing(Actor* actor);
 	bool IsVoring(Actor* giant);
@@ -224,7 +223,7 @@ namespace GTS {
 	void CallVampire();
 	void CallHelpMessage();
 	void AddCalamityPerk();
-	void AddPerkPoints(float level);
+	void AddPerkPoints(float a_Level);
 
 	void AddStolenAttributes(Actor* giant, float value);
 	void AddStolenAttributesTowards(Actor* giant, ActorValue type, float value);

@@ -71,20 +71,19 @@ namespace {
 	float GetGrowthReduction(float size) {
 		// https://www.desmos.com/calculator/pqgliwxzi2
 		
-		if (SizeManager::GetSingleton().BalancedMode() >= 2.0f) {
+		if (SizeManager::BalancedMode()) {
 			SoftPotential cut {
 				.k = 1.08f,
 				.n = 0.90f,
 				.s = 3.00f,
 				.a = 0.0f,
 			};
-			float balance = GameModeManager::GetSingleton().GetBalanceModeInfo(BalanceModeInfo::SizeGain_Penalty);
-			float power = soft_power(size, cut) * balance;
+			const float balance = Config::GetBalance().fBMSizeGainPenaltyMult;
+			const float power = soft_power(size, cut) * balance;
 			return std::clamp(power, 1.0f, 99999.0f);
-		} else {
-			return 1.0f;
-			// So it never reports values below 1.0. Just to make sure.
 		}
+		return 1.0f;
+		// So it never reports values below 1.0. Just to make sure.
 	}
 
 	bool Utils_ManageTinyProtection(Actor* giantref, bool force_cancel, bool Balance) {
@@ -654,19 +653,22 @@ namespace GTS {
 		}
 
 		bool hostile = (IsHostile(giant, tiny) || IsHostile(tiny, giant));
-		bool NPC = Persistent::GetSingleton().NPCEffectImmunity;
-		bool PC = Persistent::GetSingleton().PCEffectImmunity;
+
+		const auto& Settings = Config::GetBalance();
+
+		bool NPCImmunity = Settings.bFollowerFriendlyImmunity;
+		bool PlayerImmunity = Settings.bPlayerFriendlyImmunity;
 
 		if (hostile) {
 			return true;
 		}
-		if (NPC && giant->formID == 0x14 && (IsTeammate(tiny)) && !hostile) {
+		if (NPCImmunity && giant->formID == 0x14 && (IsTeammate(tiny)) && !hostile) {
 			return false; // Protect NPC's against player size-related effects
 		}
-		if (NPC && (IsTeammate(giant)) && (IsTeammate(tiny))) {
+		if (NPCImmunity && (IsTeammate(giant)) && (IsTeammate(tiny))) {
 			return false; // Disallow NPC's to damage each-other if they're following Player
 		}
-		if (PC && tiny->formID == 0x14 && (IsTeammate(giant)) && !hostile) {
+		if (PlayerImmunity && tiny->formID == 0x14 && (IsTeammate(giant)) && !hostile) {
 			return false; // Protect Player against friendly NPC's damage
 		}
 		return true;
@@ -756,7 +758,7 @@ namespace GTS {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	float GetDamageSetting() {
-		return Persistent::GetSingleton().size_related_damage_mult;
+		return Config::GetBalance().fSizeDamageMult;
 	}
 
 	float GetFallModifier(Actor* giant) {
@@ -924,7 +926,8 @@ namespace GTS {
 		float value = 1.0f;
 		if (IsProning(player)) {
 			return 0.18f;
-		} else if (IsCrawling(player)) {
+		}
+		else if (IsCrawling(player)) {
 
 			value = Config::GetCamera().fFPCrawlHeightMult;
 		}
@@ -1575,10 +1578,6 @@ namespace GTS {
 		return false;
 	}
 
-	bool IsInBalanceMode() {
-		return SizeManager::GetSingleton().BalancedMode() > 1.0f;
-	}
-
 	bool IsHugCrushing(Actor* actor) {
 		bool IsHugCrushing = false;
 		actor->GetGraphVariableBool("IsHugCrushing", IsHugCrushing);
@@ -1852,19 +1851,19 @@ namespace GTS {
 	}
 
 	bool AllowStagger(Actor* giant, Actor* tiny) {
-		if (Persistent::GetSingleton().allow_stagger == true) {
-			return true; // Allow it
-		} else if (Persistent::GetSingleton().allow_stagger == false) {
-			bool ProtectGTS = giant->formID == 0x14 || IsTeammate(giant);
-			bool ProtectTiny = tiny->formID == 0x14 || IsTeammate(tiny);
-			//log::info("GTS {}: {}", giant->GetDisplayFullName(), ProtectGTS);
-			//log::info("Tiny {}: {}", tiny->GetDisplayFullName(), ProtectTiny);
-			if (ProtectGTS && ProtectTiny) {
-				return false; // Protect
-			}
-			return true;
+		const auto& Settings = Config::GetBalance();
+
+		bool giantIsFriendly = (tiny->formID == 0x14 || IsTeammate(tiny));
+		bool tinyIsFriendly = (tiny->formID == 0x14 || IsTeammate(tiny));
+
+		//If Tiny is follower or player dont allow stagger
+		if (tinyIsFriendly && giantIsFriendly) {
+			return Settings.bAllowFriendlyStagger;
 		}
-		return true;
+
+		//If tiny is Other npc return settings option
+		return Settings.bAllowOthersStagger;
+
 	}
 
 	bool IsMechanical(Actor* actor) {
@@ -1965,20 +1964,28 @@ namespace GTS {
 		}
 	}
 
-	void AddPerkPoints(float level) {
+	void AddPerkPoints(float a_Level) {
+
+		const auto _Level = static_cast<int>(std::round(a_Level));
+
 		auto GtsSkillPerkPoints = Runtime::GetGlobal("GtsSkillPerkPoints");
+
 		if (!GtsSkillPerkPoints) {
 			return;
 		}
-		if (int(level) % 5 == 0) {
-			Notify("You've learned a bonus perk point");
+
+		if (static_cast<int>(_Level) % 5 == 0) {
+			Notify("You've learned a bonus perk point.");
 			GtsSkillPerkPoints->value += 1.0f;
 		}
-		if (level == 20 || level == 40) {
+
+		if (_Level == 20 || _Level == 40) {
 			GtsSkillPerkPoints->value += 2.0f;
-		} else if (level == 60 || level == 80) {
+		}
+		else if (_Level == 60 || _Level == 80) {
 			GtsSkillPerkPoints->value += 3.0f;
-		} else if (level == 100) {
+		}
+		else if (_Level == 100) {
 			GtsSkillPerkPoints->value += 4.0f;
 		}
 	}
@@ -2008,21 +2015,15 @@ namespace GTS {
 				float limit = 2.0f * giant->GetLevel() * modifier;
 				if (type == ActorValue::kHealth) {
 					health += value;
-					if (health >= limit) {
-						health = limit;
-					}
+					health = std::min(health, limit);
 					//log::info("Adding {} to health, health: {}", value, health);
 				} else if (type == ActorValue::kMagicka) {
 					magick += value;
-					if (magick >= limit) {
-						magick = limit;
-					}
+					magick = std::min(magick, limit);
 					//log::info("Adding {} to magick, magicka: {}", value, magick);
 				} else if (type == ActorValue::kStamina) {
 					stamin += value;
-					if (stamin >= limit) {
-						stamin = limit;
-					}
+					stamin = std::min(stamin, limit);
 					//log::info("Adding {} to stamina, stamina: {}", value, stamin);
 				}
 			}
@@ -2058,7 +2059,7 @@ namespace GTS {
 
 	void DistributeStolenAttributes(Actor* giant, float value) {
 		if (value > 0 && giant->formID == 0x14 && Runtime::HasPerk(giant, "SizeConversion")) { // Permamently increases random AV after shrinking and stuff
-			float scale = std::clamp(get_visual_scale(giant), 0.01f, 999999.0f);
+			float scale = std::clamp(get_visual_scale(giant), 0.01f, 1000000.0f);
 			float modifier = Config::GetGameplay().fSizeConvLevelCap;
 			float Storage = GetStolenAttributes(giant);
 			float limit = 2.0f * giant->GetLevel() * modifier;
@@ -2907,8 +2908,7 @@ namespace GTS {
 	}
 
 	float GetXpBonus() {
-		float xp = Persistent::GetSingleton().experience_mult;
-		return xp;
+		return Config::GetBalance().fExpMult;
 	}
 
 	void DragonAbsorptionBonuses() { // The function is ugly but im a bit lazy to make it look pretty
@@ -2921,41 +2921,40 @@ namespace GTS {
 			return;
 		}
 
-		TESGlobal* BonusSize = Runtime::GetGlobal("ExtraPotionSize"); 
+		auto& BonusSize = Persistent::GetSingleton().GTSExtraPotionSize;
 
 		ModSizeExperience(player, 0.45f);
 
-		if (BonusSize) {
-			Notify("You feel like something is filling you");
-			BonusSize->value += 0.0659f; // +12 cm
+		
+		Notify("You feel like something is filling you");
+		BonusSize.value += 0.0659f; // +12 cm
 
-			if (rng <= 1) {
-				PlayMoanSound(player, 1.0f);
-				Task_FacialEmotionTask_Moan(player, 1.6f, "DragonVored");
-				shake_camera(player, 0.5f, 0.33f);
-			}
-
-			SpawnCustomParticle(player, ParticleType::Red, NiPoint3(), "NPC COM [COM ]", get_visual_scale(player) * 1.6f); 
-			
-			ActorHandle gianthandle = player->CreateRefHandle();
-			std::string name = std::format("DragonGrowth_{}", player->formID);
-
-			float HpRegen = GetMaxAV(player, ActorValue::kHealth) * 0.00125f;
-			float Gigantism = 1.0f + Ench_Aspect_GetPower(player);
-
-			float duration = 6.0f + dur_rng;
-
-			TaskManager::RunFor(name, duration, [=](auto& progressData) {
-				if (!gianthandle) {
-					return false;
-				}
-				auto giantref = gianthandle.get().get();
-				ApplyShakeAtNode(giantref, Rumble_Misc_MightOfDragons, "NPC COM [COM ]");
-				update_target_scale(giantref, 0.0026f * Gigantism * TimeScale(), SizeEffectType::kGrow);
-				giantref->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, ActorValue::kHealth, HpRegen * TimeScale());
-				return true;
-			});
+		if (rng <= 1) {
+			PlayMoanSound(player, 1.0f);
+			Task_FacialEmotionTask_Moan(player, 1.6f, "DragonVored");
+			shake_camera(player, 0.5f, 0.33f);
 		}
+
+		SpawnCustomParticle(player, ParticleType::Red, NiPoint3(), "NPC COM [COM ]", get_visual_scale(player) * 1.6f); 
+		
+		ActorHandle gianthandle = player->CreateRefHandle();
+		std::string name = std::format("DragonGrowth_{}", player->formID);
+
+		float HpRegen = GetMaxAV(player, ActorValue::kHealth) * 0.00125f;
+		float Gigantism = 1.0f + Ench_Aspect_GetPower(player);
+
+		float duration = 6.0f + dur_rng;
+
+		TaskManager::RunFor(name, duration, [=](auto& progressData) {
+			if (!gianthandle) {
+				return false;
+			}
+			auto giantref = gianthandle.get().get();
+			ApplyShakeAtNode(giantref, Rumble_Misc_MightOfDragons, "NPC COM [COM ]");
+			update_target_scale(giantref, 0.0026f * Gigantism * TimeScale(), SizeEffectType::kGrow);
+			giantref->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, ActorValue::kHealth, HpRegen * TimeScale());
+			return true;
+		});
 	}
 
 	void AddSMTDuration(Actor* actor, float duration, bool perk_check) {

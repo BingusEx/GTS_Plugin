@@ -20,7 +20,7 @@ namespace {
 			.a = 0.0f
 		};
 
-		float balance = GameModeManager::GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Base) * 1.6f;
+		const float balance = Config::GetBalance().fBMShrinkRate * 1.6f;
 		float power = soft_power(size, launch) * balance;
 		return power;
 	}
@@ -334,20 +334,6 @@ namespace GTS {
 		return "GameModeManager";
 	}
 
-	float GameModeManager::GetBalanceModeInfo(BalanceModeInfo info) {
-		auto& Persist = Persistent::GetSingleton();
-		switch (info) {
-			case BalanceModeInfo::SizeGain_Penalty: // 1.0
-				return Persist.BalanceMode_SizeGain_Penalty;
-			case BalanceModeInfo::ShrinkRate_Base: // 1.0
-				return Persist.BalanceMode_ShrinkRate_Base;
-			case BalanceModeInfo::ShrinkRate_Combat: // 0.08
-				return Persist.BalanceMode_ShrinkRate_Combat;
-		}
-			
-		return 1.0f;
-	}
-
 	void GameModeManager::ApplyGameMode(Actor* a_Actor, const SelectedGameMode& a_SelectedGameMode, const float& a_GrowthRate, const float& a_ShrinkRate)  {
 
 		auto profiler = Profilers::Profile("Manager: ApplyGameMode");
@@ -477,7 +463,7 @@ namespace GTS {
 					BaseShrinkRate = 0.0f;
 				}
 				else if (actor->IsInCombat() && BalanceModeEnabled) {
-					BaseShrinkRate *= GetBalanceModeInfo(BalanceModeInfo::ShrinkRate_Combat); // shrink at 6% rate
+					BaseShrinkRate *= Config::GetBalance().fBMShrinkRateCombat;
 				}
 
 				if (fabs(BaseShrinkRate) <= 1e-6) {

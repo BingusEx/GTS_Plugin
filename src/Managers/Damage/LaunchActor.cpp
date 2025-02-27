@@ -84,7 +84,7 @@ namespace GTS {
 
 		float DamageMult = 0.5f;
 		float giantSize = get_visual_scale(giant);
-		float tinySize = std::clamp(get_visual_scale(tiny), 0.5f, 999999.0f); // clamp else they will fly into the sky
+		float tinySize = std::clamp(get_visual_scale(tiny), 0.5f, 1000000.0f); // clamp else they will fly into the sky
 		float highheel = GetHighHeelsBonusDamage(tiny, true);
 
 		float startpower = Push_Actor_Upwards * highheel * (1.0f + Potion_GetMightBonus(giant)); // determines default power of launching someone

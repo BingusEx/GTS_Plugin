@@ -253,13 +253,9 @@ namespace {
 		}
 		float visual_scale = persi_actor_data->visual_scale;
 		if (actor->formID == 0x14) {
-			float scaleOverride = get_fp_scale(actor);
-			if (IsFirstPerson() && scaleOverride >= 1e-4) {
-				if (scaleOverride > 1.0f) {
-					visual_scale *= GetProneAdjustment(); // In normal case we * it for compatibility with crawling/proning.
-				} else {
-					visual_scale = scaleOverride; // In Loot/Combat mode case, we override it with flat value (such as 0.6).
-				}
+			
+			if (IsFirstPerson()) {
+				visual_scale *= GetProneAdjustment(); // In normal case we * it for compatibility with crawling/proning.
 			}
 		}
 
@@ -363,6 +359,67 @@ namespace {
 		bool SneaktState = (a_actor->formID == 0x14) ? ActionS.bSneakTransitions : ActionS.bSneakTransitionsOther;
 		SetEnableSneakTransition(a_actor, !SneaktState);
 	}
+
+	//Ported From Papyrus
+	float GetSizeFromPerks(RE::Actor* a_Actor) {
+		float BonusSize = 0.0f;
+
+		if (Runtime::HasPerk(a_Actor,"TrueGiantess")) { //SizeManipulation 3
+			BonusSize += static_cast<float>(a_Actor->GetLevel()) * 0.0330f;
+		}
+
+		if (Runtime::HasPerk(a_Actor,"ExpandedGrowth")) { //SizeManipulation 2
+			BonusSize += Runtime::GetFloat("GtsSkillLevel") * 0.0165f;
+		}
+
+		if (Runtime::HasPerk(a_Actor,"SizeManipulation")) { //SizeManipulation 1
+			BonusSize += 0.135f;
+		}
+
+		return BonusSize;
+	}
+
+	//Ported From Papyrus
+	float GetExpectedMaxSize(RE::Actor* a_Actor) {
+		const float LevelBonus = 1.0f + GetGtsSkillLevel(a_Actor) * 0.006f;
+		const float Essence = Persistent::GetSingleton().GTSExtraPotionSize.value;
+
+		const auto Quest = Runtime::GetQuest("MainQuest"); // <------ ProgressionQuest
+		if (!Quest) {
+			return 1.0f;
+		}
+
+		const auto Stage = Quest->GetCurrentStageID();
+		if (Stage < 20) {
+			return 1.0f;
+		}
+
+		//Each stage after 20 adds 0.04f in steps of 10 stages
+		//Base value + Current Stage - 20 / 10
+		float QuestMult = 0.10f + static_cast<float>(Stage - 20) / 10.f * 0.04f;
+		if (Stage >= 80) QuestMult = 0.60f;
+
+		if (Runtime::HasPerk(a_Actor,"ColossalGrowth")) { //Total Size Control Perk
+
+			if (!Config::GetBalance().bBalanceMode) {
+				const float SizeOverride = Config::GetBalance().fMaxPlayerSizeOverride;
+				if (SizeOverride > 0.1f) {
+					return SizeOverride;
+				}
+			}
+		}
+
+		const float MaxAllowedSize = 1.0f + (QuestMult + GetSizeFromPerks(a_Actor)) * LevelBonus;
+		return MaxAllowedSize + Essence;
+
+	}
+
+	void UpdateGlobalSizeLimit() {
+		if (const auto Player = PlayerCharacter::GetSingleton()) {
+			Persistent::GetSingleton().GTSGlobalSizeLimit.value = GetExpectedMaxSize(Player);
+		}
+	}
+
 }
 
 GtsManager& GtsManager::GetSingleton() noexcept {
@@ -396,15 +453,19 @@ void GtsManager::Update() {
 	ShiftAudioFrequency();
 	FixActorFade();
 	UpdateCameraINIs();
+	UpdateGlobalSizeLimit();
+
 
 	for (auto actor: find_actors()) {
 
 		if (actor) {
 
+
+
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
 
 				ClothManager::GetSingleton().CheckClothingRip(actor);
-				GameModeManager::GetSingleton().GameMode(actor); // Handle Game Modes
+				GameModeManager::GameMode(actor); // Handle Game Modes
 
 				Foot_PerformIdleEffects_Main(actor); // Just idle zones for pushing away/dealing minimal damage
 				TinyCalamity_SeekActors(actor); // Active only on Player

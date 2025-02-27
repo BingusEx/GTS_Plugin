@@ -47,11 +47,9 @@ namespace {
 	}
 
 	bool Hit_ShouldShrink(Actor* receiver) {
-		auto& sizemanager = SizeManager::GetSingleton();
 		
-		bool HasPerk = Runtime::HasPerk(receiver, "GrowthOnHitPerk");
-		bool BalanceMode = sizemanager.BalancedMode() >= 2.0f;
-		bool IsPlayer = receiver->formID == 0x14;
+		const bool HasPerk = Runtime::HasPerk(receiver, "GrowthOnHitPerk");
+		const bool BalanceMode = SizeManager::BalancedMode();
 
 		if (BalanceMode && receiver->formID == 0x14 && !HasPerk) {
 			if (get_target_scale(receiver) > get_natural_scale(receiver, true)) {
@@ -179,7 +177,7 @@ namespace {
 		float scale = get_target_scale(receiver);
 		float naturalscale = get_natural_scale(receiver, true);
 
-		float lossmod = Runtime::GetFloatOr("SizeLossModifier", 1.0f);
+		const float lossmod = Config::GetBalance().fBMShrinkOnHitMult;
 		float modifier = std::clamp(lossmod, 0.10f, 25.0f); // * size loss value
 
 		ShrinkValue *= modifier;
@@ -197,19 +195,19 @@ namespace {
 		if (attacker == receiver) {
 			return;
 		}
-		
-		auto& sizemanager = SizeManager::GetSingleton();
-		float BalanceMode = sizemanager.BalancedMode();
 
-		float SizeHunger = 1.0f + Ench_Hunger_GetPower(receiver);
-		float Gigantism = 1.0f + Ench_Aspect_GetPower(receiver);
+		const float BalanceMode = SizeManager::BalancedMode() ? 2.0f : 1.0f;
+
+		const float SizeHunger = 1.0f + Ench_Hunger_GetPower(receiver);
+		const float Gigantism = 1.0f + Ench_Aspect_GetPower(receiver);
 		
-		float SizeDifference = GetSizeDifference(receiver, attacker, SizeType::VisualScale, true, true);
-		float resistance = Potion_GetShrinkResistance(receiver);
+		const float SizeDifference = GetSizeDifference(receiver, attacker, SizeType::VisualScale, true, true);
+		const float resistance = Potion_GetShrinkResistance(receiver);
 	
 		if (Hit_ShouldGrow(receiver)) { // if has perk. Wins over balance mode if true
 			HitGrowth(receiver, attacker, Hit_CalculateGrowth(damage, SizeHunger, Gigantism), SizeDifference, BalanceMode);
-		} else if (Hit_ShouldShrink(receiver)) { // else, if balance mode is on, Shrink us
+		}
+		else if (Hit_ShouldShrink(receiver)) { // else, if balance mode is on, Shrink us
 			HitShrink(receiver, Hit_CalculateShrink(attacker, damage, SizeHunger, Gigantism, resistance));
 		}
 	}

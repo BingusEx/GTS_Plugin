@@ -5,7 +5,7 @@ using namespace GTS;
 
 namespace GTS {
 	 void ShiftAudioFrequency() {
-		auto enable = Persistent::GetSingleton().edit_voice_frequency;
+	 	auto enable = Config::GetAudio().bEnableVoiceOverride;
 		if (!enable) {
 			return;
 		}
@@ -18,7 +18,6 @@ namespace GTS {
 						if (high) {
 							auto Audio_1 = high->soundHandles[0];
 							auto Audio_2 = high->soundHandles[1];
-							auto Audio_3 = high->soundHandles[2];
 
 							float scale = get_visual_scale(tiny) / get_natural_scale(tiny, false) / game_getactorscale(tiny);
 							float volume = std::clamp(scale + 0.5f, 0.35f, 1.0f);
@@ -37,10 +36,6 @@ namespace GTS {
 							if (Audio_2.soundID != BSSoundHandle::kInvalidID) {
 								Audio_2.SetFrequency(freq);
 								Audio_2.SetVolume(volume);
-							}
-							if (Audio_3.soundID != BSSoundHandle::kInvalidID) {
-								Audio_3.SetFrequency(freq);
-								Audio_3.SetVolume(volume);
 							}
 						}
 					}

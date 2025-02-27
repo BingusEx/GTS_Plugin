@@ -11,10 +11,7 @@ namespace GTS {
 	void ShrinkOther::OnUpdate() {
 
 		constexpr float BASE_POWER = 0.00180f;
-		constexpr float CRUSH_BONUS = 0.00180f;
-		constexpr float GROWTH_AMOUNT_BONUS = 1.4f;
 		constexpr float DUAL_CAST_BONUS = 2.0f;
-		constexpr float SCALE_FACTOR = 0.5f;
 
 		auto caster = GetCaster();
 		if (!caster) {
@@ -35,12 +32,7 @@ namespace GTS {
 			power *= 1.75f;
 		}
 
-		float caster_scale = get_visual_scale(caster);
 		float target_scale = get_visual_scale(target);
-
-		if (Runtime::GetFloat("CrushGrowthRate") >= GROWTH_AMOUNT_BONUS) {
-			power += CRUSH_BONUS;
-		}
 
 		if (IsDualCasting()) {
 			power *= DUAL_CAST_BONUS;

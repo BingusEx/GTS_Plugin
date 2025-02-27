@@ -44,8 +44,8 @@ namespace GTS {
 			float GetGrowthSpurt(Actor* actor);
 			void ModGrowthSpurt(Actor* actor, float amt);
 
-			void SetSizeAttribute(Actor* actor, float amt, SizeAttribute attribute);
-			float GetSizeAttribute(Actor* actor, SizeAttribute attribute);
+			static void SetSizeAttribute(Actor* actor, float amt, SizeAttribute attribute);
+			static float GetSizeAttribute(Actor* actor, SizeAttribute attribute);
 
 			void SetSizeVulnerability(Actor* actor, float amt);
 			float GetSizeVulnerability(Actor* actor);
@@ -59,9 +59,9 @@ namespace GTS {
 
 			void SetCameraHalflife(Actor* actor, CameraTracking Bone);
 			float GetCameraHalflife(Actor* actor);
-		
 
-			float BalancedMode();
+
+			static bool BalancedMode();
 
 		private: 
 			std::map<Actor*, SizeManagerData> sizeData;

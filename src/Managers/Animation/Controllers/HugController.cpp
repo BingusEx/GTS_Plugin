@@ -233,8 +233,6 @@ namespace GTS {
 			MINIMUM_HUG_SCALE *= 0.80f;
 		}
 
-		float balancemode = SizeManager::GetSingleton().BalancedMode();
-
 		float prey_distance = (pred->GetPosition() - prey->GetPosition()).Length();
 
 		if (prey_distance <= (MINIMUM_DISTANCE * pred_scale)) {

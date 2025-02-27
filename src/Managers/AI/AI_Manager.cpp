@@ -46,7 +46,12 @@ namespace {
 		for (auto actor: find_actors()) {
 			if (actor->Is3DLoaded()) {
 				if (!actor->IsDead()) {
-					int Requirement = 14 * static_cast<int>(SizeManager::GetSingleton().BalancedMode());
+
+					int Requirement = 14;
+
+					if (SizeManager::BalancedMode()) {
+						Requirement *= 2;
+					}
 
 					int random = RandomInt(0, Requirement);
 					int trigger_threshold = 2;

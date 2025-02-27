@@ -14,24 +14,16 @@ using namespace RE::BSScript;
 namespace {
 
 	constexpr std::string_view PapyrusClass = "GtsPlugin";
+
 	float GetDistanceToCamera(StaticFunctionTag*, Actor* actor) {
 		return get_distance_to_camera(actor);
-	}
-	void SetSizeDamageMultiplier(StaticFunctionTag*, float bonus) {
-		Persistent::GetSingleton().size_related_damage_mult = bonus;
-	}
-	void SetExperienceMultiplier(StaticFunctionTag*, float bonus) {
-		Persistent::GetSingleton().experience_mult = bonus;
-	}
-
-	void SetLegacySounds(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().legacy_sounds = enabled;
 	}
 
 	float GetSizeRelatedDamage(StaticFunctionTag*, Actor* actor, float attribute) {
 		SizeAttribute Attribute = static_cast<SizeAttribute>(attribute);
 		return SizeManager::GetSingleton().GetSizeAttribute(actor, Attribute);
 	}
+
 	float GetSizeVulnerability(StaticFunctionTag*, Actor* actor) {
 		return SizeManager::GetSingleton().GetSizeVulnerability(actor);
 	}
@@ -140,12 +132,12 @@ namespace {
 	}
 
 	// From https://stackoverflow.com/questions/17211122/formatting-n-significant-digits-in-c-without-scientific-notation
-	std::string format(double f, int n)
-	{
+	std::string format(double f, int n) {
 		if (f == 0) {
 			return "0";
 		}
-		int d = (int)::ceil(::log10(f < 0 ? -f : f)); /*digits before decimal point*/
+
+		int d = static_cast<int>(ceil(::log10(f < 0 ? -f : f))); /*digits before decimal point*/
 		double order = ::pow(10., n - d);
 		std::stringstream ss;
 		ss << std::fixed << std::setprecision(std::max(n - d, 0)) << round(f * order) / order;
@@ -154,23 +146,6 @@ namespace {
 
 	std::string SigFig(StaticFunctionTag*, float number, int sf) {
 		return format(number, sf);
-	}
-
-	void SetPlayerStagger(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().allow_stagger = enabled;
-	}
-
-	void SetActorAudioOverride(StaticFunctionTag*, bool enabled) {
-		log::info("FREQUENCY OVERRIDE: {}", enabled);
-		Persistent::GetSingleton().edit_voice_frequency = enabled;
-	}
-
-	void SetNPCProtection(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().NPCEffectImmunity = enabled;
-	}
-
-	void SetPCProtection(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().PCEffectImmunity = enabled;
 	}
 
 	void EnableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
@@ -229,26 +204,6 @@ namespace {
 		AdjustMassLimit(value, caster);
 	}
 
-	void AdjustBalanceMode(StaticFunctionTag*, int parameter, float modifier) {
-		BalanceModeInfo param = static_cast<BalanceModeInfo>(parameter);
-		auto& Persist = Persistent::GetSingleton();
-		switch (param) {
-			case BalanceModeInfo::SizeGain_Penalty: // 1.0
-				Persist.BalanceMode_SizeGain_Penalty = modifier;
-			break;
-			case BalanceModeInfo::ShrinkRate_Base: // 1.0
-				Persist.BalanceMode_ShrinkRate_Base = modifier;
-			break;
-			case BalanceModeInfo::ShrinkRate_Combat: // 0.08
-				Persist.BalanceMode_ShrinkRate_Combat = modifier;
-			break;
-		}
-	}
-
-	void SetProgressionMultiplier(StaticFunctionTag*, float value) {
-		Persistent::GetSingleton().progression_multiplier = value;
-	}
-
 	void SetStompAi(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().Stomp_Ai = enabled;
 	}
@@ -278,10 +233,6 @@ namespace {
 
 	void SetActorPanic(StaticFunctionTag*, bool enabled) {
 		Persistent::GetSingleton().actors_panic = enabled;
-	}
-
-	void ToggleHostileDamage(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().hostile_toggle = enabled;
 	}
 
 	void DisintegrateTarget(StaticFunctionTag*, Actor* actor) {
@@ -315,33 +266,11 @@ namespace {
 		return IsDragon(actor);
 	}
 
-	bool IsJumping(StaticFunctionTag*, Actor* actor) {
-		return GTS::IsJumping(actor);
-	}
-
 	bool IsInAir(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
 			return false;
 		}
 		return actor->IsInMidair();
-	}
-
-	float GetTremorScale(StaticFunctionTag*) {
-		return Persistent::GetSingleton().tremor_scale;
-	}
-
-	void SetTremorScale(StaticFunctionTag*, float value) {
-		//UNUSED REMOVE ME
-		Persistent::GetSingleton().tremor_scale = value;
-	}
-
-	float GetTremorScaleNPC(StaticFunctionTag*) {
-		// UNUSED REMOVE ME
-		return Persistent::GetSingleton().npc_tremor_scale;
-	}
-
-	void SetTremorScaleNPC(StaticFunctionTag*, float value) {
-		Persistent::GetSingleton().npc_tremor_scale = value;
 	}
 
 	float GetExperimentFloat(StaticFunctionTag*) {
@@ -356,9 +285,6 @@ namespace {
 namespace GTS {
 	bool register_papyrus_plugin(IVirtualMachine* vm) {
 		vm->RegisterFunction("GetDistanceToCamera", PapyrusClass, GetDistanceToCamera);
-		vm->RegisterFunction("SetSizeDamageMultiplier", PapyrusClass, SetSizeDamageMultiplier);
-		vm->RegisterFunction("SetExperienceMultiplier", PapyrusClass, SetExperienceMultiplier);
-		vm->RegisterFunction("SetLegacySounds", PapyrusClass, SetLegacySounds);
 		vm->RegisterFunction("GetSizeRelatedDamage", PapyrusClass, GetSizeRelatedDamage);
 		vm->RegisterFunction("ModSizeVulnerability", PapyrusClass, ModSizeVulnerability);
 		vm->RegisterFunction("GetSizeVulnerability", PapyrusClass, GetSizeVulnerability);
@@ -369,17 +295,11 @@ namespace GTS {
 		vm->RegisterFunction("GetGrowthHalfLife", PapyrusClass, GetGrowthHalfLife);
 		vm->RegisterFunction("SetAnimSpeed", PapyrusClass, SetAnimSpeed);
 		vm->RegisterFunction("SigFig", PapyrusClass, SigFig);
-		vm->RegisterFunction("SetPlayerStagger", PapyrusClass, SetPlayerStagger);
-		vm->RegisterFunction("SetActorAudioOverride", PapyrusClass, SetActorAudioOverride);
-		vm->RegisterFunction("SetNPCProtection", PapyrusClass, SetNPCProtection);
-		vm->RegisterFunction("SetPCProtection", PapyrusClass, SetPCProtection);
 		vm->RegisterFunction("DisableCollisionLayerAndMotion", PapyrusClass, DisableCollisionLayerAndMotion);
 		vm->RegisterFunction("EnableCollisionLayerAndMotion", PapyrusClass, EnableCollisionLayerAndMotion);
 		vm->RegisterFunction("ResetQuestProgression", PapyrusClass, ResetQuestProgression);
 		vm->RegisterFunction("Quest_GetProgression", PapyrusClass, Quest_GetProgression);
 		vm->RegisterFunction("GetAspectOfGiantessPower", PapyrusClass, GetAspectOfGiantessPower);
-		vm->RegisterFunction("AdjustBalanceMode", PapyrusClass, AdjustBalanceMode);
-		vm->RegisterFunction("SetProgressionMultiplier", PapyrusClass, SetProgressionMultiplier);
 		vm->RegisterFunction("SetStompAi", PapyrusClass, SetStompAi);
 		vm->RegisterFunction("SetSandwichAi", PapyrusClass, SetSandwichAi);
 		vm->RegisterFunction("SetFollowerInteractions", PapyrusClass, SetFollowerInteractions);
@@ -389,7 +309,6 @@ namespace GTS {
 		vm->RegisterFunction("SetKickAi", PapyrusClass, SetKickAi);
 		vm->RegisterFunction("SetButtCrushAi", PapyrusClass, SetButtCrushAi);
 		vm->RegisterFunction("SetActorPanic", PapyrusClass, SetActorPanic);
-		vm->RegisterFunction("ToggleHostileDamage", PapyrusClass, ToggleHostileDamage);
 		vm->RegisterFunction("SetAllowPlayerVore", PapyrusClass, SetAllowPlayerVore);
 		vm->RegisterFunction("DistributeRandomItems", PapyrusClass, DistributeRandomItems);
 		vm->RegisterFunction("SetOnlyCombatVore", PapyrusClass, SetOnlyCombatVore);
@@ -404,10 +323,6 @@ namespace GTS {
 		vm->RegisterFunction("DragonCheck", PapyrusClass, DragonCheck);
 		vm->RegisterFunction("IsJumping", PapyrusClass, IsJumping);
 		vm->RegisterFunction("IsInAir", PapyrusClass, IsInAir);
-		vm->RegisterFunction("GetTremorScale", PapyrusClass, GetTremorScale);
-		vm->RegisterFunction("SetTremorScale", PapyrusClass, SetTremorScale);
-		vm->RegisterFunction("GetTremorScaleNPC", PapyrusClass, GetTremorScaleNPC);
-		vm->RegisterFunction("SetTremorScaleNPC", PapyrusClass, SetTremorScaleNPC);
 		vm->RegisterFunction("GetExperimentFloat", PapyrusClass, GetExperimentFloat);
 		vm->RegisterFunction("SetExperimentFloat", PapyrusClass, SetExperimentFloat);
 

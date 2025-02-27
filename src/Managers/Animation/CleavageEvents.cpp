@@ -161,7 +161,7 @@ namespace {
 			float gts_scale = get_visual_scale(giant) * GetSizeFromBoundingBox(giant);
 
 			float sizeDiff = gts_scale/tiny_scale;
-			float power = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 999999.0f);
+			float power = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 1000000.0f);
 			float additionaldamage = 1.0f + sizemanager.GetSizeVulnerability(tiny);
 			float damage = (Damage_Breast_Squish * damage_mult) * power * additionaldamage * additionaldamage * sizeDiff;
 			float experience = std::clamp(damage/1600, 0.0f, 0.06f);
@@ -382,7 +382,7 @@ namespace {
                 Disintegrate(tiny);
                 SendDeathEvent(giant, tiny);
             } else {
-                DamageAV(tiny, ActorValue::kHealth, 999999);
+                DamageAV(tiny, ActorValue::kHealth, 1000000);
                 tiny->KillImpl(giant, 1, true, true);
             }
             

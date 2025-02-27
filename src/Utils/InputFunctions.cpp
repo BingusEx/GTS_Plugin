@@ -11,6 +11,8 @@
 
 #include "Magic/Effects/Common.hpp"
 
+#include "Managers/GtsSizeManager.hpp"
+
 #include "UI/UIManager.hpp"
 
 
@@ -329,8 +331,7 @@ namespace {
 	void ProtectSmallOnesEvent(const ManagedInputEvent& data) {
 		static Timer ProtectTimer = Timer(5.0);
 		if (ProtectTimer.ShouldRunFrame()) {
-			bool balance = IsInBalanceMode();
-			Utils_ProtectTinies(balance);
+			Utils_ProtectTinies(SizeManager::BalancedMode());
 		}
 	}
 

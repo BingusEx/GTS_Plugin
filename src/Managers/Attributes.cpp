@@ -1,4 +1,7 @@
 #include "Managers/Attributes.hpp"
+
+#include "Config/Config.hpp"
+
 #include "Managers/Damage/TinyCalamity.hpp"
 #include "Managers/GtsSizeManager.hpp"
 
@@ -30,7 +33,7 @@ namespace {
 
 	void ManagePerkBonuses(Actor* actor) {
 		auto& SizeManager = SizeManager::GetSingleton();
-		float BalancedMode = SizeManager::GetSingleton().BalancedMode();
+		float BalanceModeDiv = SizeManager::BalancedMode() ? 2.0f : 1.0f;
 		float gigantism = 1.0f + (Ench_Aspect_GetPower(actor) * 0.30f);
 
 		float BaseGlobalDamage = SizeManager::GetSingleton().GetSizeAttribute(actor, SizeAttribute::Normal);
@@ -43,13 +46,13 @@ namespace {
 
 		///Normal Damage
 		if (Runtime::HasPerkTeam(actor, "Cruelty")) {
-			ExpectedGlobalDamage += 0.15f/BalancedMode;
+			ExpectedGlobalDamage += 0.15f/BalanceModeDiv;
 		}
 		if (Runtime::HasPerkTeam(actor, "RealCruelty")) {
-			ExpectedGlobalDamage += 0.35f/BalancedMode;
+			ExpectedGlobalDamage += 0.35f/BalanceModeDiv;
 		}
 		if (IsGrowthSpurtActive(actor)) {
-			ExpectedGlobalDamage *= (1.0f + (0.35f/BalancedMode));
+			ExpectedGlobalDamage *= (1.0f + (0.35f/BalanceModeDiv));
 		}
 		if (Runtime::HasPerkTeam(actor, "MightOfGiants")) {
 			ExpectedGlobalDamage *= 1.15f; // +15% damage
@@ -57,11 +60,11 @@ namespace {
 
 		///Sprint Damage
 		if (Runtime::HasPerkTeam(actor, "QuickApproach")) {
-			ExpectedSprintDamage += 0.25f/BalancedMode;
+			ExpectedSprintDamage += 0.25f/BalanceModeDiv;
 		}
 		///Fall Damage
 		if (Runtime::HasPerkTeam(actor, "MightyLegs")) {
-			ExpectedFallDamage += 0.3f/BalancedMode;
+			ExpectedFallDamage += 0.3f/BalanceModeDiv;
 		}
 		///Buff by enchantment
 		ExpectedGlobalDamage *= gigantism;
@@ -123,13 +126,13 @@ namespace GTS {
 		}
 	}
 
-	float AttributeManager::GetAttributeBonus(Actor* actor, ActorValue av) {
+	float AttributeManager::GetAttributeBonus(Actor* actor, ActorValue av) const {
 		auto profiler = Profilers::Profile("Attributes: GetAttributeBonus");
 		if (!actor) {
 			return 1.0f;
 		}
 
-		float BalancedMode = SizeManager::GetSingleton().BalancedMode();
+		float BalancedMode = SizeManager::BalancedMode() ? 2.0f : 1.0f;
 		float natural_scale = get_natural_scale(actor, true);
 		float scale = get_giantess_scale(actor);
 		if (scale <= 0) {
@@ -142,6 +145,7 @@ namespace GTS {
 			// Fix:    0.91/0.91(natural size) = 1.0
 		}
 		switch (av) {
+
 			case ActorValue::kHealth: {
 				float might = 1.0f + Potion_GetMightBonus(actor);
 
@@ -155,15 +159,14 @@ namespace GTS {
 				}
 
 				scale *= might;
-
 				float resistance = std::clamp(1.0f / scale, 0.001f, 3.0f); // 0.001% as max resistance, -300% is a max vulnerability.
-
 				return resistance;
 
 			}
+
 			case ActorValue::kCarryWeight: {
-				float bonusCarryWeightMultiplier = Runtime::GetFloatOr("bonusCarryWeightMultiplier", 1.0f);
-				float power = (bonusCarryWeightMultiplier/BalancedMode);
+				const float BonusCarryMult = Config::GetBalance().fStatBonusCarryWeightMult;
+				float power = (BonusCarryMult/BalancedMode);
 
 				float might = 1.0f + Potion_GetMightBonus(actor);
 
@@ -176,9 +179,17 @@ namespace GTS {
 					return 1.0f * might; // Don't reduce it if scale is < 1.0
 				}
 			}
+
 			case ActorValue::kSpeedMult: {
-				// TODO: Rework to something more succient that garuentees 1xspeed@1xscale
-				SoftPotential& MS_adjustment = Persistent::GetSingleton().MS_adjustment;
+
+				constexpr SoftPotential MS_adjustment{ 
+					.k = 0.132f, //0.132
+					.n = 0.86f,  //0.86
+					.s = 1.12f,  //1.12
+					.o = 1.0f,
+					.a = 0.0f, //Default is 0
+				};
+
 				float MS_mult = soft_core(scale, MS_adjustment);
 				float MS_mult_limit = std::clamp(MS_mult, 0.750f, 1.0f);
 				float Multy = std::clamp(MS_mult, 0.70f, 1.0f);
@@ -197,25 +208,28 @@ namespace GTS {
 				float power = 1.0f * Slowdown * (Bonus/2.0f + 1.0f)/MS_mult/MS_mult_limit/Multy/bonusspeed;
 				if (scale > 1.0f) {
 					return power;
-				} else {
+				}
+				else {
 					return scale * Slowdown * (Bonus/2.0f + 1.0f);
 				}
 			}
+
 			case ActorValue::kAttackDamageMult: {
 				if (actor->formID == 0x14 && HasSMT(actor)) {
 					scale += 1.0f;
 				}
-				float bonusDamageMultiplier = Runtime::GetFloatOr("bonusDamageMultiplier", 1.0f);
-				float damage_storage = 1.0f + ((bonusDamageMultiplier) * scale - 1.0f);
+				const float BonusDamageMult = Config::GetBalance().fStatBonusDamageMult;
+				const float DamageStorage = 1.0f + ((BonusDamageMult) * scale - 1.0f);
 
 				float might = 1.0f + Potion_GetMightBonus(actor);
 
 				if (scale > 1.0f) {
-					return damage_storage * might;
+					return DamageStorage * might;
 				} else {
 					return scale * might;
 				}
 			}
+
 			case ActorValue::kJumpingBonus: { // Used through MCM only (display bonus jump height)
 				float power = 1.0f;
 				float defaultjump = 1.0f + (1.0f * (scale - 1) * power);

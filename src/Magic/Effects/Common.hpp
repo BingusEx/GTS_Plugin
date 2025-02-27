@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include "Config/Config.hpp"
 
 #include "Managers/ShrinkToNothingManager.hpp"
@@ -200,42 +202,35 @@ namespace GTS {
 	}
 
 	inline void AdjustSizeLimit(float value, Actor* caster) {  // A function that adjusts Size Limit (Globals)
-		if (caster->formID == 0x14) {
-			float progressionMultiplier = Persistent::GetSingleton().progression_multiplier;
-
-			auto globalMaxSizeCalc = Runtime::GetFloat("GlobalMaxSizeCalc");
-			if (globalMaxSizeCalc < 10.0f) {
-				Runtime::SetFloat("GlobalMaxSizeCalc", globalMaxSizeCalc + (value * 1.45f * 50 * progressionMultiplier * TimeScale())); // Always apply it
-			}
-		}
+		//Unused
 	}
 
 	inline void AdjustMassLimit(float value, Actor* caster) { // Adjust Size Limit for Mass Based Size Mode
 		if (caster->formID == 0x14) {
-			auto selectedFormula = Runtime::GetInt("SelectedSizeFormula");
-			float progressionMultiplier = Persistent::GetSingleton().progression_multiplier;
-			if (selectedFormula) {
-				if (selectedFormula >= 1.0f) {
-					SoftPotential mod {
-						.k = 0.070f,
-						.n = 3.0f,
-						.s = 0.54f,
-					};
-					auto globalMassSize = Runtime::GetFloat("GtsMassBasedSize");
-					
-					float modifier = soft_core(globalMassSize, mod);
-					if (modifier <= 0.10f) {
-						modifier = 0.10f;
-					}
-					value *= 10.0f * modifier;
+			const auto selectedFormula = Config::GetBalance().sSizeMode;
+			float progressionMultiplier = Config::GetBalance().fSpellEfficiency;
+			if (selectedFormula == "kMassBased") {
 
-					auto sizeLimit = Runtime::GetFloat("sizeLimit");
-					if (Runtime::HasPerk(caster, "ColossalGrowth")) {
-						sizeLimit = 999999.0f;
-					}
-					if (globalMassSize + 1.0f < sizeLimit) {
-						Runtime::SetFloat("GtsMassBasedSize", globalMassSize + value * progressionMultiplier * TimeScale());
-					}
+				SoftPotential mod {
+					.k = 0.070f,
+					.n = 3.0f,
+					.s = 0.54f,
+				};
+
+				const float MassBasedSize = Persistent::GetSingleton().GTSMassBasedSize.value;
+
+				float modifier = soft_core(MassBasedSize, mod);
+				modifier = std::max(modifier, 0.10f);
+				value *= 10.0f * modifier;
+
+				auto GlobalSizeLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
+
+				if (Runtime::HasPerk(caster, "ColossalGrowth")) {
+					GlobalSizeLimit = 1000000.0f;
+				}
+
+				if (MassBasedSize + get_natural_scale(caster) < GlobalSizeLimit) {
+					Persistent::GetSingleton().GTSMassBasedSize.value = MassBasedSize + value * progressionMultiplier * TimeScale();
 				}
 			}
 		}
@@ -271,14 +266,14 @@ namespace GTS {
 	}
 
 	inline float CalcPower(Actor* actor, float scale_factor, float bonus, bool shrink) {
-		float progress_mult = Persistent::GetSingleton().progression_multiplier;
+		float progress_mult = Config::GetBalance().fSpellEfficiency;
 		float size_cap = 0.5f;
 		// y = mx +c
 		// power = scale_factor * scale + bonus
 		if (shrink) { // allow for more size weakness when we need it
 			size_cap = 0.02f; // up to 98% shrink weakness
 		}
-		float scale = std::clamp(get_visual_scale(actor), size_cap, 999999.0f);
+		float scale = std::clamp(get_visual_scale(actor), size_cap, 1000000.0f);
 		return (scale * scale_factor + bonus) * progress_mult * MASTER_POWER * TimeScale();
 	}
 

@@ -388,7 +388,7 @@ namespace GTS {
 	void Vore::RecordOriginalScale(Actor* tiny) {
 		auto Data = Transient::GetSingleton().GetData(tiny);
 		if (Data) {
-			Data->vore_recorded_scale = std::clamp(get_visual_scale(tiny), 0.02f, 999999.0f);
+			Data->vore_recorded_scale = std::clamp(get_visual_scale(tiny), 0.02f, 1000000.0f);
 		}
 	}
 
@@ -404,7 +404,7 @@ namespace GTS {
 		if (tiny) {
 			float Adjustment_Tiny = GetSizeFromBoundingBox(tiny);
 			float preyscale = get_visual_scale(tiny) * Adjustment_Tiny;
-			float targetScale = std::clamp(preyscale/12.0f * Adjustment_Tiny, 0.01f, 999999.0f);
+			float targetScale = std::clamp(preyscale/12.0f * Adjustment_Tiny, 0.01f, 1000000.0f);
 
 			float shrink_magnitude = -targetScale;
 

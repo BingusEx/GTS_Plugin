@@ -1,19 +1,10 @@
 #include "Managers/Cameras/FPState.hpp"
-#include "Managers/Cameras/CamUtil.hpp"
 
 namespace GTS {
 
-	void FirstPersonCameraState::ExitState() {
-		// Reset the override
-		auto player = GetCameraActor();
-		auto playerData = Persistent::GetSingleton().GetData(player);
-		if (playerData) {
-			playerData->scaleOverride = -1.0f;
-		}
-	}
+	void FirstPersonCameraState::ExitState() {}
 
 	float FirstPersonCameraState::GetScale() {
-		// Dont need to scale as we follow the head bone in fp
 		return 1.0f;
 	}
 

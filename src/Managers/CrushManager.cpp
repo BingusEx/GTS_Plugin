@@ -14,7 +14,7 @@ namespace {
 
 	void CrushGrow(Actor* actor, float scale_factor, float bonus) {
 		// amount = scale * a + b
-		float modifier = SizeManager::GetSingleton().BalancedMode();
+		float modifier = SizeManager::BalancedMode() ? 2.0f : 1.0f;
 		scale_factor /= modifier;
 		bonus /= modifier;
 		update_target_scale(actor, CalcPower(actor, scale_factor, bonus, false), SizeEffectType::kGrow);

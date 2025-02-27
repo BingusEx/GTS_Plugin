@@ -302,8 +302,6 @@ namespace GTS {
 			return;
 		}
 
-		auto& camera_collisions = Persistent::GetSingleton().camera_collisions;
-		
 		BSWriteLockGuard lock(world->worldLock);
 
 		RE::bhkCollisionFilter* filter = static_cast<bhkCollisionFilter*>(world->GetWorld2()->collisionFilter);

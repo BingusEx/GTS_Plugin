@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Managers/Damage/TinyCalamity.hpp"
 
 #include "Managers/Animation/Controllers/VoreController.hpp"
@@ -115,7 +117,7 @@ namespace GTS {
                         float gts_hp = GetMaxAV(giant, ActorValue::kHealth);
                         float tiny_hp = GetMaxAV(tiny, ActorValue::kHealth);
 
-                        float min_cap = IsInBalanceMode() ? 0.5f : 1.0f;
+                        float min_cap = SizeManager::BalancedMode() ? 0.5f : 1.0f;
 
                         float difference = std::clamp(gts_hp / tiny_hp, min_cap, 2.0f);
 
@@ -377,9 +379,8 @@ namespace GTS {
 		}
 	}
 
-    void TinyCalamity_BonusSpeed(Actor* giant) { // Manages SMT bonus speed
-		// Andy's TODO: Calc on demand rather than poll
-
+    // Manages SMT bonus speed
+    void TinyCalamity_BonusSpeed(Actor* giant) {
 		auto Attributes = Persistent::GetSingleton().GetData(giant);
 		float Gigantism = 1.0f + (Ench_Aspect_GetPower(giant) * 0.25f);
 
@@ -388,21 +389,23 @@ namespace GTS {
         float cap = 1.0f;
 
 		float& currentspeed = Attributes->smt_run_speed;
-		if (giant->AsActorState()->IsSprinting() && HasSMT(giant)) { // SMT Active and sprinting
+        // SMT Active and sprinting
+		if (giant->AsActorState()->IsSprinting() && HasSMT(giant)) {
+
 			if (Runtime::HasPerk(giant, "NoSpeedLoss")) {
 				speed = 1.25f;
                 decay = 1.5f;
 				cap = 1.10f;
 			}
 
-			currentspeed += 0.004400f * speed * Gigantism * 10; // increase MS
+            // increase MS
+			currentspeed += 0.004400f * speed * Gigantism * 10;
 
-			if (currentspeed > cap) {
-				currentspeed = cap;
-			}
+			currentspeed = std::min(currentspeed, cap);
 
-            FullSpeed_ApplyEffect(giant, currentspeed);
-		} else { // else decay bonus speed over time
+			FullSpeed_ApplyEffect(giant, currentspeed);
+		}
+    	else { // else decay bonus speed over time
 			if (currentspeed > 0.0f) {
 				currentspeed -= (0.045000f * 10) / decay;
 			} else if (currentspeed <= 0.0f) {

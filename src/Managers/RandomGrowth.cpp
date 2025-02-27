@@ -50,9 +50,11 @@ namespace {
 		if (HasSMT(actor)) {
 			return false; // Disallow random groth during Tiny Calamity
 		}
-		if (SizeManager::GetSingleton().BalancedMode() == 2.0f) {
+
+		if (SizeManager::BalancedMode()) {
 			MultiplySlider = 1.0f; // Disable effect in Balance Mode, so slider is always 1.0
 		}
+
 		float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 		int Requirement = static_cast<int>((300 * MultiplySlider * SizeManager::GetSingleton().BalancedMode()) / Gigantism); // Doubles random in Balance Mode
 		Requirement *= Get_size_penalty(actor);
@@ -86,10 +88,10 @@ namespace GTS {
 						if (ShouldGrow(actor)) {
 							if (get_target_scale(actor) < get_max_scale(actor)) {
 								float scale = get_visual_scale(actor);
-								float ProgressionMultiplier = Persistent::GetSingleton().progression_multiplier;
+								const float SpellEfficiency = Config::GetBalance().fSpellEfficiency;
 								int random = RandomInt(0, 80);
 								float TotalPower = (100.0f + random)/100.0f;
-								float base_power = ((0.00750f * TotalPower * 25) * ProgressionMultiplier);  // The power of it
+								float base_power = ((0.00750f * TotalPower * 25) * SpellEfficiency);  // The power of it
 								float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 
 								if (Runtime::HasPerkTeam(actor, "RandomGrowthAug") && TotalPower >= Get_Breach_Threshold(actor) && !IsGtsBusy(actor)) {

@@ -43,12 +43,12 @@ namespace GTS {
 			if (actor->formID == 0x14 && HasSMT(actor)) {
 				scale *= 1.85f;
 			}
-			bool LegacySounds = Persistent::GetSingleton().legacy_sounds; // Determine if we should play old pre 2.00 update sounds
+			const bool LegacySounds = Config::GetAudio().bUseOldSounds; // Determine if we should play old pre 2.00 update sounds
 			if (scale > 1.2f && !actor->AsActorState()->IsSwimming()) {
 				float movement = FootStepManager::Volume_Multiply_Function(actor, foot_kind);
 				scale *= 0.75f;
 
-				if (Runtime::GetBool("EnableGiantSounds")) {
+				if (Config::GetAudio().bFootstepSounds) {
 					FootStepManager::PlayLegacySounds(movement, node, foot_kind, scale);
 					return; // New Sounds are disabled for now
 					if (!LegacySounds) {       // Play normal sounds

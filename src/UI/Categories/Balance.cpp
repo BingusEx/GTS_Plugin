@@ -2,7 +2,21 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 
+
+
+namespace {
+
+
+    const std::string CollossalGrowthPerk = "ColossalGrowth"; //AKA GtsTotalSizeControl
+    const std::string PleasurableGrowthPerk = "RandomGrowth"; //AKA GtsCrushGrowthAug
+    const std::string CrushGrowthAugmetationPerk = "GrowthDesirePerk";
+    const std::string GrowOnHitPerk = "GrowthOnHitPerk";
+
+}
+
 namespace GTS {
+
+
 
     void CategoryBalance::DrawLeft() {
 
@@ -66,7 +80,6 @@ namespace GTS {
         ImUtil_Unique{
 
             const char* T0 = "Change the formula used for all size gain.";
-
             const char* T1 = "Adjust the global multiplier for all size gains and losses.";
 
             if (ImGui::CollapsingHeader("Size Options", ImUtil::HeaderFlags)) {
@@ -84,30 +97,28 @@ namespace GTS {
 
         ImUtil_Unique{
 
-            const bool temp = true;
-
-            if (ImUtil::ConditionalHeader("Size Limits", "Requires \"Colossal Growth\" Perk", temp)) {
-
-                const float Max = 255.0f;
-                const float Min = 0.0;
+        	bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CollossalGrowthPerk);
+			const std::string HeaderHelpText = Settings.bBalanceMode ? "Balance Mode Active" : "Requires \"Colossal Growth\" Perk";
+            if (ImUtil::ConditionalHeader("Size Limits", HeaderHelpText, HasPerk && !Settings.bBalanceMode)) {
+	            constexpr float Max = 255.0f;
+	            constexpr float Min = 0.0;
 
                 {   //Player Size
-                    float* Scale = &Settings.fMaxPlayerSize;
+                    float* Scale = &Settings.fMaxPlayerSizeOverride;
                     const bool ShouldBeInf = *Scale > Max - 5.0f;
                     const bool ShouldBeAuto = *Scale < Min + 0.1f;
 
-                    std::string _Frmt = "";
+                    std::string _Frmt;
 
                     if (ShouldBeInf) {
                         _Frmt = "Infinite";
-                        *Scale = 10000.0f;
+                        *Scale = 1000000.0f;
                     }
                     else if (ShouldBeAuto) {
-                        //TODO Implement this shit....
-                        //Getting Size needs to be completely redone, Its done in papyrus currently AAAAAAAAAAAARRRRRRHG!!!!!
-                        const float SkillBasedLimit = 9.13f;
+                      
+                        const float SkillBasedLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
 
-                        _Frmt = fmt::format("Skill Based [{}x]", SkillBasedLimit);
+                        _Frmt = fmt::format("Skill Based [{:.2f}x]", SkillBasedLimit);
                         *Scale = 0.0f;
                     }
                     else {
@@ -135,18 +146,22 @@ namespace GTS {
                     const bool ShouldBeInf = *Scale > Max - 5.0f;
                     const bool ShouldBeAuto = *Scale < Min + 0.1f;
 
-                    std::string _Frmt = "";
+                    std::string _Frmt;
                     if (ShouldBeInf) {
                         _Frmt = "Infinite";
-                        *Scale = 10000.0f;
+                        *Scale = 1000000.0f;
                     }
                     else if (ShouldBeAuto) {
 
-                        //TODO Implement this shit.... Whatever you end up doing here needs to be done for followers too
-                        //Getting Size needs to be completely redone, Its done in papyrus currently AAAAAAAAAAAARRRRRRHG!!!!!
-                        const float PlayersLimit = 9.13f;
+                        const float PlayersLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
 
-                        _Frmt = fmt::format("Based on Player [{}x]", PlayersLimit);
+                        if (PlayersLimit >= 250.01f) {
+                            _Frmt = fmt::format("Based on Player [Infinite]", PlayersLimit);
+                        }
+                        else {
+                            _Frmt = fmt::format("Based on Player [{:.2f}x]", PlayersLimit);
+                        }
+
                         *Scale = 0.0f;
                     }
                     else {
@@ -172,18 +187,21 @@ namespace GTS {
                     const bool ShouldBeInf = *Scale > Max - 5.0f;
                     const bool ShouldBeAuto = *Scale < Min + 0.1f;
 
-                    std::string _Frmt = "";
+                    std::string _Frmt;
                     if (ShouldBeInf) {
                         _Frmt = "Infinite";
-                        *Scale = 10000.0f;
+                        *Scale = 1000000.0f;
                     }
                     else if (ShouldBeAuto) {
 
-                        //TODO Implement this shit.... Whatever you end up doing here needs to be done for other npc's too.
-                        //Getting Size needs to be completely redone, Its done in papyrus currently AAAAAAAAAAAARRRRRRHG!!!!!
-                        const float NPCsLimit = 9.13f;
+                        const float NPCsLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
 
-                        _Frmt = fmt::format("Based on Player [{}x]", NPCsLimit);
+                        if (NPCsLimit >= 250.01f) {
+                            _Frmt = fmt::format("Based on Player [Infinite]", NPCsLimit);
+                        }
+                        else {
+                            _Frmt = fmt::format("Based on Player [{:.2f}x]", NPCsLimit);
+                        }
                         *Scale = 0.0f;
                     }
                     else {
@@ -209,11 +227,13 @@ namespace GTS {
             const char* T0 = "Changes the amount of damage size-related actions do.";
             const char* T1 = "Changes the amount of damage increase regular melee atacks gain.";
             const char* T2 = "Adjust the speed at which you gain size experience.";
+            const char* T3 = "Change the ammount of carry weight capacity gained based on your size.";
 
             if (ImUtil::ConditionalHeader("Multipiers", "Balance Mode Active", !Settings.bBalanceMode)) {
 
                 ImUtil::SliderF("Size Damage Multiplier", &Settings.fSizeDamageMult, 0.1f, 2.0f, T0, "%.2fx");
                 ImUtil::SliderF("Damage Multiplier", &Settings.fStatBonusDamageMult, 0.1f, 2.0f, T1, "%.2fx");
+                ImUtil::SliderF("Carry Weight Multiplier", &Settings.fStatBonusCarryWeightMult, 0.1f, 2.0f, T3, "%.2fx");
                 ImUtil::SliderF("Experience Multiplier", &Settings.fExpMult, 0.1f, 5.0f, T2, "%.2fx");
                 ImGui::Spacing();
 

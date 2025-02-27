@@ -11,10 +11,8 @@ namespace GTS {
 	void GrowOther::OnUpdate() {
 
 		constexpr float BASE_POWER = 0.00045f;
-		constexpr float BONUS = 0.00045f;
 		constexpr float SMT_BONUS = 2.0f;
 		constexpr float DUAL_CAST_BONUS = 2.0f;
-		constexpr float CRUSH_GROWTH_CHECK = 1.4f;
 
 		auto caster = GetCaster();
 		if (!caster) {
@@ -37,10 +35,6 @@ namespace GTS {
 
 		float caster_scale = get_visual_scale(caster);
 		float target_scale = get_visual_scale(target);
-
-		if (Runtime::GetFloat("CrushGrowthRate") >= CRUSH_GROWTH_CHECK) {
-			power += BONUS;
-		}
 
 		if (IsDualCasting()) {
 			power *= DUAL_CAST_BONUS;

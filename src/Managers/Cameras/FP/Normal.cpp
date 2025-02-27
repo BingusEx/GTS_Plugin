@@ -2,10 +2,11 @@
 
 namespace GTS {
 	float FirstPerson::GetScaleOverride(bool IsCrawling) {
-		constexpr float proneFactor = 1.005f;
+		constexpr float proneFactor = 1.0f;
 		if (IsCrawling) {
 			return proneFactor; // 1.0 only if we crawl
-		} else {
+		}
+		else {
 			return -1.0f;
 		}
 	}

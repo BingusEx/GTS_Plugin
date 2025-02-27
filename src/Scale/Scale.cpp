@@ -39,6 +39,7 @@ namespace GTS {
 			return 1.0f;
 		}
 	}
+
 	float get_target_scale(Actor* actor) {
 		if (actor) {
 			Actor& a = *actor;
@@ -67,6 +68,7 @@ namespace GTS {
             }
         }
     }
+
 	void mod_target_scale(Actor* actor, float amt) {
 		if (actor) {
 			mod_target_scale(*actor, amt);

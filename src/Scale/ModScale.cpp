@@ -219,15 +219,6 @@ namespace GTS {
 		return result;
 	}
 
-
-	float get_fp_scale(Actor* giant) {
-		auto data = Persistent::GetSingleton().GetData(giant);
-		if (data) {
-			return data->scaleOverride;
-		}
-		return 1.0f;
-	}
-
 	float get_npcnode_scale(Actor* actor) {
 		// This will get the scale of the root npc node
 		string node_name = "NPC Root [Root]";

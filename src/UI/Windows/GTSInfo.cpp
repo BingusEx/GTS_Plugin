@@ -24,7 +24,7 @@ namespace GTS {
         }
 
         const float CurrentScale = get_visual_scale(a_Actor);
-        const float MaxScale = get_max_scale(a_Actor);
+        float MaxScale = get_max_scale(a_Actor);
 
         auto& Atrib = AttributeManager::GetSingleton();
 
@@ -53,18 +53,27 @@ namespace GTS {
         const float _ShrinkResist = (1.0f - Potion_GetShrinkResistance(a_Actor)) * 100.f;
         const float _OnTheEdge = (GetPerkBonus_OnTheEdge(a_Actor,0.01f) - 1.0f) * 100.f;
 
-
-        //TODO NEEDS TO BE CHANGED
-        const float _Essence = Runtime::GetGlobal("ExtraPotionSize")->value;
+        const float _Essence = Persistent::GetSingleton().GTSExtraPotionSize.value;
         const auto& Settings = Config::GetUI().StatusWindow;
 
         const std::string sScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";
         const std::string sReal = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitReal) ? GTS::GetFormatedHeight(a_Actor).c_str() : "";
         const std::string pText = fmt::format("{}{}", sReal, sScale);
-        ImUtil::CenteredProgress(CurrentScale / MaxScale, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : Settings.fFixedWidth, 0.0f), pText.c_str(), Settings.fSizeBarHeightMult);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize))
-				ImGui::Text("Max Scale: %.2fx", MaxScale);
+        const auto VisualProgress = MaxScale < 250.0f ? CurrentScale / MaxScale : 0.0f;
+
+        ImUtil::CenteredProgress(VisualProgress, ImVec2(hasFlag(a_featureFlags, GTSInfoFeatures::kAutoSize) ? 0.0f : Settings.fFixedWidth, 0.0f), pText.c_str(), Settings.fSizeBarHeightMult);
+
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize)) {
+            
+        	if (MaxScale > 250.0f) {
+                ImGui::Text("Max Scale: Infinite");
+        	}
+            else {
+                ImGui::Text("Max Scale: %.2fx", MaxScale);
+            }
+        }
+
 
         if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowBonusSize))
             ImGui::Text("Bonus Size: %.2fx", _BonusSize);

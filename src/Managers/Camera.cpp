@@ -166,12 +166,6 @@ namespace GTS {
 			// Get scale based on camera state
 			float scale = currentState->GetScale();
 
-			// Do any scale overrides
-			auto playerData = Persistent::GetSingleton().GetData(player);
-			if (playerData) {
-				playerData->scaleOverride = currentState->GetScaleOverride(IsCurrentlyCrawling);
-			}
-
 			// Get current camera position in player space
 			auto cameraPosLocal = GetCameraPosLocal();
 
@@ -234,25 +228,8 @@ namespace GTS {
 	}
 
 	CameraState* CameraManager::GetCameraStateFP() {
-		// First Person states
-		// 0 is normal
-		// 1 is combat
-		// 2 is loot
-		int FirstPersonMode = Runtime::GetInt("FirstPersonMode");
-		switch (FirstPersonMode) {
-			case 0: {
-				return &this->fpState;
-			}
-			case 1: {
-				return &this->fpCombatState;
-			}
-			case 2: {
-				return &this->fpLootState;
-			}
-			default: {
-				return nullptr;
-			}
-		}
+		//Other states are now deprecated
+		return &this->fpState;
 	}
 
 	// Decide which camera state to use

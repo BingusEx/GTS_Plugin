@@ -120,7 +120,7 @@ namespace GTS {
 		if (!actor) {
 			return 0.0f;
 		}
-		float GS = clamp (0.0f, 999999.0f, this->GetData(actor).GrowthSpurtSize);
+		float GS = clamp (0.0f, 1000000.0f, this->GetData(actor).GrowthSpurtSize);
 		return GS;
 	}
 
@@ -161,10 +161,10 @@ namespace GTS {
 		}
 		auto Persistent = Persistent::GetSingleton().GetData(actor);
 		if (Persistent) {
-			float Normal = clamp (1.0f, 999999.0f, Persistent->NormalDamage);
-			float Sprint = clamp (1.0f, 999999.0f, Persistent->SprintDamage);
-			float Fall = clamp (1.0f, 999999.0f, Persistent->FallDamage);
-			float HH = clamp (1.0f, 999999.0f, Persistent->HHDamage);
+			float Normal = clamp (1.0f, 1000000.0f, Persistent->NormalDamage);
+			float Sprint = clamp (1.0f, 1000000.0f, Persistent->SprintDamage);
+			float Fall = clamp (1.0f, 1000000.0f, Persistent->FallDamage);
+			float HH = clamp (1.0f, 1000000.0f, Persistent->HHDamage);
 			switch (attribute) {
 				case SizeAttribute::Normal: 
 					return Normal;
@@ -250,13 +250,8 @@ namespace GTS {
 	//
 
 	//===============Balance Mode
-	float SizeManager::BalancedMode()
-	{
-		if (Runtime::GetBool("BalanceMode")) {
-			return 2.0f;
-		} else {
-			return 1.0f;
-		}
+	bool SizeManager::BalancedMode(){
+		return Config::GetBalance().bBalanceMode;
 	}
 
 	SizeManagerData& SizeManager::GetData(Actor* actor) {

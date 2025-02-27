@@ -18,7 +18,7 @@ namespace {
 				}
 			}
 
-			if (Runtime::GetFloat("AllowMoanSounds") == 1.0f) {
+			if (Config::GetAudio().bSlowGrowMoans) {
 				Task_FacialEmotionTask_Moan(caster, 1.0f + RandomFloat(0.0f, 0.25f), "SlowGrow");
 				float MoanVolume = std::clamp(get_visual_scale(caster)/8.0f, 0.25f, 1.0f);
 				PlayMoanSound(caster, MoanVolume);
