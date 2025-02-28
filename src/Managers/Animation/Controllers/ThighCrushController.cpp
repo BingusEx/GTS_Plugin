@@ -1,15 +1,12 @@
 #include "Managers/Animation/Controllers/ThighCrushController.hpp"
-
 #include "Managers/Animation/AnimationManager.hpp"
-
-#include "Managers/AI/AI_SelectAction.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/HighHeel.hpp"
 
 namespace {
 	constexpr float MINIMUM_THIGH_DISTANCE = 58.0f;
 	constexpr float THIGH_ANGLE = 75;
-	constexpr float PI = std::numbers::pi_v<float>;;
+	constexpr float PI = std::numbers::pi_v<float>;
 }
 
 namespace GTS {
@@ -156,7 +153,8 @@ namespace GTS {
 		}
 
 		AnimationManager::StartAnim("ThighLoopEnter", pred);
-		AI_StartThighCrushTask(pred);
+		//TODO WTF is this here
+		//AI_StartThighCrushTask(pred);
 
 		log::info("Starting Thigh Crush between {} and {}", pred->GetDisplayFullName(), prey->GetDisplayFullName());
 	}

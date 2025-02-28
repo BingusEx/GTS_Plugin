@@ -3,11 +3,7 @@
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Perks/PerkHandler.hpp"
 #include "Managers/AI/AIFunctions.hpp"
-
 #include "Magic/Effects/Common.hpp"
-
-
-
 #include "Utils/SurvivalMode.hpp"
 #include "Utils/VoreUtils.hpp"
 #include "Utils/Looting.hpp"
@@ -15,9 +11,9 @@
 using namespace GTS;
 
 namespace {
-	constexpr float MINIMUM_VORE_DISTANCE = 94.0f;
-	constexpr float VORE_ANGLE = 76;
-	constexpr float PI = std::numbers::pi_v<float>;;
+	constexpr float MINIMUM_VORE_DISTANCE = 95.0f;
+	constexpr float VORE_ANGLE = 75;
+	constexpr float PI = std::numbers::pi_v<float>;
 }
 
 namespace GTS {
@@ -46,7 +42,7 @@ namespace GTS {
 				float DefaultScale = get_natural_scale(tiny);
 				ModSizeExperience(giant, 0.08f + (DefaultScale*0.025f));
 
-				SurvivalMode_AdjustHunger(this->giant.get().get(), Vore::GetSingleton().ReadOriginalScale(tiny) * GetSizeFromBoundingBox(tiny), Living, false);
+				SurvivalMode_AdjustHunger(this->giant.get().get(), Vore::ReadOriginalScale(tiny) * GetSizeFromBoundingBox(tiny), Living, false);
 			}
 
 			Task_Vore_StartVoreBuff(giant, tiny, static_cast<int>(this->tinies.size()));
@@ -54,7 +50,9 @@ namespace GTS {
 		}
 	}
 	void VoreData::KillAll() {
+
 		if (!AllowDevourment()) {
+
 			for (auto& [key, tinyref]: this->tinies) {
 				auto tiny = tinyref.get().get();
 				auto giantref = this->giant;
@@ -170,7 +168,7 @@ namespace GTS {
 
 	Actor* Vore::GetVoreTargetInFront(Actor* pred) {
 		auto preys = this->GetVoreTargetsInFront(pred, 1);
-		if (preys.size() > 0) {
+		if (!preys.empty()) {
 			return preys[0];
 		} else {
 			return nullptr;
@@ -182,6 +180,7 @@ namespace GTS {
 		if (!pred) {
 			return {};
 		}
+
 		auto charController = pred->GetCharController();
 		if (!charController) {
 			return {};
@@ -204,7 +203,7 @@ namespace GTS {
 		preys.erase(std::remove_if(preys.begin(), preys.end(),[pred, this](auto prey)
 		{
 			return !this->CanVore(pred, prey);
-		}), preys.end());;
+		}), preys.end());
 
 		// Filter out actors not in front
 		auto actorAngle = pred->data.angle.z;
@@ -258,14 +257,12 @@ namespace GTS {
 	}
 
 	bool Vore::CanVore(Actor* pred, Actor* prey) {
+
 		if (pred == prey) {
 			return false;
 		}
-		if (!CanPerformAnimation(pred, AnimationCondition::kVore)) {
-			return false;
-		}
 
-		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
+		if (!CanPerformAnimation(pred, AnimationCondition::kVore)) {
 			return false;
 		}
 
@@ -285,15 +282,16 @@ namespace GTS {
 				return false;
 			}
 		}
+
 		float MINIMUM_VORE_SCALE = Action_Vore;
 		float MINIMUM_DISTANCE = MINIMUM_VORE_DISTANCE;
 
 		if (HasSMT(pred)) {
 			MINIMUM_DISTANCE *= 1.75f;
 		}
+
 		float pred_scale = get_visual_scale(pred);
 		float sizedifference = GetSizeDifference(pred, prey, SizeType::VisualScale, true, false);
-
 		float prey_distance = (pred->GetPosition() - prey->GetPosition()).Length();
 
 		if (IsInsect(prey, true) || IsBlacklisted(prey) || IsUndead(prey, true)) {
@@ -312,6 +310,7 @@ namespace GTS {
 			}
 			return false;
 		}
+
 		if (prey_distance <= (MINIMUM_DISTANCE * pred_scale) && sizedifference > MINIMUM_VORE_SCALE) {
 			if (IsFlying(prey)) {
 				return false; // Disallow to vore flying dragons
@@ -319,10 +318,12 @@ namespace GTS {
 			if ((prey->formID != 0x14 && !CanPerformAnimationOn(pred, prey, false))) {
 				Notify("{} is important and shouldn't be eaten.", prey->GetDisplayFullName());
 				return false;
-			} else {
+			}
+			else {
 				return true;
 			}
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -336,6 +337,7 @@ namespace GTS {
 	}
 
 	void Vore::StartVore(Actor* pred, Actor* prey) {
+
 		if (!CanVore(pred, prey)) {
 			return;
 		}

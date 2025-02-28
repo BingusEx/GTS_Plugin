@@ -1,4 +1,3 @@
-#include "Managers/Animation/AnimationManager.hpp"
 #include "Papyrus/Plugin.hpp"
 #include "Data/Transient.hpp"
 #include "Magic/Effects/Common.hpp"
@@ -15,19 +14,23 @@ namespace {
 
 	constexpr std::string_view PapyrusClass = "GtsPlugin";
 
+	//Unused
 	float GetDistanceToCamera(StaticFunctionTag*, Actor* actor) {
 		return get_distance_to_camera(actor);
 	}
 
+	//Unused
 	float GetSizeRelatedDamage(StaticFunctionTag*, Actor* actor, float attribute) {
 		SizeAttribute Attribute = static_cast<SizeAttribute>(attribute);
-		return SizeManager::GetSingleton().GetSizeAttribute(actor, Attribute);
+		return SizeManager::GetSizeAttribute(actor, Attribute);
 	}
 
+	//Unused
 	float GetSizeVulnerability(StaticFunctionTag*, Actor* actor) {
 		return SizeManager::GetSingleton().GetSizeVulnerability(actor);
 	}
 
+	//Unused TODO
 	float GetStolenAttribute(StaticFunctionTag*, float value) {
 		auto player = PlayerCharacter::GetSingleton();
 		auto Persistent = Persistent::GetSingleton().GetData(player);
@@ -48,6 +51,7 @@ namespace {
 		return 0.0f;
 	}
 
+	//Unused <- Ported
 	float GetAttributeBonus(StaticFunctionTag*, Actor* actor, float value) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (!actor) {
@@ -74,6 +78,7 @@ namespace {
 		return 1.0f;
 	}
 
+	//Unused <- Ported
 	float GetFlatAttributeBonus(StaticFunctionTag*, Actor* actor, float value) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (!actor) {
@@ -91,6 +96,7 @@ namespace {
 		return 0.0f;
 	}
 
+	//Unused
 	bool ModSizeVulnerability(StaticFunctionTag*, Actor* actor, float amt) {
 		if (actor) {
 			SizeManager::GetSingleton().ModSizeVulnerability(actor, amt);
@@ -99,6 +105,7 @@ namespace {
 		return false;
 	}
 
+	//Unused
 	bool SetGrowthHalfLife(StaticFunctionTag*, Actor* actor, float halflife) {
 		if (actor) {
 			auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -110,6 +117,7 @@ namespace {
 		return false;
 	}
 
+	//Unused
 	float GetGrowthHalfLife(StaticFunctionTag*, Actor* actor) {
 		if (actor) {
 			auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -120,6 +128,7 @@ namespace {
 		return 0.05f;
 	}
 
+	//Unused But keep it
 	bool SetAnimSpeed(StaticFunctionTag*, Actor* actor, float animspeed) {
 		if (actor) {
 			auto actor_data = Persistent::GetSingleton().GetData(actor);
@@ -131,6 +140,7 @@ namespace {
 		return false;
 	}
 
+	//Unused
 	// From https://stackoverflow.com/questions/17211122/formatting-n-significant-digits-in-c-without-scientific-notation
 	std::string format(double f, int n) {
 		if (f == 0) {
@@ -144,10 +154,12 @@ namespace {
 		return ss.str();
 	}
 
+	//Unused
 	std::string SigFig(StaticFunctionTag*, float number, int sf) {
 		return format(number, sf);
 	}
 
+	//Unused
 	void EnableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
 		if (!ref) {
 			return;
@@ -159,6 +171,8 @@ namespace {
 		current3D->SetMotionType(static_cast<uint32_t>(hkpMotion::MotionType::kCharacter), true, true, true);
 		current3D->SetCollisionLayer(COL_LAYER::kCharController);
 	}
+
+	//Unused
 	void DisableCollisionLayerAndMotion(StaticFunctionTag*, TESObjectREFR* ref) {
 		if (!ref) {
 			return;
@@ -171,76 +185,45 @@ namespace {
 		current3D->SetCollisionLayer(COL_LAYER::kNonCollidable);
 	}
 
+	//Keep
 	void ResetQuestProgression(StaticFunctionTag*) {
 		ResetQuest();
 	}
 
+	//Keep
 	float Quest_GetProgression(StaticFunctionTag*, int stage) {
 		return GetQuestProgression(stage);
 	}
 
+	//UNUSED
 	float GetAspectOfGiantessPower(StaticFunctionTag*) {
 		auto player = PlayerCharacter::GetSingleton();
 		return Ench_Aspect_GetPower(player);
 	}
 
-	void SetAllowPlayerVore(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().vore_allowplayervore = enabled;
-	}
-
+	//UNUSED
 	void DistributeRandomItems(StaticFunctionTag*) {
 		//DistributeChestItems();
 	}
 
-	void SetOnlyCombatVore(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().vore_combatonly = enabled;
-	}
-
+	//UNUSED
 	void IncreaseSizeLimit(StaticFunctionTag*, float value, Actor* caster) {
 		AdjustSizeLimit(value, caster);
 	}
 
+	//UNUSED
 	void IncreaseMassLimit(StaticFunctionTag*, float value, Actor* caster) {
 		AdjustMassLimit(value, caster);
 	}
 
-	void SetStompAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Stomp_Ai = enabled;
-	}
-
-	void SetSandwichAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Sandwich_Ai = enabled;
-	}
-	void SetFollowerInteractions(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().FollowerInteractions = enabled;
-	}
-
-	void SetVoreAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Vore_Ai = enabled;
-	}
-	void SetHugsAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Hugs_Ai = enabled;
-	}
-	void SetThighAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Thigh_Ai = enabled;
-	}
-	void SetKickAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Kick_Ai = enabled;
-	}
-	void SetButtCrushAi(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().Butt_Ai = enabled;
-	}
-
-	void SetActorPanic(StaticFunctionTag*, bool enabled) {
-		Persistent::GetSingleton().actors_panic = enabled;
-	}
-
+	//UNUSED
 	void DisintegrateTarget(StaticFunctionTag*, Actor* actor) {
 		if (actor) {
 			Disintegrate(actor);
 		}
 	}
 
+	//Keep
 	bool WasDragonEaten(StaticFunctionTag*) {
 		auto pc = PlayerCharacter::GetSingleton();
 		auto transient = Transient::GetSingleton().GetData(pc);
@@ -254,11 +237,13 @@ namespace {
 		Devourment_Compatibility(Pred, Prey, Digested);
 	}
 
+	//Not really needed. Calldevourmentcompat could just do this check itself
 	bool GetDevourmentCompatibility(StaticFunctionTag*) {
 		return Config::GetGeneral().bDevourmentCompat;
 	}
 
 
+	//Called in unused psc function. Remove
 	bool DragonCheck(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
 			return false;
@@ -266,6 +251,7 @@ namespace {
 		return IsDragon(actor);
 	}
 
+	//UNUSED
 	bool IsInAir(StaticFunctionTag*, Actor* actor) {
 		if (!actor) {
 			return false;
@@ -273,10 +259,12 @@ namespace {
 		return actor->IsInMidair();
 	}
 
+	//UNUSED
 	float GetExperimentFloat(StaticFunctionTag*) {
 		return GtsManager::GetSingleton().experiment;
 	}
 
+	//UNUSED
 	void SetExperimentFloat(StaticFunctionTag*, float value) {
 		GtsManager::GetSingleton().experiment = value;
 	}
@@ -300,18 +288,7 @@ namespace GTS {
 		vm->RegisterFunction("ResetQuestProgression", PapyrusClass, ResetQuestProgression);
 		vm->RegisterFunction("Quest_GetProgression", PapyrusClass, Quest_GetProgression);
 		vm->RegisterFunction("GetAspectOfGiantessPower", PapyrusClass, GetAspectOfGiantessPower);
-		vm->RegisterFunction("SetStompAi", PapyrusClass, SetStompAi);
-		vm->RegisterFunction("SetSandwichAi", PapyrusClass, SetSandwichAi);
-		vm->RegisterFunction("SetFollowerInteractions", PapyrusClass, SetFollowerInteractions);
-		vm->RegisterFunction("SetVoreAi", PapyrusClass, SetVoreAi);
-		vm->RegisterFunction("SetHugsAi", PapyrusClass, SetHugsAi);
-		vm->RegisterFunction("SetThighAi", PapyrusClass, SetThighAi);
-		vm->RegisterFunction("SetKickAi", PapyrusClass, SetKickAi);
-		vm->RegisterFunction("SetButtCrushAi", PapyrusClass, SetButtCrushAi);
-		vm->RegisterFunction("SetActorPanic", PapyrusClass, SetActorPanic);
-		vm->RegisterFunction("SetAllowPlayerVore", PapyrusClass, SetAllowPlayerVore);
 		vm->RegisterFunction("DistributeRandomItems", PapyrusClass, DistributeRandomItems);
-		vm->RegisterFunction("SetOnlyCombatVore", PapyrusClass, SetOnlyCombatVore);
 		vm->RegisterFunction("IncreaseSizeLimit", PapyrusClass, IncreaseSizeLimit);
 		vm->RegisterFunction("IncreaseMassLimit", PapyrusClass, IncreaseMassLimit);
 		vm->RegisterFunction("DisintegrateTarget", PapyrusClass, DisintegrateTarget);

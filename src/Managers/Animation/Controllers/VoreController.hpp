@@ -71,7 +71,7 @@ namespace GTS {
 			// Check if they can vore based on size difference and reach distance
 			bool CanVore(Actor* pred, Actor* prey);
 
-			// Do the vore (this has no checks make sure they can vore with CanVore first)
+			// Do the vore
 			void StartVore(Actor* pred, Actor* prey);
 
 

@@ -1,6 +1,5 @@
 
 #include "Managers/AI/Headtracking.hpp"
-#include "Managers/GameMode/GameModeManager.hpp"
 
 using namespace GTS;
 
@@ -21,6 +20,7 @@ namespace {
 		}
 		return location + headOffset;
 	}
+
 	NiPoint3 HeadLocation(TESObjectREFR& obj) {
 		float scale = 1.0f;
 		auto asActor = skyrim_cast<Actor*>(&obj);
@@ -29,6 +29,7 @@ namespace {
 		}
 		return HeadLocation(obj, scale);
 	}
+
 	NiPoint3 HeadLocation(TESObjectREFR* obj, const float& scale) {
 		if (!obj) {
 			return NiPoint3();
@@ -36,6 +37,7 @@ namespace {
 			return HeadLocation(*obj, scale);
 		}
 	}
+
 	NiPoint3 HeadLocation(TESObjectREFR* obj) {
 		if (!obj) {
 			return NiPoint3();
@@ -43,6 +45,7 @@ namespace {
 			return HeadLocation(*obj);
 		}
 	}
+
 	NiPoint3 HeadLocation(const ActorHandle& objRefr, const float& scale) {
 		if (!objRefr) {
 			return NiPoint3();
@@ -54,6 +57,7 @@ namespace {
 			return HeadLocation(*obj, scale);
 		}
 	}
+
 	NiPoint3 HeadLocation(const ActorHandle& objRefr) {
 		if (!objRefr) {
 			return NiPoint3();
@@ -94,6 +98,7 @@ namespace {
 		if (giant->formID == 0x14) {
 			return;
 		}
+
 		float finalAngle = 0.0f;
 		if (tiny) { // giant is the actor that is looking, tiny is the one that is being looked at (Player for example)
 			//log::info("Tiny is: {}", tiny->GetDisplayFullName());
@@ -105,6 +110,7 @@ namespace {
 				//giant->SetGraphVariableFloat("Collision_PitchMult", 0.0f);
 				//log::info("Collision Pitch Mult: {}", Collision_PitchMult);
 			}
+
 			auto dialoguetarget = giant->GetActorRuntimeData().dialogueItemTarget;
 			if (dialoguetarget) {
 				// In dialogue
@@ -131,7 +137,8 @@ namespace {
 					//log::info("  - finalAngle: {}", finalAngle);
 				}
 			
-			} else {
+			}
+			else {
 				// Not in dialog
 				if (fabs(data.spineSmooth.value) < 1e-3) {
 					// Finihed smoothing back to zero
@@ -144,64 +151,6 @@ namespace {
 		data.spineSmooth.target = finalAngle;
 		giant->SetGraphVariableFloat("GTSPitchOverride", data.spineSmooth.value);
 	}
-
-	/*void RotateCaster(Actor* giant, HeadtrackingData& data) { // Unused
-		const float PI = 3.std::numbers::pi_v<float>;
-		if (!giant) {
-			return;
-		}
-		float finalAngle = 0.0f;
-		auto combatController = giant->GetActorRuntimeData().combatController;
-		if (combatController) {
-			auto& targetHandle = combatController->targetHandle;
-			if (targetHandle) {
-				auto tiny = targetHandle.get().get();
-				if (tiny) {
-					//log::info("Combat Target: {}", tiny->GetDisplayFullName());
-					auto casterSource = giant->GetMagicCaster(MagicSystem::CastingSource::kLeftHand);
-					if (casterSource) {
-						auto casterNode = casterSource->GetMagicNode();
-						if (casterNode) {
-							auto sourceLoc = casterNode->world.translate;
-							auto scaleTiny = get_visual_scale(tiny);
-							auto targetLoc = HeadLocation(tiny, scaleTiny*0.5f); // 50% up tiny body
-
-							auto directionToLook = targetLoc - sourceLoc;
-							//log::info("Combat: Direction: {}", Vector2Str(directionToLook));
-							directionToLook = directionToLook * (1/directionToLook.Length());
-							NiPoint3 upDirection = NiPoint3(0.0f, 0.0f, 1.0f);
-							auto sinAngle = directionToLook.Dot(upDirection);
-							auto angleFromUp = fabs(acos(sinAngle));
-							float angleFromForward = -(angleFromUp - PI/2.0f);
-
-							//log::info("angleFromForward: {}", angleFromForward);
-							finalAngle = std::clamp(angleFromForward, -60.0f * PI /180.0f, 60.f * PI /180.0f);
-							//log::info("CasterNode finalAngle: {}", finalAngle);
-						}
-					}
-				}
-			}
-		}
-		// data.casterSmooth.target = finalAngle;
-		data.casterSmooth.target = PI*1.5f;
-
-		for (auto casterSourceType: {MagicSystem::CastingSource::kLeftHand, MagicSystem::CastingSource::kRightHand}) {
-			auto casterSource = giant->GetMagicCaster(casterSourceType);
-			if (casterSource) {
-				auto casterNode = casterSource->GetMagicNode();
-				if (casterNode) {
-					auto targetRotation = NiMatrix3();
-					if (data.casterSmooth.value > 1e-3) {
-						targetRotation.SetEulerAnglesXYZ(data.casterSmooth.value, 0.0f, 0.0f);
-					}
-					casterNode->local.rotate = targetRotation;
-					casterNode->world.rotate = targetRotation;
-					//log::info("Adjusting Node Rotation of {}, target: {}, value: {}", giant->GetDisplayFullName(), targetRotation, casterNode->local.rotate);
-					update_node(casterNode);
-				}
-			}
-		}
-	}*/
 }
 
 namespace GTS {

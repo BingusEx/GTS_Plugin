@@ -10,6 +10,7 @@
 #include "Managers/AI/AIFunctions.hpp"
 #include "Managers/Input/InputManager.hpp"
 #include "Managers/Rumble.hpp"
+#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
 
 #include "Utils/InputConditions.hpp"
 

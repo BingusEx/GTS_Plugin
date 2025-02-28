@@ -41,10 +41,10 @@ namespace GTS {
 
 	NiPoint3 ComputeLookAt(float zoomScale = 0.95f);
 
-	float GetFnearDist();
+	float GetFrustrumNearDistance();
 
 	// Get's camera position relative to the player
 	NiPoint3 GetCameraPosLocal();
 
-	void UpdateCamera(float scale, NiPoint3 cameraLocalOffset, NiPoint3 playerLocalOffset);
+	void UpdateCamera(float a_ActorScale, NiPoint3 a_CameraLocalOffset, NiPoint3 a_ActorLocalOffset);
 }

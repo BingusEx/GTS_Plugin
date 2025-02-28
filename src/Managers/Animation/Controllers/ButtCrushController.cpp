@@ -1,17 +1,12 @@
 #include "Managers/Animation/Controllers/ButtCrushController.hpp"
-
 #include "Managers/Animation/Utils/CooldownManager.hpp"
 #include "Managers/Animation/Utils/AttachPoint.hpp"
-
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/BoobCrush.hpp"
-
-#include "Managers/AI/AIFunctions.hpp"
-
 #include "Managers/GtsSizeManager.hpp"
-
 #include "Managers/Rumble.hpp"
 #include "Managers/HighHeel.hpp"
+#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
 
 using namespace GTS;
 
@@ -19,7 +14,7 @@ namespace {
 
 	constexpr float MINIMUM_BUTTCRUSH_DISTANCE = 95.0f;
 	constexpr float BUTTCRUSH_ANGLE = 70;
-	constexpr float PI = std::numbers::pi_v<float>;;
+	constexpr float PI = std::numbers::pi_v<float>;
 
 	void AttachToObjectBTask(Actor* giant, Actor* tiny) {
 		std::string name = std::format("ButtCrush_{}", tiny->formID);

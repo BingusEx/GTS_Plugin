@@ -1,12 +1,10 @@
 #include "Managers/Animation/BoobCrush.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
-
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/Utils/CrawlUtils.hpp"
-#include "Managers/AI/AIFunctions.hpp"
 #include "Managers/Rumble.hpp"
-
 #include "Magic/Effects/Common.hpp"
+#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
 
 using namespace GTS;
 

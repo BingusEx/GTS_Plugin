@@ -1,3 +1,5 @@
+#include <numbers>
+
 #include "Utils/Spring.hpp"
 
 namespace {
@@ -5,12 +7,12 @@ namespace {
 	// Spring code from https://theorangeduck.com/page/spring-roll-call
 	float halflife_to_damping(float halflife, float eps = 1e-5f)
 	{
-		return (4.0f * 0.69314718056f) / (halflife + eps);
+		return (4.0f * std::numbers::ln2_v<float>) / (halflife + eps);
 	}
 
 	float damping_to_halflife(float damping, float eps = 1e-5f)
 	{
-		return (4.0f * 0.69314718056f) / (damping + eps);
+		return (4.0f * std::numbers::ln2_v<float>) / (damping + eps);
 	}
 	float fast_negexp(float x)
 	{

@@ -25,7 +25,7 @@ namespace GTS {
 			};
 
 			// Check if it has hit anything
-			bool HasHit();
+			bool HasHit() const;
 
 			// Get the hits
 			std::vector<AllRayCollectorOutput>& GetHits();

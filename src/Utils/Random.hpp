@@ -41,6 +41,18 @@ namespace GTS {
         return dist(generator);
     }
 
+	[[nodiscard]] static inline int RandomIntWeighted(std::vector<int> a_weights) {
+		std::discrete_distribution<> dist(a_weights.begin(), a_weights.end());
+		return dist(generator);
+	}
+
+
+	template <std::size_t N>
+	[[nodiscard]] static inline int RandomIntWeighted(const std::array<int, N>& a_weights) {
+		std::discrete_distribution<> dist(a_weights.begin(), a_weights.end());
+		return dist(generator);
+	}
+
 	//https://en.cppreference.com/w/cpp/numeric/random/discrete_distribution
 	//Example RandomIntWeighted(30,1,150) -> 
 	// Adds all argumetns together then calculates odds given example numbers this will have a...

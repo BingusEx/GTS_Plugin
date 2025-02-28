@@ -29,20 +29,12 @@ namespace GTS {
 		return this->hits;
 	}
 
-	bool AllRayCollector::HasHit() {
+	bool AllRayCollector::HasHit() const {
 		return !this->hits.empty();
 	}
 }
 
+void hkpClosestRayHitCollector::AddRayHit(const hkpCdBody& a_body, const hkpShapeRayCastCollectorOutput& a_hitInfo) {}
+hkpClosestRayHitCollector::~hkpClosestRayHitCollector() = default;
+ExtraDataList::ExtraDataList() = default;
 
-void hkpClosestRayHitCollector::AddRayHit(const hkpCdBody& a_body, const hkpShapeRayCastCollectorOutput& a_hitInfo) {
-	// Dummy
-}
-
-hkpClosestRayHitCollector::~hkpClosestRayHitCollector() {
-	// Dummy
-}
-
-ExtraDataList::ExtraDataList() {
-	// Dummy
-}

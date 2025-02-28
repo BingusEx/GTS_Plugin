@@ -5,11 +5,9 @@
 #include "Managers/Animation/Utils/CrawlUtils.hpp"
 #include "Managers/Damage/LaunchActor.hpp"
 #include "Managers/Audio/Footstep.hpp"
-#include "Managers/AI/aifunctions.hpp"
-
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Rumble.hpp"
-
+#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
 
 
 using namespace GTS;

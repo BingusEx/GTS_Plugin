@@ -15,7 +15,7 @@ namespace {
 		Transform,
 	};
 
-	constexpr CameraDataMode currentMode = CameraDataMode::State;
+	constexpr CameraDataMode currentMode = CameraDataMode::Transform;
 
 	const BoneTarget GetBoneTarget_Anim(CameraTracking Camera_Anim) {
 
@@ -214,9 +214,8 @@ namespace {
 		return BoneTarget();
 	}
 
-
 	//https://www.desmos.com/calculator/5adrwyld6l
-	inline float CalcLOGFnear(float scale, const float a_ref = 15.0f) {
+	float CalcLOGFnear(float scale, const float a_ref = 15.0f) {
 		// Clamp scale between 0.05 and 1.0
 		scale = std::max(0.05f, std::min(scale, 1.0f));
 
@@ -228,21 +227,17 @@ namespace {
 		return result;
 	}
 
-	inline void CalcFNearDist(const float actorscale) {
+	void ComputeFrustrumNearDistance(const float a_ActorScale) {
 
-		if (!Config::GetCamera().bEnableAutoFNearDist || actorscale > 1.0f) return;
+		if (!Config::GetCamera().bEnableAutoFNearDist || a_ActorScale > 1.0f) return;
 
 		if (auto niCamera = GetNiCamera()) {
 
-			auto fnear = CalcLOGFnear(actorscale);
+			auto fnear = CalcLOGFnear(a_ActorScale);
 
 			niCamera->GetRuntimeData2().viewFrustum.fNear = fnear;
 		}
 	}
-
-	static NiPoint3 previousCameraPosition;
-	 // Adjust this value to control the smoothness of interpolation (0.0 to 1.0)
-
 }
 
 namespace GTS {
@@ -353,8 +348,8 @@ namespace GTS {
 		auto niCamera = GetNiCamera();
 		if (niCamera) {
 			niCamera->world.translate = camLoc;
-			UpdateWorld2ScreetMat(niCamera);
 			update_node(niCamera);
+			UpdateWorld2ScreetMat(niCamera);
 		}
 	}
 
@@ -374,7 +369,6 @@ namespace GTS {
 		if (camera) {
 			auto cameraRoot = camera->cameraRoot;
 			if (cameraRoot) {
-				auto cameraState = reinterpret_cast<ThirdPersonState*>(camera->currentState.get());
 				cameraRoot->local.translate = camLoc;
 				cameraRoot->world.translate = camLoc;
 				update_node(cameraRoot.get());
@@ -559,7 +553,6 @@ namespace GTS {
 				NiTransform ActorTranslation = RootModel->world;
 				NiTransform transform = ActorTranslation.Invert();
 				ActorTranslation.scale = RootModel->parent ? RootModel->parent->world.scale : 1.0f;  // Only do translation/rotation
-
 				BoneTarget boneTarget = TPState->GetBoneTarget();
 
 				std::vector<NiAVObject*> bones = {};
@@ -583,7 +576,7 @@ namespace GTS {
 				NiPoint3 worldBonePos = ActorTranslation * bonePos;
 
 				if (IsDebugEnabled()) {
-					DebugAPI::DrawSphere(glm::vec3(worldBonePos.x, worldBonePos.y, worldBonePos.z), 1.0f, 10, { 0.5f, 1.0f, 0.0f, 1.0f }, 10.0f);
+					DebugAPI::DrawSphere(glm::vec3(worldBonePos.x, worldBonePos.y, worldBonePos.z), 1.0f, 33, { 0.1f, 0.9f, 0.2f, 1.0f }, 5.0f);
 				}
 
 				return worldBonePos;
@@ -592,7 +585,7 @@ namespace GTS {
 		return {};
 	}
 
-	float GetFnearDist() {
+	float GetFrustrumNearDistance() {
 		
 		if (auto niCamera = GetNiCamera()) {
 			return niCamera->GetRuntimeData2().viewFrustum.fNear;
@@ -601,82 +594,51 @@ namespace GTS {
 		return 15.0f;
 	}
 
-	// Add a global variable or class member to store the previous camera position
+	void UpdateCamera(float a_ActorScale, NiPoint3 a_CameraLocalOffset, NiPoint3 a_ActorLocalOffset) {
+		PlayerCamera* PlayerCamera = PlayerCamera::GetSingleton();
+		NiPointer<NiNode>& CameraRoot = PlayerCamera->cameraRoot;
+		Actor* CameraTargetActor = GetCameraActor();
+		BSTSmartPointer<TESCameraState>& CurrentCameraState = PlayerCamera->currentState;
 
+		if (CameraRoot && CurrentCameraState && CameraTargetActor) {
+			NiTransform CameraWorldTransform = GetCameraWorldTransform();
+			NiPoint3 CameraTranslation;
+			CurrentCameraState->GetTranslation(CameraTranslation);
 
-	void UpdateCamera(float scale, NiPoint3 cameraLocalOffset, NiPoint3 playerLocalOffset) {
-		auto camera = PlayerCamera::GetSingleton();
-		auto& cameraRoot = camera->cameraRoot;
-		auto cameraActor = GetCameraActor();
-		auto& currentState = camera->currentState;
+			if (a_ActorScale > 1e-4) {
+				NiAVObject* Actor3D = CameraTargetActor->Get3D(false);
+				if (Actor3D) {
+					NiTransform ActorTransform = Actor3D->world;
+					ActorTransform.scale = Actor3D->parent ? Actor3D->parent->world.scale : 1.0f;
+					NiTransform InverseTransform = ActorTransform.Invert();
 
-		if (cameraRoot) {
-			if (currentState) {
-				auto cameraWorldTranform = GetCameraWorldTransform();
-				NiPoint3 cameraLocation;
-				currentState->GetTranslation(cameraLocation);
-				if (cameraActor) {
-					if (scale > 1e-4) {
-						auto model = cameraActor->Get3D(false);
-						if (model) {
-							auto playerTrans = model->world;
-							playerTrans.scale = model->parent ? model->parent->world.scale : 1.0f;  // Only do translation/rotation
-							auto playerTransInve = playerTrans.Invert();
+					// Standard transform calculations
+					NiTransform ActorAdjustments = NiTransform();
+					ActorAdjustments.scale = a_ActorScale;
+					ActorAdjustments.translate = a_ActorLocalOffset;
+					NiPoint3 TargetLocationWorld = ActorTransform * (ActorAdjustments * (InverseTransform * CameraTranslation));
+					CameraWorldTransform.translate = TargetLocationWorld;
 
-							// Make the transform matrix for our changes
-							NiTransform adjustments = NiTransform();
-							adjustments.scale = scale;
+					NiTransform CameraAdjustments = NiTransform();
+					CameraAdjustments.translate = a_CameraLocalOffset * a_ActorScale;
+					NiPoint3 WorldShifted = CameraWorldTransform * CameraAdjustments * NiPoint3();
+					NiNode* CameraRootParent = CameraRoot->parent;
+					NiTransform InvertedRootTransform = CameraRootParent->world.Invert();
+					NiPoint3 LocalSpacePosition = InvertedRootTransform * WorldShifted;
 
-							// Adjust by scale reports 1.0 / naturalscale (Which includes RaceMenu and GetScale)
-							adjustments.translate = playerLocalOffset;
-
-							// Get Scaled Camera Location
-							auto targetLocationWorld = playerTrans * (adjustments * (playerTransInve * cameraLocation));
-
-							// Get shifted Camera Location
-							cameraWorldTranform.translate = targetLocationWorld; // Update with latest position
-							NiTransform adjustments2 = NiTransform();
-							adjustments2.translate = cameraLocalOffset * scale;
-							auto worldShifted = cameraWorldTranform * adjustments2 * NiPoint3();
-
-							// Convert to local space
-							auto parent = cameraRoot->parent;
-							NiTransform transform = parent->world.Invert();
-							auto localShifted = transform * worldShifted;
-
-							//Do camera colision raycasts
-							auto rayStart = GetAggregateBoneTarget(cameraActor);
-							if (rayStart != NiPoint3()) {
-								NiPoint3 raycastResult = ComputeRaycast(rayStart, localShifted);
-
-								float interpolationFactor = Config::GetCamera().fCameraInterpolationFactor;
-
-								// Linear Interpolation
-								NiPoint3 interpolatedPosition;
-								if (previousCameraPosition == NiPoint3()) {
-									interpolatedPosition = raycastResult; // If no previous position, directly set to raycast result for first frame
-								}
-								else {
-									interpolatedPosition.x = previousCameraPosition.x + (raycastResult.x - previousCameraPosition.x) * interpolationFactor;
-									interpolatedPosition.y = previousCameraPosition.y + (raycastResult.y - previousCameraPosition.y) * interpolationFactor;
-									interpolatedPosition.z = previousCameraPosition.z + (raycastResult.z - previousCameraPosition.z) * interpolationFactor;
-								}
-								localShifted = interpolatedPosition; // Use interpolated position
-
-							}
-
-							//Change Fnear distance depending on scale.
-							CalcFNearDist(scale);
-
-							UpdatePlayerCamera(localShifted);
-							UpdateNiCamera(localShifted);
-
-							previousCameraPosition = localShifted; // Store current position for next frame interpolation
-						}
+					// Collision handling
+					NiPoint3 rayStart = GetAggregateBoneTarget(CameraTargetActor);
+					if (rayStart != NiPoint3()) {
+						LocalSpacePosition = ComputeRaycast(rayStart, LocalSpacePosition);
 					}
+
+					// Apply final transformations
+					ComputeFrustrumNearDistance(a_ActorScale);
+					UpdatePlayerCamera(LocalSpacePosition);
+					UpdateNiCamera(LocalSpacePosition);
+
 				}
 			}
 		}
 	}
-
 }

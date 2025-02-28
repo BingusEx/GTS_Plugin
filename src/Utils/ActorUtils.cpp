@@ -1,11 +1,8 @@
-#include <algorithm>
-
 #include "Utils/ActorUtils.hpp"
 #include "Utils/DeathReport.hpp"
 #include "Utils/FindActor.hpp"
 
 #include "Magic/Effects/Common.hpp"
-
 #include "Colliders/Actor.hpp"
 #include "Colliders/RE/RE.hpp"
 
@@ -27,7 +24,6 @@
 #include "Managers/HighHeel.hpp"
 
 #include "Config/Config.hpp"
-
 #include "UI/DebugAPI.hpp"
 
 
@@ -503,7 +499,8 @@ namespace GTS {
 		}
 		if (IsDraugr || IsDwemer) {
 			return false;
-		} else {
+		}
+		else {
 			return true;
 		}
 		return true;
@@ -554,7 +551,6 @@ namespace GTS {
 		if (IsFlying(tiny)) {
 			return false; // Disallow to do stuff with flying dragons
 		}
-
 		if (Busy) {
 			return false;
 		}
@@ -563,13 +559,17 @@ namespace GTS {
 		}
 		if (allow_teammate) { // allow if type is (teammate - teammate), and if bool is true
 			return true;
-		} else if (essential) { // disallow to perform on essentials
+		}
+		else if (essential) { // disallow to perform on essentials
 			return false;
-		} else if (hostile) { // always allow for non-essential enemies. Will return true if Teammate is hostile towards someone (even player)
+		}
+		else if (hostile) { // always allow for non-essential enemies. Will return true if Teammate is hostile towards someone (even player)
 			return true;
-		} else if (!Teammate) { // always allow for non-teammates
+		}
+		else if (!Teammate) { // always allow for non-teammates
 			return true;
-		} else {
+		}
+		else {
 			return true; // else allow
 		}
 	}
@@ -1488,9 +1488,16 @@ namespace GTS {
 		if (!actor) {
 			return false;
 		}
+
+		//A player can't be their own teammate
+		if (actor->formID == 0x14) {
+			return false;
+		}
+
 		if (Runtime::InFaction(actor, "FollowerFaction") || actor->IsPlayerTeammate() || IsGtsTeammate(actor)) {
 			return true;
 		}
+
 		return false;
 	}
 

@@ -82,7 +82,7 @@ namespace GTS {
 
 	NiPoint3 ComputeRaycast(const NiPoint3& rayStart, const NiPoint3& rayEnd, const float hullMult) {
 		// Determine hull size.
-		const float Hull = (hullMult < 0.0f) ? GetFnearDist() : camhullSize * hullMult;
+		const float Hull = (hullMult < 0.0f) ? GetFrustrumNearDistance() : camhullSize * hullMult;
 		NiPoint3 currentStart = rayStart;
 		// Default to rayEnd if no hit occurs
 		NiPoint3 lastValidResult = rayEnd;

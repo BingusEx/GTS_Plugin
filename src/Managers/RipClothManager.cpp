@@ -15,7 +15,7 @@ namespace GTS {
 		"ArmorJewelry",
 		"VendorItemJewelry",
 		"ClothingRing",
-		"ClothingNecklace",
+		//"ClothingNecklace",
 		"SexLabNoStrip", //This is the keyword 3BA uses for the SMP addons?, it doesnt even originate from SL.
 		"GTSDontStrip"
 	};
@@ -32,7 +32,7 @@ namespace GTS {
 		BGSBipedObjectForm::BipedObjectSlot::kFeet,                 // 37
 		BGSBipedObjectForm::BipedObjectSlot::kCalves,               // 38
 		// BGSBipedObjectForm::BipedObjectSlot::kShield,					// 39
-		// BGSBipedObjectForm::BipedObjectSlot::kTail,					// 40
+		 BGSBipedObjectForm::BipedObjectSlot::kTail,				// 40
 		// BGSBipedObjectForm::BipedObjectSlot::kLongHair,				// 41
 		BGSBipedObjectForm::BipedObjectSlot::kCirclet,              // 42
 		BGSBipedObjectForm::BipedObjectSlot::kEars,                 // 43

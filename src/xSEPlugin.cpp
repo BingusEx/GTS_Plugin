@@ -19,7 +19,7 @@ using namespace GTS;
 namespace {
 
 	#ifdef GTSDEBUG
-		//#define GTSCONSOLE
+		#define GTSCONSOLE
 	#endif
 
 	void InitializeLogging() {
@@ -42,13 +42,13 @@ namespace {
 
 			#ifdef GTSCONSOLE
 
-				auto file_sink = std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-				file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
+				//auto file_sink = std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true);
+				//file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
 
-				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>(spdlog::color_mode::always);
+				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 				console_sink->set_pattern("[GTS] [%l] [%s:%#] %v");
 
-				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", { console_sink, file_sink }));
+				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", console_sink));
 
 			#else
 
