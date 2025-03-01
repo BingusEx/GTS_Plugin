@@ -1,7 +1,6 @@
 #pragma once
 #include "ImGui/ImWindowManager.hpp"
 #include "ImGui/ImInput.hpp"
-#include "Managers/Input/InputManager.hpp"
 
 namespace GTS {
 
@@ -20,7 +19,10 @@ namespace GTS {
 		ImFontManager& FontMgr = ImFontManager::GetSingleton();
 		ImStyleManager& StyleMgr = ImStyleManager::GetSingleton();
 
+
+
 		public:
+		static inline std::atomic_bool ShouldDrawOverTop = false;
 
 		static UIManager& GetSingleton() {
 			static UIManager Instance;

@@ -150,10 +150,6 @@ namespace GTS {
 		if (GetAV(prey, ActorValue::kHealth) < 0) {
 			return false;
 		}
-		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
-			Notify("You're protected from grabbing");
-			return false;
-		}
 	
 		float pred_scale = get_visual_scale(pred);
 

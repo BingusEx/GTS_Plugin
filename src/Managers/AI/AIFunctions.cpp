@@ -1,4 +1,7 @@
 #include "Managers/AI/AIFunctions.hpp"
+
+#include "config/Config.hpp"
+
 #include "Managers/Animation/Utils/CooldownManager.hpp"
 
 using namespace GTS;
@@ -204,7 +207,7 @@ namespace GTS {
 
 	void ScareActors(Actor* giant) {
 		auto profiler = Profilers::Profile("ActorUtils: ScareActors");
-		if (!Persistent::GetSingleton().actors_panic) {
+		if (!Config::GetAI().bPanic) {
 			return; // Disallow Panic if bool is false.
 		}
 		for (auto tiny: FindSomeActors("AiActors", 2)) {

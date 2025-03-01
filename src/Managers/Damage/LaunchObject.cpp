@@ -258,11 +258,16 @@ namespace GTS {
 		}
 	}
 
-	void PushObjects(std::vector<ObjectRefHandle> refs, Actor* giant, NiAVObject* bone, float power, float radius, bool Kick) {
+	void PushObjects(const std::vector<ObjectRefHandle>& refs, Actor* giant, NiAVObject* bone, float power, float radius, bool Kick) {
 		if (!refs.empty()) {
-			for (auto object: refs) {
+			for (const auto& object: refs) {
 				if (object) {
 					TESObjectREFR* objectref = object.get().get();
+
+					if (objectref->formID == 0x14 && !Config::GetAI().bEnablePlayerPushBack) {
+						continue;
+					}
+
 					PushObjectsTowards(giant, objectref, bone, power, radius, Kick);
 				}
 			}

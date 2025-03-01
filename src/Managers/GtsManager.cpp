@@ -253,6 +253,12 @@ namespace {
 		}
 		float visual_scale = persi_actor_data->visual_scale;
 
+		if(actor->formID == 0x14) {
+			if (IsFirstPerson()) {
+				visual_scale *= GetProneAdjustment();
+			}
+		}
+
 		// Is scale correct already?
 		if (fabs(visual_scale - scale) <= 1e-5 && !force) {
 			return;

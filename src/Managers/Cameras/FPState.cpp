@@ -1,4 +1,5 @@
 #include "Managers/Cameras/FPState.hpp"
+#include "CamUtil.hpp"
 
 namespace GTS {
 

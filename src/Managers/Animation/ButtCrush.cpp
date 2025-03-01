@@ -7,11 +7,9 @@
 #include "Managers/Animation/ButtCrush.hpp"
 
 #include "Managers/Audio/Footstep.hpp"
-#include "Managers/AI/AIFunctions.hpp"
 #include "Managers/Input/InputManager.hpp"
 #include "Managers/Rumble.hpp"
-#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
-
+#include "Utils/ButtCrushUtils.hpp"
 #include "Utils/InputConditions.hpp"
 
 using namespace GTS;

@@ -544,7 +544,7 @@ namespace GTS {
 		bool Teammate = IsTeammate(tiny);
 		bool hostile = IsHostile(giant, tiny);
 		bool essential = IsEssential_WithIcons(giant, tiny); // Teammate check is also done here, spawns icons
-		bool no_protection = Persistent::GetSingleton().FollowerInteractions;
+		bool no_protection = Config::GetAI().bAllowFollowers;
 		bool Ignore_Protection = (HugCheck && giant->formID == 0x14 && Runtime::HasPerk(giant, "HugCrush_LovingEmbrace"));
 		bool allow_teammate = (giant->formID != 0x14 && no_protection && IsTeammate(tiny) && IsTeammate(giant));
 
@@ -928,7 +928,6 @@ namespace GTS {
 			return 0.18f;
 		}
 		else if (IsCrawling(player)) {
-
 			value = Config::GetCamera().fFPCrawlHeightMult;
 		}
 		
@@ -1915,9 +1914,17 @@ namespace GTS {
 		}
 	}
 
+	//TODO IMPLEMENT ENDO IN SCRIPT
 	void CallDevourment(Actor* giant, Actor* tiny) {
 		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		const auto& AllowEndo = Config::GetAI().bDVDoEndoOnTeam;
+		bool DoEndo = false;
+		if (AllowEndo && (IsTeammate(giant) || giant->formID == 0x14 && IsTeammate(tiny) || tiny->formID == 0x14)) {
+			DoEndo = true;
+		}
+
 		if (progressionQuest) {
+
 			CallFunctionOn(progressionQuest, "gtsProgressionQuest", "Devourment", giant, tiny);
 		}
 	}

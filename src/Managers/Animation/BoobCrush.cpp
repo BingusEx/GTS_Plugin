@@ -4,7 +4,7 @@
 #include "Managers/Animation/Utils/CrawlUtils.hpp"
 #include "Managers/Rumble.hpp"
 #include "Magic/Effects/Common.hpp"
-#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
+#include "Utils/ButtCrushUtils.hpp"
 
 using namespace GTS;
 

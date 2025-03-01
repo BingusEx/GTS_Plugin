@@ -476,13 +476,14 @@ struct SettingsAI {
     AIButtAction ButtCrush = {};
     AIGrabAction Grab = {};
 
-
     // Additional AI toggles
     bool bPanic = true;
     bool bCombatOnly = true;
     bool bAllowPlayer = true;
     bool bAllowFollowers = true;
     bool bDisableAttacks = true;
+    bool bEnablePlayerPushBack = true;
+    bool bDVDoEndoOnTeam = false;
 };
 TOML_SERIALIZABLE(SettingsAI);
 

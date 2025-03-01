@@ -132,7 +132,7 @@ namespace {
 		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
 		if (!ActorData) return;
 
-		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		Timer* IntervalTimer = &ActorData->ActionTimer;
 		if (!IntervalTimer) return;
 
 		//Set Values based on Settings and actor type.
@@ -142,7 +142,7 @@ namespace {
 			//SkillLevel = GetGtsSkillLevel(a_Actor);
 			CurseOfGrowthMaxSize = Settings.fCurseGrowthSizeLimit;
 			const float RandomDelay = Settings.fGameModeUpdateInterval;
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay/10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay/10, RandomDelay / 10));
 		}
 		else if (IsTeammate(a_Actor)) {
 			const auto& Settings = Config::GetGameplay().GamemodeFollower;
@@ -151,7 +151,7 @@ namespace {
 			//SkillLevel = GetAV(a_Actor, ActorValue::kAlteration);
 			CurseOfGrowthMaxSize = Settings.fCurseGrowthSizeLimit;
 			const float RandomDelay = Settings.fGameModeUpdateInterval;
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
 		}
 		else {
 			return;
@@ -209,7 +209,7 @@ namespace {
 		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
 		if (!ActorData) return;
 
-		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		Timer* IntervalTimer = &ActorData->ActionTimer;
 		if (!IntervalTimer) return;
 
 		//Set Values based on Settings and actor type.
@@ -219,7 +219,7 @@ namespace {
 			//SkillLevel = GetGtsSkillLevel(a_Actor);
 			CurseTargetScale = Settings.fCurseTargetScale;
 			const float RandomDelay = Settings.fGameModeUpdateInterval;
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
 		}
 		else if (IsTeammate(a_Actor)) {
 			const auto& Settings = Config::GetGameplay().GamemodeFollower;
@@ -228,7 +228,7 @@ namespace {
 			//SkillLevel = GetAV(a_Actor, ActorValue::kAlteration);
 			CurseTargetScale = Settings.fCurseTargetScale;
 			const float RandomDelay = Settings.fGameModeUpdateInterval;
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
 		}
 		else {
 			return;
@@ -275,7 +275,7 @@ namespace {
 		auto ActorData = Transient::GetSingleton().GetData(a_Actor);
 		if (!ActorData) return;
 
-		Timer* IntervalTimer = &ActorData->GameModeIntervalTimer;
+		Timer* IntervalTimer = &ActorData->ActionTimer;
 		if (!IntervalTimer) return;
 
 		//Set Values based on Settings and actor type.
@@ -286,7 +286,7 @@ namespace {
 			CurseTargetScale = Settings.fCurseTargetScale;
 			//The larger the actor the faster they shrink
 			const float RandomDelay = Settings.fGameModeUpdateInterval / RandomFloat(1.0, a_CurrentTargetScale / 2.0);
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
 		}
 		else if (IsTeammate(a_Actor)) {
 			const auto& Settings = Config::GetGameplay().GamemodeFollower;
@@ -296,7 +296,7 @@ namespace {
 			CurseTargetScale = Settings.fCurseTargetScale;
 			//The larger the actor the faster they shrink
 			const float RandomDelay = Settings.fGameModeUpdateInterval / RandomFloat(1.0, a_CurrentTargetScale / 2.0);
-			ActorData->GameModeIntervalTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
+			ActorData->ActionTimer.UpdateDelta(RandomDelay + RandomFloat(-RandomDelay / 10, RandomDelay / 10));
 		}
 		else {
 			return;
@@ -412,6 +412,10 @@ namespace GTS {
 		auto profiler = Profilers::Profile("Manager: GameMode");
 
 		if (!actor) {
+			return;
+		}
+
+		if (!Plugin::Live()) {
 			return;
 		}
 

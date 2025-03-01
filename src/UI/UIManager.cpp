@@ -11,7 +11,6 @@
 #include "UI/Windows/WindowSettings.hpp"
 #include "UI/Windows/WindowStatus.hpp"
 #include "Managers/Input/InputManager.hpp"
-
 #include "Windows/WindowUnderstomp.hpp"
 
 namespace {
@@ -36,21 +35,17 @@ namespace {
                 msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
             }
 
-            if (UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
-                const auto msgQueue = RE::UIMessageQueue::GetSingleton();
-                msgQueue->AddMessage(RE::Console::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
-            }
-
-            //Due to the HUDMenu hook dialogue draws above our stuff. Just disallow opening settings if a dialogue menu is opened.
             if (UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME)) {
                 const auto msgQueue = RE::UIMessageQueue::GetSingleton();
                 msgQueue->AddMessage(RE::DialogueMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
             }
 
             if (GTS::Config::GetAdvanced().bPauseGame) {
-                //Pause the game
+                //Pause the game, Figuring out that this was the "magic" value that needed to be set for the full game to pause was fun*
+                //*it was not... Atleast it was good practice in figuring out how ghidra works with the RE'd stuff....
                 RE::UI::GetSingleton()->numPausesGame++;
-                //Old method Only stops world update
+                //Old method Only stops world update, Its litterally only used for the TFC 1 command in the whole exe.
+                //WorldUpdate Checks this value and it only ever gets set by the TFC 1 console command....
                 //RE::Main::GetSingleton()->freezeTime = true;
             }
             else {
@@ -60,7 +55,9 @@ namespace {
             RE::UIBlurManager::GetSingleton()->IncrementBlurCount();
 
             //Show Settings Window
+            GTS::UIManager::ShouldDrawOverTop = true;
             Window->Show = true;
+
 
         }
     }
@@ -101,6 +98,7 @@ namespace GTS {
             }
 
             //Show Settings Window
+        	ShouldDrawOverTop = false;
             Window->Show = false;
 
             //Should be good enough of a check i guess?

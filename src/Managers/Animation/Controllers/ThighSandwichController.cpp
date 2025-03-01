@@ -8,8 +8,7 @@
 #include "Managers/GtsSizeManager.hpp"
 #include "Magic/Effects/Common.hpp"
 
-
-
+#include "Managers/AI/Thigh/ThighSandwichAI.hpp"
 
 using namespace GTS;
 
@@ -28,10 +27,9 @@ namespace {
 	}
 }
 
-
 namespace GTS {
-	SandwichingData::SandwichingData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {
-	}
+
+	SandwichingData::SandwichingData(Actor* giant) : giant(giant? giant->CreateRefHandle() : ActorHandle()) {}
 
 	void SandwichingData::AddTiny(Actor* tiny) {
 		this->tinies.try_emplace(tiny->formID, tiny->CreateRefHandle());
@@ -39,7 +37,7 @@ namespace GTS {
 
 	std::vector<Actor*> SandwichingData::GetActors() {
 		std::vector<Actor*> result;
-		for (auto& [key, actorref]: this->tinies) {
+		for (auto& actorref : this->tinies | views::values) {
 			auto actor = actorref.get().get();
 			result.push_back(actor);
 		}
@@ -59,35 +57,22 @@ namespace GTS {
 		this->MoveTinies = move;
 	}
 
-	void SandwichingData::ManageAi(Actor* giant) {
-		if (this->tinies.size() > 0) {
-			int random = RandomInt( 0, 20);
-			if (random < 9) {
-				AnimationManager::StartAnim("ThighAttack", giant);
-			} else if (random < 12) {
-				AnimationManager::StartAnim("ThighAttack_Heavy", giant);
-			}
-		} else {
-			AnimationManager::StartAnim("ThighExit", giant);
-		}
-	}
-
-	void SandwichingData::DisableRuneTask(Actor* giant, bool shrink) {
+	void SandwichingData::DisableRuneTask(Actor* a_Giant, bool shrink) {
 		if (shrink == true) {
-			std::string name = std::format("ShrinkRune_{}", giant->formID);
+			std::string name = std::format("ShrinkRune_{}", a_Giant->formID);
 			TaskManager::Cancel(name);
 		} else if (shrink == false) {
-			std::string name = std::format("ScaleRune_{}", giant->formID);
+			std::string name = std::format("ScaleRune_{}", a_Giant->formID);
 			TaskManager::Cancel(name);
 		}
 	}
 
-	void SandwichingData::EnableRuneTask(Actor* giant, bool shrink) {
+	void SandwichingData::EnableRuneTask(Actor* a_Giant, bool shrink) {
 		string node_name = "GiantessRune";
 		if (shrink == true) {
 			double Start = Time::WorldTimeElapsed();
-			std::string name = std::format("ShrinkRune_{}", giant->formID);
-			ActorHandle gianthandle = giant->CreateRefHandle();
+			std::string name = std::format("ShrinkRune_{}", a_Giant->formID);
+			ActorHandle gianthandle = a_Giant->CreateRefHandle();
 			TaskManager::Run(name, [=](auto& progressData) {
 				if (!gianthandle) {
 					return false;
@@ -106,10 +91,11 @@ namespace GTS {
 				}
 				return true;
 			});
-		} else if (shrink == false) {
+		}
+		else if (shrink == false) {
 			double Start = Time::WorldTimeElapsed();
-			std::string name = std::format("ScaleRune_{}", giant->formID);
-			ActorHandle gianthandle = giant->CreateRefHandle();
+			std::string name = std::format("ScaleRune_{}", a_Giant->formID);
+			ActorHandle gianthandle = a_Giant->CreateRefHandle();
 			TaskManager::Run(name, [=](auto& progressData) {
 				if (!gianthandle) {
 					return false;
@@ -133,21 +119,31 @@ namespace GTS {
 
 	void SandwichingData::Update() {
 		if (this->giant) {
-			auto giant = this->giant.get().get();
-			bool move = this->MoveTinies;
-			if (!giant) {
+			auto GiantRef = this->giant.get().get();
+			bool MoveTinies = this->MoveTinies;
+
+			if (!GiantRef) {
 				return;
 			}
-			float giantScale = get_visual_scale(giant);
-			if (giant->formID != 0x14) {
-				if (GetPlayerOrControlled()->formID == 0x14 && this->SandwichTimer.ShouldRun()) {
-					this->ManageAi(giant);
+
+			float giantScale = get_visual_scale(GiantRef);
+
+			//If AI
+			if (GiantRef->formID != 0x14) {
+				if (auto AITransientData = Transient::GetSingleton().GetData(GiantRef)) {
+					AITransientData->ActionTimer.UpdateDelta(Config::GetAI().ThighSandwich.fInterval);
+					if (GetPlayerOrControlled()->formID == 0x14 && AITransientData->ActionTimer.ShouldRunFrame()) {
+						ThighSandwichAI_DecideAction(GiantRef, !tinies.empty());
+					}
 				}
 			}
-			for (auto& [key, tinyref]: this->tinies) {
-				if (!move) {
+
+			for (auto& tinyref : this->tinies | views::values) {
+
+				if (!MoveTinies) {
 					return;
 				}
+
 				auto tiny = tinyref.get().get();
 				if (!tiny) {
 					return;
@@ -157,31 +153,31 @@ namespace GTS {
 				if (tiny_is_actor) {
 					ShutUp(tiny_is_actor);
 					ForceRagdoll(tiny_is_actor, false);
-					AttachToObjectA(giant, tiny_is_actor);
+					AttachToObjectA(GiantRef, tiny_is_actor);
 				}
 
 				float tinyScale = get_visual_scale(tiny);
-				float sizedifference = GetSizeDifference(giant, tiny, SizeType::VisualScale, true, false);
+				float sizedifference = GetSizeDifference(GiantRef, tiny, SizeType::VisualScale, true, false);
 				float threshold = Action_Sandwich;
 
-				if (giant->IsDead() || sizedifference < threshold || !IsThighSandwiching(giant)) {
+				if (GiantRef->IsDead() || sizedifference < threshold || !IsThighSandwiching(GiantRef)) {
 					EnableCollisions(tiny);
 					SetBeingHeld(tiny, false);
 					AllowToBeCrushed(tiny, true);
-					PushActorAway(giant, tiny, 1.0f);
+					PushActorAway(GiantRef, tiny, 1.0f);
 					ForceRagdoll(tiny_is_actor, true);
-					Cprint("{} slipped out of {} thighs", tiny->GetDisplayFullName(), giant->GetDisplayFullName());
+					Cprint("{} slipped out of {} thighs", tiny->GetDisplayFullName(), GiantRef->GetDisplayFullName());
 					this->tinies.erase(tiny->formID); // Disallow button abuses to keep tiny when on low scale
 				}
 
-				if (this->Suffocate && CanDoDamage(giant, tiny, false)) {
+				if (this->Suffocate && CanDoDamage(GiantRef, tiny, false)) {
 					float sizedifference = giantScale/tinyScale;
 					float damage = Damage_ThighSandwich_DOT * sizedifference * TimeScale();
 					float hp = GetAV(tiny, ActorValue::kHealth);
-					InflictSizeDamage(giant, tiny, damage);
+					InflictSizeDamage(GiantRef, tiny, damage);
 					if (damage > hp && !tiny->IsDead()) {
 						this->Remove(tiny);
-						PrintSuffocate(giant, tiny);
+						PrintSuffocate(GiantRef, tiny);
 					}
 				}
 			}
@@ -189,7 +185,7 @@ namespace GTS {
 	}
 
 	void ThighSandwichController::Update() {
-		for (auto& [key, SandwichData]: this->data) {
+		for (auto& SandwichData : this->data | views::values) {
 			SandwichData.Update();
 		}
 	}
@@ -216,19 +212,16 @@ namespace GTS {
 		auto preys = find_actors();
 
 		// Sort prey by distance
-		sort(preys.begin(), preys.end(),
-		     [predPos](const Actor* preyA, const Actor* preyB) -> bool
-		{
+		ranges::sort(preys,[predPos](const Actor* preyA, const Actor* preyB) -> bool{
 			float distanceToA = (preyA->GetPosition() - predPos).Length();
 			float distanceToB = (preyB->GetPosition() - predPos).Length();
 			return distanceToA < distanceToB;
 		});
 
 		// Filter out invalid targets
-		preys.erase(std::remove_if(preys.begin(), preys.end(),[pred, this](auto prey)
-		{
+		std::erase_if(preys,[pred, this](auto prey){
 			return !this->CanSandwich(pred, prey);
-		}), preys.end());
+		});
 
 		// Filter out actors not in front
 		auto actorAngle = pred->data.angle.z;
@@ -237,8 +230,7 @@ namespace GTS {
 
 		NiPoint3 predDir = actorForward;
 		predDir = predDir / predDir.Length();
-		preys.erase(std::remove_if(preys.begin(), preys.end(),[predPos, predDir](auto prey)
-		{
+		std::erase_if(preys,[predPos, predDir](auto prey){
 			NiPoint3 preyDir = prey->GetPosition() - predPos;
 			if (preyDir.Length() <= 1e-4) {
 				return false;
@@ -246,7 +238,7 @@ namespace GTS {
 			preyDir = preyDir / preyDir.Length();
 			float cosTheta = predDir.Dot(preyDir);
 			return cosTheta <= 0; // 180 degress
-		}), preys.end());
+		});
 
 		// Filter out actors not in a truncated cone
 		// \      x   /
@@ -258,8 +250,7 @@ namespace GTS {
 		float shiftAmount = fabs((predWidth / 2.0f) / tan(SANDWICH_ANGLE/2.0f));
 
 		NiPoint3 coneStart = predPos - predDir * shiftAmount;
-		preys.erase(std::remove_if(preys.begin(), preys.end(),[coneStart, predWidth, predDir](auto prey)
-		{
+		std::erase_if(preys,[coneStart, predWidth, predDir](auto prey){
 			NiPoint3 preyDir = prey->GetPosition() - coneStart;
 			if (preyDir.Length() <= predWidth*0.4f) {
 				return false;
@@ -267,7 +258,7 @@ namespace GTS {
 			preyDir = preyDir / preyDir.Length();
 			float cosTheta = predDir.Dot(preyDir);
 			return cosTheta <= cos(SANDWICH_ANGLE*PI/180.0f);
-		}), preys.end());
+		});
 
 		if (numberOfPrey == 1) {
 			return Vore_GetMaxVoreCount(pred, preys);
@@ -281,14 +272,12 @@ namespace GTS {
 		return preys;
 	}
 
-	bool ThighSandwichController::CanSandwich(Actor* pred, Actor* prey) {
+	bool ThighSandwichController::CanSandwich(Actor* pred, Actor* prey) const {
 		if (pred == prey) {
 			return false;
 		}
+
 		if (prey->IsDead()) {
-			return false;
-		}
-		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
 			return false;
 		}
 
@@ -332,9 +321,11 @@ namespace GTS {
 
 	void ThighSandwichController::StartSandwiching(Actor* pred, Actor* prey) {
 		auto& sandwiching = ThighSandwichController::GetSingleton();
+
 		if (!sandwiching.CanSandwich(pred, prey)) {
 			return;
 		}
+
 		if (IsBeingHeld(pred, prey)) {
 			return;
 		}
@@ -353,6 +344,7 @@ namespace GTS {
 	void ThighSandwichController::Reset() {
 		this->data.clear();
 	}
+
 	void SandwichingData::ReleaseAll() {
 		this->tinies.clear();
 		this->MoveTinies = false;
@@ -371,12 +363,15 @@ namespace GTS {
 	void SandwichingData::EnableSuffocate(bool enable) {
 		this->Suffocate = enable;
 	}
+
 	void SandwichingData::ManageScaleRune(bool enable) {
 		this->RuneScale = enable;
 	}
+
 	void SandwichingData::ManageShrinkRune(bool enable) {
 		this->RuneShrink = enable;
 	}
+
 	void SandwichingData::OverideShrinkRune(float value) {
 		this->ScaleRune.value = value;
 	}
@@ -384,7 +379,6 @@ namespace GTS {
 	SandwichingData& ThighSandwichController::GetSandwichingData(Actor* giant) {
 		// Create it now if not there yet
 		this->data.try_emplace(giant->formID, giant);
-
 		return this->data.at(giant->formID);
 	}
 

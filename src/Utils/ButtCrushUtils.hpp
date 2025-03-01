@@ -1,8 +1,5 @@
-#pragma once 
-
 namespace GTS {
 
-	//ButtCrush Untilities
 	float GetButtCrushSize(Actor* giant);
 	float GetGrowthCount(Actor* giant);
 	float GetGrowthLimit(Actor* actor);
@@ -10,7 +7,4 @@ namespace GTS {
 	void ModGrowthCount(Actor* giant, float value, bool reset);
 	void RecordStartButtCrushSize(Actor* giant);
 	void SetButtCrushSize(Actor* giant, float value, bool reset);
-
-
-
 }

@@ -6,7 +6,7 @@
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Rumble.hpp"
 #include "Managers/HighHeel.hpp"
-#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
+#include "Utils/ButtCrushUtils.hpp"
 
 using namespace GTS;
 
@@ -249,9 +249,6 @@ namespace GTS {
 		}
 
 		if (prey->IsDead()) {
-			return false;
-		}
-		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
 			return false;
 		}
 

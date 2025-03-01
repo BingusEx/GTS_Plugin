@@ -20,6 +20,8 @@ namespace GTS {
             const char* T3 = "Allow the AI to target other followers.";
             const char* T4 = "Only allow the action AI to be active when follower is in combat.";
             const char* T5 = "Prevent Followers from using regular attacks when they're large. The chance to not attack increases with size.";
+            const char* T6 = "Toggle whether actions like kicks ragdoll the player.";
+            const char* T7 = "If devourment compatibility is enabled.\nToggle whether the GTS should do DV's Endo on the player and teammates instead of doing lethal vore.";
 
             const char* THelp = "The GTS AI checks at a configurable time interval what GTS actions it can start.\n"
                                 "Whether the AI takes an action depends on said actions' probability settings.\n"
@@ -46,7 +48,9 @@ namespace GTS {
                     ImUtil::CheckBox("Target Player", &Settings.bAllowPlayer, T2);
                     ImUtil::CheckBox("Target Other Followers", &Settings.bAllowFollowers, T3);
                     ImUtil::CheckBox("Enable AI Only During Combat",&Settings.bCombatOnly, T4);
-                    ImUtil::CheckBox("Disble Regular Attacks When Large", &Settings.bDisableAttacks, T5);
+                    ImUtil::CheckBox("Disable Regular Attacks When Large", &Settings.bDisableAttacks, T5);
+                    ImUtil::CheckBox("Kicks Affect Player", &Settings.bEnablePlayerPushBack, T6);
+                    ImUtil::CheckBox("Do DV Endo On Team And Player", &Settings.bDVDoEndoOnTeam, T7);
                     ImGui::EndDisabled();
                 }
 

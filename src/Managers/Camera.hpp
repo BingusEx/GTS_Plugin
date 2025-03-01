@@ -12,8 +12,6 @@
 #include "Managers/Cameras/TP/footR.hpp"
 
 #include "Managers/Cameras/FP/normal.hpp"
-#include "Managers/Cameras/FP/combat.hpp"
-#include "Managers/Cameras/FP/loot.hpp"
 
 namespace GTS {
 
@@ -48,8 +46,6 @@ namespace GTS {
 			FootL footLState;
 
 			FirstPerson fpState;
-			FirstPersonCombat fpCombatState;
-			FirstPersonLoot fpLootState;
 
 			NiPoint3 manualEdit;
 

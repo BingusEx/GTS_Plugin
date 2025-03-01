@@ -46,7 +46,12 @@ namespace {
 				//file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
 
 				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-				console_sink->set_pattern("[GTS] [%l] [%s:%#] %v");
+
+				console_sink->set_pattern("\033[37m[\033[95mGTS\033[37m]\033[0m " \
+					"\033[37m[\033[36m%H:%M:%S.%e\033[37m]\033[0m " \
+					"\033[37m[\033[0m%^%l%$\033[37m]\033[0m " \
+					"\033[37m[\033[33m%s:%#\033[37m]\033[0m " \
+					"\033[37m%v\033[0m");
 
 				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", console_sink));
 

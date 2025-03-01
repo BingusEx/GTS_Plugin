@@ -7,7 +7,7 @@
 #include "Managers/Audio/Footstep.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/Rumble.hpp"
-#include "Managers/AI/ButtCrush/ButtCrushFunctions.hpp"
+#include "Utils/ButtCrushUtils.hpp"
 
 
 using namespace GTS;

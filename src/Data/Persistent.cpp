@@ -54,8 +54,6 @@ namespace GTS {
 		GetSingleton().Reset();
 	}
 
-
-
 	void Persistent::OnGameLoaded(SerializationInterface* serde) {
 
 		std::uint32_t type;
@@ -74,7 +72,6 @@ namespace GTS {
 			Persi.TrackedCameraState.Load(serde, type, version, size);
 			Persi.EnableCrawlPlayer.Load(serde, type, version, size);
 			Persi.EnableCrawlFollower.Load(serde, type, version, size);
-
 			Persi.GTSMassBasedSize.Load(serde, type, version, size);
 			Persi.GTSExtraPotionSize.Load(serde, type, version, size);
 			Persi.GTSGlobalSizeLimit.Load(serde, type, version, size);
@@ -388,26 +385,26 @@ namespace GTS {
 
 						ActorData Data = {};
 
-						Data.PAD_00 = native_scale;
+						//Data.PAD_00;
 						Data.visual_scale = visual_scale;
 						Data.visual_scale_v = visual_scale_v;
 						Data.target_scale = target_scale;
 						Data.max_scale = max_scale;
 						Data.half_life = half_life;
 						Data.anim_speed = anim_speed;
-						Data.PAD_1C = effective_multi;
-						Data.PAD_20 = bonus_hp;
-						Data.PAD_24 = bonus_carry;
-						Data.PAD_28 = bonus_max_size;
+						//Data.PAD_1C;
+						//Data.PAD_20;
+						//Data.PAD_24;
+						//Data.PAD_28;
 						Data.smt_run_speed = smt_run_speed;
 						Data.NormalDamage = NormalDamage;
 						Data.SprintDamage = SprintDamage;
 						Data.FallDamage = FallDamage;
 						Data.HHDamage = HHDamage;
-						Data.PAD_40 = SizeVulnerability;
+						//Data.PAD_40;
 						Data.SizeReserve = SizeReserve;
 						Data.target_scale_v = target_scale_v;
-						Data.PAD_50 = scaleOverride;
+						//Data.PAD_50;
 						Data.stolen_attributes = stolen_attributes;
 						Data.stolen_health = stolen_health;
 						Data.stolen_magick = stolen_magick;
@@ -521,7 +518,7 @@ namespace GTS {
 			//data.PAD_44;
 			const float SizeReserve = data.SizeReserve;
 			const float target_scale_v = data.target_scale_v;
-			const float scaleOverride = data.PAD_50;
+			//data.PAD_50;
 			const float stolen_attributes = data.stolen_attributes;
 			const float stolen_health = data.stolen_health;
 			const float stolen_magick = data.stolen_magick;
@@ -548,7 +545,7 @@ namespace GTS {
 			serde->WriteRecordData(&DUMMY_FLOAT, sizeof(DUMMY_FLOAT));               //0x48
 			serde->WriteRecordData(&SizeReserve, sizeof(SizeReserve));               //0x4C
 			serde->WriteRecordData(&target_scale_v, sizeof(target_scale_v));         //0x50
-			serde->WriteRecordData(&scaleOverride, sizeof(scaleOverride));           //0x54
+			serde->WriteRecordData(&DUMMY_FLOAT, sizeof(DUMMY_FLOAT));               //0x54
 			serde->WriteRecordData(&stolen_attributes, sizeof(stolen_attributes));   //0x58
 			serde->WriteRecordData(&stolen_health, sizeof(stolen_health));           //0x5C
 			serde->WriteRecordData(&stolen_magick, sizeof(stolen_magick));           //0x60

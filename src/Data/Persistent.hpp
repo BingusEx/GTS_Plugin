@@ -105,18 +105,6 @@ namespace GTS {
 			//BasicRecord<float, 'QVRR'> VoreCount = 0.0f;
 			//BasicRecord<float, 'QGCR'> GiantCount = 0.0f;
 
-			bool vore_allowplayervore = false;
-			bool FollowerInteractions = false;
-			bool vore_combatonly = true;
-			bool Vore_Ai = true;
-			bool Stomp_Ai = true;
-			bool Sandwich_Ai = true;
-			bool Kick_Ai = true;
-			bool Hugs_Ai = true;
-			bool Butt_Ai = true;
-			bool Thigh_Ai = true;
-			bool actors_panic = true;
-
 			// ---- Quest Progression
 			float HugStealCount = 0.0f;
 			float CrushCount = 0.0f; // Stage 2

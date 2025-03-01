@@ -43,7 +43,15 @@ namespace Hooks {
 	//DXGISwapchain::Present
 	void Hook_Renderer::Present(uint32_t a1) {
 		_Present(a1);
-		UIManager::GetSingleton().Update();
+
+		//Hack: Without this Settings draws over the hud and while its fine for 99% of cases sometimes something will draw over the hud and thus over the settings.
+		//I don't know how to register a "HUD" element that could draw over all other hud elements so we'll do it this way.
+		//Does checking for an atomic bool hurt perf. i honestly don't know.
+		//The proper way to do this would be to have 2 imgui contexts for each "layer" but managing 2 of them needs a semi rewrite of all the custom helper functions
+		//And thus is an absolute pain in the ass.
+		if (UIManager::ShouldDrawOverTop) {
+			UIManager::GetSingleton().Update();
+		}
 	}
 
 	//HudMenu Present
@@ -51,7 +59,10 @@ namespace Hooks {
 
 		static void thunk (RE::IMenu* a_menu) {
 			func(a_menu);
-			UIManager::GetSingleton().Update();
+
+			if (!UIManager::ShouldDrawOverTop) {
+				UIManager::GetSingleton().Update();
+			}
 		}
 
 		static inline REL::Relocation<decltype(thunk)> func;
@@ -72,19 +83,16 @@ namespace Hooks {
 		const REL::Relocation<uintptr_t> created3d11Hook{ REL::VariantID(75595, 77226, 0xDC5530) };     // D72810, DA3850, DC5530
 		const REL::Relocation<uintptr_t> presentHook{ REL::VariantID(75461, 77246, 0xDBBDD0) };         // D6A2B0, DA5BE0, DBBDD0
 
-
-		//_InputFunc = trampoline.write_call<5>(inputHook.address() + REL::VariantOffset(0x7B, 0x7B, 0x81).offset(), InputFunc);
-
 		_RegisterClassA = *reinterpret_cast<uintptr_t*>(trampoline.write_call<6>(registerWindowHook.address() + REL::VariantOffset(0x8E, 0x15C, 0x99).offset(), RegisterClassA));
 		logger::info("Hooked RegisterClassA");
 
 		_CreateD3DAndSwapChain = trampoline.write_call<5>(created3d11Hook.address() + REL::VariantOffset(0x9, 0x275, 0x9).offset(), CreateD3DAndSwapChain);
 		logger::info("Hooked CreateD3DAndSwapChain");
 
-		//_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
+		_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
 		//logger::info("Hooked DXGISwapchain Present");
 
-		//Updatinge earlier in the render pass allows us to auto hide everything when
+		//Updating earlier in the render pass allows us to auto hide everything when
 		//skyrim is doing its fade to black
 		Hook_HUDMenu_Present::Install();
 

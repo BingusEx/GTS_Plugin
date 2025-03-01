@@ -1014,9 +1014,14 @@ namespace GTS {
 								//log::info("Roll: {}, RandomChance {}, Threshold: {}", roll, RagdollChance, Random);
 								//eventually it reaches 100% chance to ragdoll an actor (at ~x3.0 size difference)
 
+								if (otherActor->formID == 0x14 && !Config::GetAI().bEnablePlayerPushBack) {
+									continue;
+								}
+
 								if (difference > 1.35f && (roll || otherActor->IsDead())) {
 									PushTowards(giant, otherActor, node, pushForce * pushpower, true);
-								} else if (difference > 0.88f * Threshold) {
+								}
+								else if (difference > 0.88f * Threshold) {
 									float push = std::clamp(0.25f * (difference - 0.25f), 0.25f, 1.0f);
 									StaggerActor(giant, otherActor, push);
 								}
@@ -1028,6 +1033,7 @@ namespace GTS {
 									Runtime::PlaySoundAtNode("SwingImpact", giant, Volume, 1.0f, node); // play swing impact sound
 									ApplyShakeAtPoint(giant, 1.8f * pushpower * audio, node->world.translate, 0.0f);
 								}
+
 								ApplyActionCooldown(otherActor, CooldownSource::Damage_Hand);
 								CollisionDamage::GetSingleton().DoSizeDamage(giant, otherActor, damage, bbmult, crushmult, static_cast<int>(random), Cause, true);
 							}
@@ -1789,6 +1795,10 @@ namespace GTS {
 		}
 
 		bool PrevState = false;
+		if (auto transient = Transient::GetSingleton().GetData(a_actor)) {
+			transient->FPCrawling = a_state;
+		}
+
 		if (a_actor->GetGraphVariableBool("GTS_CrawlEnabled", PrevState)) {
 
 			if (PrevState == a_state) {
@@ -1797,9 +1807,6 @@ namespace GTS {
 
 			a_actor->SetGraphVariableBool("GTS_CrawlEnabled", a_state);
 
-			if (auto transient = Transient::GetSingleton().GetData(a_actor)) {
-				transient->FPCrawling = a_state;
-			}
 
 			if (a_actor->IsSneaking() && !IsProning(a_actor) && !IsGtsBusy(a_actor) && !IsTransitioning(a_actor)) {
 				return PrevState != a_state;

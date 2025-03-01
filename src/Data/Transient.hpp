@@ -94,8 +94,9 @@ namespace GTS {
 
 		float breast_size_buff;
 
-		//0 Timers dont Run.
+
 		Timer GameModeIntervalTimer = Timer(0);
+		Timer ActionTimer = Timer(0);
 
 	};
 

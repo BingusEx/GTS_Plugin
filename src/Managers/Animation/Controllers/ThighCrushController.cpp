@@ -1,15 +1,17 @@
 #include "Managers/Animation/Controllers/ThighCrushController.hpp"
-#include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/GtsSizeManager.hpp"
 #include "Managers/HighHeel.hpp"
 
 namespace {
+
 	constexpr float MINIMUM_THIGH_DISTANCE = 58.0f;
 	constexpr float THIGH_ANGLE = 75;
 	constexpr float PI = std::numbers::pi_v<float>;
+
 }
 
 namespace GTS {
+
 	ThighCrushController& ThighCrushController::GetSingleton() noexcept {
 		static ThighCrushController instance;
 		return instance;
@@ -104,9 +106,7 @@ namespace GTS {
 		if (prey->IsDead()) {
 			return false;
 		}
-		if (prey->formID == 0x14 && !Persistent::GetSingleton().vore_allowplayervore) {
-			return false;
-		}
+
 		if (IsCrawling(pred) || IsTransitioning(pred) || IsBeingHeld(pred, prey)) {
 			return false;
 		}
@@ -141,21 +141,5 @@ namespace GTS {
 			return false;
 		}
 		return false;
-	}
-
-	void ThighCrushController::StartThighCrush(Actor* pred, Actor* prey) {
-		auto& ThighCrush = ThighCrushController::GetSingleton();
-		if (!ThighCrush.CanThighCrush(pred, prey)) {
-			return;
-		}
-		if (IsThighCrushing(pred)) {
-			return;
-		}
-
-		AnimationManager::StartAnim("ThighLoopEnter", pred);
-		//TODO WTF is this here
-		//AI_StartThighCrushTask(pred);
-
-		log::info("Starting Thigh Crush between {} and {}", pred->GetDisplayFullName(), prey->GetDisplayFullName());
 	}
 }

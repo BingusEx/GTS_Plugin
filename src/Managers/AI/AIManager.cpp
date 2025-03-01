@@ -1,6 +1,10 @@
 #include "Managers/AI/AIManager.hpp"
-#include "Managers/AI/Vore/VoreFunctions.hpp"
-#include "Managers/AI/StompKick/StompKickFunctions.hpp"
+
+#include "Managers/AI/Vore/VoreAI.hpp"
+#include "Managers/AI/StompKick/StompKickSwipeAI.hpp"
+#include "Managers/AI/Thigh/ThighCrushAI.hpp"
+#include "Managers/AI/Thigh/ThighSandwichAI.hpp"
+
 using namespace GTS;
 
 namespace {
@@ -30,9 +34,10 @@ namespace {
 
 			const bool HasHP = GetAV(a_Actor, ActorValue::kHealth) > 0;
 			const bool IsVisible = a_Actor->GetAlpha() > 0.0f;
+			const bool IsInNormalState = a_Actor->AsActorState()->GetSitSleepState() == SIT_SLEEP_STATE::kNormal;
 
 			//Is In combat or do we allow ai outside of combat?
-			if ((a_Actor->IsInCombat() || !a_CombatOnly) && !IsGtsBusy(a_Actor) && HasHP && IsVisible) {
+			if ((a_Actor->IsInCombat() || !a_CombatOnly) && !IsGtsBusy(a_Actor) && HasHP && IsVisible && IsInNormalState) {
 
 				//Follower Check
 				if (IsTeammate(a_Actor)) {
@@ -160,9 +165,11 @@ namespace GTS {
 
 	void AIManager::Update() {
 
-		if (!Plugin::Live()) return;
-
 		std::ignore = Profilers::Profile("AIManager: Update");
+
+		if (!Plugin::Live()) {
+			return;
+		}
 
 		BeginNewActionTimer.UpdateDelta(AISettings.fMasterTimer);
 
@@ -184,8 +191,6 @@ namespace GTS {
 			}
 		}
 	}
-
-
 
 	void AIManager::TryStartAction(Actor* a_Performer) const {
 
@@ -236,7 +241,7 @@ namespace GTS {
 		//----------- THIGH SANDWICH
 
 		if (AISettings.ThighSandwich.bEnableAction) {
-			//CanThighSandwich;
+			CanThighSandwich = ThighSandwichAI_FilterList(a_Performer, PreyList);
 			if (!CanThighSandwich.empty()) {
 				StartableActions.emplace(ActionType::kThighS, static_cast<int>(AISettings.ThighSandwich.fProbability));
 			}
@@ -245,7 +250,7 @@ namespace GTS {
 		//----------- THIGH CRUSH
 
 		if (AISettings.ThighCrush.bEnableAction) {
-			//CanThighCrush;
+			CanThighCrush = ThighCrushAI_FilterList(a_Performer, PreyList);
 			if (!CanThighCrush.empty()) {
 				StartableActions.emplace(ActionType::kThighC, static_cast<int>(AISettings.ThighCrush.fProbability));
 			}
@@ -286,7 +291,6 @@ namespace GTS {
 				logger::trace("AI Starting kStomps Action");
 
 				if (!CanStompKickSwipe.empty()) {
-					//Take first element
 					StompAI_Start(a_Performer, CanStompKickSwipe.front());
 				}
 
@@ -296,7 +300,6 @@ namespace GTS {
 				logger::trace("AI Starting kKicks Action");
 
 				if (!CanStompKickSwipe.empty()) {
-					//Take first element
 					KickSwipeAI_Start(a_Performer);
 				}
 
@@ -304,10 +307,20 @@ namespace GTS {
 			}
 			case ActionType::kThighS: {
 				logger::trace("AI Starting kThighS Action");
+
+				if (!CanThighSandwich.empty()) {
+					ThighSandwichAI_Start(a_Performer, CanThighSandwich);
+				}
+
 				return;
 			}
 			case ActionType::kThighC: {
 				logger::trace("AI Starting kThighC Action");
+
+				if (!CanThighCrush.empty()) {
+					ThighCrushAI_Start(a_Performer);
+				}
+
 				return;
 			}
 			case ActionType::kButt: {

@@ -1,4 +1,3 @@
-
 #include "Managers/AI/Headtracking.hpp"
 
 using namespace GTS;

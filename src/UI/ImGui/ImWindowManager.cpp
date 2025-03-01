@@ -49,7 +49,8 @@ namespace GTS {
 
             auto UI = UI::GetSingleton();
 
-            if (Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME) || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
+            //|| UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME)
+            if (Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
 
                 for (const auto& window : windows) {
 

@@ -1,4 +1,4 @@
-#include "Managers/AI/StompKick/StompKickFunctions.hpp"
+#include "Managers/AI/StompKick/StompKickSwipeAI.hpp"
 #include "Config/Config.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Stomp_Under.hpp"
@@ -221,14 +221,13 @@ namespace GTS {
 		// Reduce vector size
 
 		return Vore_GetMaxVoreCount(a_Pred, PreyList);
-
 	}
 
 
 
 	void StompAI_Start(Actor* a_Performer, Actor* a_Prey) {
 
-		switch (RandomIntWeighted(10,10,5)) {
+		switch (RandomIntWeighted(10,10,10)) {
 
 			case 0: {
 				Do_LightStomp(a_Performer, a_Prey);

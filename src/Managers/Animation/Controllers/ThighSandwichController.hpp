@@ -21,12 +21,10 @@ namespace GTS {
 
 			// Update all things that are happening like
 			// keeping them on the AnimObjectA and shrinking nodes
-			void EnableRuneTask(Actor* giant, bool shrink);
-			void DisableRuneTask(Actor* giant, bool shrink);
+			static void EnableRuneTask(Actor* a_Giant, bool shrink);
+			static void DisableRuneTask(Actor* a_Giant, bool shrink);
 			void Update();
 			void MoveActors(bool move);
-			void ManageAi(Actor* giant);
-			void UpdateRune(Actor* giant);
 
 		private:
 			ActorHandle giant;
@@ -57,7 +55,7 @@ namespace GTS {
 
 			std::vector<Actor*> GetSandwichTargetsInFront(Actor* pred, std::size_t numberOfPrey);
 			static void StartSandwiching(Actor* pred, Actor* prey);
-			bool CanSandwich(Actor* pred, Actor* prey);
+			bool CanSandwich(Actor* pred, Actor* prey) const;
 
 			SandwichingData& GetSandwichingData(Actor* giant);
 
