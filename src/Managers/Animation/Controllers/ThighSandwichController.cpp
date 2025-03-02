@@ -319,11 +319,13 @@ namespace GTS {
 		}
 	}
 
-	void ThighSandwichController::StartSandwiching(Actor* pred, Actor* prey) {
+	void ThighSandwichController::StartSandwiching(Actor* pred, Actor* prey, bool dochecks) {
 		auto& sandwiching = ThighSandwichController::GetSingleton();
 
-		if (!sandwiching.CanSandwich(pred, prey)) {
-			return;
+		if (dochecks) {
+			if (!sandwiching.CanSandwich(pred, prey)) {
+				return;
+			}
 		}
 
 		if (IsBeingHeld(pred, prey)) {

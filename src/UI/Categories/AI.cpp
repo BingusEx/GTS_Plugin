@@ -18,7 +18,7 @@ namespace GTS {
 
             const char* T2 = "Allow the AI to target the player.";
             const char* T3 = "Allow the AI to target other followers.";
-            const char* T4 = "Only allow the action AI to be active when follower is in combat.";
+            const char* T4 = "Only allow the action AI to be active when the follower is in combat.";
             const char* T5 = "Prevent Followers from using regular attacks when they're large. The chance to not attack increases with size.";
             const char* T6 = "Toggle whether actions like kicks ragdoll the player.";
             const char* T7 = "If devourment compatibility is enabled.\nToggle whether the GTS should do DV's Endo on the player and teammates instead of doing lethal vore.";
@@ -192,25 +192,25 @@ namespace GTS {
             const char* T1 = "Set the chance for a hug action to be started.";
             const char* T2 = "Allow followers to perform the hug-crush action on other followers.";
             const char* T3 = "Allow followers to perform the hug-crush action on friendly (not in combat) NPCs.";
-            const char* T4 = "Toggle whether the follower continues hugging someone after hug healing them to full HP.";
             const char* T5 = "Set the interval at which an attempt is made to do any of the following hug actions when hugging someone.";
             const char* T6 = "Set the chance to perform a hug heal action.";
             const char* T7 = "Set the chance to perform a hug crush action.";
-            const char* T8 = "Set the chance to perform a hug shrink action.";
+            const char* T8 = "Set the chance to perform a hug shrink action.\n"
+        					 "Note: When the player or another follower is being hugged by a follower the chance to shrink is capped to up to 15%";
+            const char* T9 = "Should the hugged actor be let go if they can't be shrunk any further.\nApplies only to Followers/Player. Others will be always let go.";
 
             if (ImGui::CollapsingHeader("Hugs",ImGuiTreeNodeFlags_None)) {
 
                 ImUtil::CheckBox("Enable Hugs", &Settings.Hugs.bEnableAction, T0);
-
                 {
                     ImGui::BeginDisabled(!Settings.Hugs.bEnableAction);
                     ImUtil::SliderF("Start Hugs Probability", &Settings.Hugs.fProbability, 1.0f, 100.0f, T1,"%.0f%%");
 
                     ImGui::Spacing();
 
-                    ImUtil::CheckBox("Allow Crushing Followers", &Settings.Hugs.bKillFollowers,T2);
-                    ImUtil::CheckBox("Allow Crushing Friendlies", &Settings.Hugs.bKillFriendlies,T3);
-                    ImUtil::CheckBox("Stop After Health Is Full", &Settings.Hugs.bStopAtFullHP, T4);
+                    ImUtil::CheckBox("Allow Crushing (Followers & Player)", &Settings.Hugs.bKillFollowersOrPlayer,T2);
+                    ImUtil::CheckBox("Allow Crushing (Friendly NPCs)", &Settings.Hugs.bKillFriendlies,T3);
+                    ImUtil::CheckBox("Stop When Too Small (Followers & Player)", &Settings.Hugs.bStopIfCantShrink, T9);
 
                     ImGui::Spacing();
 
@@ -243,12 +243,6 @@ namespace GTS {
                              "Note: The chance to perform the crush is internally increased based on growth.\n"
                              "If you want the follower to grow often and only crush after a while, keep this value low.";
 
-            const char* T6 = "Cap the scale which followers should grow up to.\n"
-                             "Note: This doesn't guarantee that the follower will grow to this scale,\n"
-                             "it just prevents them from growing any larger. If the follower\n"
-                             "grows to this scale, the next time the interval timer ticks,\n"
-                             "they will perform a crush action.";
-
             if (ImGui::CollapsingHeader("Butt Crush",ImGuiTreeNodeFlags_None)) {
 
                 ImUtil::CheckBox("Enable Butt Crush", &Settings.ButtCrush.bEnableAction, T0);
@@ -264,20 +258,6 @@ namespace GTS {
                     ImUtil::SliderF("Targeted Action Interval",&Settings.ButtCrush.fInterval, 1.0f, 10.0f, T3, "Every %.1f Second(s)");
                     ImUtil::SliderF("Chance To Grow",&Settings.ButtCrush.fGrowProb, 0.0f, 100.0f, T4, "%.0f%%");
                     ImUtil::SliderF("Chance To Crush",&Settings.ButtCrush.fCrushProb, 0.0f, 100.0f, T5, "%.0f%%");
-
-                    ImGui::Spacing();
-
-                    {
-                        const float Max = 51.0f;
-                        float* Scale = &Settings.ButtCrush.fGrowUntilScale;
-                        const bool ShouldBeInf = *Scale > Max - 1.0f;
-
-                        if (ShouldBeInf)
-                            *Scale = 10000.0f;
-
-                        //Config::GetGameplay().ActionSettings.fStartButtCrushScale
-                        ImUtil::SliderF("Grow Scale Cap", Scale, 2.0f + 0.1f, Max, T6, ShouldBeInf ? "Infinite" : "%.1fx");
-                    }
 
                     ImGui::EndDisabled();
                 }

@@ -245,7 +245,6 @@ namespace GTS {
 				else {
 					Do_LightStomp(a_Performer, a_Prey);
 				}
-				return;
 			}
 			default: {}
 		}
@@ -275,7 +274,6 @@ namespace GTS {
 				else {
 					Do_HeavyKick(a_Performer);
 				}
-				return;
 			}
 			default: {}
 		}

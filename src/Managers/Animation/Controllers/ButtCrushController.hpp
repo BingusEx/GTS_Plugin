@@ -11,7 +11,7 @@ namespace GTS {
 			static void ButtCrush_OnCooldownMessage(Actor* giant);
 			std::vector<Actor*> GetButtCrushTargets(Actor* pred, std::size_t numberOfPrey);
 			bool CanButtCrush(Actor* pred, Actor* prey);
-			static void StartButtCrush(Actor* pred, Actor* prey);	
+			static void StartButtCrush(Actor* pred, Actor* prey, bool dochecks = true);
 
 			void AllowMessage(bool allow);
 		private:

@@ -212,8 +212,11 @@ namespace GTS {
                 const char* T1 = "Toggle whether non lethal hug actions\n"
                                  "like Hug-Heal or Hug-Shrink should start combat.";
 
-                ImUtil::CheckBox("Non Lethal Hugs Are Hostile", &Settings.ActionSettings.bNonLethalHugsHostile, T1);
+                const char* T2 = "Toggle whether after hug healing to full HP\n"
+								 "The held actor should be let go.";
 
+                ImUtil::CheckBox("Non Lethal Hugs Are Hostile", &Settings.ActionSettings.bNonLethalHugsHostile, T1);
+                ImUtil::CheckBox("Hug Heal Stops At Full HP (Player & Followers)", &Settings.ActionSettings.bHugsStopAtFullHP, T2);
                 ImGui::Spacing();
             }
         }

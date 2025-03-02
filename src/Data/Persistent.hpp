@@ -94,7 +94,7 @@ namespace GTS {
 			BasicRecord<float, 'GTSL'> GTSGlobalSizeLimit = 1.0f;
 			BasicRecord<float, 'GMBS'> GTSMassBasedSize = 0.0f;
 
-			//TODO
+			//TODO Move Quest data to basic record
 
 			// ---- Quest Progression
 			//BasicRecord<float, 'QHSR'> HugStealCount = 0.0f;

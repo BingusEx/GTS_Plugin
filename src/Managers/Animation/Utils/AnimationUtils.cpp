@@ -437,7 +437,8 @@ namespace GTS {
 
 		if (IsFemale(tiny)) {
 			AnimationManager::StartAnim("Huggies_Heal_Victim_F", tiny);
-		} else {
+		}
+		else {
 			AnimationManager::StartAnim("Huggies_Heal_Victim_M", tiny);
 		}
 	}

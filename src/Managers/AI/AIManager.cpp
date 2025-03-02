@@ -1,9 +1,12 @@
 #include "Managers/AI/AIManager.hpp"
 
+#include "Hug/HugAI.hpp"
+
 #include "Managers/AI/Vore/VoreAI.hpp"
-#include "Managers/AI/StompKick/StompKickSwipeAI.hpp"
 #include "Managers/AI/Thigh/ThighCrushAI.hpp"
+#include "Managers/AI/ButtCrush/ButtCrushAI.hpp"
 #include "Managers/AI/Thigh/ThighSandwichAI.hpp"
+#include "Managers/AI/StompKick/StompKickSwipeAI.hpp"
 
 using namespace GTS;
 
@@ -158,7 +161,6 @@ namespace {
 			return ActionType::kNone;
 		}
 	}
-
 }
 
 namespace GTS {
@@ -256,10 +258,19 @@ namespace GTS {
 			}
 		}
 
+		//----------- BUTT CRUSH
+
+		if (AISettings.ButtCrush.bEnableAction) {
+			CanButtCrush = ButtCrushAI_FilterList(a_Performer, PreyList);
+			if (!CanButtCrush.empty()) {
+				StartableActions.emplace(ActionType::kButt, static_cast<int>(AISettings.ThighCrush.fProbability));
+			}
+		}
+
 		//----------- HUGS
 
 		if (AISettings.Hugs.bEnableAction) {
-			//CanHug;
+			CanHug = HugAI_FilterList(a_Performer, PreyList);
 			if (!CanHug.empty()) {
 				StartableActions.emplace(ActionType::kHug, static_cast<int>(AISettings.Hugs.fProbability));
 			}
@@ -325,10 +336,20 @@ namespace GTS {
 			}
 			case ActionType::kButt: {
 				logger::trace("AI Starting kButt Action");
+
+				if (!CanButtCrush.empty()) {
+					ButtCrushAI_Start(a_Performer, CanButtCrush.front());
+				}
+
 				return;
 			}
 			case ActionType::kHug: {
 				logger::trace("AI Starting kHug Action");
+
+				if (!CanHug.empty()) {
+					HugAI_Start(a_Performer, CanHug.front());
+				}
+
 				return;
 			}
 			case ActionType::kGrab: {
@@ -354,80 +375,5 @@ namespace GTS {
 		this->AIDataMap.try_emplace(a_Actor->formID, a_Actor);
 		return this->AIDataMap.at(a_Actor->formID);
 	}
-
-
-	/////////// ------------------ ACTION SELECTION
-
-
-
-	//void AI_SelectActionToPlay(Actor* pred, Actor* prey, int rng, int butt_rng, int action_rng) {
-	//	if (!IsGtsBusy(pred)) {
-	//		if (rng <= 2 && butt_rng <= 2) {
-	//			AI_ButtCrush(pred, prey);
-	//		}
-	//		else if (rng <= 3) {
-	//			AI_StrongStomp(pred, prey, action_rng);
-	//		}
-	//		else if (rng <= 6) {
-	//			AI_LightStomp(pred, prey, action_rng);
-	//		}
-	//		else if (rng <= 8) {
-	//			AI_Kicks(pred, action_rng);
-	//		}
-	//		else if (rng <= 9) {
-	//			AI_Tramples(pred, action_rng);
-	//		}
-	//	}
-	//}
-
-
-	//void AI_TryAction(Actor* actor) {
-	//	float scale = std::clamp(get_visual_scale(actor), 1.0f, 6.0f);
-	//	if (GetAV(actor, ActorValue::kHealth) < 0) {
-	//		log::info("Action: {} Health is < 0", actor->GetDisplayFullName());
-	//		return;
-	//	}
-
-	//	if (!AnyActionEnabled()) {
-	//		AttackManager::PreventAttacks(actor, nullptr); // Toggle ON vanilla attacks
-	//	}
-
-	//	if (!IsGtsBusy(actor)) {
-	//		int rng = RandomInt(0, 100);
-	//		if (rng > 7 && rng < 33 * scale) {
-	//			AI_DoStomp_Kick_ButtCrush(actor);
-	//		}
-	//		else if (rng > 3 && rng < 7) {
-	//			AI_DoSandwich(actor);
-	//		}
-	//		else if (rng <= 3) {
-	//			int HugsOrThigh = RandomInt(0, 10);
-	//			if (HugsOrThigh > 5) {
-	//				AI_DoHugs(actor);
-	//			}
-	//			else {
-	//				AI_DoThighCrush(actor);
-	//			}
-	//		}
-	//	}
-	//	// Random Vore is managed inside Vore.cpp, RandomVoreAttempt(Actor* pred) function
-	//}
-
-	//void AI_DoStomp_Kick_ButtCrush(Actor* pred) {
-	//	int rng = RandomInt(0, 10);
-	//	int butt_rng = RandomInt(0, 10);
-	//	int action_rng = RandomInt(0, 10);
-	//	std::size_t amount = 6;
-	//	std::vector<Actor*> preys = AIManager::GetSingleton().RandomStomp(pred, amount);
-	//	for (auto prey : preys) {
-	//		AI_SelectActionToPlay(pred, prey, rng, butt_rng, action_rng);
-	//		AttackManager::PreventAttacks(pred, prey);
-	//	}
-
-	//	if (preys.empty()) {
-	//		AttackManager::PreventAttacks(pred, nullptr); // Toggle Vanilla Attacks back
-	//	}
-	//}
-
 
 }

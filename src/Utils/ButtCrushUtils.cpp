@@ -30,6 +30,7 @@ namespace GTS {
 		if (Runtime::HasPerkTeam(actor, "ButtCrush_LoomingDoom")) {
 			limit += 5.0f;
 		}
+
 		return limit;
 	}
 

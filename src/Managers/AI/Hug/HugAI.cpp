@@ -1,155 +1,332 @@
-/*
+#include "Managers/AI/Hug/HugAI.hpp"
 
-void RecordSneakingState(Actor* giant, Actor* tiny) {
-	bool Crawling = IsCrawling(giant);
-	bool Sneaking = giant->IsSneaking();
+#include "Config/Config.hpp"
 
-	tiny->SetGraphVariableBool("GTS_Hug_Sneak_Tny", Sneaking); // Is Sneaking?
-	tiny->SetGraphVariableBool("GTS_Hug_Crawl_Tny", Crawling); // Is Crawling?
-}
+#include "Managers/AttackManager.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/HugShrink.hpp"
+#include "Managers/Animation/Controllers/HugController.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
 
-void AI_DoHugs(Actor* pred) {
-	if (Persistent::GetSingleton().Hugs_Ai) {
-		int rng = RandomInt(0, 7);
-		if (rng >= 2) {
-			if (CanDoPaired(pred) && !IsSynced(pred) && !IsTransferingTiny(pred)) {
-				auto& hugs = HugAnimationController::GetSingleton();
-				std::vector<Actor*> preys = hugs.GetHugTargetsInFront(pred, 1);
-				for (auto prey : preys) {
-					// ^ If Size > 0.92 (minimum) && Size < 2.5 + perk bonus (maximum) threshold basically
-					AI_StartHugs(pred, prey);
+using namespace GTS;
 
-					AttackManager::PreventAttacks(pred, prey);
-				}
+namespace {
 
-				if (preys.empty()) {
-					AttackManager::PreventAttacks(pred, nullptr); // Toggle Vanilla Attacks back
-				}
+	constexpr float MINIMUM_HUG_DISTANCE = 110.0f;
+	constexpr float GRAB_ANGLE = 70.0f;
+	constexpr float PI = std::numbers::pi_v<float>;
+
+	void RecordSneakingState(Actor* a_Performer, Actor* a_Prey) {
+		bool Crawling = IsCrawling(a_Performer);
+		bool Sneaking = a_Performer->IsSneaking();
+
+		a_Prey->SetGraphVariableBool("GTS_Hug_Sneak_Tny", Sneaking); // Is Sneaking?
+		a_Prey->SetGraphVariableBool("GTS_Hug_Crawl_Tny", Crawling); // Is Crawling?
+	}
+
+	bool ActorStateCheck(Actor* a_Actor) {
+		bool Jumping = IsJumping(a_Actor);
+		bool Ragdolled = IsRagdolled(a_Actor);
+		bool Busy = IsGtsBusy(a_Actor);
+		return Jumping || Ragdolled || Busy;
+	}
+
+	bool CanHug(Actor* a_Performer, Actor* a_Prey) {
+
+		if (a_Performer == a_Prey) {
+			return false;
+		}
+
+		if (a_Prey->IsDead()) {
+			return false;
+		}
+
+		if (IsTransitioning(a_Performer) || IsBeingHeld(a_Performer, a_Prey)) {
+			return false;
+		}
+
+		if (ActorStateCheck(a_Performer) || ActorStateCheck(a_Prey)) {
+			return false;
+		}
+
+		const float PredatorScale = get_visual_scale(a_Performer);
+		// No need to check for BB scale in this case
+
+		float SizeDifference = GetSizeDifference(a_Performer, a_Prey, SizeType::VisualScale, false, true);
+
+
+		float MinDist = MINIMUM_HUG_DISTANCE;
+		constexpr float MinScale = Action_Hug;
+
+		if (a_Performer->IsSneaking()) {
+			if (IsCrawling(a_Performer)) {
+				MinDist *= 2.35f;
+			}
+			else {
+				MinDist *= 1.6f;
 			}
 		}
-	}
-}
 
-void AI_StartHugs(Actor* pred, Actor* prey) {
-	auto& hugging = HugAnimationController::GetSingleton();
-	auto& persist = Persistent::GetSingleton();
-	if (!pred->IsInCombat() && persist.vore_combatonly) {
-		return;
-	}
-	if (prey->formID != 0x14 && !IsHostile(pred, prey) && !IsTeammate(pred)) {
-		return;
-	}
-	if (prey->formID == 0x14 && !persist.vore_allowplayervore) {
-		return;
-	}
+		const float PreyDistance = (a_Performer->GetPosition() - a_Prey->GetPosition()).Length();
 
-	RecordSneakingState(pred, prey); // Needed to determine which hugs to play: sneak or crawl ones (when sneaking)
+		if (PreyDistance <= MinDist * PredatorScale) {
 
-	HugShrink::GetSingleton().HugActor(pred, prey);
+			if (SizeDifference > MinScale) {
 
-	AnimationManager::StartAnim("Huggies_Try", pred);
-
-	if (pred->IsSneaking()) {
-		AnimationManager::StartAnim("Huggies_Try_Victim_S", prey); // GTSBEH_HugAbsorbStart_Sneak_V
-	}
-	else {
-		AnimationManager::StartAnim("Huggies_Try_Victim", prey); //   GTSBEH_HugAbsorbStart_V
-	}
-
-	AI_StartHugsTask(pred, prey);
-	DisarmActor(prey, false);
-}
-
-void AI_StartHugsTask(Actor* giant, Actor* tiny) {
-	std::string name = std::format("Huggies_Forced_{}", giant->formID);
-	ActorHandle gianthandle = giant->CreateRefHandle();
-	ActorHandle tinyhandle = tiny->CreateRefHandle();
-	static Timer ActionTimer = Timer(2.5);
-	TaskManager::Run(name, [=](auto& progressData) {
-		if (!gianthandle) {
-			return false;
-		}
-		if (!tinyhandle) {
-			return false;
-		}
-		auto giantref = gianthandle.get().get();
-		auto tinyref = tinyhandle.get().get();
-
-		bool AllyHugged;
-		bool IsDead = (tinyref->IsDead() || giantref->IsDead());
-		tinyref->GetGraphVariableBool("GTS_IsFollower", AllyHugged);
-
-		if (!HugShrink::GetHuggiesActor(giantref)) {
-			if (!AllyHugged && tinyref->formID != 0x14) {
-				PushActorAway(giantref, tinyref, 1.0f);
-			}
-			return false;
-		}
-		if (ActionTimer.ShouldRunFrame()) {
-			int rng = RandomInt(0, 20);
-			if (rng < 12) {
-				if (!Runtime::HasPerkTeam(giantref, "HugCrush_LovingEmbrace")) {
-					rng = 1; // always force crush and always shrink
+				if (a_Prey->formID != 0x14 && !CanPerformAnimationOn(a_Performer, a_Prey, true)) {
+					return false;
 				}
 
-				if (AI_CanHugCrush(giantref, tinyref, rng)) {
-					AnimationManager::StartAnim("Huggies_HugCrush", giantref);
-					AnimationManager::StartAnim("Huggies_HugCrush_Victim", tinyref);
+				if (!IsHuman(a_Prey)) { // Allow hugs with humanoids only
+					return false;
 				}
-				else {
-					log::info("HealOrShrink");
-					AI_HealOrShrink(giant, tiny, rng);
-				}
+
+				return SizeDifference <= GetHugShrinkThreshold(a_Performer);
 			}
 		}
-		if (IsDead) {
-			return false;
-		}
-		return true;
+		return false;
+	}
+
+	//--------------
+	// HUG TASK
+	//--------------
+
+	bool HugAI_CanHugCrush(Actor* a_Performer, Actor* a_Prey) {
+
+		const float HealthPercentage = GetHealthPercentage(a_Prey);
+		const float StaminaPercentage = GetStaminaPercentage(a_Performer);
+		const float HPCrushThreshold = GetHugCrushThreshold(a_Performer, a_Prey, true);
+		const bool HasLowHP = HealthPercentage <= HPCrushThreshold;
+		const bool StaminaCheck = Runtime::HasPerkTeam(a_Performer, "HugCrush_MightyCuddles") && StaminaPercentage >= 0.75f;
+		const auto& Settings = Config::GetAI().Hugs;
+		const bool Teammate = IsTeammate(a_Prey) || a_Prey->formID == 0x14;
+		const bool Hostile = IsHostile(a_Performer, a_Prey) || IsHostile(a_Prey, a_Performer);
+		const bool CanStartCrush = Config::GetAI().Hugs.fKillProb > 0.01f;
+
+		const bool Killable =
+			(Settings.bKillFollowersOrPlayer && Teammate) || //Teammate/Player Check
+			((Settings.bKillFriendlies || Hostile) && !Teammate); //If Kill Friendly is enabled or Tiny is hostile And Not a teammate Allow
+
+		return (HasLowHP || StaminaCheck) && Killable && CanStartCrush;
+	}
+
+
+	bool HugAI_CanShrink(Actor* a_Performer, Actor* a_Prey) {
+		const float SizeDiff = GetSizeDifference(a_Performer, a_Prey, SizeType::TargetScale, false, true);
+		const bool TooSmall = SizeDiff >= GetHugShrinkThreshold(a_Performer);
+		const bool CanStartShrink = Config::GetAI().Hugs.fShrinkProb > 0.01f;
+
+		return !TooSmall && CanStartShrink;
+	}
+
+	bool HugAI_CanHeal(Actor* a_Performer, Actor* a_Prey) {
+		const bool Teammate = IsTeammate(a_Performer) && (IsTeammate(a_Prey) || a_Prey->formID == 0x14);
+		const bool HasPerk = Runtime::HasPerkTeam(a_Performer, "HugCrush_LovingEmbrace");
+		const bool Hostile = IsHostile(a_Performer, a_Prey) || IsHostile(a_Prey, a_Performer);
+		const bool CanStartHeal = Config::GetAI().Hugs.fHealProb > 0.01f;
+		
+		return HasPerk && !Hostile && Teammate && CanStartHeal;
+	}
+
+	bool HugAI_ShouldStop(Actor* a_Performer, Actor* a_Prey) {
+		const bool Teammate = IsTeammate(a_Performer) && (IsTeammate(a_Prey) || a_Prey->formID == 0x14);
+		const bool CanCrush = HugAI_CanHugCrush(a_Performer, a_Prey);
+		const bool CanHeal = HugAI_CanHeal(a_Performer, a_Prey);
+		const bool CanShrink = HugAI_CanShrink(a_Performer, a_Prey) || (!Config::GetAI().Hugs.bStopIfCantShrink && Teammate);
+
+		return !(CanCrush || CanHeal || CanShrink);
+	}
+
+	void HugAI_StartLogicTask(Actor* a_Performer, Actor* a_Prey) {
+
+		const std::string TaskName = std::format("HugAI_{}", a_Performer->formID);
+		const ActorHandle PerformerHandle = a_Performer->CreateRefHandle();
+		const ActorHandle PreyHandle = a_Prey->CreateRefHandle();
+
+		TaskManager::Run(TaskName, [=](auto& progressData) {
+
+			const auto& Settings = Config::GetAI().Hugs;
+
+			if (!PerformerHandle || !PreyHandle) {
+				return false;
+			}
+
+			Actor* PerformerActor = PerformerHandle.get().get();
+			Actor* PreyActor = PreyHandle.get().get();
+
+			if (!PerformerActor || !PreyActor) {
+				return false;
+			}
+
+			const auto& TransientData = Transient::GetSingleton().GetData(PerformerActor);
+			if (!TransientData) {
+				return false;
+			}
+			TransientData->ActionTimer.UpdateDelta(Config::GetAI().Hugs.fInterval);
+
+			const bool IsDead = PreyActor->IsDead() || PerformerActor->IsDead();
+			const bool IsBusy = IsHugCrushing(PerformerActor) || IsHugHealing(PerformerActor);
+			const bool GentleAnim = IsTeammate(PreyActor) || PreyActor->formID == 0x14;
+
+			if (!HugShrink::GetHuggiesActor(PerformerActor) || !IsHugging(PerformerActor)) {
+				if (!GentleAnim) {
+					PushActorAway(PerformerActor, PreyActor, 1.0f);
+				}
+				return false;
+			}
+
+			//Should we stop? Means we can't do any other actions on the Tiny
+			const bool ShouldStop = HugAI_ShouldStop(PerformerActor, PreyActor);
+
+			if (TransientData->ActionTimer.ShouldRun() && !IsBusy && !IsDead && !ShouldStop) {
+
+				UpdateFriendlyHugs(PerformerActor, PreyActor, !GentleAnim);
+				const bool Teammate = (IsTeammate(PerformerActor) && (IsTeammate(PreyActor) || PreyActor->formID == 0x14));
+				//Reduce if folllower or player
+
+				const float ShrinkProbability = Teammate ? clamp(Settings.fShrinkProb, 0.0f, 0.15f) : Settings.fShrinkProb;
+				const int SelectedAction = RandomIntWeighted({
+					HugAI_CanHeal(PerformerActor,PreyActor) ? static_cast<int>(Settings.fHealProb) : 0,
+					HugAI_CanShrink(PerformerActor,PreyActor) ? static_cast<int>(ShrinkProbability) : 0,
+					HugAI_CanHugCrush(PerformerActor,PreyActor) ? static_cast<int>(Settings.fKillProb) : 0,
+					100 //Base Chance to do nothing
+				});
+
+
+				switch (SelectedAction) {
+					case 0:{ //HEAL
+						StartHealingAnimation(PerformerActor, PreyActor);
+						break;
+					}
+
+					case 1:{ //SHRINK
+						AnimationManager::StartAnim("Huggies_Shrink", PerformerActor);
+						AnimationManager::StartAnim("Huggies_Shrink_Victim", PreyActor);
+						break;
+					}
+
+					case 2:{ //CRUSH
+						AnimationManager::StartAnim("Huggies_HugCrush", PerformerActor);
+						AnimationManager::StartAnim("Huggies_HugCrush_Victim", PreyActor);
+						break;
+					}
+
+					default: {}
+				}
+
+			}
+
+			if (ShouldStop) {
+				UpdateFriendlyHugs(PerformerActor, PreyActor, !GentleAnim);
+				AbortHugAnimation(PerformerActor, PreyActor);
+			}
+
+			if (IsDead) {
+				return false;
+			}
+
+			return true;
 		});
+	}
+
 }
 
-bool AI_CanHugCrush(Actor* giant, Actor* tiny, int rng) {
-	int crush_rng = RandomInt(0, 4);
+namespace GTS {
 
-	float health = GetHealthPercentage(tiny);
-	float HpThreshold = GetHugCrushThreshold(giant, tiny, true);
+	std::vector<Actor*> HugAI_FilterList(Actor* a_Performer, const std::vector<Actor*>& a_PotentialPrey) {
+		// Get vore target for actor
 
-	bool low_hp = (health <= HpThreshold);
-	bool allow_perform = (tiny->formID != 0x14 && IsHostile(giant, tiny)) || (rng <= 1);
-	bool Can_HugCrush = (low_hp && allow_perform);
+		if (!a_Performer) {
+			return {};
+		}
 
-	float stamina = GetStaminaPercentage(giant);
-	bool Can_Force = Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles") && IsHostile(giant, tiny);
+		if (IsGtsBusy(a_Performer)) {
+			return {};
+		}
 
-	if (Can_Force && crush_rng <= 1 && stamina >= 0.75f) {
-		return true;
+		if (!CanDoPaired(a_Performer) && !IsSynced(a_Performer) && !IsTransferingTiny(a_Performer)) {
+			return {};
+		}
+
+		const auto CharacterController = a_Performer->GetCharController();
+		if (!CharacterController) {
+			return {};
+		}
+
+		const NiPoint3 PredPos = a_Performer->GetPosition();
+
+		auto PreyList = a_PotentialPrey;
+
+		// Sort prey by distance
+		ranges::sort(PreyList,[PredPos](const Actor* a_PreyA, const Actor* a_PreyB) -> bool {
+			float DistToA = (a_PreyA->GetPosition() - PredPos).Length();
+			float DistToB = (a_PreyB->GetPosition() - PredPos).Length();
+			return DistToA < DistToB;
+		});
+
+		// Filter out invalid targets
+		std::erase_if(PreyList, [a_Performer](auto idxPrey) {
+			return !CanHug(a_Performer, idxPrey);
+		});
+
+		// Filter out actors not in front
+		const auto ActorAngle = a_Performer->data.angle.z;
+		constexpr NiPoint3 FWDVector{ 0.f, 1.f, 0.f };
+		const NiPoint3 ActorForward = RotateAngleAxis(FWDVector, -ActorAngle, { 0.f, 0.f, 1.f });
+
+		NiPoint3 PredDirection = ActorForward;
+		PredDirection = PredDirection / PredDirection.Length();
+		std::erase_if(PreyList, [PredPos, PredDirection](auto idxPrey) {
+			NiPoint3 PreyDirection = idxPrey->GetPosition() - PredPos;
+			if (PreyDirection.Length() <= 1e-4) {
+				return false;
+			}
+			PreyDirection = PreyDirection / PreyDirection.Length();
+			const float CosineTheta = PredDirection.Dot(PreyDirection);
+			return CosineTheta <= 0; // 180 degress
+		});
+
+		// Filter out actors not in a truncated cone
+		// \      x   /
+		//  \  x     /
+		//   \______/  <- Truncated cone
+		//   | pred |  <- Based on width of pred
+		//   |______|
+
+		const float PredConeWidth = 70 * get_visual_scale(a_Performer);
+		const float ShiftAmount = fabs((PredConeWidth / 2.0f) / tan(GRAB_ANGLE / 2.0f));
+
+		NiPoint3 ConeStart = PredPos - PredDirection * ShiftAmount;
+		std::erase_if(PreyList, [ConeStart, PredConeWidth, PredDirection](auto idxPrey) {
+			NiPoint3 PreyDirection = idxPrey->GetPosition() - ConeStart;
+			if (PreyDirection.Length() <= PredConeWidth * 0.4f) {
+				return false;
+			}
+			PreyDirection = PreyDirection / PreyDirection.Length();
+			const float CosineTheta = PredDirection.Dot(PreyDirection);
+			return CosineTheta <= cos(GRAB_ANGLE * PI / 180.0f);
+		});
+
+
+		return PreyList;
 	}
-	if (Can_HugCrush) {
-		return true;
-	}
-	return false;
-}
 
-void AI_HealOrShrink(Actor* giant, Actor* tiny, int rng) {
-	bool hostile = IsHostile(giant, tiny);
-	bool IsCrushing = IsHugCrushing(giant);
+	void HugAI_Start(Actor* a_Performer, Actor* a_Prey) {
 
-	if (!IsCrushing && (hostile || rng <= 1)) { // chance to get drained by follower, it is always 1 without Loving Embrace perk
+		RecordSneakingState(a_Performer, a_Prey); // Needed to determine which hugs to play: sneak or crawl ones (when sneaking)
+		HugShrink::HugActor(a_Performer, a_Prey);
 
-		float sizedifference = GetSizeDifference(giant, tiny, SizeType::TargetScale, false, true);
-		if (!IsHugHealing(giant) && sizedifference >= GetHugShrinkThreshold(giant)) {
-			AbortHugAnimation(giant, tiny); // Cancel anim if below shrink threshold
-			log::info("Sizediff is > threshold, aborting");
+		AnimationManager::StartAnim("Huggies_Try", a_Performer);
+
+		if (a_Performer->IsSneaking()) {
+			AnimationManager::StartAnim("Huggies_Try_Victim_S", a_Prey); // GTSBEH_HugAbsorbStart_Sneak_V
 		}
 		else {
-			AnimationManager::StartAnim("Huggies_Shrink", giant);
-			AnimationManager::StartAnim("Huggies_Shrink_Victim", tiny);
+			AnimationManager::StartAnim("Huggies_Try_Victim", a_Prey); //   GTSBEH_HugAbsorbStart_V
 		}
-	}
-	else { // else heal
-		StartHealingAnimation(giant, tiny);
+
+		DisarmActor(a_Prey, false);
+		HugAI_StartLogicTask(a_Performer, a_Prey);
 	}
 }
 
-*/

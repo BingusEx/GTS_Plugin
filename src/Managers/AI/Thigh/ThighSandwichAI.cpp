@@ -1,7 +1,5 @@
 #include "Managers/AI/Thigh/ThighSandwichAI.hpp"
 #include "Config/Config.hpp"
-#include "Managers/AttackManager.hpp"
-#include "Managers/HighHeel.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Controllers/ThighSandwichController.hpp"
 
@@ -154,8 +152,7 @@ namespace GTS {
 
 	void ThighSandwichAI_Start(Actor* a_Performer, const std::vector<Actor*>& a_PreyList) {
 		for (const auto& prey : a_PreyList) {
-
-			ThighSandwichController::StartSandwiching(a_Performer, prey);
+			ThighSandwichController::StartSandwiching(a_Performer, prey, false);
 			auto node = find_node(a_Performer, "GiantessRune", false);
 			if (node) {
 				node->local.scale = 0.01f;

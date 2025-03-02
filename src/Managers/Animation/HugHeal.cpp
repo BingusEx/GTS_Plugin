@@ -55,11 +55,18 @@ namespace {
 		}
 
 		if (!Healing && hp >= maxhp) {
+
+			if ((IsTeammate(giantref) && IsTeammate(tinyref) || tinyref->formID == 0x14) && !Config::GetGameplay().ActionSettings.bHugsStopAtFullHP) {
+				return true;
+			}
+
 			AbortHugAnimation(giantref, tinyref);
+
 			if (giantref->formID == 0x14) {
 				Notify("{} health is full", tinyref->GetDisplayFullName());
 			}
 			return false;
+
 		} 
 
 		if (giantref->formID == 0x14) {

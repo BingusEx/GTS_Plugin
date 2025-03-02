@@ -292,11 +292,13 @@ namespace GTS {
 		}
 	}
 
-	void ButtCrushController::StartButtCrush(Actor* pred, Actor* prey) {
+	void ButtCrushController::StartButtCrush(Actor* pred, Actor* prey, const bool dochecks) {
 		auto& buttcrush = ButtCrushController::GetSingleton();
-		
-		if (!buttcrush.CanButtCrush(pred, prey)) {
-			return;
+
+		if (dochecks) {
+			if (!buttcrush.CanButtCrush(pred, prey)) {
+				return;
+			}
 		}
 
 		if (CanDoButtCrush(pred, false) && !IsBeingHeld(pred, prey)) {
@@ -317,6 +319,7 @@ namespace GTS {
 			ActorHandle giantHandle = pred->CreateRefHandle();
 			std::string taskname = std::format("ButtCrushMagicka_{}", pred->formID);
 			TaskManager::RunOnce(taskname, [=](auto& update){
+
 				if (!giantHandle) {
 					return;
 				}
@@ -325,10 +328,10 @@ namespace GTS {
 				DamageAV(giantref, ActorValue::kMagicka, 180 * GetButtCrushCost(giantref, true));
 				DamageAV(giantref, ActorValue::kStamina, WasteStamina);
 			});
-			
 
 			AnimationManager::StartAnim("ButtCrush_Start", pred);
-		} else {
+		}
+		else {
 			ButtCrush_OnCooldownMessage(pred);
 		}
 	}

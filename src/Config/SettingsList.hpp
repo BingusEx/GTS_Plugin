@@ -128,6 +128,7 @@ struct GameplayActionSettings {
 
     //Hug Settings
     bool bNonLethalHugsHostile = true;
+    bool bHugsStopAtFullHP = true;
 
     // Cleavage offset for forward/back and up/down adjustments
     std::array<float, 2> f2CleavageOffset = { 0.0f, 0.0f };
@@ -175,9 +176,9 @@ struct AIHugAction {
     float fProbability = 50.0f;
 
     // Conditions
-    bool bStopAtFullHP = true;
+    bool bStopIfCantShrink = true;
     bool bKillFriendlies = true;
-    bool bKillFollowers = false;
+    bool bKillFollowersOrPlayer = false;
     
     // Outcome probabilities
     float fHealProb = 50.0f;
@@ -209,7 +210,6 @@ struct AIButtAction {
 
     // Timing and limit
     float fInterval = 2.0f;
-    float fGrowUntilScale = 30.0f;
 };
 TOML_SERIALIZABLE(AIButtAction);
 
