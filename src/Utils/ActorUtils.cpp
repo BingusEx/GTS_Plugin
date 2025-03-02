@@ -1424,7 +1424,7 @@ namespace GTS {
 
 	float GetHighHeelsBonusDamage(Actor* actor, bool multiply, float adjust) {
 		auto profiler = Profilers::Profile("ActorUtils: GetHHBonusDamage");
-		float value = 0.0f;
+		float value;
 		float hh = 0.0f;
 
 		if (actor) {
@@ -2009,9 +2009,8 @@ namespace GTS {
 			auto attributes = Persistent::GetSingleton().GetData(giant);
 			if (attributes) {
 				attributes->stolen_attributes += value;
-				if (attributes->stolen_attributes <= 0.0f) {
-					attributes->stolen_attributes = 0.0f; // Cap it just in case
-				}
+				//Cap it just in case
+				attributes->stolen_attributes = std::max(attributes->stolen_attributes, 0.0f);
 			}
 		}
 	}
@@ -2020,13 +2019,13 @@ namespace GTS {
 		if (giant->formID == 0x14) {
 			auto Persistent = Persistent::GetSingleton().GetData(giant);
 			if (Persistent) {
-				
-				float modifier = Config::GetGameplay().fSizeConvLevelCap;
 
+				const uint16_t Level = giant->GetLevel();
+				const float modifier = Config::GetGameplay().fSizeConvLevelCap;
 				float& health = Persistent->stolen_health;
 				float& magick = Persistent->stolen_magick;
 				float& stamin = Persistent->stolen_stamin;
-				float limit = 2.0f * giant->GetLevel() * modifier;
+				const float limit = static_cast<float>(Level) * modifier * 2.0f;
 				if (type == ActorValue::kHealth) {
 					health += value;
 					health = std::min(health, limit);

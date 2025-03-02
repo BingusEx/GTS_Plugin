@@ -9,7 +9,7 @@ using namespace GTS;
 
 namespace {
 
-    void BuffAttributes(Actor* giant, float tinyscale) {
+    void BuffAttributes(Actor* giant) {
 		if (giant) {
 			if (Runtime::HasPerk(giant, "SoulVorePerk")) { // Permamently increases random AV after eating someone
 				float TotalMod = 0.33f;
@@ -165,7 +165,7 @@ namespace GTS {
 
             VoreMessage_Absorbed(giant, tiny_name);
             AdjustSizeReserve(giant, size_gain);
-            BuffAttributes(giant, tinySize);
+            BuffAttributes(giant);
 
             if (giant->formID == 0x14) {
 				SurvivalMode_AdjustHunger(giant, tinySize * Box_Scale * multiplier, WasLiving, true);

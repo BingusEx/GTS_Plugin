@@ -1,4 +1,4 @@
-[sounds]
+[SNDR] # Sound Descriptors ------------------------------------------------------------------------------------------------------------------------------------
 
 lFootstep = "GTS.esp|1E93AB"
 lJumpLand = "GTS.esp|183F43"
@@ -85,7 +85,7 @@ NormalLand_x48 = "GTS.esp|61588B"
 NormalLand_x96 = "GTS.esp|61588C"
 NormalLand_Mega = "GTS.esp|61588D"
 
-[spellEffects]
+[MGEF] # Magic Effects ------------------------------------------------------------------------------------------------------------------------------------
 TinyCalamity = "GTS.esp|1A2568"
 
 # Explosive
@@ -174,7 +174,9 @@ AlchResistShrink = "GTS.esp|89D949"
 FakeCrushEffect = "GTS.esp|271EF9"
 HealthBoost = "GTS.esp|518645"
 
-[spells]
+[SPEL] # Spells ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 GtsVoreFearSpell = "GTS.esp|026D15"
 SmallMassiveThreatSpell = "GTS.esp|1A2566"
 CrushGrowthSpell = "GTS.esp|2028B7"
@@ -198,7 +200,7 @@ ShrinkStorm = "GTS.esp|3C527A"
 ShrinkBolt = "GTS.esp|3C5276"
 gtsProtectTiniesSpell = "GTS.esp|763ACF"
 
-# Survival
+#---------- Survival Mode
 Survival_HungerStage0 = "ccQDRSSE001-SurvivalMode.esl|000876"
 Survival_HungerStage1 = "ccQDRSSE001-SurvivalMode.esl|00087E"
 Survival_HungerStage2 = "ccQDRSSE001-SurvivalMode.esl|000880"
@@ -206,7 +208,9 @@ Survival_HungerStage3 = "ccQDRSSE001-SurvivalMode.esl|000881"
 Survival_HungerStage4 = "ccQDRSSE001-SurvivalMode.esl|000886"
 Survival_HungerStage5 = "ccQDRSSE001-SurvivalMode.esl|000885"
 
-[perks]
+[PERK] # Perks ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 Acceleration = "GTS.esp|87F342"
 AdditionalGrowth = "GTS.esp|151518"
 BendLifeless = "GTS.esp|7913D9"
@@ -285,13 +289,16 @@ SizeManipulation = "GTS.esp|128CF2"
 ExpandedGrowth = "GTS.esp|128CF3"
 TalkToActor = "GTS.esp|5F7265" #Used In Papyrus
 
-[explosions]
+[EXPL] # Explosions ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 BloodExplosion = "GTS.esp|01CE9D"
 BloodFX = "Dawnguard.esm|00E7B4"
 footstepExplosion = "GTS.esp|035C81"
 draugrexplosion = "GTS.esp|035C80"
 
-[globals]
+[GLOB] # Globals ------------------------------------------------------------------------------------------------------------------------------------
+
 PlayerSizeOverride = "GTS.esp|2028B5" #UNUSED
 FreeLookOnVore = "GTS.esp|281206" #UNUSED
 MultiplyGameModePC = "GTS.esp|47B72B" #UNUSED
@@ -378,15 +385,6 @@ HostileDamage = "GTS.esp|271EF2" #UNUSED
 bonusCarryWeightMultiplier = "GTS.esp|28B407" #UNUSED
 
 
-
-
-
-
-
-
-
-
-
 #---------- GTS Perk Tree
 OpenGTSSkillMenu = "GTS.esp|1421FF"
 GtsSkillLevel = "GTS.esp|142200"
@@ -409,14 +407,16 @@ Survival_HungerStage5Value = "ccQDRSSE001-SurvivalMode.esl|000805"
 # Toggle
 Survival_ModeEnabled = "ccQDRSSE001-SurvivalMode.esl|000826"
 
-[quests]
+
+
+[QUST] # Quests ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 MainQuest = "GTS.esp|005E3A"
 ManagerQuest = "GTS.esp|000D62"
 
 
-
-
-[factions]
+[FACT] # Factions ------------------------------------------------------------------------------------------------------------------------------------
 
 #---------- Base Game
 FollowerFaction = "Skyrim.esm|05C84E"
@@ -430,13 +430,17 @@ GtsWasEaten = "GTS.esp|4FF13C"
 #---------- Sexlab
 SexLabAnimatingFaction = "SexLab.esm|00E50F"
 
-[impacts]
+[IDPS] # Impacts ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 GtsBloodSprayImpactSet = "GTS.esp|01CEA7"
 GtsBloodSprayImpactSetVore = "GTS.esp|024578"
 GtsBloodSprayImpactSetVoreMedium = "GTS.esp|024579"
 GtsBloodSprayImpactSetVoreSmallest = "GTS.esp|02457A"
 
-[races]
+[RACE] # Races ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- Base Game
 dragonRace = "Skyrim.esm|012E82"
 FrostbiteSpiderRace = "Skyrim.esm|0131F8"
 FrostbiteSpiderRaceGiant = "Skyrim.esm|04E507"
@@ -452,7 +456,8 @@ IcewraithRace = "Skyrim.esm|0131FE"
 MammothRace = "Skyrim.esm|0131FF"
 GiantRace = "Skyrim.esm|0131F9"
 
-[keywords]
+[KYWD] # Keywords ------------------------------------------------------------------------------------------------------------------------------------
+
 #---------- GTS
 BlackListKeyword = "GTS.esp|6A85AF"
 CountAsFollower = "GTS.esp|88E644"
@@ -468,12 +473,16 @@ DarkSouls = "Skyrim.esm|0C1E8F"
 SummonUndead = "Skyrim.esm|02482B"
 ActorTypeNPC = "Skyrim.esm|013794"
 
-[containers]
+[CONT] # Container ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 Dropbox = "GTS.esp|6AD6B0"
 Dropbox_Undead = "GTS.esp|6BC9BC"
 Dropbox_Mechanical = "GTS.esp|6C1ABE"
 Dropbox_Soul = "GTS.esp|6C1ABD"
 Dropbox_Bug = "GTS.esp|6C1ABF"
 
-[levelitems]
+[LVLI] # Leveled List Item ------------------------------------------------------------------------------------------------------------------------------------
+
+#---------- GTS
 LootList_Master = "GTS.esp|7C3DFB"

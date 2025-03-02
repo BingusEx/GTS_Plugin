@@ -35,19 +35,19 @@ namespace {
 
 		RuntimeConfig(const toml::value& data) {
 
-			this->sounds = toml::find_or(data, "sounds", std::unordered_map<std::string, std::string>());
-			this->spellEffects = toml::find_or(data, "spellEffects", std::unordered_map<std::string, std::string>());
-			this->spells = toml::find_or(data, "spells", std::unordered_map<std::string, std::string>());
-			this->perks = toml::find_or(data, "perks", std::unordered_map<std::string, std::string>());
-			this->explosions = toml::find_or(data, "explosions", std::unordered_map<std::string, std::string>());
-			this->globals = toml::find_or(data, "globals", std::unordered_map<std::string, std::string>());
-			this->quests = toml::find_or(data, "quests", std::unordered_map<std::string, std::string>());
-			this->factions = toml::find_or(data, "factions", std::unordered_map<std::string, std::string>());
-			this->impacts = toml::find_or(data, "impacts", std::unordered_map<std::string, std::string>());
-			this->races = toml::find_or(data, "races", std::unordered_map<std::string, std::string>());
-			this->keywords = toml::find_or(data, "keywords", std::unordered_map<std::string, std::string>());
-			this->containers = toml::find_or(data, "containers", std::unordered_map<std::string, std::string>());
-			this->levelitems = toml::find_or(data, "levelitems", std::unordered_map<std::string, std::string>());
+			this->sounds = toml::find_or(data, "SNDR", std::unordered_map<std::string, std::string>());
+			this->spellEffects = toml::find_or(data, "MGEF", std::unordered_map<std::string, std::string>());
+			this->spells = toml::find_or(data, "SPEL", std::unordered_map<std::string, std::string>());
+			this->perks = toml::find_or(data, "PERK", std::unordered_map<std::string, std::string>());
+			this->explosions = toml::find_or(data, "EXPL", std::unordered_map<std::string, std::string>());
+			this->globals = toml::find_or(data, "GLOB", std::unordered_map<std::string, std::string>());
+			this->quests = toml::find_or(data, "QUST", std::unordered_map<std::string, std::string>());
+			this->factions = toml::find_or(data, "FACT", std::unordered_map<std::string, std::string>());
+			this->impacts = toml::find_or(data, "IDPS", std::unordered_map<std::string, std::string>());
+			this->races = toml::find_or(data, "RACE", std::unordered_map<std::string, std::string>());
+			this->keywords = toml::find_or(data, "KYWD", std::unordered_map<std::string, std::string>());
+			this->containers = toml::find_or(data, "CONT", std::unordered_map<std::string, std::string>());
+			this->levelitems = toml::find_or(data, "LVLI", std::unordered_map<std::string, std::string>());
 
 		}
 	};

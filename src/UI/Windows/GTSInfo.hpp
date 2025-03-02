@@ -18,6 +18,12 @@ namespace GTS {
         kShowBonusSize = (1 << 12),
         kShowShrinkResist = (1 << 13),
         kShowOnTheEdge = (1 << 14),
+        kShowStolenAttributes = (1 << 15),
+        kShowStolenHealth = (1 << 16),
+        kShowStolenStamina = (1 << 17),
+        kShowStolenMagicka = (1 << 18),
+        kShowSizeReserve = (1 << 19),
+        kShowHighHeelBonusDmg = (1 << 20),
     };
 
 
