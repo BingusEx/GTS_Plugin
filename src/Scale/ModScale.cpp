@@ -124,7 +124,8 @@ namespace GTS {
 					set_npcnode_scale(actor, initScale.npc);
 				}
 			}
-		}catch (exception& e) {
+		}
+		catch (exception& e) {
 			log::error("ResetToInitScale Failed {}", e.what());
 		}
 	}

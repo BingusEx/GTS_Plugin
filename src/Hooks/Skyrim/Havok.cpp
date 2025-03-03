@@ -243,7 +243,7 @@ namespace Hooks {
 	void Hook_Havok::Hook(Trampoline& trampoline) {
 		REL::Relocation<uintptr_t> hook{RELOCATION_ID(38112, 39068)}; // SE: 6403D0
 		const auto addr = hook.address();
-		log::info("Applying Havok Hook at {}", fmt::format("{:x}", addr));
+		log::info("Applying Havok Hook at {}", fmt::format("{:#X}", addr));
 		_ProcessHavokHitJobs = trampoline.write_call<5>(hook.address() + RELOCATION_OFFSET(0x104, 0xFC), ProcessHavokHitJobs);
 
 		REL::Relocation<std::uintptr_t> Vtbl{ RE::VTABLE_bhkCollisionFilter[1] };

@@ -3224,23 +3224,28 @@ namespace GTS {
 	void AdvanceQuestProgression(Actor* giant, Actor* tiny, QuestStage stage, float value, bool vore) {
 		if (giant->formID == 0x14) { // Player Only
 			auto progressionQuest = Runtime::GetQuest("MainQuest");
+
+			auto& Persistent = Persistent::GetSingleton();
+
 			if (progressionQuest) {
 				auto queststage = progressionQuest->GetCurrentStageID();
+
 				if (queststage >= 100 || queststage < 10) {
 					return;
 				}
+
 				switch (stage) {
 					case QuestStage::HugSteal: 				// Stage 0: hug steal 2 meters of size
-						Persistent::GetSingleton().HugStealCount += value;
+						Persistent.HugStealCount.value += value;
 					break;
 					case QuestStage::HugSpellSteal:			// Stage 1: hug/spell steal 5 meters of size
 						if (queststage == 20) {
-							Persistent::GetSingleton().StolenSize += value;
+							Persistent.StolenSize.value += value;
 						}
 					break;
 					case QuestStage::Crushing:				// Stage 2: Crush 3 (*4 if dead) enemies
 						if (queststage >= 30 && queststage <= 40) {
-							Persistent::GetSingleton().CrushCount += value;
+							Persistent.CrushCount.value += value;
 							if (value < 1) {
 								SpawnCustomParticle(tiny, ParticleType::DarkRed, NiPoint3(), "NPC Root [Root]", 1.0f);
 							} else {
@@ -3258,7 +3263,7 @@ namespace GTS {
 					break;
 					case QuestStage::ShrinkToNothing:		// Stage 3: Crush or Shrink to nothing 6 enemies in total
 						if (queststage == 40) {
-							Persistent::GetSingleton().STNCount += value;
+							Persistent.STNCount.value += value;
 							if (value < 1) {
 								SpawnCustomParticle(tiny, ParticleType::DarkRed, NiPoint3(), "NPC Root [Root]", 1.0f);
 							} else {
@@ -3268,17 +3273,17 @@ namespace GTS {
 						}
 					break;
 					case QuestStage::HandCrush:				// Stage 4: hand crush 3 enemies
-						Persistent::GetSingleton().HandCrushed += value;
+						Persistent.HandCrushed.value += value;
 						SpawnCustomParticle(tiny, ParticleType::Red, NiPoint3(), "NPC Root [Root]", 1.0f);
 						Notify("Progress: {:.1f}/{:.1f}", GetQuestProgression(static_cast<int>(QuestStage::HandCrush)), 3.0f);
 					break;
 					case QuestStage::Vore:					// Stage 5: Vore 6 enemies
-						Persistent::GetSingleton().VoreCount += value;
+						Persistent.VoreCount.value += value;
 						SpawnCustomParticle(tiny, ParticleType::Blue, NiPoint3(), "NPC Root [Root]", 1.0f);
 						Notify("Progress: {:.1f}/{:.1f}", GetQuestProgression(static_cast<int>(QuestStage::Vore)), 6.0f);
 					break;
 					case QuestStage::Giant:					// Stage 6: Vore/crush/shrink a Giant
-						Persistent::GetSingleton().GiantCount += value;
+						Persistent.GiantCount.value += value;
 						if (vore) {
 							SpawnCustomParticle(tiny, ParticleType::Blue, NiPoint3(), "NPC Root [Root]", 1.0f);
 						} else {
@@ -3292,34 +3297,40 @@ namespace GTS {
 
 	float GetQuestProgression(int stage) {
 		QuestStage Stage = static_cast<QuestStage>(stage);
+
+		const auto& Persistent = Persistent::GetSingleton();
+
 		switch (Stage) {
 			case QuestStage::HugSteal: 				// Stage 0: hug steal 2 meters of size
-				return Persistent::GetSingleton().HugStealCount;
+				return Persistent.HugStealCount.value;
 			case QuestStage::HugSpellSteal: 		// Stage 1: hug/spell steal 5 meters of size
-				return Persistent::GetSingleton().StolenSize;
+				return Persistent.StolenSize.value;
 			case QuestStage::Crushing: 				// Stage 2: Crush 3 (*4 if dead) enemies
-				return Persistent::GetSingleton().CrushCount;
+				return Persistent.CrushCount.value;
 			case QuestStage::ShrinkToNothing:  		// Stage 3: Crush or Shrink to nothing 6 enemies in total
-				return (Persistent::GetSingleton().CrushCount - 3.0f) + Persistent::GetSingleton().STNCount;
+				return Persistent.CrushCount.value - 3.0f + Persistent.STNCount.value;
 			case QuestStage::HandCrush: 			// Stage 4: hand crush 3 enemies
-				return Persistent::GetSingleton().HandCrushed;
+				return Persistent.HandCrushed.value;
 			case QuestStage::Vore: 					// Stage 5: Vore 6 enemies
-				return Persistent::GetSingleton().VoreCount;
+				return Persistent.VoreCount.value;
 			case QuestStage::Giant:					// Stage 6: Vore/crush/shrink a Giant
-				return Persistent::GetSingleton().GiantCount;
+				return Persistent.GiantCount.value;
 			break;
 		}
 		return 0.0f;
 	}
 
 	void ResetQuest() {
-		Persistent::GetSingleton().HugStealCount = 0.0f;
-		Persistent::GetSingleton().StolenSize = 0.0f;
-		Persistent::GetSingleton().CrushCount = 0.0f;
-		Persistent::GetSingleton().STNCount = 0.0f;
-		Persistent::GetSingleton().HandCrushed = 0.0f;
-		Persistent::GetSingleton().VoreCount = 0.0f;
-		Persistent::GetSingleton().GiantCount = 0.0f;
+
+		auto& Persistent = Persistent::GetSingleton();
+
+		Persistent.HugStealCount.value = 0.0f;
+		Persistent.StolenSize.value = 0.0f;
+		Persistent.CrushCount.value = 0.0f;
+		Persistent.STNCount.value = 0.0f;
+		Persistent.HandCrushed.value = 0.0f;
+		Persistent.VoreCount.value = 0.0f;
+		Persistent.GiantCount.value = 0.0f;
 	}
 
 	void SpawnHearts(Actor* giant, Actor* tiny, float Z, float scale, bool hugs) {

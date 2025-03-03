@@ -117,7 +117,7 @@ namespace GTS {
 
 		private:
 
-			mutable std::mutex _lock;
-			std::unordered_map<FormID, TempActorData> _actor_data;
+			mutable std::mutex TransientLock;
+			std::unordered_map<FormID, TempActorData> TempActorDataMap;
 	};
 }

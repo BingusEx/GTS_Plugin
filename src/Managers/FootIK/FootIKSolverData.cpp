@@ -14,7 +14,7 @@
 			throw std::runtime_error("It is an error to create the solver data using nullptr");
 			return;
 		}
-		// log::info("solver memSizeAndFlags: {:X}", this->solver->memSizeAndFlags);
+		// log::info("solver memSizeAndFlags: {:#X}", this->solver->memSizeAndFlags);
 		this->m_footEndLS = solver->m_setup.m_footEndLS;
 		this->m_footPlantedAnkleHeightMS = solver->m_setup.m_footPlantedAnkleHeightMS;
 		this->m_footRaisedAnkleHeightMS = solver->m_setup.m_footRaisedAnkleHeightMS;

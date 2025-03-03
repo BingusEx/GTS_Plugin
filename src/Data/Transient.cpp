@@ -16,7 +16,7 @@ namespace GTS {
 		TempActorData* result = nullptr;
 
 		try {
-			result = &this->_actor_data.at(key);
+			result = &this->TempActorDataMap.at(key);
 		}
 		catch (const std::out_of_range& oor) {
 			return nullptr;
@@ -27,7 +27,7 @@ namespace GTS {
 
 	TempActorData* Transient::GetActorData(Actor* actor) {
 
-		std::unique_lock lock(this->_lock);
+		std::unique_lock lock(this->TransientLock);
 
 		if (!actor) {
 			return nullptr;
@@ -36,9 +36,9 @@ namespace GTS {
 		auto key = actor->formID;
 
 		try {
-			return &this->_actor_data.at(key);
+			return &this->TempActorDataMap.at(key);
 		}
-		catch (const std::out_of_range& oor) {
+		catch (const std::out_of_range&) {
 
 			// Try to add
 			if (!actor) {
@@ -245,16 +245,16 @@ namespace GTS {
 			NewTempActorData.breast_size_buff = breast_size_buff;
 			NewTempActorData.GameModeIntervalTimer = Timer(0);
 
-			this->_actor_data.try_emplace(key, NewTempActorData);
+			this->TempActorDataMap.try_emplace(key, NewTempActorData);
 
-			return &this->_actor_data.at(key);
+			return &this->TempActorDataMap.at(key);
 		}
 	}
 
 	std::vector<FormID> Transient::GetForms() const {
 		std::vector<FormID> keys;
-		keys.reserve(this->_actor_data.size());
-		for(const auto data : this->_actor_data | views::keys) {
+		keys.reserve(this->TempActorDataMap.size());
+		for(const auto data : this->TempActorDataMap | views::keys) {
 			keys.push_back(data);
 		}
 		return keys;
@@ -267,7 +267,7 @@ namespace GTS {
 
 	void Transient::Update() {
 
-		for (auto actor: find_actors()) {
+		for (Actor* actor : find_actors()) {
 
 			if (!actor) {
 				continue;
@@ -277,39 +277,30 @@ namespace GTS {
 				continue;
 			}
 
-			auto key = actor->formID;
-			std::unique_lock lock(this->_lock);
+			FormID ActorKey = actor->formID;
+			std::unique_lock lock(this->TransientLock);
 
 			try {
-				auto data = this->_actor_data.at(key);
-				auto shoe = actor->GetWornArmor(BGSBipedObjectForm::BipedObjectSlot::kFeet);
-				float shoe_weight = 1.0f;
-
-				if (shoe) {
-					shoe_weight = shoe->weight;
-				}
-
-				data.shoe_weight = shoe_weight;
+				auto data = this->TempActorDataMap.at(ActorKey);
 				data.char_weight = actor->GetWeight();
-
 			}
-			catch (const std::out_of_range& oor) {
-				logger::warn("Transient::Update exception: {}", oor.what());
+			catch (...) {
+				
 			}
 		}
 	}
 
 	void Transient::Reset() {
 		log::info("Transient was reset");
-		std::unique_lock lock(this->_lock);
-		this->_actor_data.clear();
+		std::unique_lock lock(this->TransientLock);
+		this->TempActorDataMap.clear();
 	}
 
 	void Transient::ResetActor(Actor* actor) {
-		std::unique_lock lock(this->_lock);
+		std::unique_lock lock(this->TransientLock);
 		if (actor) {
 			auto key = actor->formID;
-			this->_actor_data.erase(key);
+			this->TempActorDataMap.erase(key);
 		}
 	}
 }

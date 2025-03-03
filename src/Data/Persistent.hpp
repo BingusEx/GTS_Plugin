@@ -55,20 +55,47 @@ namespace GTS {
 		//Add New Stuff Here if needed / PAD data is all used up.
 		//Must Be Read and written in the same order as found here
 
+		ActorData() = default;
 
-		ActorData();
-		explicit ActorData(Actor* actor);
+		explicit ActorData(RE::Actor* actor) {}
+
 	};
 
 	class Persistent : public EventListener {
 
 		public:
-			virtual std::string DebugName() override;
-			virtual void Reset() override;
+
+			virtual void Reset() override {
+
+				std::unique_lock lock(this->_lock);
+				this->ActorDataMap.clear();
+
+				// Ensure we reset them back to inital scales
+				// if they are loaded into game memory
+				// since skyrim only lazy loads actors
+				// that are already in memory it won't reload
+				// their nif scales otherwise
+				for (auto actor : find_actors()) {
+					ResetToInitScale(actor);
+				}
+			}
+
 			virtual void ResetActor(Actor* actor) override;
 
-			[[nodiscard]] static Persistent& GetSingleton() noexcept;
-			static void OnRevert(SKSE::SerializationInterface*);
+			virtual std::string DebugName() override {
+				return "Persistent";
+			}
+
+			static void OnRevert(SerializationInterface*) {
+				GetSingleton().Reset();
+			}
+
+			[[nodiscard]] inline static Persistent& GetSingleton() noexcept {
+				static Persistent Instance;
+				return Instance;
+			}
+
+			//SKSE Callbacks
 			static void OnGameSaved(SKSE::SerializationInterface* serde);
 			static void OnGameLoaded(SKSE::SerializationInterface* serde);
 
@@ -82,6 +109,10 @@ namespace GTS {
 			//float -> 4 bytes
 			//double -> 8 bytes
 
+			//------ Actor Record Struct
+			constexpr static inline uint8_t ActorStructVersion = 8;
+			const static inline uint32_t ActorDataRecord = _byteswap_ulong('ACTD');
+
 			//----- Camera
 			BasicRecord<int, 'TCST'> TrackedCameraState = 0;
 
@@ -94,30 +125,34 @@ namespace GTS {
 			BasicRecord<float, 'GTSL'> GTSGlobalSizeLimit = 1.0f;
 			BasicRecord<float, 'GMBS'> GTSMassBasedSize = 0.0f;
 
-			//TODO Move Quest data to basic record
-
 			// ---- Quest Progression
-			//BasicRecord<float, 'QHSR'> HugStealCount = 0.0f;
-			//BasicRecord<float, 'QSSR'> StolenSize = 0.0f;
-			//BasicRecord<float, 'QCCR'> CrushCount = 0.0f;
-			//BasicRecord<float, 'QSTR'> STNCount = 0.0f;
-			//BasicRecord<float, 'QHCR'> HandCrushed = 0.0f;
-			//BasicRecord<float, 'QVRR'> VoreCount = 0.0f;
-			//BasicRecord<float, 'QGCR'> GiantCount = 0.0f;
-
-			// ---- Quest Progression
-			float HugStealCount = 0.0f;
-			float CrushCount = 0.0f; // Stage 2
-			float STNCount = 0.0f; // Stage 3, Shrink to nothing
-			float StolenSize = 0.0f; // Stage 4,
-			float HandCrushed = 0.0f; // Stage 5, Crushed with hand
-			float VoreCount = 0.0f; // Stage 6, Fully Vored
-			float GiantCount = 0.0f; // Stage 7, Giant Count
+			BasicRecord<float, 'QHSR'> HugStealCount = 0.0f;
+			BasicRecord<float, 'QSSR'> StolenSize = 0.0f;
+			BasicRecord<float, 'QCCR'> CrushCount = 0.0f;
+			BasicRecord<float, 'QSTR'> STNCount = 0.0f;
+			BasicRecord<float, 'QHCR'> HandCrushed = 0.0f;
+			BasicRecord<float, 'QVRR'> VoreCount = 0.0f;
+			BasicRecord<float, 'QGCR'> GiantCount = 0.0f;
 
 		private:
 
 			Persistent() = default;
 			mutable std::mutex _lock;
 			std::unordered_map<FormID, ActorData> ActorDataMap;
+
+			static void LoadPersistent(SerializationInterface* serde);
+			static void SavePersistent(SerializationInterface* serde);
+
+			//Actor Data Load
+			static void LoadActorData(SKSE::SerializationInterface* serde, const uint32_t RecordType, const uint32_t RecordVersion);
+			static void LoadActorRecordFloat(SKSE::SerializationInterface* serde, float* a_Data, uint32_t RecordVersion, uint32_t MinVersion, float DefaultValue);
+			static void DummyReadFloat(SKSE::SerializationInterface* serde);
+
+			//Actor Data Save
+			static void WriteActorData(SKSE::SerializationInterface* serde, uint8_t Version);
+			static void WriteActorRecordFloat(SKSE::SerializationInterface* serde, const float* Data);
+			static void WriteActorRecordFormID(SKSE::SerializationInterface* serde, const FormID* Id);
+			static void DummyWriteFloat(SKSE::SerializationInterface* serde);
+
 	};
 }

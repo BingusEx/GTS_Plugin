@@ -8,7 +8,7 @@ namespace Hooks {
 	void FunctionHook<void>::Attach(void** target, void* hook) {
 		
 		uintptr_t base = REL::Module::get().base();
-		log::debug("Attaching function hook to address 0x{:X} (offset from image base of 0x{:X} by 0x{:X}...",
+		log::debug("Attaching function hook to address {:#X} (offset from image base of {:#X} by {:#X}...",
 		           reinterpret_cast<uintptr_t>(*target), base, reinterpret_cast<uintptr_t>(*target) - base);
 		for (std::size_t i = 0; i < 3; ++i) {
 			auto result = DetourTransactionBegin();
@@ -87,7 +87,7 @@ namespace Hooks {
 
 	void FunctionHook<void>::Detach(void** target, void* hook) {
 		uintptr_t base = REL::Module::get().base();
-		log::debug("Detaching function hook from address 0x{:X} (offset from image base of 0x{:X} by 0x{:X}...",
+		log::debug("Detaching function hook from address {:#X} (offset from image base of {:#X} by {:#X}...",
 		           reinterpret_cast<uintptr_t>(*target), base, reinterpret_cast<uintptr_t>(*target) - base);
 		for (std::size_t i = 0; i < MaxRetry; ++i) {
 			auto result = DetourTransactionBegin();
