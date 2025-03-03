@@ -122,7 +122,7 @@ namespace GTS {
 			LoadActorRecordFloat(serde, &Data.visual_scale, RecordVersion, 1, 1.0f);        //0x08
 			LoadActorRecordFloat(serde, &Data.visual_scale_v, RecordVersion, 1, 0.0f);      //0x1C
 			LoadActorRecordFloat(serde, &Data.target_scale, RecordVersion, 1, 1.0f);        //0x10
-			LoadActorRecordFloat(serde, &Data.max_scale, RecordVersion, 1, 1.0f);       //0x14
+			LoadActorRecordFloat(serde, &Data.max_scale, RecordVersion, 1, 1.0f);           //0x14
 
 			//V2
 			LoadActorRecordFloat(serde, &Data.half_life, RecordVersion, 2, 1.0f);           //0x18
@@ -159,6 +159,7 @@ namespace GTS {
 			LoadActorRecordFloat(serde, &Data.stolen_stamin, RecordVersion, 8, 0.0f);       //0x64
 
 			//Do this last. If we continue early we'll have shifted the read pointer by 4 bytes for the next  read
+			//Corrupting any future deserialization
 			RE::FormID CorrectedFormID;  //Load order may have changed. This is the New FormID
 			if (!serde->ResolveFormID(ReadFormID, CorrectedFormID)) {
 				log::warn("Actor FormID {:08X} Not be Resolved. Not Adding to ActorDataMap.", ReadFormID);
