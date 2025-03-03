@@ -11,8 +11,9 @@ scriptName GtsEvent hidden
 ;
 ;
 ; Registeration must done on every startup with:
-; RegisterOnFootstep(a_form)
+; RegisterOnFootstep(akForm)
 ; This form is usually self if registering for the event in the
 ; target script
-Function RegisterOnFootstep(Form form) global native
-Function UnRegisterOnFootstep(Form form) global native
+
+Function RegisterOnFootstep(Form akForm) global native
+Function UnRegisterOnFootstep(Form akForm) global native

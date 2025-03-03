@@ -24,7 +24,7 @@ namespace {
 						ActorHandle targetHandle = targetRef->CreateRefHandle();
 
 						std::string name = std::format("GrowFollower_{}", targetRef->formID);
-						const float DURATION = 2.0f;
+						constexpr float DURATION = 2.0f;
 
 						TaskManager::RunFor(name, DURATION, [=](auto& progressData){
 							if (!casterHandle) {
@@ -75,7 +75,7 @@ namespace {
 						ActorHandle casterHandle = casterRef->CreateRefHandle();
 						ActorHandle targetHandle = targetRef->CreateRefHandle();
 
-						const float DURATION = 2.0f;
+						constexpr float DURATION = 2.0f;
 						std::string name = std::format("ShrinkFollower_{}", targetRef->formID);
 
 						TaskManager::RunFor(name, DURATION, [=](auto& progressData){
@@ -124,7 +124,7 @@ namespace {
 				// Thread safe handles
 				ActorHandle casterHandle = casterRef->CreateRefHandle();
 
-				const float DURATION = 2.0f;
+				constexpr float DURATION = 2.0f;
 				std::string name = std::format("GrowPlayer_{}", casterRef->formID);
 
 				TaskManager::RunFor(name, DURATION, [=](auto& progressData){
@@ -169,7 +169,7 @@ namespace {
 				// Thread safe handles
 				ActorHandle casterHandle = casterRef->CreateRefHandle();
 
-				const float DURATION = 2.0f;
+				constexpr float DURATION = 2.0f;
 				std::string name = std::format("ShrinkPlayer_{}", casterRef->formID);
 
 				TaskManager::RunFor(name, DURATION, [=](auto& progressData){
@@ -238,18 +238,22 @@ namespace {
 }
 
 namespace GTS {
+
 	bool register_total_control(IVirtualMachine* vm) {
+
+		//Followers
 		vm->RegisterFunction("GrowTeammate", PapyrusClass, GrowTeammate);
 		vm->RegisterFunction("ShrinkTeammate", PapyrusClass, ShrinkTeammate);
 
+		//Player
 		vm->RegisterFunction("GrowPlayer", PapyrusClass, GrowPlayer);
 		vm->RegisterFunction("ShrinkPlayer", PapyrusClass, ShrinkPlayer);
 
+		//Rappid Growth
 		vm->RegisterFunction("CallRapidGrowth", PapyrusClass, CallRapidGrowth);
 		vm->RegisterFunction("CallRapidShrink", PapyrusClass, CallRapidShrink);
 
 		return true;
 	}
 
-	
 }

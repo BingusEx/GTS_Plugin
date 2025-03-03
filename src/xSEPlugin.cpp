@@ -47,11 +47,7 @@ namespace {
 
 				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
-				console_sink->set_pattern("\033[37m[\033[95mGTS\033[37m]\033[0m " \
-					"\033[37m[\033[36m%H:%M:%S.%e\033[37m]\033[0m " \
-					"\033[37m[\033[0m%^%l%$\033[37m]\033[0m " \
-					"\033[37m[\033[33m%s:%#\033[37m]\033[0m " \
-					"\033[37m%v\033[0m");
+				console_sink->set_pattern("\033[37m[\033[33mGTS\033[37m]\033[0m\033[37m[\033[37m%H:%M:%S.%e\033[37m]\033[0m\033[37m[%^%l%$]\033[0m\033[37m[\033[33m%s:%#\033[37m]\033[0m\033[37m: %v\033[0m");
 
 				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", console_sink));
 
@@ -107,7 +103,7 @@ namespace {
 				// Player's selected save game has finished loading.
 				case MessagingInterface::kPostLoadGame: {
 					Plugin::SetInGame(true);
-					Cprint(" [GTSPlugin.dll]: [ Giantess Mod was succesfully initialized and loaded. ]");
+					Cprint("[GTSPlugin.dll]: [ Succesfully initialized and loaded ]");
 					break;
 				}
 
@@ -115,7 +111,7 @@ namespace {
 				case MessagingInterface::kNewGame: {
 					Plugin::SetInGame(true);
 					EventDispatcher::DoReset();
-					Cprint(" [GTSPlugin.dll]: [ Giantess Mod was succesfully initialized and loaded. ]");
+					Cprint("[GTSPlugin.dll]: [ Succesfully initialized and loaded ]");
 					break;
 				}
 
@@ -147,6 +143,7 @@ namespace {
 		log::trace("Initializing cosave serialization...");
 
 		auto* serde = GetSerializationInterface();
+
 
 		serde->SetUniqueID(_byteswap_ulong('GTSP'));
 
@@ -208,10 +205,7 @@ SKSEPluginLoad(const LoadInterface * a_skse){
 	//Why??? who tf knows why...
 	//So we instead build with the relwithdebinfo preset when using the debug and debug-eha presets, but pass all debug flags to the compiler when doing so...
 	//This results in this dll being built with full debug options but commonlib and other libraries being built as release...
-	//I mean is this good? No. But does it finnaly allow us to have working break points in the dll? Yes.
-
-	//If you see a 32+ mb dll being built there's a 100% chance it will ctd at the first hook.
-	//"Normal" debug dlls should be around 10-13mb as of 15-02-2025
+	//I mean is this good? No. But does it finnaly allow us to have working breakpoints in the dll when using a debugger? Yes.
 
 	#ifdef GTSCONSOLE
 		AllocateConsole();

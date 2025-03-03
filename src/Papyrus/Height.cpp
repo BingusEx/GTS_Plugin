@@ -35,34 +35,23 @@ namespace {
 		return get_visual_height(actor);
 	}
 
-	void ModTeammateHeight(StaticFunctionTag*, float amt) {
-		for (auto actor: find_actors()) {
-			if (!actor) {
-				continue;
-			}
-			if (!actor->Is3DLoaded()) {
-				continue;
-			}
-			if (IsTeammate(actor)) {
-				mod_target_height(actor, amt);
-			}
-		}
-	}
 }
 
 namespace GTS {
 	bool register_papyrus_height(IVirtualMachine* vm) {
+
+		//Target Height
 		vm->RegisterFunction("SetTargetHeight", PapyrusClass, SetTargetHeight);
 		vm->RegisterFunction("GetTargetHeight", PapyrusClass, GetTargetHeight);
 		vm->RegisterFunction("ModTargetHeight", PapyrusClass, ModTargetHeight);
 
+		//Target Max Height
 		vm->RegisterFunction("SetMaxHeight", PapyrusClass, SetMaxHeight);
 		vm->RegisterFunction("GetMaxHeight", PapyrusClass, GetMaxHeight);
 		vm->RegisterFunction("ModMaxHeight", PapyrusClass, ModMaxHeight);
 
+		//Visual Height
 		vm->RegisterFunction("GetVisualHeight", PapyrusClass, GetVisualHeight);
-
-		vm->RegisterFunction("ModTeammateHeight", PapyrusClass, ModTeammateHeight);
 
 		return true;
 	}
