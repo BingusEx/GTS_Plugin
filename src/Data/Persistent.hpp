@@ -97,6 +97,9 @@ namespace GTS {
 			static void OnGameSaved(SKSE::SerializationInterface* serde);
 			static void OnGameLoaded(SKSE::SerializationInterface* serde);
 
+			void EraseUnloadedPersistentData();
+
+
 			ActorData* GetActorData(Actor& actor);
 			ActorData* GetActorData(Actor* actor);
 			ActorData* GetData(TESObjectREFR* refr);

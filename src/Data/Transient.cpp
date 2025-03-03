@@ -9,17 +9,19 @@ namespace GTS {
 
 	TempActorData* Transient::GetData(TESObjectREFR* a_Object) {
 
+		std::unique_lock lock(this->TransientLock);
+
 		if (!a_Object) {
 			return nullptr;
 		}
 
 		auto ActorKey = a_Object->formID;
-		TempActorData* result = nullptr;
+		TempActorData* result;
 
 		try {
 			result = &this->TempActorDataMap.at(ActorKey);
 		}
-		catch (const std::out_of_range&) {
+		catch (const std::exception&) {
 			return nullptr;
 		}
 
@@ -48,14 +50,19 @@ namespace GTS {
 			if (get_scale(actor) < 0.0f) {
 				return nullptr;
 			}
+
 			TempActorData NewTempActorData = TempActorData(actor);
 			auto [iter, inserted] = this->TempActorDataMap.try_emplace(ActorKey, NewTempActorData);
 			return &(iter->second);
-
+		}
+		catch (const exception& e) {
+			logger::warn("Transient Exeption GetActorData {}", e.what());
+			return nullptr;
 		}
 	}
 
 	std::vector<FormID> Transient::GetForms() const {
+		std::unique_lock lock(this->TransientLock);
 		std::vector<FormID> keys;
 		keys.reserve(this->TempActorDataMap.size());
 		for(const auto data : this->TempActorDataMap | views::keys) {
@@ -69,48 +76,40 @@ namespace GTS {
 		return "Transient";
 	}
 
-	//Disabled Update, It did nothing but create exceptions when a new actor was loaded.
-	//Adding a new insertion on exception was not done previously so i guess its fine?
+	void Transient::ActorLoaded(RE::Actor* actor) {
+		std::unique_lock lock(this->TransientLock);
 
-	//void Transient::Update() {
+		if (!actor) {
+			return;
+		}
+		try {
+			//Try accessing the element if it doesnt exist. Create it.
+			const FormID ActorID = actor->formID;
+			std::ignore = this->TempActorDataMap.at(ActorID);
+		}
+		catch (const std::out_of_range&) {
 
-	//	for (Actor* actor : find_actors()) {
+			// Try to add
+			if (!actor) {
+				return;
+			}
 
-	//		if (!actor) {
-	//			continue;
-	//		}
+			if (get_scale(actor) < 0.0f) {
+				return;
+			}
 
-	//		if (!actor->Is3DLoaded()) {
-	//			continue;
-	//		}
-
-	//		FormID ActorKey = actor->formID;
-	//		std::unique_lock lock(this->TransientLock);
-
-	//		try {
-	//			//Try getting Actor data.
-	//			std::ignore = this->TempActorDataMap.at(ActorKey);
-	//		}
-	//		catch (const std::out_of_range&) {
-
-	//			// Try to add
-	//			if (!actor) {
-	//				return;
-	//			}
-	//			if (get_scale(actor) < 0.0f) {
-	//				return;
-	//			}
-
-	//			//Create New Data.
-	//			TempActorData NewTempActorData = TempActorData(actor);
-	//			this->TempActorDataMap.try_emplace(ActorKey, NewTempActorData);
-	//		}
-	//	}
-	//}
+			const FormID ActorKey = actor->formID;
+			TempActorData NewTempActorData = TempActorData(actor);
+			this->TempActorDataMap.try_emplace(ActorKey, NewTempActorData);
+		}
+		catch (const exception& e) {
+			logger::warn("Transient Exeption ActorLoaded {}",e.what());
+		}
+	}
 
 	void Transient::Reset() {
-		log::info("Transient was reset");
 		std::unique_lock lock(this->TransientLock);
+		log::info("Transient was reset");
 		this->TempActorDataMap.clear();
 	}
 
@@ -120,5 +119,33 @@ namespace GTS {
 			auto key = actor->formID;
 			this->TempActorDataMap.erase(key);
 		}
+	}
+
+	void Transient::EraseUnloadedTransientData() {
+		std::unique_lock lock(this->TransientLock);
+
+		// Create a set to hold the whitelisted FormIDs.
+		std::unordered_set<FormID> allowedFormIDs;
+
+		// Always keep FormID 0x14 (Player).
+		allowedFormIDs.insert(0x14);
+
+		// Get preserve all currently loaded actors
+		for (const Actor* ActorToNotDelete : find_actors()) {
+			if (ActorToNotDelete) {
+				allowedFormIDs.insert(ActorToNotDelete->formID);
+			}
+		}
+
+		// Iterate through ActorDataMap and remove entries whose key is not in allowedFormIDs.
+		for (auto it = TempActorDataMap.begin(); it != TempActorDataMap.end(); ) {
+			if (!allowedFormIDs.contains(it->first)) {
+				it = TempActorDataMap.erase(it);  // erase returns the next iterator.
+			}
+			else {
+				++it;
+			}
+		}
+		logger::critical("All Unloaded actors have beeen purged from transient.");
 	}
 }

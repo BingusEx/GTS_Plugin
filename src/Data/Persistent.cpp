@@ -17,6 +17,7 @@ namespace GTS {
 		LoadPersistent(serde);
 	}
 
+
 	void Persistent::OnGameSaved(SerializationInterface* serde) {
 		std::unique_lock lock(GetSingleton()._lock);
 		SavePersistent(serde);
@@ -361,5 +362,34 @@ namespace GTS {
 			data->stolen_stamin = 0.0f;
 		}
 		ResetToInitScale(actor);
+	}
+
+	void Persistent::EraseUnloadedPersistentData() {
+		std::unique_lock lock(_lock);
+		// Create a set to hold the whitelisted FormIDs.
+		std::unordered_set<FormID> allowedFormIDs;
+
+		// Always keep FormID 0x14 (Player).
+		allowedFormIDs.insert(0x14);
+
+		// Get preserve all currently loaded actors
+		for (const Actor* ActorToNotDelete : find_actors()) {
+			if (ActorToNotDelete) {
+				allowedFormIDs.insert(ActorToNotDelete->formID);
+			}
+		}
+
+		// Iterate through ActorDataMap and remove entries whose key is not in allowedFormIDs.
+		for (auto it = ActorDataMap.begin(); it != ActorDataMap.end(); ) {
+			if (!allowedFormIDs.contains(it->first)) {
+				it = ActorDataMap.erase(it);  // erase returns the next iterator.
+			}
+			else {
+				++it;
+			}
+		}
+
+		logger::critical("All Unloaded actors have beeen purged from persistent.");
+
 	}
 }

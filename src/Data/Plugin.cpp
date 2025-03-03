@@ -71,7 +71,8 @@ namespace GTS {
 			RE::StatsMenu::MENU_NAME,
 			RE::TrainingMenu::MENU_NAME,
 			RE::TutorialMenu::MENU_NAME,
-			RE::TweenMenu::MENU_NAME
+			RE::TweenMenu::MENU_NAME,
+			RE::FaderMenu::MENU_NAME
 		};
 
 		if (Plugin::Ready()) {

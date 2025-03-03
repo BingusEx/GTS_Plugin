@@ -61,7 +61,11 @@ namespace GTS {
 		RE::InputEvent* event = *a_event;
 		RE::InputEvent* prev = nullptr;
 
-		if (Plugin::AnyMenuOpen() || !a_event || !Plugin::Live() || !Plugin::Ready()) {
+		if (!a_event) {
+			return;
+		}
+
+		if (Plugin::AnyMenuOpen() || !Plugin::Live() || !Plugin::Ready()) {
 			return;
 		}
 

@@ -25,10 +25,7 @@ namespace GTS {
             const char* T1 = "Enable the debug overlay.";
 
             const char* T2 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
-
             const char* T3 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
-
-
 
             if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
 
@@ -51,20 +48,18 @@ namespace GTS {
 
         ImUtil_Unique {
 
-                const char* T0 = "Immediately return from DamageAV Calls for the player.";
-                const char* T1 = "Bypass action cooldowns.";
-                const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
+            const char* T0 = "Immediately return from DamageAV Calls for the player.";
+            const char* T1 = "Bypass action cooldowns.";
+            const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
 
-                
+            if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
+                ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
+                ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
+                ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
+                ImUtil::SliderF("Animspeed Teammate", &Settings.fAnimSpeedAdjMultTeammate, 0.2f, 1.0f, T2);
 
-                if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
-                    ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
-                    ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
-                    ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
-                    ImUtil::SliderF("Animspeed Teammate", &Settings.fAnimSpeedAdjMultTeammate, 0.2f, 1.0f, T2);
-
-                    ImGui::Spacing();
-                }
+                ImGui::Spacing();
+            }
         }
     }
 
@@ -86,7 +81,6 @@ namespace GTS {
                     SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_FAILURE);
                 }
             }
-
         }
 
 
@@ -98,7 +92,6 @@ namespace GTS {
 
 			const char* T1 = "Multiply game speed by this value when the settings menu is open.\nOnly works if Pause game is disabled.";
 
-            //ImGui Debug
             if (ImGui::CollapsingHeader("Pause",ImUtil::HeaderFlags)) {
 
 	            ImUtil::CheckBox("Pause Game", &Settings.bPauseGame, T0);
@@ -108,7 +101,34 @@ namespace GTS {
 
         }
 
-        
 
+        ImUtil_Unique {
+
+
+            const char* THelp = "Here you can erase internal actor data that this mod stores.\n"
+        						"Make sure you do this in a cell like qasmoke. Only Unloaded actor data will deleted.\n"
+        						"You must save, close, and reload the game after doing this else you risk really breaking stuff.\n"
+								"ONLY DO THIS IF YOU REALLY KNOW WHAT YOU'RE DOING.\n";
+
+	        if (ImGui::CollapsingHeader("Data Management",ImUtil::HeaderFlags)) {
+
+                ImGui::TextColored(ImUtil::ColorError, "Info (!)");
+                ImUtil::Tooltip(THelp, true);
+
+                if (ImUtil::Button("Erase Persistent", "Clear out all data in persistent", false, 1.0f)) {
+                	TES::GetSingleton()->PurgeBufferedCells();
+                    logger::critical("Purged cell buffers in preperation of persistent erase.");
+                	Persistent::GetSingleton().EraseUnloadedPersistentData();
+                }
+
+                ImGui::SameLine();
+
+                if (ImUtil::Button("Erase Transient", "Clear out all data in Transient", false, 1.0f)) {
+                    TES::GetSingleton()->PurgeBufferedCells();
+                    logger::critical("Purged cell buffers in preperation of transient erase.");
+                    Transient::GetSingleton().EraseUnloadedTransientData();
+                }
+	        }
+        }
     }
 }
