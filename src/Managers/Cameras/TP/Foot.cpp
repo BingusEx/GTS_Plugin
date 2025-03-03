@@ -32,7 +32,7 @@ namespace GTS {
 		auto player = GetCameraActor();
 		float playerScale = get_visual_scale(player);
 
-		NiPoint3 lookAt = ComputeLookAt(ZoomIn_LookAt_BothFoot); // float is zoom scale
+		NiPoint3 lookAt = ComputeLookAt(ZoomIn_LookAt_BothFeet); // float is zoom scale
 
 		NiPoint3 footPos = this->GetFootPos();
 
@@ -70,7 +70,6 @@ namespace GTS {
 					auto rightPosLocal = transform * (rightFoot->world * NiPoint3());
 					this->smoothFootPos.target = (leftPosLocal + rightPosLocal) / 2.0f;
 					this->smoothFootPos.target.z += OFFSET*playerScale;
-
 				}
 			}
 		}

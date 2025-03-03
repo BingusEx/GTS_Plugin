@@ -15,7 +15,7 @@ namespace GTS {
 			"You can add sounds by adding your own .wav files in the following folder:\n"
 	    	"(Your Skyrim Folder)\\Data\\Sound\\fx\\GTS\\Others";
 	        
-	        if(ImGui::CollapsingHeader("Sounds",ImUtil::HeaderFlags)){
+	        if(ImGui::CollapsingHeader("Sounds",ImUtil::HeaderFlagsDefaultOpen)){
 				ImGui::TextColored(ImUtil::ColorSubscript, "A Note On Sounds (?)");
 				ImUtil::Tooltip(THelp ,true);
 
@@ -34,7 +34,7 @@ namespace GTS {
 			const char* T1 = "Change the maximum voice pitch, Higher values will lower the pitch when the actor is large.\n"
 							 "It's recommended to leave this at 1.0x. Anything above 1.2x doesn't sound good.";
 
-			if (ImGui::CollapsingHeader("Voice",ImUtil::HeaderFlags)) {
+			if (ImGui::CollapsingHeader("Voice",ImUtil::HeaderFlagsDefaultOpen)) {
 				ImUtil::CheckBox("Enable Voice Override",&Settings.bEnableVoiceOverride, T0);
 				ImUtil::SliderF("Voice Pitch Max",&Settings.fMaxVoiceFrequency, 1.0f, 1.6f, T1, "%.2fx", !Settings.bEnableVoiceOverride);
 				ImGui::Spacing();

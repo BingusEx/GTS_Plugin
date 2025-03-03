@@ -264,7 +264,7 @@ namespace GTS {
 				if (object) {
 					TESObjectREFR* objectref = object.get().get();
 
-					if (objectref->formID == 0x14 && !Config::GetAI().bEnablePlayerPushBack) {
+					if (objectref->formID == 0x14 && !Config::GetGameplay().ActionSettings.bEnablePlayerPushBack) {
 						continue;
 					}
 

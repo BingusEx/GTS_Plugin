@@ -20,8 +20,8 @@ namespace GTS {
             const char* T3 = "Allow the AI to target other followers.";
             const char* T4 = "Only allow the action AI to be active when the follower is in combat.";
             const char* T5 = "Prevent Followers from using regular attacks when they're large. The chance to not attack increases with size.";
-            const char* T6 = "Toggle whether actions like kicks ragdoll the player.";
-            const char* T7 = "If devourment compatibility is enabled.\nToggle whether the GTS should do DV's Endo on the player and teammates instead of doing lethal vore.";
+
+           
 
             const char* THelp = "The GTS AI checks at a configurable time interval what GTS actions it can start.\n"
                                 "Whether the AI takes an action depends on said actions' probability settings.\n"
@@ -30,7 +30,7 @@ namespace GTS {
                                 "Some actions (like hugs or grabs) have their own actions (sub-actions) that work on the same idea but with their own settings\n"
                                 "whom you can modify on the right pane of this settings page.";
 
-            if (ImGui::CollapsingHeader("AI Settings",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("AI Settings",ImUtil::HeaderFlagsDefaultOpen)) {
 
 
                 ImGui::TextColored(ImUtil::ColorSubscript,"How does this work (?)");
@@ -45,12 +45,14 @@ namespace GTS {
 
                     ImUtil::SliderF("Try To Start A New Action",&Settings.fMasterTimer, 2.0f, 15.0f, T1 ,"Every %.1f Seconds");
                     ImGui::Spacing();
+
                     ImUtil::CheckBox("Target Player", &Settings.bAllowPlayer, T2);
+                    ImGui::SameLine();
                     ImUtil::CheckBox("Target Other Followers", &Settings.bAllowFollowers, T3);
+
                     ImUtil::CheckBox("Enable AI Only During Combat",&Settings.bCombatOnly, T4);
                     ImUtil::CheckBox("Disable Regular Attacks When Large", &Settings.bDisableAttacks, T5);
-                    ImUtil::CheckBox("Kicks Affect Player", &Settings.bEnablePlayerPushBack, T6);
-                    ImUtil::CheckBox("Do DV Endo On Team And Player", &Settings.bDVDoEndoOnTeam, T7);
+
                     ImGui::EndDisabled();
                 }
 
@@ -62,7 +64,7 @@ namespace GTS {
 
             const char* T0 = "Toggle whether other NPCs should panic when near a GTS.";
 
-            if (ImGui::CollapsingHeader("Misc Settings",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Misc Settings",ImUtil::HeaderFlagsDefaultOpen)) {
                 ImUtil::CheckBox("Actors Panic", &Settings.bPanic, T0);
                 ImGui::Spacing();
             }
@@ -81,7 +83,7 @@ namespace GTS {
             const char* T0 = "Enable starting a vore action.";
             const char* T1 = "Set the chance for a vore action to be started.";
 
-            if (ImGui::CollapsingHeader("Vore",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Vore")) {
                 ImUtil::CheckBox("Enable Vore", &Settings.Vore.bEnableAction, T0);
                 ImUtil::SliderF("Vore Probability", &Settings.Vore.fProbability, 1.0f, 100.0f, T1,"%.0f%%",!Settings.Vore.bEnableAction);
                 ImGui::Spacing();
@@ -96,7 +98,7 @@ namespace GTS {
             const char* T1 = "Set the chance for a stomp action to be started.";
             const char* T2 = "Set the chance to pefrom a grind animation when doing under stomps";
 
-            if (ImGui::CollapsingHeader("Stomps",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Stomps")) {
                 ImUtil::CheckBox("Enable Stomps", &Settings.Stomp.bEnableAction, T0);
                 ImUtil::SliderF("Stomp Probability", &Settings.Stomp.fProbability, 1.0f, 100.0f, T1, "%.0f%%",!Settings.Stomp.bEnableAction);
                 ImUtil::SliderF("Grind On Understomp Chance", &Settings.Stomp.fUnderstompGrindProbability, 0.0f, 100.0f, T2, "%.0f%%", !Settings.Stomp.bEnableAction);
@@ -111,7 +113,7 @@ namespace GTS {
             const char* T0 = "Enable kicks when standing or hand swipes when sneaking / crawling.";
             const char* T1 = "Set the chance for a kick or swipe action to be started.";
 
-            if (ImGui::CollapsingHeader("Kicks / Swipes",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Kicks / Swipes")) {
                 ImUtil::CheckBox("Enable Kicks / Swipes", &Settings.KickSwipe.bEnableAction, T0);
                 ImUtil::SliderF("Kick / Swipe Probability", &Settings.KickSwipe.fProbability, 1.0f, 100.0f, T1,"%.0f%%",!Settings.KickSwipe.bEnableAction);
                 ImGui::Spacing();
@@ -132,7 +134,7 @@ namespace GTS {
             const char* T3 = "Modify the chance to start a heavy attack.";
             const char* T4 = "Modify the chance to start a light attack.";
 
-            if (ImGui::CollapsingHeader("Thigh Sandwich",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Thigh Sandwich")) {
                 ImUtil::CheckBox("Enable Thigh Sandwich", &Settings.ThighSandwich.bEnableAction, T0);
 
                 {
@@ -164,7 +166,7 @@ namespace GTS {
 
             const char* T3 = "Modify the chance to perform an attack.";
 
-            if (ImGui::CollapsingHeader("Thigh Crush",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Thigh Crush")) {
 
                 ImUtil::CheckBox("Enable Thigh Crush", &Settings.ThighCrush.bEnableAction, T0);
 
@@ -199,7 +201,7 @@ namespace GTS {
         					 "Note: When the player or another follower is being hugged by a follower the chance to shrink is capped to up to 15%";
             const char* T9 = "Should the hugged actor be let go if they can't be shrunk any further.\nApplies only to Followers/Player. Others will be always let go.";
 
-            if (ImGui::CollapsingHeader("Hugs",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Hugs")) {
 
                 ImUtil::CheckBox("Enable Hugs", &Settings.Hugs.bEnableAction, T0);
                 {
@@ -243,7 +245,7 @@ namespace GTS {
                              "Note: The chance to perform the crush is internally increased based on growth.\n"
                              "If you want the follower to grow often and only crush after a while, keep this value low.";
 
-            if (ImGui::CollapsingHeader("Butt Crush",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Butt Crush")) {
 
                 ImUtil::CheckBox("Enable Butt Crush", &Settings.ButtCrush.bEnableAction, T0);
 
@@ -283,7 +285,7 @@ namespace GTS {
             const char* T9 = "If an NPC is between the followers' cleavage, set the chance for a crush attack action to start.";
             const char* T10 = "If an NPC is between the followers' cleavage, set the chance for a suffocation action to start.";
 
-            if (ImGui::CollapsingHeader("Grabs",ImGuiTreeNodeFlags_None)) {
+            if (ImGui::CollapsingHeader("Grabs")) {
 
                 ImUtil::CheckBox("Enable Grabs", &Settings.Grab.bEnableAction, T0);
 
@@ -294,13 +296,17 @@ namespace GTS {
                     ImGui::Spacing();
 
                     ImUtil::SliderF("Action Interval",&Settings.Grab.fInterval, 1.0f, 10.0f, T2, "Every %.1f Second(s)");
-                    ImUtil::SliderF("Chance To Throw",&Settings.Grab.fThrowProb, 0.0f, 100.0f, T3, "%.0f%%");
+
+                	ImGui::Spacing();
+                    ImGui::Text("Grab Actions");
+                	ImUtil::SliderF("Chance To Throw",&Settings.Grab.fThrowProb, 0.0f, 100.0f, T3, "%.0f%%");
                     ImUtil::SliderF("Chance To Vore",&Settings.Grab.fVoreProb, 0.0f, 100.0f, T4, "%.0f%%");
                     ImUtil::SliderF("Chance To Crush",&Settings.Grab.fCrushProb, 0.0f, 100.0f, T5, "%.0f%%");
                     ImUtil::SliderF("Place in Cleavage Chance",&Settings.Grab.fCleavageProb, 0.0f, 100.0f, T6, "%.0f%%");
-                    ImGui::Spacing();
 
-                    ImGui::Text("Cleavage Settings");
+                	ImGui::Spacing();
+
+                    ImGui::Text("Cleavage Actions");
                     ImUtil::SliderF("Cleavage Absorb Chance",&Settings.Grab.fCleavageAbsorbProb, 0.0f, 100.0f, T7, "%.0f%%");
                     ImUtil::SliderF("Cleavage Vore Chance",&Settings.Grab.fCleavageVoreProb, 0.0f, 100.0f, T8, "%.0f%%");
                     ImUtil::SliderF("Cleavage Crush Chance",&Settings.Grab.fCleavageAttackProb, 0.0f, 100.0f, T9, "%.0f%%");

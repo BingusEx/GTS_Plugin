@@ -8,15 +8,15 @@
 
 namespace GTS {
 
-    class CategoryInterface final : public ImCategorySplit {
+    class CategoryWidgets final : public ImCategorySplit {
         public:
-        CategoryInterface(){
-            title = "Interface";
+        CategoryWidgets() {
+            title = "Widgets";
         }
 
         void DrawLeft() override;
         void DrawRight() override;
-        
+
         private:
         ImStyleManager& StyleMgr = ImStyleManager::GetSingleton();
         ImFontManager& FontMgr = ImFontManager::GetSingleton();

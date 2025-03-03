@@ -12,6 +12,8 @@
 #include "UI/Categories/Keybinds.hpp"
 #include "UI/Categories/General.hpp"
 #include "UI/Categories/Balance.hpp"
+#include "UI/Categories/Actions.hpp"
+#include "UI/Categories/Widgets.hpp"
 
 #include "UI/ImGui/ImUtil.hpp"
 #include "Managers/Input/InputManager.hpp"
@@ -82,11 +84,13 @@ namespace GTS {
 	    CatMgr.AddCategory(std::make_shared<CategoryInfo>());
 	    CatMgr.AddCategory(std::make_shared<CategoryGeneral>());
 	    CatMgr.AddCategory(std::make_shared<CategoryGameplay>());
+		CatMgr.AddCategory(std::make_shared<CategoryActions>());
 	    CatMgr.AddCategory(std::make_shared<CategoryBalance>());
 	    CatMgr.AddCategory(std::make_shared<CategoryAudio>());
 	    CatMgr.AddCategory(std::make_shared<CategoryAI>());
 	    CatMgr.AddCategory(std::make_shared<CategoryCamera>());
 	    CatMgr.AddCategory(std::make_shared<CategoryInterface>());
+		CatMgr.AddCategory(std::make_shared<CategoryWidgets>());
 	    CatMgr.AddCategory(std::make_shared<CategoryKeybinds>());
 	    CatMgr.AddCategory(std::make_shared<CategoryAdvanced>());
 	}
@@ -126,7 +130,7 @@ namespace GTS {
 			TotalWidth += (ImGui::CalcTextSize(Lables[1]).x + 2.0f * Style.FramePadding.x);
 		}
 
-		if (sHidden.IKnowWhatImDoing) {
+		if (Config::GetAdvanced().bHideLoadButton) {
 			//Load
 			TotalWidth += Style.ItemSpacing.x + 2; // Add Seperator offset
 			TotalWidth += (ImGui::CalcTextSize(Lables[0]).x + 2.0f * Style.FramePadding.x);
@@ -270,9 +274,7 @@ namespace GTS {
 
 			}
 
-
-
-			if (sHidden.IKnowWhatImDoing) {
+			if (!Config::GetAdvanced().bHideLoadButton) {
 
 				//Load
 				if (ImUtil::Button(Lables[0], "Reload and apply the values currenly stored in Settings.toml and Input.toml", buttonstate, 1.3f)) {

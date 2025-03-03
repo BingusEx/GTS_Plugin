@@ -41,14 +41,14 @@ namespace GTS {
             }
 
             const float MaxScale = get_max_scale(a_actor);
-            if (!AreEqual(LastData.MaxScale, MaxScale, 0.1f) && hasFlag(flags, GTSInfoFeatures::kShowMaxSize)) {
+            if (!AreEqual(LastData.MaxScale, MaxScale, 0.1f) && hasFlag(flags, GTSInfoFeatures::kMaxSize)) {
                 LastData.MaxScale = MaxScale;
                 Show();
                 return;
             }
 
             const float Ench = Ench_Aspect_GetPower(a_actor);
-            if (!AreEqual(LastData.Aspect, Ench) && hasFlag(flags, GTSInfoFeatures::kShowAspect)) {
+            if (!AreEqual(LastData.Aspect, Ench) && hasFlag(flags, GTSInfoFeatures::kAspect)) {
                 LastData.Aspect = Ench;
                 Show();
                 return;

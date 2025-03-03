@@ -122,9 +122,13 @@ struct GameplayActionSettings {
     bool bVoreWeightGain = false;
     bool bAllowInsects = false;
     bool bAllowUndead = false;
+    bool bDVDoEndoOnTeam = false;
 
     //Stomp Settings
     float fPlayerUnderstompGrindChance = 20.0f;
+
+    //Kick Settings
+    bool bEnablePlayerPushBack = true;
 
     //Hug Settings
     bool bNonLethalHugsHostile = true;
@@ -294,6 +298,7 @@ struct SettingsAdvanced {
     bool bDamageAV = true;
     bool bCooldowns = true;
     bool bPauseGame = true;
+    bool bHideLoadButton = true;
     float fSGTMMult = 0.5f;
     float fAnimSpeedAdjMultPlayer = 1.0f;
     float fAnimSpeedAdjMultTeammate = 1.0f;
@@ -482,8 +487,6 @@ struct SettingsAI {
     bool bAllowPlayer = true;
     bool bAllowFollowers = true;
     bool bDisableAttacks = true;
-    bool bEnablePlayerPushBack = true;
-    bool bDVDoEndoOnTeam = false;
 };
 TOML_SERIALIZABLE(SettingsAI);
 

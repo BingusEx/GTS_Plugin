@@ -378,5 +378,7 @@ namespace GTS {
     constexpr float ZoomIn_Cam_Butt = 1.0f;
 
     //////////////////
-    constexpr float ZoomIn_LookAt_BothFoot = 0.5f;
+    
+    constexpr float ZoomIn_LookAt_BothFeet = 0.5f;
+
 }

@@ -75,7 +75,7 @@ namespace GTS {
 	        const char* T0 = "Change the intensity of camera shakes when performing actions as a player.";
 	        const char* T1 = "Change the intensity of camera shakes for NPCs.";
 
-	        if (ImGui::CollapsingHeader("Camera Shake", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Camera Shake", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::SliderF("Player Total Shake Power", &Settings.fCameraShakePlayer, 0.1f, 3.0f, T0, "%.1fx");
 	            ImUtil::SliderF("NPC Total Shake Power", &Settings.fCameraShakeOther, 0.1f, 3.0f, T1, "%.1fx");
 
@@ -89,7 +89,7 @@ namespace GTS {
 	        const char* T1 = "Change the height multiplier of the camera while crawling in third person.\n"
 	    					 "Note: This wont't work correctly if you are using smoothcam.";
 
-	        if (ImGui::CollapsingHeader("Crawl Height", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Crawl Height", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::SliderF("1st P. Crawl Height", &Settings.fFPCrawlHeightMult, 0.01f, 1.0f, T0, "%.1fx");
 	            ImUtil::SliderF("3rd P. Crawl Height", &Settings.fTPCrawlHeightMult, 0.01f, 1.0f, T1, "%.1fx");
 
@@ -200,7 +200,7 @@ namespace GTS {
 			//Hack
             auto CamState = std::bit_cast<int*>(&Persistent::GetSingleton().TrackedCameraState.value);
 
-	        if (ImGui::CollapsingHeader("Automatic Camera", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Automatic Camera", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::CheckBox("Enable Automatic Camera", &Settings.bAutomaticCamera, T0);
 	            ImUtil::IComboEx<CameraModeTP>("Camera Mode", CamState, T1, !Settings.bAutomaticCamera);
 				ImUtil::SliderF("Interpolation Factor", &Settings.fCameraInterpolationFactor, 0.01f, 1.0f, T2, "%.2fx", !Settings.bAutomaticCamera);

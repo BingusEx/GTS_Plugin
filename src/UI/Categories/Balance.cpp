@@ -34,7 +34,7 @@ namespace GTS {
                                 "On top of that all attribute increases are 50%% weaker and some configuration options are disabled.\n"
                                 "You cannot skip the quest while Balance Mode is enabled.";
 
-            if (ImGui::CollapsingHeader("Balance Mode", ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Balance Mode", ImUtil::HeaderFlagsDefaultOpen)) {
 
                 ImGui::TextColored(ImUtil::ColorSubscript,"What is balance mode (?)");
                 if (ImGui::IsItemHovered()) {
@@ -63,7 +63,7 @@ namespace GTS {
             const char* T2 = "Toggle whether the player and followers stagger / ragdoll due to others' size.";
             const char* T3 = "Toggle whether other NPCs stagger / ragdoll due to others' size.";
 
-            if (ImGui::CollapsingHeader("Misc Settings", ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Misc Settings", ImUtil::HeaderFlagsDefaultOpen)) {
 
                 ImUtil::CheckBox("Player Size Damage Immunity", &Settings.bPlayerFriendlyImmunity, T0);
                 ImUtil::CheckBox("Followers Size Damage Immunity", &Settings.bFollowerFriendlyImmunity, T1);
@@ -88,7 +88,7 @@ namespace GTS {
         						"In \"Mass Based\" mode your maximum size is determiend by how many things you have absorbed/eaten/etc...\n"
         						"Mass based mode starts off at 1.0x scale and will allow you to grow up to your normal maximum skill based scale (or if you have the perk to whatever you set max scale to) once you've absorbed enough things";
 
-            if (ImGui::CollapsingHeader("Size Options", ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Size Options", ImUtil::HeaderFlagsDefaultOpen)) {
 
                 ImGui::TextColored(ImUtil::ColorSubscript, "What is this (?)");
                 ImUtil::Tooltip(Thelp, true);
@@ -264,8 +264,6 @@ namespace GTS {
                 ImUtil::SliderF("Damage Multiplier", &Settings.fStatBonusDamageMult, 0.1f, 2.0f, T1, "%.2fx");
                 ImUtil::SliderF("Carry Weight Multiplier", &Settings.fStatBonusCarryWeightMult, 0.1f, 2.0f, T3, "%.2fx");
                 ImUtil::SliderF("Experience Multiplier", &Settings.fExpMult, 0.1f, 5.0f, T2, "%.2fx");
-                ImGui::Spacing();
-
             }
         }
     }

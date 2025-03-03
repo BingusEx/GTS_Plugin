@@ -34,7 +34,7 @@ namespace GTS {
 
 	    const char* T0 = "Collapse all currently visible input actions.";
 	    const char* T1 = "Expand all currently visible input actions.";
-	    const char* T2 = "Filter based on an actions's name.";
+	    const char* T2 = "Filter based on an actions' name.";
 	    const char* T3 = "Divide the action list in columns.";
 
 	    ImGui::BeginChild("Options", {-FLT_MIN, 0.0f}, ImGuiChildFlags_AlwaysAutoResize | ImGuiChildFlags_AutoResizeY);
@@ -206,8 +206,6 @@ namespace GTS {
 						
 	                }
 
-	                
-	                // Pain and suffering... Begins Here...
 	                {   //-- UI CODE
 
 	                    VisualKeyString = "";

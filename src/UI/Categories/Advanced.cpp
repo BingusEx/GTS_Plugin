@@ -13,7 +13,7 @@ namespace GTS {
             const char* T0 = "Show or hide this page.\n"
 							 "After Disabling you have to re-add the option to the settings toml again if you want to re-enable it.";
 
-            if (ImGui::CollapsingHeader("Advanced",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Advanced",ImUtil::HeaderFlagsDefaultOpen)) {
                 ImUtil::CheckBox("Enable/Disable This Page", &Config::GetHidden().IKnowWhatImDoing, T0);
             }
         }
@@ -27,7 +27,7 @@ namespace GTS {
             const char* T2 = "Set the log severity level. The higher it is the more info is dumped into GTSPlugin.log";
             const char* T3 = "Set the flush severity level. The higher it is the more info is dumped into GTSPlugin.log when a crash happens";
 
-            if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Logging / Debugging",ImUtil::HeaderFlagsDefaultOpen)) {
 
                 ImUtil::CheckBox("Enable Profiling",&Settings.bProfile, T0);
                 ImUtil::CheckBox("Show Debug Overlay",&Settings.bShowOverlay,T1);
@@ -52,7 +52,7 @@ namespace GTS {
             const char* T1 = "Bypass action cooldowns.";
             const char* T2 = "Multiply the resulting GetAnimationSlowdown Value";
 
-            if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Cheats",ImUtil::HeaderFlagsDefaultOpen)) {
                 ImUtil::CheckBox("ActorValue Damage",&Settings.bDamageAV, T0);
                 ImUtil::CheckBox("Action Cooldowns",&Settings.bCooldowns, T1);
                 ImUtil::SliderF("Animspeed Player", &Settings.fAnimSpeedAdjMultPlayer, 0.2f, 1.0f, T2);
@@ -68,12 +68,13 @@ namespace GTS {
         ImUtil_Unique {
 
             //ImGui Debug
-            if (ImGui::CollapsingHeader("ImGui Debug",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("ImGui Debug",ImUtil::HeaderFlagsDefaultOpen)) {
                 {
                     const char* T0 = "Show ImGui's Metrics Window";
                     const char* T1 = "Show ImGui's Stack Window";
 
                     ImUtil::CheckBox("Show Metrics", &ImWindowManager::GetSingleton().ShowMetrics,T0);
+                    ImGui::SameLine();
                     ImUtil::CheckBox("Show Stack", &ImWindowManager::GetSingleton().ShowStack,T1);
                 }
 
@@ -92,7 +93,7 @@ namespace GTS {
 
 			const char* T1 = "Multiply game speed by this value when the settings menu is open.\nOnly works if Pause game is disabled.";
 
-            if (ImGui::CollapsingHeader("Pause",ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Pause",ImUtil::HeaderFlagsDefaultOpen)) {
 
 	            ImUtil::CheckBox("Pause Game", &Settings.bPauseGame, T0);
 	            ImUtil::SliderF("SGTM Mult", &Settings.fSGTMMult, 0.05f, 1.0f, T1, "%.2fx", Settings.bPauseGame);
@@ -101,19 +102,13 @@ namespace GTS {
 
         }
 
-
         ImUtil_Unique {
 
-
-            const char* THelp = "Here you can erase internal actor data that this mod stores.\n"
+            const char* THelp = "Here you can erase the internal actor data of this mod.\n"
         						"Make sure you do this in a cell like qasmoke. Only Unloaded actor data will deleted.\n"
-        						"You must save, close, and reload the game after doing this else you risk really breaking stuff.\n"
-								"ONLY DO THIS IF YOU REALLY KNOW WHAT YOU'RE DOING.\n";
+        						"You must save, close and restart the game after doing this else you risk really breaking stuff.";
 
-	        if (ImGui::CollapsingHeader("Data Management",ImUtil::HeaderFlags)) {
-
-                ImGui::TextColored(ImUtil::ColorError, "Info (!)");
-                ImUtil::Tooltip(THelp, true);
+	        if (ImGui::CollapsingHeader("Data Management",ImUtil::HeaderFlagsDefaultOpen)) {
 
                 if (ImUtil::Button("Erase Persistent", "Clear out all data in persistent", false, 1.0f)) {
                 	TES::GetSingleton()->PurgeBufferedCells();
@@ -128,6 +123,13 @@ namespace GTS {
                     logger::critical("Purged cell buffers in preperation of transient erase.");
                     Transient::GetSingleton().EraseUnloadedTransientData();
                 }
+
+                ImGui::SameLine();
+
+                ImGui::TextColored(ImUtil::ColorError, "Info (!)");
+                ImUtil::Tooltip(THelp, true);
+
+                ImUtil::CheckBox("Hide Load Button", &Settings.bHideLoadButton, "Toggle the visibility of the load button");
 	        }
         }
     }

@@ -2,22 +2,18 @@
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImUtil.hpp"
 
-
-
 namespace {
 
-    
     const std::string CollossalGrowthPerk = "ColossalGrowth"; //AKA GtsTotalSizeControl
     const std::string PleasurableGrowthPerk = "RandomGrowth"; //AKA GtsCrushGrowthAug
     const std::string CrushGrowthAugmetationPerk = "GrowthDesirePerk";
     const std::string GrowOnHitPerk = "GrowthOnHitPerk";
-
 }
 
 
 namespace GTS {
 
-    void CategoryGameplay::GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings) {
+    void CategoryGameplay::GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings, bool a_DefaultOpen) {
 
         const char* T0 = "Select the game mode\n\n"
             "Basic:\n"
@@ -59,7 +55,7 @@ namespace GTS {
             Reason = "Requires \"Colossal Growth\" Perk";
         }
 
-        if (ImUtil::ConditionalHeader(a_title, Reason, HasPerk, false)) {
+        if (ImUtil::ConditionalHeader(a_title, Reason, HasPerk, a_DefaultOpen)) {
 
             ImUtil::ComboEx<SelectedGameMode>("Game Mode", a_Settings->sGameMode, T0);
 
@@ -85,8 +81,12 @@ namespace GTS {
 
     void CategoryGameplay::DrawLeft() {
 
+
+        //----- Perk Settings
+
         ImUtil_Unique {
-            if (ImGui::CollapsingHeader("Perk Settings", ImUtil::HeaderFlags)) {
+
+            if (ImGui::CollapsingHeader("Perk Settings", ImUtil::HeaderFlagsDefaultOpen)) {
 
                 // TODO Add Perk References
                 const bool PerkCondCrush = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CrushGrowthAugmetationPerk);
@@ -105,6 +105,8 @@ namespace GTS {
                 const std::string tGrowOnCrush = fmt::format("Grow On Crush {}", (!PerkCondCrush ? "[Missing Perk]" : ""));
                 ImUtil::CheckBox(tGrowOnCrush.c_str(), &Settings.bEnableCrushGrowth, T1, !PerkCondCrush);
 
+                ImGui::SameLine();
+
                 const std::string tGrowOnHit = fmt::format("Grow On Hit {}", (!PerkCondHit ? "[Missing Perk]" : ""));
                 ImUtil::CheckBox(tGrowOnHit.c_str(), &Settings.bEnableGrowthOnHit, T2, !PerkCondHit);
 
@@ -115,8 +117,10 @@ namespace GTS {
             }
         }
 
+    	//----- Armor Stripping
+
         ImUtil_Unique {
-            if (ImGui::CollapsingHeader("Armor Stripping", ImUtil::HeaderFlags)) {
+            if (ImGui::CollapsingHeader("Armor Stripping", ImUtil::HeaderFlagsDefaultOpen)) {
 
                 const char* T1 = "Enable/disable the automatic unequipping of clothing/armor when large enough.\n"
                                  "Applies to both the player and followers.\n"
@@ -135,8 +139,11 @@ namespace GTS {
             }
         }
 
+    	//----- Size Effects
+
         ImUtil_Unique{
-            if (ImGui::CollapsingHeader("Size Effects", ImGuiTreeNodeFlags_None)) {
+
+            if (ImGui::CollapsingHeader("Size Effects")) {
 
                 const char* T1 = "When large enough, footsteps or size-related actions will launch physics-enabled items.";
 
@@ -156,89 +163,11 @@ namespace GTS {
             }
         }
 
-        ImUtil_Unique{
-            if (ImGui::CollapsingHeader("Animations", ImGuiTreeNodeFlags_None)) {
-
-                const char* T1 = "When enabled:\n"
-                                 "Replaces the light stomp animations made by SonderBain with different\n"
-                                 "versions made by NickNack.";
-
-                const char* T2 = "This mod introduces new subtle transition animations when entering/exiting sneak or crawl states.\n"
-                                 "This toggle disables/enables them.";
-
-                ImUtil::CheckBox("Alternative Stomp Player", &Settings.ActionSettings.bStompAlternative, T1);
-                ImUtil::CheckBox("Alternative Stomp NPCs", &Settings.ActionSettings.bStomAlternativeOther, T2);
-                ImGui::Spacing();
-                ImUtil::CheckBox("Sneak Transitions Player", &Settings.ActionSettings.bSneakTransitions, T2);
-                ImUtil::CheckBox("Sneak Transitions NPCs", &Settings.ActionSettings.bSneakTransitionsOther, T2);
-
-                ImGui::Spacing();
-            }
-        }
+        //----- Random Growth
 
         ImUtil_Unique{
 
-            if (ImGui::CollapsingHeader("Vore Settings", ImGuiTreeNodeFlags_None)) {
-
-                const char* T1 = "Modify the amount of growth gained after vore.";
-                const char* T2 = "Enable Skyrim's free camera when doing any vore actions.";
-                const char* T3 = "Increase vanilla character weight after vore.";
-                const char* T4 = "Allow voring insects.";
-                const char* T5 = "Allow voring undead actors (like draugr).";
-
-                ImUtil::SliderF("Vore Gain Mult", &Settings.ActionSettings.fVoreGainMult, 0.1f, 3.0f, T1, "%.1fx");
-                ImUtil::CheckBox("Enable FreeCam During Vore", &Settings.ActionSettings.bVoreFreecam, T2);
-                ImUtil::CheckBox("Increase Character Weight After Vore", &Settings.ActionSettings.bVoreWeightGain, T3);
-                ImUtil::CheckBox("Allow Insects", &Settings.ActionSettings.bAllowInsects, T4);
-                ImUtil::CheckBox("Allow Undead", &Settings.ActionSettings.bAllowUndead, T5);
-
-                ImGui::Spacing();
-            }
-        }
-
-        ImUtil_Unique{
-
-	        if (ImGui::CollapsingHeader("Stomp Settings", ImGuiTreeNodeFlags_None)) {
-	            const char* T1 = "Increase/lower the chance to start a foot grinding animation when doing understomps.";
-	            ImUtil::SliderF("Foot Grind On Understomp Chance", &Settings.ActionSettings.fPlayerUnderstompGrindChance, 0.0f, 100.0f, T1, "%.0f%%");
-
-	            ImGui::Spacing();
-	        }
-        }
-
-        ImUtil_Unique{
-            if (ImGui::CollapsingHeader("Hug Settings", ImGuiTreeNodeFlags_None)) {
-
-                const char* T1 = "Toggle whether non lethal hug actions\n"
-                                 "like Hug-Heal or Hug-Shrink should start combat.";
-
-                const char* T2 = "Toggle whether after hug healing to full HP\n"
-								 "The held actor should be let go.";
-
-                ImUtil::CheckBox("Non Lethal Hugs Are Hostile", &Settings.ActionSettings.bNonLethalHugsHostile, T1);
-                ImUtil::CheckBox("Hug Heal Stops At Full HP (Player & Followers)", &Settings.ActionSettings.bHugsStopAtFullHP, T2);
-                ImGui::Spacing();
-            }
-        }
-
-        ImUtil_Unique{
-            if (ImGui::CollapsingHeader("Cleavage Offsets", ImGuiTreeNodeFlags_None)) {
-
-                const char* T1 = "Modify the placement of actors during cleavage actions.";
-
-                ImUtil::SliderF("Forward/Back", &Settings.ActionSettings.f2CleavageOffset.at(0), -10.0f, 10.0f, T1, "%.2f");
-                ImUtil::SliderF("Up/Down", &Settings.ActionSettings.f2CleavageOffset.at(1), -10.0f, 10.0f, T1, "%.2f");
-
-                ImGui::Spacing();
-            }
-        }
-    }
-
-    void CategoryGameplay::DrawRight() {
-
-        ImUtil_Unique{
-
-            bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), PleasurableGrowthPerk);;
+            bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), PleasurableGrowthPerk);
 
             const char* Reason;
 
@@ -266,42 +195,17 @@ namespace GTS {
                 ImGui::Spacing();
             }
         }
+    }
 
-        // ImUtil_Unique {
-        //     //TODO Check for perk
-        //     const bool temp = true;
-        //     if (ImUtil::ConditionalHeader("Size Difference Thresholds", "Requires \"Colossal Growth\" Perk", temp,false)) {
-
-        //         const char* T0 = "Size difference required between the GTS and a target to start a vore action.";
-        //         const char* T1 = "Size difference required between the GTS and a target to start a butt crush action.";
-        //         const char* T2 = "Size difference required between the GTS and a target to start a grab action.";
-        //         const char* T3 = "Size difference required between the GTS and a target to start a thigh sandwich action.";
-        //         const char* T4 = "Size difference required between the GTS and a target for stomps to start doing significant damage.";
-        //         const char* T5 = "Size difference required between the GTS and a target to be able to keep perfoming hugs on them.";
-        //         const char* T6 = "Size difference required between the GTS AI and a target to start a thigh crush action.";
-
-        //         ImGui::Text("Applies to both Player/Followers");
-        //         ImUtil::SliderF("Start Vore", &Settings.ActionSettings.fStartVoreScale, 4.0f, 10.0f, T0, "%.2fx");
-        //         ImUtil::SliderF("Start Butt Crush", &Settings.ActionSettings.fStartButtCrushScale, 1.5f, 5.0f, T1, "%.2fx");
-        //         ImUtil::SliderF("Start Grab", &Settings.ActionSettings.fStartGrabScale, 5.5f, 10.0f, T2, "%.2fx");
-        //         ImUtil::SliderF("Start Thigh Sandwich", &Settings.ActionSettings.fStartThighSandwichScale, 3.0f, 10.0f, T3, "%.2fx");
-        //         ImUtil::SliderF("Start Stomp", &Settings.ActionSettings.fStartStompScale, 5.0f, 4.0f, T4, "%.2fx");
-        //         ImUtil::SliderF("Hugs Max Size Difference", &Settings.ActionSettings.fHugDropScale, 0.7f, 1.1f, T5, "%.2fx");
-
-        //         ImGui::Text("Applies to followers only");
-        //         ImUtil::SliderF("Start Thigh Crush", &Settings.ActionSettings.fAIStartThighCrushScale, 3.0f, 10.0f, T6, "%.2fx");
-
-        //         ImGui::Spacing();
-        //     }
-        // }
+    void CategoryGameplay::DrawRight() {
 
     	//----------- Game Modes
         ImUtil_Unique{
-            GameModeOptions("Gamemode Player", &Settings.GamemodePlayer);
+            GameModeOptions("Gamemode Player", &Settings.GamemodePlayer, true);
         }
 
         ImUtil_Unique{
-            GameModeOptions("Gamemode Followers", &Settings.GamemodeFollower);
+            GameModeOptions("Gamemode Followers", &Settings.GamemodeFollower, false);
         }
     }
 }

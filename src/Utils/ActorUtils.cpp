@@ -1917,7 +1917,7 @@ namespace GTS {
 	//TODO IMPLEMENT ENDO IN SCRIPT
 	void CallDevourment(Actor* giant, Actor* tiny) {
 		auto progressionQuest = Runtime::GetQuest("MainQuest");
-		const auto& AllowEndo = Config::GetAI().bDVDoEndoOnTeam;
+		const auto& AllowEndo = Config::GetGameplay().ActionSettings.bDVDoEndoOnTeam;
 		bool DoEndo = false;
 		if (AllowEndo && (IsTeammate(giant) || giant->formID == 0x14 && IsTeammate(tiny) || tiny->formID == 0x14)) {
 			DoEndo = true;

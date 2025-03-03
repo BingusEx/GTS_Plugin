@@ -217,7 +217,7 @@ namespace ImUtil {
         }
     }
 
-    const bool ContainsString(const std::string& a1, const std::string& a2) {
+    bool ContainsString(const std::string& a1, const std::string& a2) {
         auto to_lower = [](unsigned char c) { return std::tolower(c); };
 
         auto a1_view = a1 | std::views::transform(to_lower);

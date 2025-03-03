@@ -35,7 +35,7 @@ namespace GTS {
         }
 
 
-        int Div = 2;
+        int Div = 3;
         std::string SearchRes;
         bool HideFiltered = false;
         volatile uint8_t ColExpState = 0;

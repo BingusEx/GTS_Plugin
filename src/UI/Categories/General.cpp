@@ -13,13 +13,15 @@ namespace GTS {
 
 	void CategoryGeneral::DrawLeft() {
 
+		// ----- Animation Check
+
 		ImUtil_Unique {
 
 			const char* T0 = "The automatic check can sometimes be unreliable.\n"
 							 "By pressing this you can forcefully try play an animation.\n"
 							 "A messagebox should appear stating wether the animation was successfully played or not.";
 
-			if (ImGui::CollapsingHeader("Animations Check", ImUtil::HeaderFlags)) {
+			if (ImGui::CollapsingHeader("Animations Check", ImUtil::HeaderFlagsDefaultOpen)) {
 				const auto Player = PlayerCharacter::GetSingleton();
 				const bool WorkingAnims = AnimationsInstalled(Player);
 
@@ -71,8 +73,9 @@ namespace GTS {
 	        const char* T0 = "Protect essential NPCs from being crushed, eaten, or affected by size-related spells/actions.";
 	        const char* T1 = "Protect followers from being crushed, eaten, or affected by size-related spells/actions.";
 
-	        if (ImGui::CollapsingHeader("Protect Actors", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Protect Actors", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::CheckBox("Protect Essential NPCs",&Settings.bProtectEssentials, T0);
+				ImGui::SameLine();
 	            ImUtil::CheckBox("Protect Followers",&Settings.bProtectFollowers, T1);
 	            ImGui::Spacing();
 	        }
@@ -88,28 +91,11 @@ namespace GTS {
 	        const char* T1 = "Enable or disable compatibility with the Alternate Conversation Camera mod.\n"
 	                         "If enabled, this mod's camera offsets during dialogue will be disabled.";
 
-	        if (ImGui::CollapsingHeader("Compatibility", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Compatibility", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::CheckBox("Devourment Compatibility",&Settings.bDevourmentCompat, T0);
 	            ImUtil::CheckBox("Alt Conversation Cam. Compatibility",&Settings.bConversationCamCompat, T1);
 	            ImGui::Spacing();
 
-	        }
-	    }
-
-		//------ Visuals
-
-	    ImUtil_Unique {
-
-	        const char* T0 = "Reduce the amount of gore in some sound and visual effects.";
-	        const char* T1 = "Show heart particle effects during certain actions.";
-	        const char* T2 = "Show or hide icons above NPCs indicating which GTS actions can be performed on them.";
-
-	        if (ImGui::CollapsingHeader("Visuals", ImUtil::HeaderFlags)) {
-
-	            ImUtil::CheckBox("Less Gore",&Settings.bLessGore, T0);
-	            ImUtil::CheckBox("Heart Effects",&Settings.bShowHearts, T1);
-	            ImUtil::CheckBox("Show Action Icons",&Settings.bShowIcons, T2);
-	            ImGui::Spacing();
 	        }
 	    }
 
@@ -126,7 +112,7 @@ namespace GTS {
 
 			const char* T1 = "Apply computationally expensive damage calculations to all actors.";
 
-	        if (ImGui::CollapsingHeader("Experimental", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Experimental", ImUtil::HeaderFlagsDefaultOpen)) {
 	            ImUtil::CheckBox("Allow Male Actors", &Settings.bEnableMales, T0);
 				ImUtil::CheckBox("Apply Size Effects to all Actors", &Settings.bAllActorSizeEffects, T1);
 	        	ImGui::Spacing();
@@ -137,34 +123,6 @@ namespace GTS {
 	void CategoryGeneral::DrawRight() {
 
 
-		//----- Sneaking
-
-	    ImUtil_Unique {
-
-	        const char* T1 = "Replace sneaking with crawling for the player only.\n(Save specific setting)";
-	        const char* T2 = "Replace sneaking with crawling for followers.\n(Save specific setting)";
-
-	        if (ImGui::CollapsingHeader("Sneaking", ImUtil::HeaderFlags)) {
-				auto& Persi = Persistent::GetSingleton();
-
-				bool PlayerBusy = IsTransitioning(PlayerCharacter::GetSingleton());
-				bool FollowersBusy = false;
-
-				for (const auto& Fol : FindTeammates()) {
-					if (Fol) {
-						if (IsTransitioning(Fol)) {
-							FollowersBusy = true;
-							break;
-						}
-					}
-				}
-
-	            ImUtil::CheckBox("Enable Player Crawling", &Persi.EnableCrawlPlayer.value, T1, PlayerBusy);
-	            ImUtil::CheckBox("Enable Follower Crawling", &Persi.EnableCrawlFollower.value, T2, FollowersBusy);
-	            ImGui::Spacing();
-	        }
-	    }
-
 		//----- Misc
 
 	    ImUtil_Unique {
@@ -174,20 +132,15 @@ namespace GTS {
 	                         "Once outside the small room, they will regrow to their previous size.";
 
 	        const char* T1 = "Adjust the speed of all animations based on an actor's scale.";
-	        const char* T2 = "Allow adjustments to the field of view during certain actions (e.g., Second Wind).";
-	        const char* T3 = "Track biped skeleton bone positions during certain animated actions.";
+			const char* T2 = "Reduce the amount of gore in some sound and visual effects.";
 
-	        if (ImGui::CollapsingHeader("Miscellaneous")) {
+
+	        if (ImGui::CollapsingHeader("Miscellaneous"), ImUtil::HeaderFlagsDefaultOpen) {
 	            ImUtil::CheckBox("Dynamic Size Player", &Settings.bDynamicSizePlayer, T0);
+				ImGui::SameLine();
 	            ImUtil::CheckBox("Dynamic Size Followers", &Settings.bDynamicSizeFollowers, T0);
 	            ImUtil::CheckBox("Dynamic Animation Speed", &Settings.bDynamicAnimspeed, T1);
-	            ImUtil::CheckBox("Enable FOV Edits", &Settings.bEnableFOVEdits, T2);
-
-	            if (ImUtil::CheckBox("Track Bones During Actions", &Settings.bTrackBonesDuringAnim, T3)) {
-					if (!Settings.bTrackBonesDuringAnim) {
-						ResetCameraTracking();
-					}
-	            }
+				ImUtil::CheckBox("Less Gore", &Settings.bLessGore, T2);
 
 	            ImGui::Spacing();
 	        }
@@ -200,10 +153,13 @@ namespace GTS {
 	        const char* T0 = "Enable height adjustment/correction for actors wearing high heels.";
 	        const char* T1 = "Disable HH height adjustments when using furniture to allow other mods to handle it.";
 
-	        if (ImGui::CollapsingHeader("High-Heels")) {
+	        if (ImGui::CollapsingHeader("High-Heels"), ImUtil::HeaderFlagsDefaultOpen) {
+
 	            ImUtil::CheckBox("Enable Height Adjustment", &Settings.bEnableHighHeels, T0);
 
-	        	if (ImUtil::CheckBox("Disable When Using Furniture", &Settings.bHighheelsFurniture, T1)){
+				ImGui::SameLine();
+
+	        	if (ImUtil::CheckBox("Disable When Using Furniture", &Settings.bHighheelsFurniture, T1, !Settings.bEnableHighHeels)){
 	            	if (!Settings.bHighheelsFurniture) {
 
 						auto actors = find_actors();
@@ -235,8 +191,9 @@ namespace GTS {
 	                         "should spawn loot piles containing the dead actors' inventory.\n"
 	                         "If disabled, the inventory will be automatically transferred to the killer upon death.";
 
-	        if (ImGui::CollapsingHeader("Looting")) {
+	        if (ImGui::CollapsingHeader("Looting"), ImUtil::HeaderFlagsDefaultOpen) {
 	            ImUtil::CheckBox("Player: Spawn Loot Piles",&Settings.bPlayerLootpiles, T0);
+				ImGui::SameLine();
 	            ImUtil::CheckBox("Followers: Spawn Loot Piles",&Settings.bFollowerLootpiles, T0);
 	            ImGui::Spacing();
 
@@ -249,7 +206,7 @@ namespace GTS {
 
 			const char* T0 = "Open this mod's custom skill tree";
 
-			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlags)) {
+			if (ImGui::CollapsingHeader("Skill Tree", ImUtil::HeaderFlagsDefaultOpen)) {
 				if (ImUtil::Button("Open Skill Tree",T0)) {
 					UIManager::CloseSettings();
 					Runtime::SetFloat("OpenGTSSkillMenu", 1.0);
@@ -267,7 +224,7 @@ namespace GTS {
 			const char* T1 = "Get all of the mod's spells";
 	        const char* T2 = "Instantly complete the perk tree.";
 
-	        if (ImGui::CollapsingHeader("Skip Progression", ImUtil::HeaderFlags)) {
+	        if (ImGui::CollapsingHeader("Skip Progression")) {
 
 				const auto Complete = ProgressionQuestCompleted();
 

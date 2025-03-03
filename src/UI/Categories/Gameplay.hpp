@@ -16,7 +16,7 @@ namespace GTS {
 
         private:
         SettingsGameplay& Settings = Config::GetGameplay();
-        static void GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings);
+        static void GameModeOptions(const char* a_title, GameplayActorSettings* a_Settings, bool a_DefaultOpen);
     };
 
 }

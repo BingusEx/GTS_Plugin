@@ -63,7 +63,7 @@ namespace GTS {
         const float Damage = (AttributeManager.GetAttributeBonus(a_Actor, ActorValue::kAttackDamageMult) - 1.0f) * 100.0f;
         const float ShrinkResistance = (1.0f - Potion_GetShrinkResistance(a_Actor)) * 100.f;
         const float OnTheEdge = (GetPerkBonus_OnTheEdge(a_Actor,0.01f) - 1.0f) * 100.f;
-        const float BonusHHDamage = GetHighHeelsBonusDamage(a_Actor, true) * 100.0f;
+        const float BonusHHDamage = (GetHighHeelsBonusDamage(a_Actor, true) - 1.0f) * 100.0f;
 
 
         const std::string StringScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";
@@ -78,7 +78,7 @@ namespace GTS {
             Settings.fFixedWidth, 0.0f), ResultingText.c_str(), Settings.fSizeBarHeightMult
         );
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowMaxSize)) {
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kMaxSize)) {
             
         	if (MaxScale > 250.0f) {
                 ImGui::Text("Max Scale: Infinite");
@@ -88,67 +88,67 @@ namespace GTS {
             }
         }
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowBonusSize))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kBonusSize))
             ImGui::Text("Bonus Size: %.2fx", BonusSize);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowHighHeelBonusDmg) && BonusHHDamage > 0.0f)
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kHeelsBonusDamage) && BonusHHDamage > 0.0f)
             ImGui::Text("High Heel Damage: +%.0f%%", BonusHHDamage);
 
         //Only Do anything on the player
         if (a_Actor->formID == 0x14) {
 
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowEssence))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kEssence))
                 ImGui::Text("Essence: +%.2fx", SizeEssense);
 
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowShrinkResist))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShrinkResist))
                 ImGui::Text("Shrink Resist: %.1f%%", ShrinkResistance);
 
             if (Runtime::HasPerk(a_Actor, "OnTheEdge")) {
-                if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowOnTheEdge))
+                if (hasFlag(a_featureFlags, GTSInfoFeatures::kOnTheEdge))
                     ImGui::Text("On The Edge: %.1f%%", OnTheEdge);
             }
 
             if (Runtime::HasPerk(a_Actor, "SizeReserve")) {
-                if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowSizeReserve))
+                if (hasFlag(a_featureFlags, GTSInfoFeatures::kSizeReserve))
                     ImGui::Text("Size Reserve: %.2fx", SizeReserve);
             }
         }
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowWeight))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kWeight))
         	ImGui::Text("Weight: %s", GTS::GetFormatedWeight(a_Actor).c_str());
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowAspect))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kAspect))
         	ImGui::Text("Aspect of GTS: %.0f%%", AspectOfGTS);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgResist))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kDamageResist))
         	ImGui::Text("Bonus Damage Resist: %.1f%%", DamageResist);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowCarryWeight))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kCarryWeight))
         	ImGui::Text("Bonus Carry Weight: %.1f", CarryWeight);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowSpeedmult))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kSpeedMultiplier))
         	ImGui::Text("Bonus Speed: %.1f%%", Speed);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowJumpMult))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kJumpMultiplier))
         	ImGui::Text("Bonus Jump Height: %.1f%%", JumpHeight);
 
-        if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowDmgMult))
+        if (hasFlag(a_featureFlags, GTSInfoFeatures::kDamageMultiplier))
         	ImGui::Text("Bonus Damage: %.1f%%", Damage);
 
         if (Runtime::HasPerk(a_Actor, "SizeConversion")) {
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowStolenAttributes))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kStolenAttributes))
                 ImGui::Text("Stored Attributes: +%.2f", StolenAttributes);
         }
 
         if (Runtime::HasPerk(a_Actor, "SoulVorePerk")) {
 
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowStolenHealth))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kStolenHealth))
                 ImGui::Text("Absorbed Health: +%.2f", StolenHealth);
 
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowStolenMagicka))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kStolenMagicka))
                 ImGui::Text("Absorbed Magicka: +%.2f", StolenMagicka);
 
-            if (hasFlag(a_featureFlags, GTSInfoFeatures::kShowStolenStamina))
+            if (hasFlag(a_featureFlags, GTSInfoFeatures::kStolenStamina))
                 ImGui::Text("Absorbed Stamina: +%.2f", StolenStamina);
         }
     }

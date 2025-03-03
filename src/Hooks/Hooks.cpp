@@ -58,34 +58,34 @@ namespace Hooks
 
 		log::info("Applying hooks");
 
-		auto& trampoline = SKSE::GetTrampoline();
-		trampoline.create(256);
+		Trampoline& SKSETrampoline = SKSE::GetTrampoline();
+		SKSETrampoline.create(384);
 
 		Hook_VM::Hook();
 		Hook_Character::Hook();
-		Hook_Projectiles::Hook(); // Experimental stuff with scaling arrows and other projectiles. It works but mostly visually.
+		Hook_Projectiles::Hook();      // Experimental stuff with scaling arrows and other projectiles. It works but mostly visually.
 		Hook_BGSImpactManager::Hook();
 		Hook_PlayerCharacter::Hook();
 		Hook_hkbBehaviorGraph::Hook();
 
-		Hook_MainUpdate::Hook(trampoline);
-		Hook_Input::Hook(trampoline);
-		Hook_Renderer::Hook(trampoline);
-		Hook_BGSImpactManager::Hook(trampoline);
-		Hook_Havok::Hook(trampoline);
-		Hook_Actor::Hook(trampoline);
-		Hook_ActorEquipManager::Hook(trampoline);
-		Hook_Sinking::Hook(trampoline);
-		Hook_Jumping::Hook(trampoline);
-		Hook_Damage::Hook(trampoline);
-		Hook_PushBack::Hook(trampoline);
-		Hook_PushAway::Hook(trampoline);
-		Hook_Stealth::Hook(trampoline);
-		Hook_Movement::Hook(trampoline);
-		Hook_HeadTracking::Hook(trampoline);
-		Hook_PreventAnimations::Hook(trampoline);
-		Hook_RaceMenu::Hook(trampoline);
-		Hook_Console::Hook(trampoline);
+		Hook_MainUpdate::Hook(SKSETrampoline);
+		Hook_Input::Hook(SKSETrampoline);
+		Hook_Renderer::Hook(SKSETrampoline);
+		Hook_BGSImpactManager::Hook(SKSETrampoline);
+		Hook_Havok::Hook(SKSETrampoline);
+		Hook_Actor::Hook(SKSETrampoline);
+		Hook_ActorEquipManager::Hook(SKSETrampoline);
+		Hook_Sinking::Hook(SKSETrampoline);
+		Hook_Jumping::Hook(SKSETrampoline);
+		Hook_Damage::Hook(SKSETrampoline);
+		Hook_PushBack::Hook(SKSETrampoline);
+		Hook_PushAway::Hook(SKSETrampoline);
+		Hook_Stealth::Hook(SKSETrampoline);
+		Hook_Movement::Hook(SKSETrampoline);
+		Hook_HeadTracking::Hook(SKSETrampoline);
+		Hook_PreventAnimations::Hook(SKSETrampoline);
+		Hook_RaceMenu::Hook(SKSETrampoline);
+		Hook_Console::Hook(SKSETrampoline);
 
 		HookCameraStates();
 		InstallControls();
@@ -99,7 +99,7 @@ namespace Hooks
 		//Hook_Experiments::Hook(trampoline);
 
 		log::info("Finished applying hooks");
-		log::info("Default Trampoline Used: {}/{} Bytes", trampoline.allocated_size(), trampoline.capacity());
+		log::info("Default Trampoline Used: {}/{} Bytes", SKSETrampoline.allocated_size(), SKSETrampoline.capacity());
 		
 
 

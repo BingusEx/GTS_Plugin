@@ -1015,7 +1015,7 @@ namespace GTS {
 								//log::info("Roll: {}, RandomChance {}, Threshold: {}", roll, RagdollChance, Random);
 								//eventually it reaches 100% chance to ragdoll an actor (at ~x3.0 size difference)
 
-								if (otherActor->formID == 0x14 && !Config::GetAI().bEnablePlayerPushBack) {
+								if (otherActor->formID == 0x14 && !Config::GetGameplay().ActionSettings.bEnablePlayerPushBack) {
 									continue;
 								}
 
