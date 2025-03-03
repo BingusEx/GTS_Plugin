@@ -247,12 +247,12 @@ namespace GTS {
 				return;
 			}
 
-			logger::trace("AIManager Update");
+			//logger::trace("AIManager Update");
 
 			const auto& PerformerList = FindValidPerformers();
 			if (!PerformerList.empty()) {
 
-				logger::trace("AIManager Found Performers");
+				//logger::trace("AIManager Found Performers");
 
 				//Pick random
 				int idx = RandomInt(0, static_cast<int>(PerformerList.size()) - 1);
