@@ -10,8 +10,15 @@ namespace GTS {
 
 	        const char* T0 = "Enable footstep sounds when player size meets or exceeds a certain threshold.";
 	        const char* T1 = "Enable moaning sounds during spells like Slow Growth.";
+
+			const char* THelp = "Note: Moan/Laugh sounds are not included in the mod.\n"
+			"You can add sounds by adding your own .wav files in the following folder:\n"
+	    	"(Your Skyrim Folder)\\Data\\Sound\\fx\\GTS\\Others";
 	        
-	        if(ImGui::CollapsingHeader("Sounds",ImUtil::HeaderFlags)){ 
+	        if(ImGui::CollapsingHeader("Sounds",ImUtil::HeaderFlags)){
+				ImGui::TextColored(ImUtil::ColorSubscript, "A Note On Sounds (?)");
+				ImUtil::Tooltip(THelp ,true);
+
 	            ImUtil::CheckBox("Footstep Sounds",&Settings.bFootstepSounds,T0);
 	            ImUtil::CheckBox("Moans On Slow Growth",&Settings.bSlowGrowMoans, T1);
 	            ImGui::Spacing();

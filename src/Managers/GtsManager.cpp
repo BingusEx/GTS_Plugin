@@ -448,13 +448,12 @@ void GtsManager::Update() {
 	auto profiler = Profilers::Profile("Manager: Update()");
 
 	UpdateFalling();
+	UpdateGlobalSizeLimit();
 	UpdateMaxScale(); // Update max scale of each actor in the scene
 	ManageActorControl(); // Sadly have to call it non stop since im unsure how to easily fix it otherwise :(
 	ShiftAudioFrequency();
 	FixActorFade();
 	UpdateCameraINIs();
-	UpdateGlobalSizeLimit();
-
 
 	for (auto actor: find_actors()) {
 

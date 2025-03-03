@@ -122,7 +122,7 @@ namespace GTS {
 			LoadActorRecordFloat(serde, &Data.visual_scale, RecordVersion, 1, 1.0f);        //0x08
 			LoadActorRecordFloat(serde, &Data.visual_scale_v, RecordVersion, 1, 0.0f);      //0x1C
 			LoadActorRecordFloat(serde, &Data.target_scale, RecordVersion, 1, 1.0f);        //0x10
-			LoadActorRecordFloat(serde, &Data.max_scale, RecordVersion, 1, 1.0f);           //0x14
+			LoadActorRecordFloat(serde, &Data.max_scale, RecordVersion, 1, 65535.0f);       //0x14
 
 			//V2
 			LoadActorRecordFloat(serde, &Data.half_life, RecordVersion, 2, 1.0f);           //0x18
@@ -140,10 +140,10 @@ namespace GTS {
 
 			//V6
 			LoadActorRecordFloat(serde, &Data.smt_run_speed, RecordVersion, 6, 0.0f);       //0x30
-			LoadActorRecordFloat(serde, &Data.NormalDamage, RecordVersion, 6, 0.0f);        //0x34
-			LoadActorRecordFloat(serde, &Data.SprintDamage, RecordVersion, 6, 0.0f);        //0x38
-			LoadActorRecordFloat(serde, &Data.FallDamage, RecordVersion, 6, 0.0f);          //0x3C
-			LoadActorRecordFloat(serde, &Data.HHDamage, RecordVersion, 6, 0.0f);            //0x40
+			LoadActorRecordFloat(serde, &Data.NormalDamage, RecordVersion, 6, 1.0f);        //0x34
+			LoadActorRecordFloat(serde, &Data.SprintDamage, RecordVersion, 6, 1.0f);        //0x38
+			LoadActorRecordFloat(serde, &Data.FallDamage, RecordVersion, 6, 1.0f);          //0x3C
+			LoadActorRecordFloat(serde, &Data.HHDamage, RecordVersion, 6, 1.0f);            //0x40
 			DummyReadFloat(serde);                                                          //0x44
 			DummyReadFloat(serde);                                                          //0x48
 			LoadActorRecordFloat(serde, &Data.SizeReserve, RecordVersion, 6, 0.0f);         //0x4C

@@ -77,12 +77,13 @@ namespace ImUtil {
 
     const bool ConditionalHeader(const std::string a_label, const std::string a_ConditionText, const bool a_condition, const bool a_defaultopen = true);
 
-    inline void Tooltip(const char* a_Tip){
+    inline void Tooltip(const char* a_Tip, bool a_NoDelay = false){
         if(!a_Tip) return;
-        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled) && GImGui->HoveredIdTimer > TooltipDelay){
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled) && (GImGui->HoveredIdTimer > TooltipDelay || a_NoDelay)){
             ImGui::SetTooltip(a_Tip);
         }
     }
+
 
     template <typename T>
     bool ComboEx(const char* a_label, std::string& currentValue, const char* a_Tooltip = nullptr, bool a_disabled = false, bool a_hasTotal = false) {

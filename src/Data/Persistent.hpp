@@ -11,54 +11,52 @@ namespace GTS {
 	struct ActorData {
 
 		/// --------- V1
-		float PAD_00; 
-		float visual_scale;
-		float visual_scale_v;
-		float target_scale;
-		float max_scale;
+		float PAD_00 = 0.0f; 
+		float visual_scale = 1.0f;
+		float visual_scale_v = 0.0f;
+		float target_scale = 1.0f;
+		float max_scale = 65535.0f;
 
 		/// --------- V2
-		float half_life;
+		float half_life = 1.0f;
 
 		/// --------- V3
-		float anim_speed;
+		float anim_speed = 1.0f;
 
 		/// --------- V4
-		float PAD_1C;
+		float PAD_1C = 0.0f;
 
 		/// --------- V5
-		float PAD_20;     
-		float PAD_24;     
-		float PAD_28;     
+		float PAD_20 = 0.0f;
+		float PAD_24 = 0.0f;
+		float PAD_28 = 0.0f;
 
 		/// --------- V6
-		float smt_run_speed;
-		float NormalDamage;
-		float SprintDamage;
-		float FallDamage;
-		float HHDamage;
-		float PAD_40;            
-		float PAD_44;            
-		float SizeReserve;
+		float smt_run_speed = 0.0f;
+		float NormalDamage = 1.0f;
+		float SprintDamage = 1.0f;
+		float FallDamage = 1.0f;
+		float HHDamage = 1.0f;
+		float PAD_40 = 0.0f;
+		float PAD_44 = 0.0f;
+		float SizeReserve = 0.0f;
 
 		/// --------- V7
-		float target_scale_v;
+		float target_scale_v = 0.0f;
 
 		/// --------- V8
-		float PAD_50;     
-		float stolen_attributes;
-		float stolen_health;
-		float stolen_magick;
-		float stolen_stamin;
+		float PAD_50 = 0.0f;
+		float stolen_attributes = 0.0f;
+		float stolen_health = 0.0f;
+		float stolen_magick = 0.0f;
+		float stolen_stamin = 0.0f;
 
 		/// --------- V9
 		//Add New Stuff Here if needed / PAD data is all used up.
 		//Must Be Read and written in the same order as found here
 
 		ActorData() = default;
-
 		explicit ActorData(RE::Actor* actor) {}
-
 	};
 
 	class Persistent : public EventListener {
