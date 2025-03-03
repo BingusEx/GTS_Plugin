@@ -249,8 +249,8 @@ namespace GTS {
 		if (Pred && Prey) {
 			auto Data = Transient::GetSingleton().GetData(Prey);
 			if (Data) {
-				bool& Devoured = Data->Devourment_Devoured;
-				bool& Eaten = Data->Devourment_Eaten;
+				bool& Devoured = Data->DevourmentDevoured;
+				bool& Eaten = Data->DevourmentEaten;
 				if (!Eaten) { // Stage 1: Health Bar is depleted (actor is dead)
 					DevourmentBonuses(Pred, Prey, false, 0.5f); // Value is multiplier of growth power.
 					Eaten = true;

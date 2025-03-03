@@ -82,7 +82,16 @@ namespace GTS {
             const char* T0 = "Change the formula used for all size gain.";
             const char* T1 = "Adjust the global multiplier for all size gains and losses.";
 
+            const char* Thelp = "Size gain mode defines the way you gain maximum size.\n"
+        						"In normal mode the maximum size you can grow to is defined by:\n"
+								"Current perks, GTS skill level, player level, and essense absorbed (through potions or by killing dragons while having a perk) and how far you are into the quest.\n"
+        						"In \"Mass Based\" mode your maximum size is determiend by how many things you have absorbed/eaten/etc...\n"
+        						"Mass based mode starts off at 1.0x scale and will allow you to grow up to your normal maximum skill based scale (or if you have the perk to whatever you set max scale to) once you've absorbed enough things";
+
             if (ImGui::CollapsingHeader("Size Options", ImUtil::HeaderFlags)) {
+
+                ImGui::TextColored(ImUtil::ColorSubscript, "What is this (?)");
+                ImUtil::Tooltip(Thelp, true);
 
                 if (ImUtil::ComboEx<SizeMode>("Size Gain Mode", Settings.sSizeMode, T0)) {
                     if (Settings.sSizeMode == "kNormal") Settings.fSpellEfficiency = 0.55f;
@@ -103,25 +112,45 @@ namespace GTS {
 	            constexpr float Max = 255.0f;
 	            constexpr float Min = 0.0;
 
+                const bool IsMassBased = Settings.sSizeMode == "kMassBased";
+                const float MassLimit = Persistent::GetSingleton().GTSMassBasedSizeLimit.value;
+
                 {   //Player Size
                     float* Scale = &Settings.fMaxPlayerSizeOverride;
-                    const bool ShouldBeInf = *Scale > Max - 5.0f;
-                    const bool ShouldBeAuto = *Scale < Min + 0.1f;
-
+                    const bool ShouldBeInf = *Scale > Max - 5.0000f;
+                    const bool ShouldBeAuto = *Scale < Min + 0.1000f;
                     std::string _Frmt;
 
                     if (ShouldBeInf) {
-                        _Frmt = "Infinite";
+
                         *Scale = 1000000.0f;
+
+                        if (IsMassBased) {
+                            _Frmt = fmt::format("Mass Based [{:.2f}x] Max [Inf]", MassLimit);
+                        }
+                        else {
+                            _Frmt = "Infinite";
+                        }
                     }
                     else if (ShouldBeAuto) {
                       
                         const float SkillBasedLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
 
-                        _Frmt = fmt::format("Skill Based [{:.2f}x]", SkillBasedLimit);
+                        if (IsMassBased) {
+                            _Frmt = fmt::format("Mass Based [{:.2f}x] Max [{:.2f}x]", MassLimit, SkillBasedLimit);
+                        }
+                        else {
+                            _Frmt = fmt::format("Skill Based [{:.2f}x]", SkillBasedLimit);
+                        }
+
                         *Scale = 0.0f;
                     }
                     else {
+
+                        if (IsMassBased) {
+                            _Frmt = fmt::format("Mass Based [{:.2f}x] Max [{:.2f}]", MassLimit, *Scale);
+                        }
+
                         _Frmt = "%.1fx";
                     }
 
@@ -143,8 +172,8 @@ namespace GTS {
                 {   //Max Follower Size
 
                     float* Scale = &Settings.fMaxFollowerSize;
-                    const bool ShouldBeInf = *Scale > Max - 5.0f;
-                    const bool ShouldBeAuto = *Scale < Min + 0.1f;
+                    const bool ShouldBeInf = *Scale > Max - 5.0000f;
+                    const bool ShouldBeAuto = *Scale < Min + 0.1000f;
 
                     std::string _Frmt;
                     if (ShouldBeInf) {
@@ -184,8 +213,8 @@ namespace GTS {
                 {   //Other NPC Max Size
 
                     float* Scale = &Settings.fMaxOtherSize;
-                    const bool ShouldBeInf = *Scale > Max - 5.0f;
-                    const bool ShouldBeAuto = *Scale < Min + 0.1f;
+                    const bool ShouldBeInf = *Scale > Max - 5.0000f;
+                    const bool ShouldBeAuto = *Scale < Min + 0.1000f;
 
                     std::string _Frmt;
                     if (ShouldBeInf) {

@@ -162,10 +162,10 @@ namespace GTS {
 		if (data) {
 			switch (Type) {
 				case CharEmotionType::Modifier:
-					data->emotion_modifier_busy = lock;
+					data->EmotionModifierBusy = lock;
 				break;
 				case CharEmotionType::Phenome:
-					data->emotion_phenome_busy = lock;
+					data->EmotionPhonemeBusy = lock;
 				break;
 			}
 		}
@@ -177,10 +177,10 @@ namespace GTS {
 		if (data) {
 			switch (Type) {
 				case CharEmotionType::Modifier:
-					busy = data->emotion_modifier_busy;
+					busy = data->EmotionModifierBusy;
 				break;
 				case CharEmotionType::Phenome:
-					busy = data->emotion_phenome_busy;
+					busy = data->EmotionPhonemeBusy;
 				break;
 			}
 		}

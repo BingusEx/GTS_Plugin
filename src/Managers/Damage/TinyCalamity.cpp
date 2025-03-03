@@ -1,28 +1,18 @@
-#include <algorithm>
-
 #include "Managers/Damage/TinyCalamity.hpp"
-
 #include "Managers/Animation/Controllers/VoreController.hpp"
-
 #include "Managers/Animation/Utils/TurnTowards.hpp"
 #include "Managers/Animation/Utils/CooldownManager.hpp"
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
-
 #include "Managers/Animation/TinyCalamity_Shrink.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
-
 #include "Managers/Perks/PerkHandler.hpp"
 #include "Managers/Attributes.hpp"
-
 #include "Utils/MovementForce.hpp"
 #include "Utils/Looting.hpp"
-
 #include "Managers/Damage/CollisionDamage.hpp"
 #include "Managers/AI/AIFunctions.hpp"
 #include "Managers/GtsSizeManager.hpp"
-
 #include "Magic/Effects/Common.hpp"
-
 #include "UI/DebugAPI.hpp"
 
 using namespace GTS;
@@ -77,7 +67,8 @@ namespace {
 
         if (giantHp >= ((tinyHp / Multiplier) * 1.25f)) {
             return true;
-        } else {
+        }
+    	else {
             return false;
         }
     }
@@ -85,7 +76,7 @@ namespace {
     void FullSpeed_ApplyEffect(Actor* giant, float speed) {
         auto transient = Transient::GetSingleton().GetData(giant);
 		if (transient) {
-            bool& CanApplyEffect = transient->SMT_ReachedFullSpeed;
+            bool& CanApplyEffect = transient->SMTReachedMaxSpeed;
             if (speed < 1.0f) {
                 CanApplyEffect = true;
             } else if (speed >= 1.0f && CanApplyEffect) {

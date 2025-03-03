@@ -43,7 +43,7 @@ namespace {
 		float bonus = 0.0f;
 		auto data = Transient::GetSingleton().GetActorData(giant);
 		if (data) {
-			bonus = data->Perk_lifeForceStolen;
+			bonus = data->PerkLifeForceStolen;
 		}
 		return bonus;
 	}

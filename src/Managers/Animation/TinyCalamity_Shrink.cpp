@@ -171,7 +171,7 @@ namespace GTS
 			tranData_gts->shrinkies.push_back(tiny);
 		}
 		if (tranData_tiny) {
-			tranData_tiny->shrink_until = until;
+			tranData_tiny->ShrinkUntil = until;
 		}
     }
 
@@ -187,7 +187,7 @@ namespace GTS
     float Animation_TinyCalamity::GetShrinkUntil(Actor* tiny) {
         auto tranData_tiny = Transient::GetSingleton().GetData(tiny);
 		if (tranData_tiny) {
-			return tranData_tiny->shrink_until;
+			return tranData_tiny->ShrinkUntil;
 		}
 		return 1.0f;
     }

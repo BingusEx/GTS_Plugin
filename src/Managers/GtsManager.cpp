@@ -178,7 +178,7 @@ namespace {
 		}
 
 		const float currentOtherScale = Get_Other_Scale(actor);
-		trans_actor_data->otherScales = currentOtherScale;
+		trans_actor_data->OtherScales = currentOtherScale;
 
 		const float natural_scale = get_natural_scale(actor, false);
 		float target_scale = persi_actor_data->target_scale;
@@ -403,7 +403,7 @@ namespace {
 
 			if (!Config::GetBalance().bBalanceMode) {
 				const float SizeOverride = Config::GetBalance().fMaxPlayerSizeOverride;
-				if (SizeOverride > 0.1f) {
+				if (SizeOverride > 0.05f) {
 					return SizeOverride;
 				}
 			}

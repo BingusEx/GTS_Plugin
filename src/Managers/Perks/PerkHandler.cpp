@@ -41,7 +41,7 @@ namespace {
                 auto data = Transient::GetSingleton().GetActorData(actor);
                 if (data) {
                     if (evt.perk == Runtime::GetPerk("Acceleration")) {
-                        data->Perk_BonusActionSpeed = Perk_Acceleration_GetBonus(actor);
+                        data->PerkBonusSpeed = Perk_Acceleration_GetBonus(actor);
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace {
 
     void Perks_UpdateAccelerationPerk(TempActorData* data, Actor* giant) {
         if (data && Runtime::HasPerkTeam(giant, "Acceleration")) {
-            data->Perk_BonusActionSpeed = Perk_Acceleration_GetBonus(giant);
+            data->PerkBonusSpeed = Perk_Acceleration_GetBonus(giant);
         }
     }
 
@@ -61,15 +61,15 @@ namespace {
 
         double stack_duration = 300.0;
         if (data) {
-            if (data->Perk_lifeForceStolen < 0.0f) {
-                data->Perk_lifeForceStolen = 0.0f;
+            if (data->PerkLifeForceStolen < 0.0f) {
+                data->PerkLifeForceStolen = 0.0f;
             }
-            if (data->Perk_lifeForceStacks < 0) {
-                data->Perk_lifeForceStacks = 0;
+            if (data->PerkLifeForceStacks < 0) {
+                data->PerkLifeForceStacks = 0;
             }
 
-            data->Perk_lifeForceStacks += 1;
-            data->Perk_lifeForceStolen += stack_power;
+            data->PerkLifeForceStacks += 1;
+            data->PerkLifeForceStolen += stack_power;
 
             //log::info("Life force stolen: {}, added power: {}", data->Perk_lifeForceStolen, stack_power);
 
@@ -82,10 +82,10 @@ namespace {
 
                 if (Finish - Start >= stack_duration) {
                     if (data) {
-                        if (data->Perk_lifeForceStacks > 0) {
-                            data->Perk_lifeForceStacks -= 1;
-                            data->Perk_lifeForceStolen -= stack_power;
-                        } else if (data->Perk_lifeForceStacks == 0) {
+                        if (data->PerkLifeForceStacks > 0) {
+                            data->PerkLifeForceStacks -= 1;
+                            data->PerkLifeForceStolen -= stack_power;
+                        } else if (data->PerkLifeForceStacks == 0) {
                             return false;
                         }
                     }
@@ -102,12 +102,12 @@ namespace {
             if (Runtime::HasPerkTeam(giant, "LifeAbsorption")) {
                 int stack_limit = 25;
                 if (data) {
-                    if (data->Perk_lifeForceStacks < stack_limit) {
+                    if (data->PerkLifeForceStacks < stack_limit) {
                         log::info("Stacks < 25");
                         StartStackDecayTask(giant, Perk_LifeAbsorption_GetBonus(giant), data);
                     } else {
-                        data->Perk_lifeForceStacks -= 1;
-                        data->Perk_lifeForceStolen -= Perk_LifeAbsorption_GetBonus(giant);
+                        data->PerkLifeForceStacks -= 1;
+                        data->PerkLifeForceStolen -= Perk_LifeAbsorption_GetBonus(giant);
                         // Just Refresh it
                         StartStackDecayTask(giant, Perk_LifeAbsorption_GetBonus(giant), data);
                     }
@@ -147,11 +147,11 @@ namespace GTS {
                 auto data = Transient::GetSingleton().GetActorData(actor);
                 if (data) {
                     if (evt.perk == Runtime::GetPerk("Acceleration")) {
-                        data->Perk_BonusActionSpeed = 1.0f;
+                        data->PerkBonusSpeed = 1.0f;
                     }
                     if (evt.perk == Runtime::GetPerk("LifeAbsorption")) {
-                        data->Perk_lifeForceStolen = 0.0f;
-                        data->Perk_lifeForceStacks = 0;
+                        data->PerkLifeForceStolen = 0.0f;
+                        data->PerkLifeForceStacks = 0;
                     }
                 }
             }

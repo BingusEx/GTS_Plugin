@@ -70,7 +70,7 @@ namespace {
 		}
 		DamageAV(giant, ActorValue::kMagicka, 75 * tiny_size * Perk_GetCostReduction(giant));
 
-		data->Shrink_Ticks_Calamity = 0.0f;
+		data->ShrinkTicksCalamity = 0.0f;
 	}
 
 	void PerformShrinkOnActor(Actor* giant) {
@@ -106,15 +106,15 @@ namespace {
 												float distance = (NodePosition - a_obj.world.translate).Length() - Collision_Distance_Override * 20 * bb;
 					
 												if (distance <= maxDistance) {
-													data->Shrink_Ticks_Calamity += 0.0166f * TimeScale();
+													data->ShrinkTicksCalamity += 0.0166f * TimeScale();
 													if (data->MovementSlowdown > 0.33f) {
 														data->MovementSlowdown -= 0.0032f * TimeScale();
 													}
 													nodeCollisions += 1;
 													return false;
 												} else {
-													if (data->Shrink_Ticks_Calamity > 0) {
-														data->Shrink_Ticks_Calamity -= 0.0166f * 0.20f * TimeScale();
+													if (data->ShrinkTicksCalamity > 0) {
+														data->ShrinkTicksCalamity -= 0.0166f * 0.20f * TimeScale();
 													}
 													data->MovementSlowdown = 1.0f; // Reset it
 												}
@@ -126,7 +126,7 @@ namespace {
 											float stare_threshold_s = std::clamp(3.25f * get_visual_scale(otherActor), 0.25f, 6.0f);
 											float tiny_size = get_visual_scale(otherActor);
 
-											if (data->Shrink_Ticks_Calamity >= stare_threshold_s) {
+											if (data->ShrinkTicksCalamity >= stare_threshold_s) {
 												Laugh_Chance(giant, 1.25f, "CalamityShrink");
 												if (!ShrinkToNothing(giant, otherActor, true, 1.50f)) {
 													ShrinkTheTargetOr(giant, otherActor, stare_threshold_s, tiny_size, difference, data);

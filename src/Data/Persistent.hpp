@@ -121,7 +121,7 @@ namespace GTS {
 			//----- Max Size Related
 			BasicRecord<float, 'GBPS'> GTSExtraPotionSize = 0.0f;
 			BasicRecord<float, 'GTSL'> GTSGlobalSizeLimit = 1.0f;
-			BasicRecord<float, 'GMBS'> GTSMassBasedSize = 0.0f;
+			BasicRecord<float, 'GMBS'> GTSMassBasedSizeLimit = 0.0f;
 
 			// ---- Quest Progression
 			BasicRecord<float, 'QHSR'> HugStealCount = 0.0f;

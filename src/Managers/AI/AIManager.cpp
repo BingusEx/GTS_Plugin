@@ -2,6 +2,7 @@
 
 #include "Hug/HugAI.hpp"
 
+#include "Managers/AttackManager.hpp"
 #include "Managers/AI/Vore/VoreAI.hpp"
 #include "Managers/AI/Thigh/ThighCrushAI.hpp"
 #include "Managers/AI/ButtCrush/ButtCrushAI.hpp"
@@ -25,18 +26,62 @@ namespace {
 		kTotal
 	};
 
+	//Set Reset attack blocking based on if we have a list of prey
+	void HandleAttackBlocking(Actor* a_Performer, const std::vector<Actor*>& a_ValidPreyList) {
+
+		if (a_ValidPreyList.empty()) {
+			AttackManager::PreventAttacks(a_Performer, nullptr);
+			return;
+		}
+
+		auto PredPos = a_Performer->GetPosition();
+		auto PreyList = a_ValidPreyList;
+
+		// Presort by distance
+		ranges::sort(PreyList, [PredPos](const Actor* a_PreyA, const Actor* a_PreyB) -> bool {
+			float DistToA = (a_PreyA->GetPosition() - PredPos).Length();
+			float DistToB = (a_PreyB->GetPosition() - PredPos).Length();
+			return DistToA < DistToB;
+		});
+
+		//Disable attack based on the closest valid prey actor
+		AttackManager::PreventAttacks(a_Performer, PreyList.front());
+	}
+
+	void ResetAttackBlocking(Actor* a_Performer) {
+		AttackManager::PreventAttacks(a_Performer, nullptr);
+	}
+
 	// Check if an actor is a valid GTS Action initiator/performer.
 	inline bool ValidPerformer(Actor* a_Actor, const bool a_CombatOnly) {
+
+		if (!a_Actor) {
+			return false;
+		}
+
+		if (!a_Actor->Is3DLoaded()) {
+			return false;
+		}
+
+		if (!a_Actor->Get3D()) {
+			return false;
+		}
 
 		if (a_Actor->formID == 0x14) {
 			return false;
 		}
 
+		//Check if actor is not dead
+		if (a_Actor->IsDead() || GetAV(a_Actor, ActorValue::kHealth) <= 0.0f) {
+			return false;
+		}
+
+
 		//Is "Female?"
 		if (IsFemale(a_Actor, true)) {
 
 			const bool HasHP = GetAV(a_Actor, ActorValue::kHealth) > 0;
-			const bool IsVisible = a_Actor->GetAlpha() > 0.0f;
+			const bool IsVisible = a_Actor->GetAlpha() > 0.0f; //For devourment
 			const bool IsInNormalState = a_Actor->AsActorState()->GetSitSleepState() == SIT_SLEEP_STATE::kNormal;
 
 			//Is In combat or do we allow ai outside of combat?
@@ -58,6 +103,18 @@ namespace {
 
 	// Check if an actor is a valid action victim
 	inline bool ValidPrey(Actor* a_Prey, const bool a_AllowPlayer, const bool a_AllowTeamMates, const bool a_AllowEssential) {
+
+		if (!a_Prey) {
+			return false;
+		}
+
+		if (!a_Prey->Is3DLoaded()) {
+			return false;
+		}
+
+		if (!a_Prey->Get3D()) {
+			return false;
+		}
 
 		if (IsFlying(a_Prey)) {
 			return false;
@@ -107,7 +164,10 @@ namespace {
 			if (ValidPerformer(Target, CombatOnly)) {
 				ValidPerformers.push_back(Target);
 			}
-
+			//If not a valid Performer reset their attack state.
+			else {
+				ResetAttackBlocking(Target);
+			}
 		}
 
 		return ValidPerformers;
@@ -141,6 +201,7 @@ namespace {
 
 	}
 
+	//Calculate which actions should be started based on the which ones can currently be started
 	ActionType CalculateProbability(const std::map<ActionType, int>& a_ValidActionMap) {
 
 		if (a_ValidActionMap.empty()) return ActionType::kNone;
@@ -161,6 +222,7 @@ namespace {
 			return ActionType::kNone;
 		}
 	}
+
 }
 
 namespace GTS {
@@ -175,9 +237,15 @@ namespace GTS {
 
 		BeginNewActionTimer.UpdateDelta(AISettings.fMasterTimer);
 
-		if (!AISettings.bEnableActionAI) return;
-
 		if (BeginNewActionTimer.ShouldRun()) {
+
+			//Reset attack blocking
+			if (!AISettings.bEnableActionAI) {
+				for (const auto& Actor : find_actors()) {
+					ResetAttackBlocking(Actor);
+				}
+				return;
+			}
 
 			logger::trace("AIManager Update");
 
@@ -205,7 +273,8 @@ namespace GTS {
 		std::vector<Actor*> CanHug = {};
 		std::vector<Actor*> CanGrab = {};
 
-		std::map<ActionType, int> StartableActions;
+		//a map containing which actions can be started based on if their probability will be > 0
+		std::map<ActionType, int> StartableActions = {};
 
 		const auto& PreyList = FindValidPrey(a_Performer);
 		if (PreyList.empty()) {
@@ -285,6 +354,36 @@ namespace GTS {
 			}
 		}
 
+		//-------- Merge All Vectors Into one
+		std::unordered_set<Actor*> UniqueActors;
+		std::vector<Actor*> Temp;
+		
+		Temp.reserve(CanVore.size() + CanStompKickSwipe.size() +
+			CanThighSandwich.size() + CanThighCrush.size() +
+			CanButtCrush.size() + CanHug.size() + CanGrab.size());
+
+		auto CombineActorList = [&UniqueActors, &Temp](const std::vector<Actor*>& idxActor) {
+			for (Actor* TempActor : idxActor) {
+				// Insertion succeeds only if not present
+				if (UniqueActors.insert(TempActor).second) { 
+					Temp.push_back(TempActor);
+				}
+			}
+		};
+
+		// Merge all vectors
+		CombineActorList(CanVore);
+		CombineActorList(CanStompKickSwipe);
+		CombineActorList(CanThighSandwich);
+		CombineActorList(CanThighCrush);
+		CombineActorList(CanButtCrush);
+		CombineActorList(CanHug);
+		CombineActorList(CanGrab);
+
+		// Now define the const combined vector.
+		const std::vector<Actor*> CombinedList = Temp;
+		HandleAttackBlocking(a_Performer, CombinedList);
+
 		switch (CalculateProbability(StartableActions)) {
 
 			case ActionType::kVore: {
@@ -356,24 +455,7 @@ namespace GTS {
 				logger::trace("AI Starting kGrab Action");
 				return;
 			}
-
 			default:{}
 		}
-
 	}
-
-	void AIManager::Reset() {
-		this->AIDataMap.clear();
-	}
-
-	void AIManager::ResetActor(Actor* a_Actor) {
-		this->AIDataMap.erase(a_Actor->formID);
-	}
-
-	AIData& AIManager::GetData(Actor* a_Actor) {
-		// Create it now if not there yet
-		this->AIDataMap.try_emplace(a_Actor->formID, a_Actor);
-		return this->AIDataMap.at(a_Actor->formID);
-	}
-
 }

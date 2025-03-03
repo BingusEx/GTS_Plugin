@@ -9,7 +9,7 @@ namespace {
 		if (giant->formID == 0x14 || IsTeammate(giant)) {
 			auto tranData = Transient::GetSingleton().GetData(giant);
 			if (tranData) {
-				result = tranData->push_force;
+				result = tranData->PushForce;
 			} else {
 				float size = get_giantess_scale(giant);
 				if (HasSMT(giant)) {

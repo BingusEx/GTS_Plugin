@@ -5,99 +5,87 @@ namespace GTS {
 
 	struct TempActorData {
 
-		float base_height;
-		float base_volume;
-		float char_weight;
-		float shoe_weight;
-		float fall_start;
-		float last_set_fall_start;
-		float health_boost;
-		float SMT_Bonus_Duration;
-		float SMT_Penalty_Duration;
-		float carryweight_boost;
-		float FallTimer;
-		float Hug_AnimSpeed;
-		float Throw_Speed;
-		float potion_max_size;
-		float buttcrush_max_size;
-		float buttcrush_start_scale;
-		float SizeVulnerability;
-		float push_force;
-		float otherScales;
-		float vore_recorded_scale;
-		float WorldFov_Default;
-		float FpFov_Default;
-		float ButtCrushGrowthAmount;
-		float MovementSlowdown;
-		float ShrinkResistance;
-		float MightValue;
+		float BaseHeight = 0.0f;
+		float SMTBonusDuration = 0.0f;
+		float SMTPenaltyDuration = 0.0f;
+		float CarryWeightBoost = 0.0f;
+		float HealthBoost = 0.0f;
+		float FallTimer = 1.0f;
+		float HugAnimationSpeed = 1.0f;
+		float ThrowSpeed = 0.0f;
+		float PotionMaxSize = 0.0f;
+		float ButtCrushMaxSize = 0.0f;
+		float ButtCrushStartScale = 0.0f;
+		float SizeVulnerability = 0.0f;
+		float PushForce = 1.0f;
+		float OtherScales = 1.0f;
+		float VoreRecordedScale = 1.0f;
+		float WorldFOVDefault = 0.0f;
+		float FPFOVDefault = 0.0f;
+		float ButtCrushGrowthAmount = 0.0f;
+		float MovementSlowdown = 1.0f;
+		float ShrinkResistance = 0.0f;
+		float MightValue = 0.0f;
+		float ShrinkTicks = 0.0f;
+		float ShrinkTicksCalamity = 0.0f;
+		float PerkBonusSpeed = 1.0f;
+		float PerkLifeForceStolen = 0.0f;
+		float ClothRipLastScale = -1.0f;
+		float ClothRipOffset = -1.0f;
+		float IsNotImmune = 1.0f;
+		float ShrinkUntil = 0.0f;
 
-		float Shrink_Ticks;
-		float Shrink_Ticks_Calamity;
+		int PerkLifeForceStacks = 0;
+		int CrushedTinies = 0;
 
-		float Perk_BonusActionSpeed;
-		float Perk_lifeForceStolen;
-		int   Perk_lifeForceStacks;
+		bool ThrowWasThrown = false;
+		bool CanDoVore = true;
+		bool CanBeCrushed = true;
+		bool CanBeVored = true;
+		bool BeingHeld = false;
+		bool BetweenBreasts = false;
+		bool AboutToBeEaten = false;
+		bool DragonWasEaten = false;
+		bool BeingFootGrinded = false;
+		bool SMTReachedMaxSpeed = false;
+		bool OverrideCamera = false;
+		bool WasReanimated = false;
+		bool FPCrawling = false;
+		bool FPProning = false;
+		bool Protection = false;
+		bool GrowthPotion = false;
+		bool DevourmentDevoured = false;
+		bool DevourmentEaten = false;
+		bool WasSneaking = false;
+		bool EmotionModifierBusy = false;
+		bool EmotionPhonemeBusy = false;
 
-		int CrushedTinies;
+		NiPoint3 BoundingBoxCache = { 0.0f, 0.0f, 0.0f };
+		NiPoint3 POSLastLegL = { 0.0f, 0.0f, 0.0f };
+		NiPoint3 POSLastLegR = { 0.0f, 0.0f, 0.0f };
+		NiPoint3 POSLastHandL = { 0.0f, 0.0f, 0.0f };
+		NiPoint3 POSLastHandR = { 0.0f, 0.0f, 0.0f };
 
-		NiPoint3 BoundingBox_Cache;
-		
-		bool Throw_WasThrown;
-		bool can_do_vore;
-		bool can_be_crushed;
-		bool being_held;
-		bool is_between_breasts;
-		bool about_to_be_eaten;
-		bool dragon_was_eaten;
-		bool can_be_vored;
-		bool being_foot_grinded;
-		bool SMT_ReachedFullSpeed;
-		bool OverrideCamera;
-		bool WasReanimated;
-		bool FPCrawling;
-		bool FPProning;
-		bool Overkilled;
-		bool Protection;
-		bool GrowthPotion;
+		Actor* IsInControl = nullptr;
 
-		bool Devourment_Devoured;
-		bool Devourment_Eaten;
-		
+		TESObjectREFR* DisableColissionWith = nullptr;
+		TESObjectREFR* ThrowOffender = nullptr;
 
-		bool disable_collision;
-		bool was_sneaking;
-
-		bool emotion_modifier_busy;
-		bool emotion_phenome_busy;
-
-		float IsNotImmune;
-
-		NiPoint3 POS_Last_Leg_L;
-		NiPoint3 POS_Last_Leg_R;
-		NiPoint3 POS_Last_Hand_L;
-		NiPoint3 POS_Last_Hand_R;
-
-		float shrink_until;
-
-		Actor* IsInControl;
-		std::vector<Actor*> shrinkies;
-
-		TESObjectREFR* disable_collision_with;
-		TESObjectREFR* Throw_Offender;
-
-		AttachToNode AttachmentNode;
-		BusyFoot FootInUse;
-		
-		float rip_lastScale;
-		float rip_offset;
-
-		float breast_size_buff;
-
+		AttachToNode AttachmentNode = AttachToNode::None;
+		BusyFoot FootInUse = BusyFoot::None;
 
 		Timer GameModeIntervalTimer = Timer(0);
 		Timer ActionTimer = Timer(0);
 
+		std::vector<Actor*> shrinkies;
+
+		explicit TempActorData(Actor* a_Actor) {
+			const auto _BoundValues = get_bound_values(a_Actor);
+			const auto _Scale = get_scale(a_Actor);
+
+			BaseHeight = unit_to_meter(_BoundValues[2] * _Scale);
+			BoundingBoxCache = _BoundValues;
+		}
 	};
 
 	class Transient : public EventListener {
@@ -106,7 +94,7 @@ namespace GTS {
 
 			[[nodiscard]] static Transient& GetSingleton() noexcept;
 
-			TempActorData* GetData(TESObjectREFR* object);
+			TempActorData* GetData(TESObjectREFR* a_Object);
 			TempActorData* GetActorData(Actor* actor);
 			std::vector<FormID> GetForms() const;
 

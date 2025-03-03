@@ -124,7 +124,7 @@ namespace GTS {
 
 			auto transient = Transient::GetSingleton().GetData(tiny);
 			if (transient) {
-				if (!transient->can_be_crushed && !tiny->IsDead()) {
+				if (!transient->CanBeCrushed && !tiny->IsDead()) {
 					return;
 				}
 			}

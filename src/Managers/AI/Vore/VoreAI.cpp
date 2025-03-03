@@ -37,7 +37,7 @@ namespace GTS {
 
 		const auto Transient = Transient::GetSingleton().GetData(a_Prey);
 		if (Transient) {
-			if (Transient->can_be_vored == false) {
+			if (Transient->CanBeVored == false) {
 				return false;
 			}
 		}

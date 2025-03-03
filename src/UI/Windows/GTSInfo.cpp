@@ -41,13 +41,13 @@ namespace GTS {
         float CarryWeight;
         //When in god mode carry weight gets 100x'ed for some reason
         if (a_Actor->formID == 0x14 && IsInGodMode(a_Actor)) {
-            CarryWeight = ActorTransient->carryweight_boost / 100u;
+            CarryWeight = ActorTransient->CarryWeightBoost / 100u;
         }
         else [[likely]] {
-            CarryWeight = ActorTransient->carryweight_boost;
+            CarryWeight = ActorTransient->CarryWeightBoost;
         }
 
-        const float BonusSize = ActorTransient->potion_max_size;
+        const float BonusSize = ActorTransient->PotionMaxSize;
         const float StolenHealth = ActorPersistent->stolen_health;
 		const float StolenMagicka = ActorPersistent->stolen_magick;
 		const float StolenStamina = ActorPersistent->stolen_stamin;
@@ -63,7 +63,7 @@ namespace GTS {
         const float Damage = (AttributeManager.GetAttributeBonus(a_Actor, ActorValue::kAttackDamageMult) - 1.0f) * 100.0f;
         const float ShrinkResistance = (1.0f - Potion_GetShrinkResistance(a_Actor)) * 100.f;
         const float OnTheEdge = (GetPerkBonus_OnTheEdge(a_Actor,0.01f) - 1.0f) * 100.f;
-        const float BonusHHDamage = GetHighHeelsBonusDamage(a_Actor, false) * 100.0f;
+        const float BonusHHDamage = GetHighHeelsBonusDamage(a_Actor, true) * 100.0f;
 
 
         const std::string StringScale = hasFlag(a_featureFlags, GTSInfoFeatures::kUnitScale) ? fmt::format(" ({:.2f}x)", CurrentScale) : "";

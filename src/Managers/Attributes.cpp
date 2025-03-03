@@ -255,7 +255,7 @@ namespace GTS {
 				bonus = attributes.GetAttributeBonus(actor, av);
 				auto transient = Transient::GetSingleton().GetData(actor);
 				if (transient != nullptr) {
-					transient->carryweight_boost = (originalValue * bonus) - originalValue;
+					transient->CarryWeightBoost = (originalValue * bonus) - originalValue;
 				}
 				break;
 			}
@@ -287,7 +287,7 @@ namespace GTS {
 				finalValue = originalValue + perkbonus; // add flat health on top
 				auto transient = Transient::GetSingleton().GetData(actor);
 				if (transient) {
-					transient->health_boost = finalValue - originalValue;
+					transient->HealthBoost = finalValue - originalValue;
 				}
 				return finalValue;
 			}
@@ -312,7 +312,7 @@ namespace GTS {
 			case ActorValue::kHealth: {
 				auto transient = Transient::GetSingleton().GetData(actor);
 				if (transient) {
-					float lastEdit = transient->health_boost;
+					float lastEdit = transient->HealthBoost;
 					if (finalValue - lastEdit > 0.0f) {
 						finalValue -= lastEdit;
 					}

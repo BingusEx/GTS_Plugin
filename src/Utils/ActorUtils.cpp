@@ -386,7 +386,7 @@ namespace GTS {
 	float Potion_GetSizeMultiplier(Actor* giant) {
 		auto transient = Transient::GetSingleton().GetData(giant);
 		if (transient) {
-			float bonus = std::clamp(transient->potion_max_size, 0.0f, 10.0f);
+			float bonus = std::clamp(transient->PotionMaxSize, 0.0f, 10.0f);
 			return 1.0f + bonus;
 		}
 		return 1.0f;
@@ -721,7 +721,7 @@ namespace GTS {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		bool sneaking = actor->IsSneaking();
 		if (transient) {
-			transient->was_sneaking = sneaking;
+			transient->WasSneaking = sneaking;
 		}
 	}
 
@@ -731,7 +731,7 @@ namespace GTS {
 		} else {
 			auto transient = Transient::GetSingleton().GetData(actor);
 			if (transient) {
-				actor->AsActorState()->actorState1.sneaking = transient->was_sneaking;
+				actor->AsActorState()->actorState1.sneaking = transient->WasSneaking;
 			}
 		}
 	}
@@ -1144,7 +1144,7 @@ namespace GTS {
 	void SetBeingHeld(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			transient->being_held = enable;
+			transient->BeingHeld = enable;
 		}
 	}
 
@@ -1160,21 +1160,21 @@ namespace GTS {
 	void SetBetweenBreasts(Actor* actor, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
-			transient->is_between_breasts = enable;
+			transient->BetweenBreasts = enable;
 		}
 	}
 
 	void SetBeingEaten(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			transient->about_to_be_eaten = enable;
+			transient->AboutToBeEaten = enable;
 		}
 	}
 
 	void SetBeingGrinded(Actor* tiny, bool enable) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			transient->being_foot_grinded = enable;
+			transient->BeingFootGrinded = enable;
 		}
 	}
 
@@ -1411,7 +1411,7 @@ namespace GTS {
 				auto transient = Transient::GetSingleton().GetData(pc);
 				if (transient) {
 					Cprint("Quest is Completed");
-					transient->dragon_was_eaten = true;
+					transient->DragonWasEaten = true;
 					SpawnCustomParticle(tiny, Type, NiPoint3(), "NPC Root [Root]", 1.0f);
 				}
 			}
@@ -1637,7 +1637,7 @@ namespace GTS {
 		
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			return transient->being_held && !tiny->IsDead();
+			return transient->BeingHeld && !tiny->IsDead();
 		}
 		return false;
 	}
@@ -1645,7 +1645,7 @@ namespace GTS {
 	bool IsBetweenBreasts(Actor* actor) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
-			return transient->is_between_breasts;
+			return transient->BetweenBreasts;
 		}
 		return false;
 	}
@@ -1689,7 +1689,7 @@ namespace GTS {
 	bool IsBeingEaten(Actor* tiny) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			return transient->about_to_be_eaten;
+			return transient->AboutToBeEaten;
 		}
 		return false;
 	}
@@ -1789,7 +1789,7 @@ namespace GTS {
 		bool grinded = false;
 		actor->GetGraphVariableBool("GTS_BeingGrinded", grinded);
 		if (transient) {
-			return transient->being_foot_grinded;
+			return transient->BeingFootGrinded;
 		}
 		return grinded;
 	}
@@ -2975,7 +2975,7 @@ namespace GTS {
 			if (!perk_check || Runtime::HasPerk(actor, "EternalCalamity")) {
 				auto transient = Transient::GetSingleton().GetData(actor);
 				if (transient) {
-					transient->SMT_Bonus_Duration += duration;
+					transient->SMTBonusDuration += duration;
 					//log::info("Adding perk duration");
 				}
 			}
@@ -2989,7 +2989,7 @@ namespace GTS {
 			float level_bonus = std::clamp(skill_level, 0.0f, 0.35f) * 2.0f;
 			float reduction = 1.0f - level_bonus; // up to 70% reduction of penalty
 
-			transient->SMT_Penalty_Duration += penalty * reduction;
+			transient->SMTPenaltyDuration += penalty * reduction;
 		}
 	}
 
@@ -3051,7 +3051,7 @@ namespace GTS {
 		if (actor) {
 			auto trans = Transient::GetSingleton().GetData(actor);
 			if (trans) {
-				trans->disable_collision_with = otherActor;
+				trans->DisableColissionWith = otherActor;
 				auto colliders = ActorCollisionData(actor);
 				colliders.UpdateCollisionFilter();
 				if (otherActor) {
@@ -3067,8 +3067,8 @@ namespace GTS {
 		if (actor) {
 			auto trans = Transient::GetSingleton().GetData(actor);
 			if (trans) {
-				auto otherActor = trans->disable_collision_with;
-				trans->disable_collision_with = nullptr;
+				auto otherActor = trans->DisableColissionWith;
+				trans->DisableColissionWith = nullptr;
 				auto colliders = ActorCollisionData(actor);
 				colliders.UpdateCollisionFilter();
 				if (otherActor) {

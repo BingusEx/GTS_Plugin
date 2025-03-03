@@ -19,7 +19,7 @@ namespace GTS {
 			camera->worldFOV *= 0.35f;
 		}
 
-		float DefaultTP = data->WorldFov_Default;
+		float DefaultTP = data->WorldFOVDefault;
 		double Start = Time::WorldTimeElapsed();
 
 		TaskManager::Run(name, [=](auto& progressData) {
@@ -52,7 +52,7 @@ namespace GTS {
 		ActorHandle gianthandle = actor->CreateRefHandle();
 
 		camera->firstPersonFOV *= 0.35f;
-		float DefaultFP = data->FpFov_Default;
+		float DefaultFP = data->FPFOVDefault;
 
 		double Start = Time::WorldTimeElapsed();
 
@@ -94,8 +94,8 @@ namespace GTS {
 			bool TP = camera->IsInThirdPerson();
 			bool FP = camera->IsInFirstPerson();
 			if (tranData) {
-				tranData->WorldFov_Default = camera->worldFOV;
-				tranData->FpFov_Default = camera->firstPersonFOV;
+				tranData->WorldFOVDefault = camera->worldFOV;
+				tranData->FPFOVDefault = camera->firstPersonFOV;
 				tranData->IsNotImmune = 0.0f; // make actor immune to damage
 				if (TP) {
 					CameraFOVTask_TP(actor, camera, tranData, AllowEdits);
@@ -252,7 +252,7 @@ namespace GTS {
 
 			float result = std::clamp(pushResult, 0.01f, 1.0f);
 
-            tranData->push_force = result;
+            tranData->PushForce = result;
 			//log::info("Recording Push Force:{} - {}", giant->GetDisplayFullName(), tiny->GetDisplayFullName());
 			//log::info("----Value: {}", result);
         } 

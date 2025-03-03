@@ -88,10 +88,10 @@ namespace {
 			return 0.0f;
 		}
 		if (value == 1.0f) { //get hp
-			return transient->health_boost;
+			return transient->HealthBoost;
 		}
 		if (value == 2.0f) { // get carry weight
-			return transient->carryweight_boost;
+			return transient->CarryWeightBoost;
 		}
 		return 0.0f;
 	}
@@ -228,7 +228,7 @@ namespace {
 		auto pc = PlayerCharacter::GetSingleton();
 		auto transient = Transient::GetSingleton().GetData(pc);
 		if (transient) {
-			return transient->dragon_was_eaten;
+			return transient->DragonWasEaten;
 		}
 		return false;
 	}

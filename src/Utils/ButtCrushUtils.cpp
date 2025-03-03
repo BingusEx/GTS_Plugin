@@ -5,7 +5,7 @@ namespace GTS {
 	float GetButtCrushSize(Actor* giant) {
 		auto saved_data = Transient::GetSingleton().GetData(giant);
 		if (saved_data) {
-			float butt_crush_size = std::clamp(saved_data->buttcrush_max_size, 0.0f, 1000000.0f);
+			float butt_crush_size = std::clamp(saved_data->ButtCrushMaxSize, 0.0f, 1000000.0f);
 			return butt_crush_size;
 		}
 		return 0.0f;
@@ -58,7 +58,7 @@ namespace GTS {
 	void RecordStartButtCrushSize(Actor* giant) {
 		auto saved_data = Transient::GetSingleton().GetData(giant);
 		if (saved_data) {
-			saved_data->buttcrush_start_scale = get_target_scale(giant);
+			saved_data->ButtCrushStartScale = get_target_scale(giant);
 		}
 	}
 
@@ -66,22 +66,22 @@ namespace GTS {
 		auto saved_data = Transient::GetSingleton().GetData(giant);
 		if (saved_data) {
 			float scale = game_getactorscale(giant);
-			saved_data->buttcrush_max_size += value * scale;
+			saved_data->ButtCrushMaxSize += value * scale;
 
 			if (!reset && GetGrowthCount(giant) <= 1) {
 				RecordStartButtCrushSize(giant);
 			}
 
 			if (reset) {
-				float remove_size = saved_data->buttcrush_max_size;
-				float start_scale = saved_data->buttcrush_start_scale;
+				float remove_size = saved_data->ButtCrushMaxSize;
+				float start_scale = saved_data->ButtCrushStartScale;
 
 				start_scale = std::max(start_scale, get_natural_scale(giant));
 
 				set_target_scale(giant, start_scale);
 
-				saved_data->buttcrush_max_size = 0;
-				saved_data->buttcrush_start_scale = 0.0f;
+				saved_data->ButtCrushMaxSize = 0;
+				saved_data->ButtCrushStartScale = 0.0f;
 			}
 		}
 	}

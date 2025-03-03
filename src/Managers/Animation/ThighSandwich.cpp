@@ -81,7 +81,7 @@ namespace {
 	void AllowToBeCrushed(Actor* actor, bool toggle) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
-			transient->can_be_crushed = toggle;
+			transient->CanBeCrushed = toggle;
 		}
 	}
 

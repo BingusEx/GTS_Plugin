@@ -9,6 +9,6 @@ namespace GTS {
 
 			virtual std::string DebugName() override;
 
-			static void PreventAttacks(Actor* giant, Actor* tiny);
+			static void PreventAttacks(Actor* a_Giant, Actor* a_Tiny);
 	};
 }

@@ -81,10 +81,10 @@ namespace GTS {
 
 		if (Data) {
 
-			NiPoint3& DataCoordinates_LL = Data->POS_Last_Leg_L;
-			NiPoint3& DataCoordinates_RL = Data->POS_Last_Leg_R;
-			NiPoint3& DataCoordinates_LH = Data->POS_Last_Hand_L;
-			NiPoint3& DataCoordinates_RH = Data->POS_Last_Hand_R;
+			NiPoint3& DataCoordinates_LL = Data->POSLastLegL;
+			NiPoint3& DataCoordinates_RL = Data->POSLastLegR;
+			NiPoint3& DataCoordinates_LH = Data->POSLastHandL;
+			NiPoint3& DataCoordinates_RH = Data->POSLastHandR;
 
 			switch (Type) {
 				case NodeMovementType::Movement_LeftLeg: {

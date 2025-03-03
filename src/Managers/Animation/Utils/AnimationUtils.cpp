@@ -114,7 +114,7 @@ namespace GTS {
 	void Anims_FixAnimationDesync(Actor* giant, Actor* tiny, bool reset) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			float& animspeed = transient->Hug_AnimSpeed;
+			float& animspeed = transient->HugAnimationSpeed;
 			if (!reset) {
 				animspeed = AnimationManager::GetAnimSpeed(giant); 
 				// Make DLL use animspeed of GTS on Tiny
@@ -446,14 +446,14 @@ namespace GTS {
 	void AllowToDoVore(Actor* actor, bool toggle) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
-			transient->can_do_vore = toggle;
+			transient->CanDoVore = toggle;
 		}
 	}
 
 	void AllowToBeCrushed(Actor* actor, bool toggle) {
 		auto transient = Transient::GetSingleton().GetData(actor);
 		if (transient) {
-			transient->can_be_crushed = toggle;
+			transient->CanBeCrushed = toggle;
 		}
 	}
 

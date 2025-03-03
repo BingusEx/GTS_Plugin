@@ -143,7 +143,7 @@ namespace GTS {
 				log::info("npcparentnode: {}", get_npcparentnode_scale(&actor));
 				log::info("GetScale: {}", actor.GetScale());
 			}*/
-			float result = actor_data->otherScales * initialScale;
+			float result = actor_data->OtherScales * initialScale;
 			if (game_scale) {
 				result *= game_getactorscale(&actor);
 			}

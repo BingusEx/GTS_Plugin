@@ -164,9 +164,9 @@ namespace {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
 			//Throw_RayCastTask(giant, tiny, speed);
-			transient->Throw_WasThrown = true;
-			transient->Throw_Offender = giant;
-			transient->Throw_Speed = speed;
+			transient->ThrowWasThrown = true;
+			transient->ThrowOffender = giant;
+			transient->ThrowSpeed = speed;
 		}
 	}
 

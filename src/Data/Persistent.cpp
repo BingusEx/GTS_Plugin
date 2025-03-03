@@ -45,7 +45,7 @@ namespace GTS {
 			Persistent.EnableCrawlFollower.Load(serde, RecordType, RecordVersion, RecordSize);
 
 			//----- Max Size Related
-			Persistent.GTSMassBasedSize.Load(serde, RecordType, RecordVersion, RecordSize);
+			Persistent.GTSMassBasedSizeLimit.Load(serde, RecordType, RecordVersion, RecordSize);
 			Persistent.GTSExtraPotionSize.Load(serde, RecordType, RecordVersion, RecordSize);
 			Persistent.GTSGlobalSizeLimit.Load(serde, RecordType, RecordVersion, RecordSize);
 
@@ -78,7 +78,7 @@ namespace GTS {
 		Persistent.EnableCrawlFollower.Save(serde);
 
 		//----- Max Size Related
-		Persistent.GTSMassBasedSize.Save(serde);
+		Persistent.GTSMassBasedSizeLimit.Save(serde);
 		Persistent.GTSExtraPotionSize.Save(serde);
 		Persistent.GTSGlobalSizeLimit.Save(serde);
 

@@ -119,8 +119,8 @@ namespace GTS {
 		auto transient = Transient::GetSingleton().GetActorData(a_actor);
 		if (!transient) return false;
 		// If Current Scale is Equal or Larger, we either growed or stayed the same so no shriking happened
-		bool Shrinking = !(Scale >= transient->rip_lastScale);
-		transient->rip_lastScale = Scale;
+		bool Shrinking = !(Scale >= transient->ClothRipLastScale);
+		transient->ClothRipLastScale = Scale;
 		//log::info("Shrinking: {}", Shrinking);
 		return Shrinking;
 	}
@@ -232,10 +232,10 @@ namespace GTS {
 
 		float CurrentScale = get_visual_scale(a_actor);
 
-		if (actordata->rip_lastScale < 0 || actordata->rip_offset < 0) {
+		if (actordata->ClothRipLastScale < 0 || actordata->ClothRipOffset < 0) {
 			log::trace("CheckClothingRip: Values were invallid, Resetting...");
-			actordata->rip_lastScale = CurrentScale;
-			actordata->rip_offset = ReConstructOffset(a_actor, CurrentScale);
+			actordata->ClothRipLastScale = CurrentScale;
+			actordata->ClothRipOffset = ReConstructOffset(a_actor, CurrentScale);
 			return;
 		}
 
@@ -244,8 +244,8 @@ namespace GTS {
 
 		if (CurrentScale < rip_threshold) {
 			//If Smaller than rip_Threshold but offset was > 0 means we shrunk back down, so reset the offset
-			if (actordata->rip_offset > 0.0f) {
-				actordata->rip_offset = 0.0f;
+			if (actordata->ClothRipOffset > 0.0f) {
+				actordata->ClothRipOffset = 0.0f;
 
 				//ReEquip Ripped Clothing On Follower NPC's
 				if (a_actor->formID != 0x14 && IsTeammate(a_actor)) {
@@ -264,7 +264,7 @@ namespace GTS {
 
 		//Actor is shrinking don't rip
 		if (IsShrinking(a_actor,CurrentScale)) {
-			actordata->rip_offset = CurrentScale - rip_threshold + RANDOM_OFFSET;
+			actordata->ClothRipOffset = CurrentScale - rip_threshold + RANDOM_OFFSET;
 			//log::info("OffsetAfterShrink {}", actordata->rip_offset);
 			return;
 		}
@@ -272,8 +272,8 @@ namespace GTS {
 		const float Offs = RANDOM_OFFSET;
 		//if we meet scale conditions
 		//log::info("Offset Before Rip {}", actordata->rip_offset);
-		if (CurrentScale >= (rip_threshold + actordata->rip_offset + Offs)) {
-			actordata->rip_offset = CurrentScale - rip_threshold + Offs;
+		if (CurrentScale >= (rip_threshold + actordata->ClothRipOffset + Offs)) {
+			actordata->ClothRipOffset = CurrentScale - rip_threshold + Offs;
 			//log::info("Offset After Rip {}", actordata->rip_offset);
 			RipRandomClothing(a_actor);
 			return;

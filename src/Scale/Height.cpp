@@ -12,7 +12,7 @@ namespace {
 		if (!temp_actor_data) {
 			return 1.0f;
 		}
-		return height / temp_actor_data->base_height;
+		return height / temp_actor_data->BaseHeight;
 	}
 
 	float scale_to_height(Actor* actor, float scale) {
@@ -23,7 +23,7 @@ namespace {
 		if (!temp_actor_data) {
 			return 1.0f;
 		}
-		return scale * temp_actor_data->base_height;
+		return scale * temp_actor_data->BaseHeight;
 	}
 
 }
@@ -82,14 +82,14 @@ namespace GTS {
 		if (!temp_actor_data) {
 			return 1.0f;
 		}
-		return temp_actor_data->base_height;
+		return temp_actor_data->BaseHeight;
 	}
 
 	float get_bounding_box_to_mult(Actor* actor) {
 		auto nif_dim = NiPoint3(22.0f, 14.0f, 64.0f);
 		auto temp_actor_data = Transient::GetSingleton().GetData(actor);
 		if (temp_actor_data) {
-			nif_dim = temp_actor_data->BoundingBox_Cache;
+			nif_dim = temp_actor_data->BoundingBoxCache;
 		}
 		float x = nif_dim.x;
 		float y = nif_dim.y;

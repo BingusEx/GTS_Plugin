@@ -217,7 +217,7 @@ namespace GTS {
 					.s = 0.54f,
 				};
 
-				const float MassBasedSize = Persistent::GetSingleton().GTSMassBasedSize.value;
+				const float MassBasedSize = Persistent::GetSingleton().GTSMassBasedSizeLimit.value;
 
 				float modifier = soft_core(MassBasedSize, mod);
 				modifier = std::max(modifier, 0.10f);
@@ -230,7 +230,7 @@ namespace GTS {
 				}
 
 				if (MassBasedSize + get_natural_scale(caster) < GlobalSizeLimit) {
-					Persistent::GetSingleton().GTSMassBasedSize.value = MassBasedSize + value * progressionMultiplier * TimeScale();
+					Persistent::GetSingleton().GTSMassBasedSizeLimit.value = MassBasedSize + value * progressionMultiplier * TimeScale();
 				}
 			}
 		}
@@ -412,7 +412,7 @@ namespace GTS {
 	inline bool BlockShrinkToNothing(Actor* giant, Actor* tiny, float time_mult) {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
-			float& tick = transient->Shrink_Ticks;
+			float& tick = transient->ShrinkTicks;
 			tick += 0.0166f * TimeScale();
 
 			if (tick > Shrink_To_Nothing_After * time_mult) {

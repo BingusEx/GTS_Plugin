@@ -103,7 +103,7 @@ namespace GTS {
 			auto tiny = tinyref.get().get();
 			auto transient = Transient::GetSingleton().GetData(tiny);
 			if (transient) {
-				transient->can_be_vored = allow;
+				transient->CanBeVored = allow;
 			}
 		}
 	}
@@ -276,7 +276,7 @@ namespace GTS {
 		}
 
 		if (transient) {
-			if (transient->can_be_vored == false) {
+			if (transient->CanBeVored == false) {
 				Notify("{} is already being eaten by someone else", prey->GetDisplayFullName());
 				Cprint("{} is already being eaten by someone else", prey->GetDisplayFullName());
 				return false;
@@ -390,14 +390,14 @@ namespace GTS {
 	void Vore::RecordOriginalScale(Actor* tiny) {
 		auto Data = Transient::GetSingleton().GetData(tiny);
 		if (Data) {
-			Data->vore_recorded_scale = std::clamp(get_visual_scale(tiny), 0.02f, 1000000.0f);
+			Data->VoreRecordedScale = std::clamp(get_visual_scale(tiny), 0.02f, 1000000.0f);
 		}
 	}
 
 	float Vore::ReadOriginalScale(Actor* tiny) {
 		auto Data = Transient::GetSingleton().GetData(tiny);
 		if (Data) {
-			return Data->vore_recorded_scale;
+			return Data->VoreRecordedScale;
 		}
 		return 1.0f;
 	}

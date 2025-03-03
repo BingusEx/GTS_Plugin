@@ -75,14 +75,14 @@ namespace {
 		}
 		auto tranDataA = Transient::GetSingleton().GetData(actor);
 		if (tranDataA) {
-			if (tranDataA->disable_collision_with == otherActor) {
+			if (tranDataA->DisableColissionWith == otherActor) {
 				return true;
 			}
 		}
 
 		auto tranDataB = Transient::GetSingleton().GetData(otherActor);
 		if (tranDataB) {
-			if (tranDataB->disable_collision_with == actor) {
+			if (tranDataB->DisableColissionWith == actor) {
 				return true;
 			}
 		}
@@ -215,22 +215,22 @@ namespace {
 
 			auto tranDataA = Transient::GetSingleton().GetData(objA);
 			if (tranDataA) {
-				if (tranDataA->Throw_Offender) {
-					Throw_DoDamage(objA, tranDataA->Throw_Offender, tranDataA->Throw_Speed);
-					tranDataA->Throw_WasThrown = false;
-					tranDataA->Throw_Offender = nullptr;
-					tranDataA->Throw_Speed = 0.0f;
+				if (tranDataA->ThrowOffender) {
+					Throw_DoDamage(objA, tranDataA->ThrowOffender, tranDataA->ThrowSpeed);
+					tranDataA->ThrowWasThrown = false;
+					tranDataA->ThrowOffender = nullptr;
+					tranDataA->ThrowSpeed = 0.0f;
 					return;
 				}
 			}
 
 			auto tranDataB = Transient::GetSingleton().GetData(objB);
 			if (tranDataB) {
-				if (tranDataB->Throw_Offender) {
-					Throw_DoDamage(objB, tranDataB->Throw_Offender, tranDataB->Throw_Speed);
-					tranDataB->Throw_WasThrown = false;
-					tranDataB->Throw_Offender = nullptr;
-					tranDataB->Throw_Speed = 0.0f;
+				if (tranDataB->ThrowOffender) {
+					Throw_DoDamage(objB, tranDataB->ThrowOffender, tranDataB->ThrowSpeed);
+					tranDataB->ThrowWasThrown = false;
+					tranDataB->ThrowOffender = nullptr;
+					tranDataB->ThrowSpeed = 0.0f;
 					return;
 				}
 			}
