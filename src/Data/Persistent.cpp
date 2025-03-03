@@ -10,6 +10,7 @@ namespace GTS {
 	//-----------------
 
 	void Persistent::OnGameLoaded(SerializationInterface* serde) {
+		std::unique_lock lock(GetSingleton()._lock);
 		SizeManager::GetSingleton().Reset();
 		DistributeChestItems();
 		FixAnimationsAndCamera(); // Call it from ActorUtils, needed to fix Grab anim on save-reload
@@ -97,7 +98,11 @@ namespace GTS {
 
 	void Persistent::LoadActorData(SKSE::SerializationInterface* serde, const uint32_t RecordType, const uint32_t RecordVersion) {
 
-		if (RecordType != ActorDataRecord && RecordVersion >= 1) {
+		if (RecordType != ActorDataRecord) {
+			return;
+		}
+
+		if (RecordVersion < 1) {
 			return;
 		}
 
@@ -105,18 +110,12 @@ namespace GTS {
 		serde->ReadRecordData(&RecordCount, sizeof(RecordCount));
 
 		for (; RecordCount > 0; --RecordCount) {
-
 			ActorData Data = {};
 
 			//V1
 			//FormID Offset 0x00
 			RE::FormID ReadFormID;       //FormID Stored in the Cosave;
-			RE::FormID CorrectedFormID;  //Load order may have changed. This is the New FormID
 			serde->ReadRecordData(&ReadFormID, sizeof(ReadFormID));
-			if (!serde->ResolveFormID(ReadFormID, CorrectedFormID)) {
-				log::warn("Actor FormID {:08X} Not found. Skipping.", ReadFormID);
-				continue;
-			}
 
 			//V1
 			DummyReadFloat(serde);                                                          //0x04
@@ -158,6 +157,13 @@ namespace GTS {
 			LoadActorRecordFloat(serde, &Data.stolen_health, RecordVersion, 8, 0.0f);       //0x5C
 			LoadActorRecordFloat(serde, &Data.stolen_magick, RecordVersion, 8, 0.0f);       //0x60
 			LoadActorRecordFloat(serde, &Data.stolen_stamin, RecordVersion, 8, 0.0f);       //0x64
+
+			//Do this last. If we continue early we'll have shifted the read pointer by 4 bytes for the next  read
+			RE::FormID CorrectedFormID;  //Load order may have changed. This is the New FormID
+			if (!serde->ResolveFormID(ReadFormID, CorrectedFormID)) {
+				log::warn("Actor FormID {:08X} Not be Resolved. Not Adding to ActorDataMap.", ReadFormID);
+				continue;
+			}
 
 			log::trace("Actor Persistent data loaded for FormID {:08X}", ReadFormID);
 
