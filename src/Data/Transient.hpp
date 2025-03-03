@@ -99,7 +99,7 @@ namespace GTS {
 			std::vector<FormID> GetForms() const;
 
 			virtual std::string DebugName() override;
-			virtual void Update() override;
+			//virtual void Update() override;
 			virtual void Reset() override;
 			virtual void ResetActor(Actor* actor) override;
 

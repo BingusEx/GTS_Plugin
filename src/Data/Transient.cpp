@@ -69,41 +69,44 @@ namespace GTS {
 		return "Transient";
 	}
 
-	void Transient::Update() {
+	//Disabled Update, It did nothing but create exceptions when a new actor was loaded.
+	//Adding a new insertion on exception was not done previously so i guess its fine?
 
-		for (Actor* actor : find_actors()) {
+	//void Transient::Update() {
 
-			if (!actor) {
-				continue;
-			}
+	//	for (Actor* actor : find_actors()) {
 
-			if (!actor->Is3DLoaded()) {
-				continue;
-			}
+	//		if (!actor) {
+	//			continue;
+	//		}
 
-			FormID ActorKey = actor->formID;
-			std::unique_lock lock(this->TransientLock);
+	//		if (!actor->Is3DLoaded()) {
+	//			continue;
+	//		}
 
-			try {
-				//Try getting Actor data.
-				std::ignore = this->TempActorDataMap.at(ActorKey);
-			}
-			catch (const std::out_of_range&) {
+	//		FormID ActorKey = actor->formID;
+	//		std::unique_lock lock(this->TransientLock);
 
-				// Try to add
-				if (!actor) {
-					return;
-				}
-				if (get_scale(actor) < 0.0f) {
-					return;
-				}
+	//		try {
+	//			//Try getting Actor data.
+	//			std::ignore = this->TempActorDataMap.at(ActorKey);
+	//		}
+	//		catch (const std::out_of_range&) {
 
-				//Create New Data.
-				TempActorData NewTempActorData = TempActorData(actor);
-				this->TempActorDataMap.try_emplace(ActorKey, NewTempActorData);
-			}
-		}
-	}
+	//			// Try to add
+	//			if (!actor) {
+	//				return;
+	//			}
+	//			if (get_scale(actor) < 0.0f) {
+	//				return;
+	//			}
+
+	//			//Create New Data.
+	//			TempActorData NewTempActorData = TempActorData(actor);
+	//			this->TempActorDataMap.try_emplace(ActorKey, NewTempActorData);
+	//		}
+	//	}
+	//}
 
 	void Transient::Reset() {
 		log::info("Transient was reset");
