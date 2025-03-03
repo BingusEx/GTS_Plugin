@@ -264,7 +264,30 @@ namespace GTS {
 					spdlog::set_level(spdlog::level::from_str(Config::GetAdvanced().sLogLevel));
 					spdlog::flush_on(spdlog::level::from_str(Config::GetAdvanced().sFlushLevel));
 
-					//TODO Add More Stuff Here
+					// ----- If You need to do something when settings reset add it here.
+
+					if (!Settings.bTrackBonesDuringAnim) {
+						ResetCameraTracking();
+					}
+
+					if (!Settings.bHighheelsFurniture) {
+
+						auto actors = find_actors();
+
+						for (auto actor : actors) {
+							if (!actor) {
+								return;
+							}
+
+							for (bool person : {false, true}) {
+								auto npc_root_node = find_node(actor, "NPC", person);
+								if (npc_root_node && actor->GetOccupiedFurniture()) {
+									npc_root_node->local.translate.z = 0.0f;
+									update_node(npc_root_node);
+								}
+							}
+						}
+					}
 
 					Notify("Mod settins have been reset");
 					logger::info("All Mod Settings Reset");

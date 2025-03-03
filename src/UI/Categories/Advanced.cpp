@@ -84,7 +84,6 @@ namespace GTS {
             }
         }
 
-
         ImUtil_Unique{
 
             const char* T0 = "Toggle whether to fully pause the game when the menu is open.\n"
