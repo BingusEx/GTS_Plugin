@@ -103,7 +103,7 @@ namespace GTS {
 	}
 
 	std::string CrushManager::DebugName() {
-		return "CrushManager";
+		return "::CrushManager";
 	}
 
 	void CrushManager::Update() {

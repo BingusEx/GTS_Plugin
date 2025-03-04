@@ -18,10 +18,6 @@ using namespace GTS;
 
 namespace {
 
-	#ifdef GTSDEBUG
-		#define GTSCONSOLE
-	#endif
-
 	void InitializeLogging() {
 		auto path = GTS::log_directory_fixed();
 
@@ -42,13 +38,8 @@ namespace {
 
 			#ifdef GTSCONSOLE
 
-				//auto file_sink = std::make_shared <spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-				//file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [%s:%#] %v");
-
 				auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-
 				console_sink->set_pattern("\033[37m[\033[33mGTS\033[37m]\033[0m\033[37m[\033[37m%H:%M:%S.%e\033[37m]\033[0m\033[37m[%^%l%$]\033[0m\033[37m[\033[33m%s:%#\033[37m]\033[0m\033[37m: %v\033[0m");
-
 				log = std::make_shared <spdlog::logger>(spdlog::logger("Global", console_sink));
 
 			#else
@@ -187,7 +178,6 @@ namespace {
 			log::info("Getting Logger Config...");
 			const auto& debugConfig = Config::GetAdvanced();
 			log::info("Config Loaded from settings struct: Print: {} Flush: {}", debugConfig.sLogLevel, debugConfig.sFlushLevel);
-
 			spdlog::set_level(spdlog::level::from_str(debugConfig.sLogLevel));
 			spdlog::flush_on(spdlog::level::from_str(debugConfig.sFlushLevel));
 		}
@@ -218,7 +208,10 @@ SKSEPluginLoad(const LoadInterface * a_skse){
 
 	InitializeLogging();
 	LogPrintPluginInfo();
-	SetLogLevel();
+
+	#ifndef GTSCONSOLE
+		SetLogLevel();
+	#endif
 
 	Init(a_skse);
 	VersionCheck(a_skse);

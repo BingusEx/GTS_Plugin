@@ -57,7 +57,7 @@ namespace {
 		} else {
 			double Start = Time::WorldTimeElapsed();
 			ActorHandle gianthandle = giant->CreateRefHandle();
-			float original_scale = Vore::ReadOriginalScale(tiny);
+			float original_scale = VoreController::ReadOriginalScale(tiny);
 			std::string name = std::format("HugCrushGrowth_{}_{}", giant->formID, tiny->formID);
 			
 			TaskManager::Run(name, [=](auto& progressData) {
@@ -120,7 +120,7 @@ namespace {
 		auto huggedActor = HugShrink::GetHuggiesActor(giant);
 		if (huggedActor) {
 			DisableCollisions(huggedActor, giant);
-			Vore::RecordOriginalScale(huggedActor);
+			VoreController::RecordOriginalScale(huggedActor);
 		}
 	} // Used for Sneak Hugs only
 
@@ -433,7 +433,7 @@ namespace GTS {
 	}
 
 	std::string HugShrink::DebugName() {
-		return "HugShrink";
+		return "::HugShrink";
 	}
 
 	void HugShrink::DetachActorTask(Actor* giant) {

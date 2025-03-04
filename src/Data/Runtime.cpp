@@ -60,7 +60,7 @@ namespace GTS {
 	}
 
 	std::string Runtime::DebugName() {
-		return "Runtime";
+		return "::Runtime";
 	}
 
 	// Sound

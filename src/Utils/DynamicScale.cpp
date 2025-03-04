@@ -5,6 +5,8 @@
 namespace GTS {
 
 	float GetCeilingHeight(Actor* giant) {
+
+
 		if (!giant) {
 			return std::numeric_limits<float>::infinity();
 		}
@@ -13,10 +15,12 @@ namespace GTS {
 		if (!charCont) {
 			return std::numeric_limits<float>::infinity();
 		}
+
 		auto root_node = giant->GetCurrent3D();
 		if (!root_node) {
 			return std::numeric_limits<float>::infinity();
 		}
+
 		bool debug = IsDebugEnabled();
 
 		float scale = get_visual_scale(giant);
@@ -38,10 +42,10 @@ namespace GTS {
 	
 		int sides = 6;
 		float degrees = 380.0f / sides;
-		float rads = degrees * 3.141f / 180.0f;
-		const float BASE_DIST = 18.0f;
-		const float LEVEL_SEP = 12.0f;
-		const int LEVELS = 3;
+		float rads = degrees * std::numbers::pi_v<float> / 180.0f;
+		constexpr float BASE_DIST = 18.0f;
+		constexpr float LEVEL_SEP = 12.0f;
+		constexpr int LEVELS = 3;
 		
 		for (int i=0; i<sides; i++) {
 			for (int j=0; j < LEVELS; j++) {
@@ -52,7 +56,7 @@ namespace GTS {
 				vert = ray1_p + vert;
 
 				// Test ray
-				const bool DO_TESTRAY = true;
+				constexpr bool DO_TESTRAY = true;
 				if (DO_TESTRAY) {
 					float TESTRAY_LENGTH = LEVEL_SEP * scale;
 					auto ray_start = vert;
@@ -71,14 +75,7 @@ namespace GTS {
 						break; // Don't do later levels either
 					}
 				}
-
-				rays.push_back(
-					{
-						vert,
-						NiPoint3(0.0f, 0.0f, 1.0f)
-					}
-				);
-
+				rays.emplace_back(vert,NiPoint3(0.0f, 0.0f, 1.0f));
 			}
 		}
 
@@ -86,7 +83,7 @@ namespace GTS {
 		
 
 		// Ceiling
-		std::vector<float>  ceiling_heights = {};
+		std::vector<float> ceiling_heights = {};
 		//log::info("Casting ceiling rays");
 		for (const auto& ray: rays) {
 			NiPoint3 ray_start = ray.first;
@@ -109,7 +106,7 @@ namespace GTS {
 		if (ceiling_heights.empty()) {
 			return std::numeric_limits<float>::infinity();
 		}
-		float ceiling = *std::min_element(ceiling_heights.begin(), ceiling_heights.end());
+		float ceiling = *ranges::min_element(ceiling_heights);
 
 		// Floor
 		std::vector<float>  floor_heights = {};
@@ -134,7 +131,7 @@ namespace GTS {
 		if (floor_heights.empty()) {
 			return std::numeric_limits<float>::infinity();
 		}
-		float floor = *std::max_element(floor_heights.begin(), floor_heights.end());
+		float floor = *ranges::max_element(floor_heights);
 
 		// Room height
 		float room_height = fabs(ceiling - floor);
@@ -189,7 +186,7 @@ namespace GTS {
 	}
 
 	std::string DynamicScale::DebugName() {
-		return "DynamicScale";
+		return "::DynamicScale";
 	}
 
 	DynamicScaleData& DynamicScale::GetData(Actor* actor) {

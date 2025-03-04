@@ -117,7 +117,7 @@ namespace GTS {
 	}
 
 	std::string CooldownManager::DebugName() {
-		return "CooldownManager";
+		return "::CooldownManager";
 	}
 
     CooldownData& CooldownManager::GetCooldownData(Actor* actor) {

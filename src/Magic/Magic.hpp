@@ -28,22 +28,24 @@ namespace GTS {
 
 			void poll();
 
-			Actor* GetTarget() const;
-			Actor* GetCaster() const;
+			[[nodiscard]] Actor* GetTarget() const;
+			[[nodiscard]] Actor* GetCaster() const;
 
-			ActiveEffect* GetActiveEffect() const;
-			EffectSetting* GetBaseEffect() const;
+			[[nodiscard]] ActiveEffect* GetActiveEffect() const;
+			[[nodiscard]] EffectSetting* GetBaseEffect() const;
 
 			void Dispel() const;
-			bool IsDualCasting() const;
-			inline bool DualCasted() {
+			[[nodiscard]] bool IsDualCasting() const;
+
+			[[nodiscard]] inline bool DualCasted() const {
 				return this->dual_casted;
 			}
-			bool HasDuration();
+
+			[[nodiscard]] bool HasDuration() const;
 
 			Magic(ActiveEffect* effect);
 
-			inline bool IsFinished() {
+			[[nodiscard]] inline bool IsFinished() const {
 				return this->state == State::CleanUp;
 			}
 

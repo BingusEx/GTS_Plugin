@@ -8,7 +8,7 @@ using namespace GTS;
 namespace {
     void GTS_Sneak_Vore_Start(AnimationEventData& data) {
         auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		VoreData.AllowToBeVored(false);
 		for (auto& tiny: VoreData.GetVories()) {
 			AllowToBeCrushed(tiny, false);
@@ -20,7 +20,7 @@ namespace {
     }
 
     void GTS_Sneak_Vore_Grab(AnimationEventData& data) {
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			if (!Vore_ShouldAttachToRHand(&data.giant, tiny)) {
 				VoreData.GrabAll();
@@ -37,18 +37,18 @@ namespace {
 
     void GTS_Sneak_Vore_OpenMouth(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 
 		Task_FacialEmotionTask_OpenMouth(giant, 0.6f, "SneakVoreOpenMouth");
 
 		for (auto& tiny: VoreData.GetVories()) {
-			Vore::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
+			VoreController::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
 		}
     }
     void GTS_Sneak_Vore_Swallow(AnimationEventData& data) {
         Actor* giant = &data.giant;
 
-        auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+        auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			AllowToBeCrushed(tiny, true);
 			if (tiny->formID == 0x14) {
@@ -63,7 +63,7 @@ namespace {
 				tiny->SetAlpha(0.0f);
 				Runtime::PlaySoundAtNode("VoreSwallow", giant, 1.0f, 1.0f, "NPC Head [Head]"); // Play sound
 
-				auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+				auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 				for (auto& tiny: VoreData.GetVories()) {
 					if (tiny) {
 						AllowToBeCrushed(tiny, true);

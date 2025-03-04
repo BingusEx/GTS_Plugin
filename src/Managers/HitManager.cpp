@@ -26,7 +26,7 @@ namespace GTS {
 	}
 
 	std::string HitManager::DebugName() {
-		return "HitManager";
+		return "::HitManager";
 	}
 
 	void HitManager::HitEvent(const TESHitEvent* a_event) {

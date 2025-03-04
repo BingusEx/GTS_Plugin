@@ -76,7 +76,7 @@ namespace GTS {
 	}
 
 	std::string RandomGrowth::DebugName() {
-		return "RandomGrowth";
+		return "::RandomGrowth";
 	}
 
 	void RandomGrowth::Update() {

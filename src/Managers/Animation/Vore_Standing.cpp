@@ -114,7 +114,7 @@ namespace {
 
 	void GTSvore_sit_start(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			AllowToBeCrushed(tiny, false);
 			DisableCollisions(tiny, giant);
@@ -140,7 +140,7 @@ namespace {
 	}
 
 	void GTSvore_impactLS(AnimationEventData& data) {
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			tiny->NotifyAnimationGraph("GTS_EnterFear");
 		}
@@ -167,7 +167,7 @@ namespace {
 
 	void GTSvore_hand_extend(AnimationEventData& data) {
 		StartRHandRumble("HandR", data.giant, 0.25f, 0.15f);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			tiny->NotifyAnimationGraph("GTS_ExitFear");
 		}
@@ -175,7 +175,7 @@ namespace {
 
 	void GTSvore_hand_grab(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		VoreData.GrabAll();
 		for (auto& tiny: VoreData.GetVories()) {
 			tiny->NotifyAnimationGraph("JumpFall");
@@ -199,17 +199,17 @@ namespace {
 
 	void GTSvore_open_mouth(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		Task_FacialEmotionTask_OpenMouth(giant, 0.75f, "StandingVoreOpenMouth");
 
 		for (auto& tiny: VoreData.GetVories()) {
-			Vore::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
+			VoreController::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
 		}
 	}
 
 	void GTSvore_bringactor_end(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		StopRHandRumble("HandR", data.giant);
 		VoreData.AllowToBeVored(true);
 		for (auto& tiny: VoreData.GetVories()) {
@@ -220,7 +220,7 @@ namespace {
 
 	void GTSvore_swallow(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		VoreData.EnableMouthShrinkZone(true);
 		if (AllowDevourment()) {
 			for (auto& tiny: VoreData.GetVories()) {
@@ -238,7 +238,7 @@ namespace {
 
 	void GTSvore_close_mouth(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 
 		VoreData.EnableMouthShrinkZone(false);
 
@@ -279,7 +279,7 @@ namespace {
 	}
 
 	void GTSvore_eat_actor(AnimationEventData& data) {
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		AdjustFacialExpression(&data.giant, 2, 0.0f, CharEmotionType::Expression); // Remove smile
 		VoreData.KillAll();
 	}
@@ -307,7 +307,7 @@ namespace {
 
 	void GTSvore_standup_end(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		VoreData.ReleaseAll();
 		if (Config::GetGameplay().ActionSettings.bVoreFreecam && giant->formID == 0x14) {
 			EnableFreeCamera();

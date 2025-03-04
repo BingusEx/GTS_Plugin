@@ -73,6 +73,8 @@ namespace GTS {
 			return;
 		}
 
+		std::ignore = Profilers::Profile("InputManager: ProcessEvents");
+
 		//Get Current InputKeys
 		for (auto eventIt = *a_event; eventIt; eventIt = eventIt->next) {
 			//If the event is not a button, ignore.
@@ -211,6 +213,6 @@ namespace GTS {
 	}
 
 	std::string InputManager::DebugName() {
-		return "InputManager";
+		return "::InputManager";
 	}
 }

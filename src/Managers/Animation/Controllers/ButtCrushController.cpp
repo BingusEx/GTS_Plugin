@@ -130,7 +130,7 @@ namespace GTS {
 	}
 
 	std::string ButtCrushController::DebugName() {
-		return "ButtCrushController";
+		return "::ButtCrushController";
 	}
 
 	void ButtCrushController::ButtCrush_OnCooldownMessage(Actor* giant) {

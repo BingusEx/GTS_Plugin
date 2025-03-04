@@ -48,7 +48,7 @@ namespace GTS {
 		EventDispatcher::AddListener(&ReloadManager::GetSingleton()); // Handles Skyrim Events
 		EventDispatcher::AddListener(&CollisionDamage::GetSingleton()); // Handles precise size-related damage
 		EventDispatcher::AddListener(&MagicManager::GetSingleton()); // Manages spells and size changes in general
-		EventDispatcher::AddListener(&Vore::GetSingleton()); // Manages vore
+		EventDispatcher::AddListener(&VoreController::GetSingleton()); // Manages vore
 		EventDispatcher::AddListener(&CrushManager::GetSingleton()); // Manages crushing
 		EventDispatcher::AddListener(&OverkillManager::GetSingleton()); // Manages crushing
 		EventDispatcher::AddListener(&ShrinkToNothingManager::GetSingleton()); // Shrink to nothing manager

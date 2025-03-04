@@ -140,7 +140,7 @@ namespace GTS
 	}
 
 	std::string Animation_TinyCalamity::DebugName() {
-		return "Animation_TinyCalamity";
+		return "::Animation_TinyCalamity";
 	}
 
 	void Animation_TinyCalamity::RegisterEvents() {

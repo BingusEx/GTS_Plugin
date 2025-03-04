@@ -96,18 +96,21 @@ namespace GTS {
 	}
 
 	std::string FootStepManager::DebugName() {
-		return "FootStepManager";
+		return "::FootStepManager";
 	}
 
 	void FootStepManager::OnImpact(const Impact& impact) {
 		if (impact.actor) {
+
 			if (!impact.actor->Is3DLoaded()) {
 				return;
 			} 
 			if (!impact.actor->GetCurrent3D()) {
 				return;
 			}
-			auto profiler = Profilers::Profile("FootStepSound: OnImpact");
+
+			auto profiler = Profilers::Profile("FootStepManager: OnImpact");
+
 			float scale = impact.scale;
 			auto actor = impact.actor;
 			
@@ -152,7 +155,7 @@ namespace GTS {
 
 	void FootStepManager::PlayLegacySounds(float modifier, NiAVObject* foot, FootEvent foot_kind, float scale) {
 		//https://www.desmos.com/calculator/wh0vwgljfl
-		auto profiler = Profilers::Profile("Impact: PlayLegacySounds");
+		auto profiler = Profilers::Profile("FootStepManager: PlayLegacySounds");
 
 		BSSoundHandle xlFootstep   = get_sound(modifier, foot, scale, limit_x14, get_xlFootstep_sounddesc(foot_kind), xlFootstep_Params, Params_Empty, "XL: Footstep", 1.0f, false);
 		BSSoundHandle xxlFootstep = get_sound(modifier, foot, scale, limit_x14, get_xxlFootstep_sounddesc(foot_kind), xxlFootstep_Params, Params_Empty, "XXL Footstep", 1.0f, false);

@@ -599,7 +599,7 @@ DebugOverlayMenu& DebugOverlayMenu::GetSingleton() noexcept {
 }
 
 std::string DebugOverlayMenu::DebugName() {
-	return "DebugOverlayMenu";
+	return "::DebugOverlayMenu";
 }
 
 void DebugOverlayMenu::DataReady()

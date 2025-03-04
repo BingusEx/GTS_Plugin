@@ -128,7 +128,7 @@ namespace GTS {
 	void ForceFollowerAnimation(Actor* giant, FollowerAnimType Type) {
 		std::size_t numberOfPrey = 1000;
 
-		auto& Vore =        Vore::GetSingleton();
+		auto& Vore =        VoreController::GetSingleton();
 		auto& ButtCrush = 	ButtCrushController::GetSingleton();
 		auto& Hugs = 		HugAnimationController::GetSingleton();
 		auto& Grabs = 		GrabAnimationController::GetSingleton();
@@ -940,7 +940,7 @@ namespace GTS {
 	}
 
 	void DoDamageAtPoint_Cooldown(Actor* giant, float radius, float damage, NiAVObject* node, NiPoint3 NodePosition, float random, float bbmult, float crushmult, float pushpower, DamageSource Cause) { // Apply crawl damage to each bone individually
-		auto profiler = Profilers::Profile("Other: CrawlDamage");
+		auto profiler = Profilers::Profile("AnimUtils: DoDamageAtPoint");
 		if (node) {
 			if (!giant) {
 				return;
@@ -1046,7 +1046,7 @@ namespace GTS {
 	}
 
 	void ApplyThighDamage(Actor* actor, bool right, bool CooldownCheck, float radius, float damage, float bbmult, float crush_threshold, int random, DamageSource Cause) {
-		auto profiler = Profilers::Profile("ThighDamage: Loop");
+		auto profiler = Profilers::Profile("AnimUtils: ApplyThighDamage");
 		auto& CollisionDamage = CollisionDamage::GetSingleton();
 		
 		if (actor) {
@@ -1146,7 +1146,7 @@ namespace GTS {
 	}
 
 	void ApplyFingerDamage(Actor* giant, float radius, float damage, NiAVObject* node, float random, float bbmult, float crushmult, float Shrink, DamageSource Cause) { // Apply crawl damage to each bone individually
-		auto profiler = Profilers::Profile("Other: FingerDamage");
+		auto profiler = Profilers::Profile("AnimUtils: ApplyFingerDamage");
 		if (!node) {
 			return;
 		}

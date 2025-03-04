@@ -101,7 +101,7 @@ namespace GTS {
 	}
 
 	std::string AttributeManager::DebugName() {
-		return "AttributeManager";
+		return "::AttributeManager";
 	}
 
 	void AttributeManager::Update() {
@@ -127,7 +127,7 @@ namespace GTS {
 	}
 
 	float AttributeManager::GetAttributeBonus(Actor* actor, ActorValue av) const {
-		auto profiler = Profilers::Profile("Attributes: GetAttributeBonus");
+		auto profiler = Profilers::Profile("AttributeManager: GetAttributeBonus");
 		if (!actor) {
 			return 1.0f;
 		}

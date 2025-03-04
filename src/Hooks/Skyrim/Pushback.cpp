@@ -38,7 +38,7 @@ namespace Hooks {
 			REL::RelocationID(76442, 78282), 
 			[](bhkCharacterController* controller, hkVector4& a_from, float time) { // SE: DC0930
 				// TO-DO: Somwehow improve performance instead of looping through all actors
-                auto profiler = Profilers::Profile("Hook: HavokPush");
+                auto profiler = Profilers::Profile("H: HavokPush");
 				Actor* giant = GetCharContActor(controller);
 				float scale = 1.0f;
 				if (giant) {

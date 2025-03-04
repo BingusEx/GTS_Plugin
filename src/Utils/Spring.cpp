@@ -86,7 +86,7 @@ namespace GTS {
 	}
 
 	std::string SpringManager::DebugName()  {
-		return "SpringManager";
+		return "::SpringManager";
 	}
 
 	void SpringManager::Update() {

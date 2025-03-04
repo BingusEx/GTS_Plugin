@@ -6,6 +6,6 @@ namespace GTS {
 		public:
 			[[nodiscard]] static ImpactManager& GetSingleton() noexcept;
 
-			void HookProcessEvent(BGSImpactManager* impact, const BGSFootstepEvent* a_event, BSTEventSource<BGSFootstepEvent>* a_eventSource);
+		static void HookProcessEvent(BGSImpactManager* impact, const BGSFootstepEvent* a_event, BSTEventSource<BGSFootstepEvent>* a_eventSource);
 	};
 }

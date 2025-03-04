@@ -73,7 +73,7 @@ namespace GTS {
 
 
 	std::string Transient::DebugName() {
-		return "Transient";
+		return "::Transient";
 	}
 
 	void Transient::ActorLoaded(RE::Actor* actor) {

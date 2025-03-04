@@ -18,7 +18,7 @@ namespace GTS {
 	}
 
 	std::string ThighCrushController::DebugName() {
-		return "ThighCrushController";
+		return "::ThighCrushController";
 	}
 
 	std::vector<Actor*> ThighCrushController::GetThighTargetsInFront(Actor* pred, std::size_t numberOfPrey) {

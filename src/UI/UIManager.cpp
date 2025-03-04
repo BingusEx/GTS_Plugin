@@ -40,10 +40,13 @@ namespace {
                 msgQueue->AddMessage(RE::DialogueMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
             }
 
+            GTS::UIManager::UnPausedGameTime = Hooks::Time::GGTM();
+
             if (GTS::Config::GetAdvanced().bPauseGame) {
                 //Pause the game, Figuring out that this was the "magic" value that needed to be set for the full game to pause was fun*
                 //*it was not... Atleast it was good practice in figuring out how ghidra works with the RE'd stuff....
                 RE::UI::GetSingleton()->numPausesGame++;
+                GTS::UIManager::GamePaused = true;
                 //Old method Only stops world update, Its litterally only used for the TFC 1 command in the whole exe.
                 //WorldUpdate Checks this value and it only ever gets set by the TFC 1 console command....
                 //RE::Main::GetSingleton()->freezeTime = true;
@@ -76,14 +79,14 @@ namespace GTS {
 
 
     void UIManager::ShowInfos() {
-        if (auto Window = dynamic_cast<WindowStatus*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+        if (auto Window = dynamic_cast<WindowStatus*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Status"))) {
             if (Window->ShouldDraw()) {
                 Window->Show();
             }
         	
         }
 
-        if (auto Window = dynamic_cast<WindowUnderstomp*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("Settings"))) {
+        if (auto Window = dynamic_cast<WindowUnderstomp*>(GTS::ImWindowManager::GetSingleton().GetWindowByName("UnderstompAngle"))) {
             if (Window->ShouldDraw()) {
                 Window->Show();
             }
@@ -98,19 +101,22 @@ namespace GTS {
             }
 
             //Show Settings Window
-        	ShouldDrawOverTop = false;
+            ShouldDrawOverTop = false;
             Window->Show = false;
 
-            //Should be good enough of a check i guess?
-            if (RE::UI::GetSingleton()->numPausesGame > 0)
-            RE::UI::GetSingleton()->numPausesGame--;
+            //If we incremented the pause counter ourselves
+            //decrement it again
+            //if we didnt and some random message box did this prevents underflowing the counter to 4 bilion
+            if (GTS::UIManager::GamePaused){
+                if (RE::UI::GetSingleton()->numPausesGame > 0)
+                    RE::UI::GetSingleton()->numPausesGame--;
+                GTS::UIManager::GamePaused = false;
+			}
 
             //RE::Main::GetSingleton()->freezeTime = false;
             RE::UIBlurManager::GetSingleton()->DecrementBlurCount();
-            Hooks::Time::SGTM(1.0f);
-
-
-
+            //Restore Modified Game time.
+            Hooks::Time::SGTM(GTS::UIManager::UnPausedGameTime);
         }
     }
 
@@ -174,7 +180,7 @@ namespace GTS {
 
     //Called After RE::HUDMenu is drawn
     void UIManager::Update() {
-        std::ignore = Profilers::Profile("UIManager::Update");
+       
 
         if (!Initialized.load()) {
             return;
@@ -192,6 +198,11 @@ namespace GTS {
         ImGui::NewFrame();
 
         ImWindowManager::GetSingleton().Update();
+
+        if (Profiler::ProfilerEnabled) {
+            Profilers::DisplayReport();
+            ShouldDrawOverTop = true;
+        }
 
         ImGui::Render();
 

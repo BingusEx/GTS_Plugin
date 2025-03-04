@@ -53,7 +53,7 @@ namespace GTS {
 	}
 
 	std::string GrabAnimationController::DebugName() {
-		return "GrabAnimationController";
+		return "::GrabAnimationController";
 	}
 
 	std::vector<Actor*> GrabAnimationController::GetGrabTargetsInFront(Actor* pred, std::size_t numberOfPrey) {

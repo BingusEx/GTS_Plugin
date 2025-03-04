@@ -228,7 +228,7 @@ namespace GTS {
 	}
 
 	std::string SizeHitEffects::DebugName() {
-		return "SizeHitEffects";
+		return "::SizeHitEffects";
 	}
 
 	void SizeHitEffects::ApplyEverything(Actor* attacker, Actor* receiver, float damage) {

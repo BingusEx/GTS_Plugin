@@ -49,7 +49,7 @@ namespace {
 
 	void GTSBeh_CrawlVoring(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		VoreData.AllowToBeVored(false);
 		for (auto& tiny: VoreData.GetVories()) {
 			AllowToBeCrushed(tiny, false);
@@ -65,7 +65,7 @@ namespace {
 
 	void GTSCrawlVore_Grab(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			if (!Vore_ShouldAttachToRHand(giant, tiny)) {
 				VoreData.GrabAll();
@@ -122,10 +122,10 @@ namespace {
 		auto giant = &data.giant;
 		Task_FacialEmotionTask_OpenMouth(giant, 0.5f, "CrawlVoreOpenMouth");
 
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 
 		for (auto& tiny: VoreData.GetVories()) {
-			Vore::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
+			VoreController::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
 		}
 	}
 
@@ -133,7 +133,7 @@ namespace {
 	}
 	void GTSCrawlVore_Swallow(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 
 		for (auto& tiny: VoreData.GetVories()) {
 			AllowToBeCrushed(tiny, true);
@@ -154,7 +154,7 @@ namespace {
 
 	void GTSCrawlVore_KillAll(AnimationEventData& data) {
 		auto giant = &data.giant;
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			if (tiny) {
 				AllowToBeCrushed(tiny, true);

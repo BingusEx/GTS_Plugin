@@ -98,7 +98,7 @@ namespace GTS {
 
             float duration = 0.35f;
 
-            std::vector<Actor*> preys = Vore::GetSingleton().GetVoreTargetsInFront(giant, 1);
+            std::vector<Actor*> preys = VoreController::GetSingleton().GetVoreTargetsInFront(giant, 1);
             bool OnCooldown = IsActionOnCooldown(giant, CooldownSource::Misc_TinyCalamityRage);
             for (auto tiny: preys) {
                 if (tiny) {
@@ -151,7 +151,7 @@ namespace GTS {
     }
 
     void TinyCalamity_ShrinkActor(Actor* giant, Actor* tiny, float shrink) {
-        auto profiler = Profilers::Profile("Calamity: Shrink");
+        auto profiler = Profilers::Profile("TinyCalamity: ShrinkActor");
         if (HasSMT(giant)) {
             bool HasPerk = Runtime::HasPerk(giant, "LifeSteal");
             float limit = Minimum_Actor_Scale;
@@ -293,7 +293,7 @@ namespace GTS {
     }
 
     void TinyCalamity_SeekActors(Actor* giant) {
-        auto profiler = Profilers::Profile("Calamity: SeekActor");
+        auto profiler = Profilers::Profile("TinyCalamity: SeekActors");
         if (giant->formID == 0x14) {
             if (giant->AsActorState()->IsSprinting() && HasSMT(giant)) {
                 auto node = find_node(giant, "NPC Pelvis [Pelv]");
@@ -343,7 +343,7 @@ namespace GTS {
     }
 
     void TinyCalamity_CrushCheck(Actor* giant, Actor* tiny) {
-		auto profiler = Profilers::Profile("tinyCalamity: CrushCheck");
+		auto profiler = Profilers::Profile("TinyCalamity: CrushCheck");
 		if (giant == tiny) {
 			return;
 		}

@@ -16,13 +16,13 @@ namespace GTS {
 
 	using EventResult = RE::BSEventNotifyControl;
 
-	class InputManager {
+	class InputManager : EventListener {
 		public:
 			[[nodiscard]] static InputManager& GetSingleton() noexcept;
 
 			void ProcessEvents(InputEvent** a_event);
 
-			static std::string DebugName();
+			std::string DebugName() override;
 
 			void Init();
 

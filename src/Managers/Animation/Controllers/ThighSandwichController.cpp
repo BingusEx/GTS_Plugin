@@ -50,7 +50,7 @@ namespace GTS {
 	}
 
 	std::string ThighSandwichController::DebugName() {
-		return "ThighSandwichController";
+		return "::ThighSandwichController";
 	}
 
 	void SandwichingData::MoveActors(bool move) {

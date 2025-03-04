@@ -26,11 +26,11 @@ namespace GTS {
 	}
 
 	std::string HighHeelManager::DebugName() {
-		return "HighHeelManager";
+		return "::HighHeelManager";
 	}
 
 	void HighHeelManager::HavokUpdate() {
-		auto profiler = Profilers::Profile("HH: HavokUpdate");
+		auto profiler = Profilers::Profile("HHMgr: HavokUpdate");
 		auto actors = FindSomeActors("HHHavokUpdate", 1);
 		for (auto actor: actors) {
 			ApplyHH(actor, false);
@@ -78,7 +78,7 @@ namespace GTS {
 	}
 
 	void HighHeelManager::ApplyHH(Actor* actor, bool force) {
-		auto profiler = Profilers::Profile("HH: ApplyHH");
+		auto profiler = Profilers::Profile("HHMgr: ApplyHH");
 		if (actor) {
 
 			if (actor->Is3DLoaded()) {
@@ -152,7 +152,7 @@ namespace GTS {
 
 
 	void HighHeelManager::UpdateHHOffset(Actor* actor) {
-		auto profiler = Profilers::Profile("HH: UpdateHHOffset");
+		auto profiler = Profilers::Profile("HHMgr: UpdateHHOffset");
 		auto models = GetModelsForSlot(actor, BGSBipedObjectForm::BipedObjectSlot::kFeet);
 		NiPoint3 result = NiPoint3();
 		for (auto model: models) {
@@ -224,7 +224,7 @@ namespace GTS {
 	}
 
 	NiPoint3 HighHeelManager::GetBaseHHOffset(Actor* actor) {
-		auto profiler = Profilers::Profile("HH: GetBaseHHOffset");
+		auto profiler = Profilers::Profile("HHMgr: GetBaseHHOffset");
 		auto& me = HighHeelManager::GetSingleton();
 		me.data.try_emplace(actor);
 		auto& hhData = me.data[actor];
@@ -232,7 +232,7 @@ namespace GTS {
 	}
 
 	NiPoint3 HighHeelManager::GetHHOffset(Actor* actor) {
-		auto profiler = Profilers::Profile("HH: GetHHOffset");
+		auto profiler = Profilers::Profile("HHMgr: GetHHOffset");
 		auto Scale = get_visual_scale(actor); // used to read Root [Root] only for some reason
 		return HighHeelManager::GetBaseHHOffset(actor) * Scale;
 	}

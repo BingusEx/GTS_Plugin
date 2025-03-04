@@ -57,7 +57,7 @@ namespace GTS {
 	}
 
 	bool IsEquipBusy(Actor* actor) {
-		auto profiler = Profilers::Profile("ActorUtils: IsEquipBusy");
+		auto profiler = Profilers::Profile("ActorBools: IsEquipBusy");
 		int State;
 		actor->GetGraphVariableInt("currentDefaultState", State);
 		if (State >= 10 && State <= 20) {
@@ -227,7 +227,7 @@ namespace GTS {
 	}
 
 	bool IsGtsBusy(Actor* actor) {
-		auto profiler = Profilers::Profile("ActorUtils: IsGtsBusy"); 
+		auto profiler = Profilers::Profile("ActorBools: IsGtsBusy"); 
 		bool GTSBusy = false;
 		actor->GetGraphVariableBool("GTS_Busy", GTSBusy);
 

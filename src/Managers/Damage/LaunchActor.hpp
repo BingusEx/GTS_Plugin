@@ -10,11 +10,11 @@ namespace GTS {
 			static void ApplyLaunchTo(Actor* giant, Actor* tiny, float force, float launch_power);
 			void ApplyLaunch_At(Actor* giant, float radius, float power, FootEvent kind);
 
-			void LaunchAtNode(Actor* giant, float radius, float power, std::string_view node);
-			void LaunchAtNode(Actor* giant, float radius, float power, NiAVObject* node);
+			static void LaunchAtNode(Actor* giant, float radius, float power, std::string_view node);
+			static void LaunchAtNode(Actor* giant, float radius, float power, NiAVObject* node);
 
-			void LaunchAtCustomNode(Actor* giant, float radius, float min_radius, float power, NiAVObject* node);
+			static void LaunchAtCustomNode(Actor* giant, float radius, float min_radius, float power, NiAVObject* node);
 
-			void LaunchAtFoot(Actor* giant, float radius, float power, bool right_foot);
+			static void LaunchAtFoot(Actor* giant, float radius, float power, bool right_foot);
 	};
 }

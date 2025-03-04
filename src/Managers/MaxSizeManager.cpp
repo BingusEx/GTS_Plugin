@@ -59,7 +59,7 @@ namespace GTS {
 
     void UpdateMaxScale() {
 
-        auto profiler = Profilers::Profile("SizeManager: Update");
+        auto profiler = Profilers::Profile("MaxSizeManager: UpdateMaxScale");
 
 		for (auto actor: find_actors()) {
 

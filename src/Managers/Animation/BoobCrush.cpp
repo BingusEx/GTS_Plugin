@@ -330,7 +330,7 @@ namespace GTS
 	}
 
 	std::string AnimationBoobCrush::DebugName() {
-		return "AnimationBoobCrush";
+		return "::AnimationBoobCrush";
 	}
 
 	void AnimationBoobCrush::AttachActor(Actor* giant, Actor* tiny) {

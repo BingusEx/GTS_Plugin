@@ -331,12 +331,12 @@ namespace GTS {
 	}
 
 	std::string GameModeManager::DebugName() {
-		return "GameModeManager";
+		return "::GameModeManager";
 	}
 
 	void GameModeManager::ApplyGameMode(Actor* a_Actor, const SelectedGameMode& a_SelectedGameMode, const float& a_GrowthRate, const float& a_ShrinkRate)  {
 
-		auto profiler = Profilers::Profile("Manager: ApplyGameMode");
+		auto profiler = Profilers::Profile("GameModeManager: ApplyGameMode");
 
 
 		if (a_SelectedGameMode == SelectedGameMode::kNone) {
@@ -409,7 +409,7 @@ namespace GTS {
 	}
 
 	void GameModeManager::GameMode(Actor* actor)  {
-		auto profiler = Profilers::Profile("Manager: GameMode");
+		auto profiler = Profilers::Profile("GameModeManager: GameMode");
 
 		if (!actor) {
 			return;

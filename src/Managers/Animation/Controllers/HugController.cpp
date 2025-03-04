@@ -93,7 +93,7 @@ namespace GTS {
 	}
 
 	std::string HugAnimationController::DebugName() {
-		return "HugAnimationController";
+		return "::HugAnimationController";
 	}
 
 	void HugAnimationController::Hugs_OnCooldownMessage(Actor* giant) {

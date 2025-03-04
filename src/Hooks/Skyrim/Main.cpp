@@ -30,9 +30,11 @@ namespace Hooks {
 	void Hook_MainUpdate::Update(RE::Main* a_this, float a2) {
 
 		_Update(a_this, a2);
-		//log::info("Plugin Ready:{}, Plugin Live: {}", Plugin::Ready(), Plugin::Live());
+
 		static std::atomic_bool started = std::atomic_bool(false);
+
 		Plugin::SetOnMainThread(true);
+
 		if (Plugin::Live()) {
 			// We are not loading or in the mainmenu
 			// Player loaded and not paused
@@ -51,11 +53,11 @@ namespace Hooks {
 		}
 		Plugin::SetOnMainThread(false);
 
-		if (Profiler::ProfilerEnabled) {
+		/*if (Profiler::ProfilerEnabled) {
 			static Timer timer = Timer(5.0);
 			if (timer.ShouldRun()) {
 				Profilers::Report();
 			}
-		}
+		}*/
 	}
 }

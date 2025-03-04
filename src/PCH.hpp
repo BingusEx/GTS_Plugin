@@ -169,6 +169,10 @@ namespace RE {
 
 namespace logger = SKSE::log;
 
+#ifdef GTSDEBUG
+	#define GTSCONSOLE
+#endif
+
 //git version tracking
 #include "git.h"
 

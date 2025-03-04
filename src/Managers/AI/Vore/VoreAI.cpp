@@ -141,7 +141,7 @@ namespace GTS {
 
 	void VoreAI_StartVore(Actor* a_Predator, const vector<Actor*>& a_PotentialPrey) {
 
-		auto& VoreData = Vore::GetSingleton().GetVoreData(a_Predator);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(a_Predator);
 		for (auto Prey : a_PotentialPrey) {
 			VoreData.AddTiny(Prey);
 		}

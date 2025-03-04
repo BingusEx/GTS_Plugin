@@ -76,7 +76,7 @@ namespace GTS {
 	}
 
 	std::string CameraManager::DebugName() {
-		return "CameraManager";
+		return "::CameraManager";
 	}
 
 	void CameraManager::DataReady() {
@@ -99,7 +99,7 @@ namespace GTS {
 
 	void CameraManager::CameraUpdate() {
 
-		auto profiler = Profilers::Profile("Camera: Update");
+		auto profiler = Profilers::Profile("CameraManager: CameraUpdate");
 		CameraState* currentState = this->GetCameraState();
 
 		if (SmoothCam::Enabled()) {

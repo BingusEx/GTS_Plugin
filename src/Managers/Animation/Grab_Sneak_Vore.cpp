@@ -12,7 +12,7 @@ namespace {
 		auto otherActor = Grab::GetHeldActor(&data.giant);
 
         ManageCamera(&data.giant, true, CameraTracking::Grab_Left);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 
 		if (otherActor) {
 			VoreData.AddTiny(otherActor);
@@ -20,7 +20,7 @@ namespace {
 	}
 
     void GTS_GrabSneak_Eat(AnimationEventData& data) { 
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
             if (tiny) {
                 tiny->NotifyAnimationGraph("JumpFall");
@@ -36,7 +36,7 @@ namespace {
 	}
 
     void GTS_GrabSneak_KillAll(AnimationEventData& data) {
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		for (auto& tiny: VoreData.GetVories()) {
 			if (tiny) {
 				AllowToBeCrushed(tiny, true);

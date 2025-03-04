@@ -76,7 +76,7 @@ namespace {
 	}
 
 	void ManageActorControl() { // Rough control other fix
-		auto profiler = Profilers::Profile("Manager: Actor Control");
+		auto profiler = Profilers::Profile("GTSManager: ManageActorControl");
 		Actor* target = GetPlayerOrControlled();
 		if (target->formID != 0x14) {
 			auto grabbed = Grab::GetHeldActor(target);
@@ -108,7 +108,7 @@ namespace {
 	}
 
 	void FixActorFade() {
-		auto profiler = Profilers::Profile("Manager: Fade Fix");
+		auto profiler = Profilers::Profile("GTSManager: FixActorFade");
 		// No fix: 
 		// -Followers fade away at ~x1000 scale, may even fade earlier than that
 		// -Proteus Player gets disabled at ~x2200 scale
@@ -153,7 +153,8 @@ namespace {
 				// Only apply room scale if room_scale > natural_scale
 				//   This stops it from working when room_scale < 1.0
 				target_scale = min(target_scale, room_scale);
-			} else {
+			}
+			else {
 				// Else we just scale to natural
 				target_scale = 1.0f;
 			}
@@ -161,7 +162,7 @@ namespace {
 	}
 
 	void update_height(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data) {
-		auto profiler = Profilers::Profile("Manager: update_height");
+		auto profiler = Profilers::Profile("GTSManager: UpdateHeight");
 
 		if (!actor) {
 			return;
@@ -229,7 +230,7 @@ namespace {
 	}
 
 	void apply_height(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data, bool force = false) {
-		auto profiler = Profilers::Profile("Manager: apply_height");
+		auto profiler = Profilers::Profile("GTSManager: ApplyHeight");
 		if (!actor) {
 			return;
 		}
@@ -275,7 +276,7 @@ namespace {
 	}
 
 	void apply_speed(Actor* actor, ActorData* persi_actor_data, TempActorData* trans_actor_data, bool force = false) {
-		auto profiler = Profilers::Profile("Manager: apply_speed");
+		auto profiler = Profilers::Profile("GTSManager: ApplySpeed");
 		if (!Config::GetGeneral().bDynamicAnimspeed) {
 			return;
 		}
@@ -309,14 +310,14 @@ namespace {
 	}
 
 	void update_actor(Actor* actor) {
-		auto profiler = Profilers::Profile("Manager: update_actor");
+		auto profiler = Profilers::Profile("GTSManager: UpdateActor");
 		auto temp_data = Transient::GetSingleton().GetActorData(actor);
 		auto saved_data = Persistent::GetSingleton().GetActorData(actor);
 		update_height(actor, saved_data, temp_data);
 	}
 
 	void apply_actor(Actor* actor, bool force = false) {
-		auto profiler = Profilers::Profile("Manager: apply_actor");
+		auto profiler = Profilers::Profile("GTSManager: ApplyActor");
 		auto temp_data = Transient::GetSingleton().GetData(actor);
 		auto saved_data = Persistent::GetSingleton().GetData(actor);
 		apply_height(actor, saved_data, temp_data, force);
@@ -436,7 +437,7 @@ GtsManager& GtsManager::GetSingleton() noexcept {
 }
 
 std::string GtsManager::DebugName() {
-	return "GtsManager";
+	return "::GTSManager";
 }
 
 void GtsManager::Start() {
@@ -445,7 +446,7 @@ void GtsManager::Start() {
 
 // Poll for updates
 void GtsManager::Update() {
-	auto profiler = Profilers::Profile("Manager: Update()");
+	auto profiler = Profilers::Profile("GTSManager: Update");
 
 	UpdateFalling();
 	UpdateGlobalSizeLimit();
@@ -494,7 +495,7 @@ void GtsManager::DragonSoulAbsorption() {
 
 void GtsManager::reapply(bool force) {
 	// Get everyone in loaded AI data and reapply
-	auto profiler = Profilers::Profile("Manager: reapply");
+	auto profiler = Profilers::Profile("GTSManager: ReApply");
 	for (auto actor: find_actors()) {
 		if (actor) {
 		   	if (actor->Is3DLoaded()) {
@@ -504,7 +505,7 @@ void GtsManager::reapply(bool force) {
 	}
 }
 void GtsManager::reapply_actor(Actor* actor, bool force) {
-	auto profiler = Profilers::Profile("Manager: reapply_actor");
+	auto profiler = Profilers::Profile("GTSManager: ReApplyActor");
 	// Reapply just this actor
 	if (actor) {
 		if (actor->Is3DLoaded()) {

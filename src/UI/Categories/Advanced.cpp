@@ -18,7 +18,7 @@ namespace GTS {
             }
         }
 
-        ImUtil_Unique{
+        ImUtil_Unique {
 
             const char* T0 = "Enable the profiler to diagnose performance issues.\n"
         					 "Note: Needs a game restart to enable after setting it.";
@@ -33,11 +33,19 @@ namespace GTS {
                 ImUtil::CheckBox("Show Debug Overlay",&Settings.bShowOverlay,T1);
 
                 if (ImUtil::ComboEx<spdlog::level::level_enum>("Log Level", Settings.sLogLevel,T2,false,true)) {
-                    spdlog::set_level(spdlog::level::from_str(Settings.sLogLevel));
+
+					#ifndef GTSCONSOLE
+						spdlog::set_level(spdlog::level::from_str(Settings.sLogLevel));
+					#endif
+                	
 				}
 
 				if (ImUtil::ComboEx<spdlog::level::level_enum>("Flush Level", Settings.sFlushLevel,T3,false,true)) {
-                   spdlog::flush_on(spdlog::level::from_str(Settings.sFlushLevel));
+
+					#ifndef GTSCONSOLE
+						spdlog::flush_on(spdlog::level::from_str(Settings.sFlushLevel));
+                    #endif
+
 				}
 
               ImGui::Spacing();

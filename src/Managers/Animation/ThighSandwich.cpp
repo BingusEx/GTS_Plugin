@@ -441,6 +441,6 @@ namespace GTS
 	}
 
 	std::string AnimationThighSandwich::DebugName() {
-		return "AnimationThighSandwich";
+		return "::AnimationThighSandwich";
 	}
 }

@@ -44,7 +44,7 @@ namespace {
 
     void PreventAttacking() { // Old LOOP version of it
 		static Timer CheckTimer = Timer(0.50);
-        auto profiler = Profilers::Profile("Prevent Attacking ()");
+        auto profiler = Profilers::Profile("AttackManager: PreventAttacking");
 		if (CheckTimer.ShouldRunFrame()) {
 			for (auto giant: find_actors()) {
 				if (giant) {
@@ -95,7 +95,7 @@ namespace GTS {
     }
 
     std::string AttackManager::DebugName() {
-        return "AttackManager";
+        return "::AttackManager";
     }
 
 	void AttackManager::PreventAttacks(Actor* a_Giant, Actor* a_Tiny) {

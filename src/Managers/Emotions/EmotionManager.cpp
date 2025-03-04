@@ -154,7 +154,7 @@ namespace GTS {
 	}
 
 	std::string EmotionManager::DebugName() {
-		return "EmotionManager";
+		return "::EmotionManager";
 	}
 
 	void EmotionManager::SetEmotionBusy(Actor* giant, CharEmotionType Type, bool lock) { // We don't want emotion tasks to stack, it breaks them

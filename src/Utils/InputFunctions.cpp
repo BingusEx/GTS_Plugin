@@ -355,7 +355,7 @@ namespace {
 		}
 
 		if (voreTimer.ShouldRunFrame()) {
-			auto& VoreManager = Vore::GetSingleton();
+			auto& VoreManager = VoreController::GetSingleton();
 
 			std::vector<Actor*> preys = VoreManager.GetVoreTargetsInFront(pred, 1);
 			for (auto prey: preys) {

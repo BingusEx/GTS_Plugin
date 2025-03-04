@@ -49,9 +49,9 @@ namespace GTS {
 			bool allGrabbed = false;
 	};
 
-	class Vore : public EventListener {
+	class VoreController : public EventListener {
 		public:
-			[[nodiscard]] static Vore& GetSingleton() noexcept;
+			[[nodiscard]] static VoreController& GetSingleton() noexcept;
 
 			virtual std::string DebugName() override;
 			virtual void Reset() override;

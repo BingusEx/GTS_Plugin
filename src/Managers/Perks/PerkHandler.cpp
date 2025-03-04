@@ -132,7 +132,7 @@ namespace GTS {
     }
 
     std::string PerkHandler::DebugName() {
-        return "PerkHandler";
+        return "::PerkHandler";
     }
 
     void PerkHandler::OnAddPerk(const AddPerkEvent& evt) {

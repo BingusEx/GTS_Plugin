@@ -12,7 +12,7 @@ namespace GTS {
 	};
 
 	/*vector<Actor*> find_actors() {
-	        auto profiler = Profilers::Profile("Other: Find Actors");
+	        auto profiler = Profilers::Profile("FindActor: Find Actors");
 	        vector<Actor*> result;
 
 	        auto high_actors = find_actors_high();
@@ -34,7 +34,7 @@ namespace GTS {
 
 
 	vector<Actor*> find_actors() { // Backup above ^
-		auto profiler = Profilers::Profile("Other: Find Actors");
+		auto profiler = Profilers::Profile("FindActor: FindActors");
 		vector<Actor*> result;
 		auto high_actors = find_actors_high();
 

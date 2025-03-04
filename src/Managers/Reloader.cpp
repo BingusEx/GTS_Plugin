@@ -2,7 +2,7 @@
 
 namespace GTS {
 	std::string ReloadManager::DebugName() {
-		return "ReloadManager";
+		return "::ReloadManager";
 	}
 
 	void ReloadManager::DataReady() {

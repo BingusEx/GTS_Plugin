@@ -62,7 +62,7 @@ namespace GTS {
 	}
 
 	std::string ClothManager::DebugName() {
-		return "ClothManager";
+		return "::ClothManager";
 	}
 
 	//Add A check bool to transient to decect npc_reequips

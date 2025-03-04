@@ -25,6 +25,8 @@ namespace GTS {
 
     void ImWindowManager::Update() {
 
+        std::ignore = Profilers::Profile("ImWindowManager Update");
+
 		if (HasWindows()) [[likely]] {
 
             if (HasInputConsumers()) {
@@ -43,26 +45,28 @@ namespace GTS {
                 ImGui::ShowMetricsWindow();
             }
 
-            else if (ShowStack) {
+            if (ShowStack) {
                 ImGui::ShowStackToolWindow();
             }
 
-            auto UI = UI::GetSingleton();
+            //No longer needed since Settings now draws ontop again
 
-            //|| UI->IsMenuOpen(RE::DialogueMenu::MENU_NAME)
-            if (Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
+            //auto UI = UI::GetSingleton();
 
-                for (const auto& window : windows) {
 
-                    if (window->Name == "Settings" && window->Show) {
-                        logger::warn("WindowManager::Update -> Force closed settings!");
-                        UIManager::CloseSettings();
-                    }
-                    //Redundant
-                    window->Show = false;
-                }
-                return;
-            }
+            //if (Plugin::AnyMenuOpen() || UI->IsMenuOpen(RE::FaderMenu::MENU_NAME)) {
+
+            //    for (const auto& window : windows) {
+
+            //        if (window->Name == "Settings" && window->Show) {
+            //            logger::warn("WindowManager::Update -> Force closed settings!");
+            //            UIManager::CloseSettings();
+            //        }
+            //        //Redundant
+            //        window->Show = false;
+            //    }
+            //    return;
+            //}
 
             for (const auto& window : windows) {
 

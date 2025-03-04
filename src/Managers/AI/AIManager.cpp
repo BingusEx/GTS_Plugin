@@ -229,8 +229,6 @@ namespace GTS {
 
 	void AIManager::Update() {
 
-		std::ignore = Profilers::Profile("AIManager: Update");
-
 		if (!Plugin::Live()) {
 			return;
 		}

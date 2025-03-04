@@ -42,7 +42,7 @@ namespace GTS {
 				float DefaultScale = get_natural_scale(tiny);
 				ModSizeExperience(giant, 0.08f + (DefaultScale*0.025f));
 
-				SurvivalMode_AdjustHunger(this->giant.get().get(), Vore::ReadOriginalScale(tiny) * GetSizeFromBoundingBox(tiny), Living, false);
+				SurvivalMode_AdjustHunger(this->giant.get().get(), VoreController::ReadOriginalScale(tiny) * GetSizeFromBoundingBox(tiny), Living, false);
 			}
 
 			Task_Vore_StartVoreBuff(giant, tiny, static_cast<int>(this->tinies.size()));
@@ -130,7 +130,7 @@ namespace GTS {
 	}
 
 	void VoreData::Update() {
-		auto profiler = Profilers::Profile("Vore: Update");
+		auto profiler = Profilers::Profile("VoreData: Update");
 		if (this->giant) {
 			auto giant = this->giant.get().get();
 			float giantScale = get_visual_scale(giant);
@@ -151,22 +151,22 @@ namespace GTS {
 		}
 	}
 
-	Vore& Vore::GetSingleton() noexcept {
-		static Vore instance;
+	VoreController& VoreController::GetSingleton() noexcept {
+		static VoreController instance;
 		return instance;
 	}
 
-	std::string Vore::DebugName() {
-		return "Vore";
+	std::string VoreController::DebugName() {
+		return "::VoreController";
 	}
 
-	void Vore::Update() {
-		for (auto& [key, voreData]: this->data) {
+	void VoreController::Update() {
+		for (auto& voreData : this->data | views::values) {
 			voreData.Update();
 		}
 	}
 
-	Actor* Vore::GetVoreTargetInFront(Actor* pred) {
+	Actor* VoreController::GetVoreTargetInFront(Actor* pred) {
 		auto preys = this->GetVoreTargetsInFront(pred, 1);
 		if (!preys.empty()) {
 			return preys[0];
@@ -175,7 +175,7 @@ namespace GTS {
 		}
 	}
 
-	std::vector<Actor*> Vore::GetVoreTargetsInFront(Actor* pred, std::size_t numberOfPrey) {
+	std::vector<Actor*> VoreController::GetVoreTargetsInFront(Actor* pred, std::size_t numberOfPrey) {
 		// Get vore target for actor
 		if (!pred) {
 			return {};
@@ -256,7 +256,7 @@ namespace GTS {
 		return preys;
 	}
 
-	bool Vore::CanVore(Actor* pred, Actor* prey) {
+	bool VoreController::CanVore(Actor* pred, Actor* prey) {
 
 		if (pred == prey) {
 			return false;
@@ -328,15 +328,15 @@ namespace GTS {
 		}
 	}
 
-	void Vore::Reset() {
+	void VoreController::Reset() {
 		this->data.clear();
 	}
 
-	void Vore::ResetActor(Actor* actor) {
+	void VoreController::ResetActor(Actor* actor) {
 		this->data.erase(actor->formID);
 	}
 
-	void Vore::StartVore(Actor* pred, Actor* prey) {
+	void VoreController::StartVore(Actor* pred, Actor* prey) {
 
 		if (!CanVore(pred, prey)) {
 			return;
@@ -387,14 +387,14 @@ namespace GTS {
 		AnimationManager::StartAnim("StartVore", pred);
 	}
 
-	void Vore::RecordOriginalScale(Actor* tiny) {
+	void VoreController::RecordOriginalScale(Actor* tiny) {
 		auto Data = Transient::GetSingleton().GetData(tiny);
 		if (Data) {
 			Data->VoreRecordedScale = std::clamp(get_visual_scale(tiny), 0.02f, 1000000.0f);
 		}
 	}
 
-	float Vore::ReadOriginalScale(Actor* tiny) {
+	float VoreController::ReadOriginalScale(Actor* tiny) {
 		auto Data = Transient::GetSingleton().GetData(tiny);
 		if (Data) {
 			return Data->VoreRecordedScale;
@@ -402,7 +402,7 @@ namespace GTS {
 		return 1.0f;
 	}
 
-	void Vore::ShrinkOverTime(Actor* giant, Actor* tiny, float over_time) {
+	void VoreController::ShrinkOverTime(Actor* giant, Actor* tiny, float over_time) {
 		if (tiny) {
 			float Adjustment_Tiny = GetSizeFromBoundingBox(tiny);
 			float preyscale = get_visual_scale(tiny) * Adjustment_Tiny;
@@ -415,7 +415,7 @@ namespace GTS {
 			std::string name = std::format("ShrinkTo_{}", tiny->formID);
 
 			if (preyscale > targetScale) {
-				Vore::GetSingleton().RecordOriginalScale(tiny); // We're shrinking the tiny which affects effectiveness of vore bonuses, this fixes it
+				VoreController::GetSingleton().RecordOriginalScale(tiny); // We're shrinking the tiny which affects effectiveness of vore bonuses, this fixes it
 				TaskManager::Run(name, [=](auto& progressData) {
 					Actor* actor = tinyHandle.get().get();
 					if (!actor) {
@@ -442,14 +442,14 @@ namespace GTS {
 	}
 
 	// Gets the current vore data of a giant
-	VoreData& Vore::GetVoreData(Actor* giant) {
+	VoreData& VoreController::GetVoreData(Actor* giant) {
 		// Create it now if not there yet
 		this->data.try_emplace(giant->formID, giant);
 
 		return this->data.at(giant->formID);
 	}
 
-	void Vore::AllowMessage(bool allow) {
+	void VoreController::AllowMessage(bool allow) {
 		this->allow_message = allow;
 	}
 }

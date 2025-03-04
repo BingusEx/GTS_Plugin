@@ -43,7 +43,7 @@ namespace GTS {
 	}
 
 	std::string Rumbling::DebugName() {
-		return "Rumbling";
+		return "::Rumbling";
 	}
 
 	void Rumbling::Reset() {
@@ -88,7 +88,7 @@ namespace GTS {
 
 
 	void Rumbling::Update() {
-		auto profiler = Profilers::Profile("Rumble: Update");
+		auto profiler = Profilers::Profile("Rumbling: Update");
 		for (auto& [actor, data]: this->data) {
 			// Update values based on time passed
 			std::vector<std::string> tagsToErase = {};

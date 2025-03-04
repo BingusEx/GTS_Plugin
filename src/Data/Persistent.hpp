@@ -81,7 +81,7 @@ namespace GTS {
 			virtual void ResetActor(Actor* actor) override;
 
 			virtual std::string DebugName() override {
-				return "Persistent";
+				return "::Persistent";
 			}
 
 			static void OnRevert(SerializationInterface*) {

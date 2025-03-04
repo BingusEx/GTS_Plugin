@@ -7,7 +7,7 @@ namespace GTS {
 		private:
 			// Type aliases to make accessing nested type easier
 			using Clock = std::chrono::steady_clock;
-			using Second = std::chrono::duration<double, std::ratio<1> >;
+			using Second = std::chrono::duration<double, std::ratio<1>>;
 
 			std::chrono::time_point<Clock> m_beg { Clock::now() };
 
@@ -20,7 +20,7 @@ namespace GTS {
 
 
 		public:
-			Profiler(std::string_view name);
+			explicit Profiler(std::string_view name);
 
 			void Start();
 
@@ -28,11 +28,11 @@ namespace GTS {
 
 			void Reset();
 
-			double Elapsed();
+			double Elapsed() const;
 
-			bool IsRunning();
+			bool IsRunning() const;
 
-			double RunningTime();
+			double RunningTime() const;
 
 			std::string GetName();
 
@@ -49,10 +49,15 @@ namespace GTS {
 
 	class Profilers {
 		public:
-			[[nodiscard]] static ProfilerHandle Profile(std::string_view name);
+			[[nodiscard]] static ProfilerHandle Profile(std::string_view name) {
+				return { name };
+			}
+
 			static void Start(std::string_view name);
 			static void Stop(std::string_view name);
-			static void Report();
+			static void ReportText();
+			static void DisplayReport();
+
 		private:
 			bool AnyRunning();
 			[[nodiscard]] static Profilers& GetSingleton();

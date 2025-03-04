@@ -158,11 +158,11 @@ namespace GTS {
 	}
 
 	std::string CollisionDamage::DebugName() {
-		return "CollisionDamage";
+		return "::CollisionDamage";
 	}
 
 	void CollisionDamage::DoFootCollision(Actor* actor, float damage, float radius, int random, float bbmult, float crush_threshold, DamageSource Cause, bool Right, bool ApplyCooldown, bool ignore_rotation, bool SupportCalamity) { // Called from GtsManager.cpp, checks if someone is close enough, then calls DoSizeDamage()
-		auto profiler = Profilers::Profile("CollisionDamageLeft: DoFootCollision_Left");
+		auto profiler = Profilers::Profile("CollisionDamage: DoFootCollision");
 		auto& CollisionDamage = CollisionDamage::GetSingleton();
 		if (actor) {
 			float giantScale = get_visual_scale(actor) * GetSizeFromBoundingBox(actor);
@@ -247,7 +247,7 @@ namespace GTS {
 		}
 	}
 
-	void CollisionDamage::DoSizeDamage(Actor* giant, Actor* tiny, float damage, float bbmult, float crush_threshold, int random, DamageSource Cause, bool apply_damage) { // Applies damage and crushing
+	void CollisionDamage::DoSizeDamage(Actor* giant, Actor* tiny, float damage, float bbmult, float crush_threshold, int random, DamageSource Cause, bool apply_damage) const { // Applies damage and crushing
 		auto profiler = Profilers::Profile("CollisionDamage: DoSizeDamage");
 		if (!giant) {
 			return;

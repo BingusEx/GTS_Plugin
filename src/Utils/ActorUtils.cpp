@@ -454,7 +454,7 @@ namespace GTS {
 
 	bool IsFemale(Actor* a_Actor, bool AllowOverride) {
 		if (AllowOverride) {
-			auto profiler = Profilers::Profile("ActorUtils: FemaleCheck");
+			auto profiler = Profilers::Profile("ActorUtils: IsFemale");
 
 			if (Config::GetGeneral().bEnableMales) {
 				return true;
@@ -1423,7 +1423,7 @@ namespace GTS {
 	}
 
 	float GetHighHeelsBonusDamage(Actor* actor, bool multiply, float adjust) {
-		auto profiler = Profilers::Profile("ActorUtils: GetHHBonusDamage");
+		auto profiler = Profilers::Profile("ActorUtils: GetHighHeelsBonusDamage");
 		float value;
 		float hh = 0.0f;
 
@@ -3160,7 +3160,7 @@ namespace GTS {
 	}
 
 	void FixAnimationsAndCamera() { // Fixes Animations for GTS Grab Actions and resets the bone tracking on camera
-		auto profiler = Profilers::Profile("Utils: Actor State Fix");
+		auto profiler = Profilers::Profile("ActorUtils: FixAnimationsAndCamera");
 
 		ResetCameraTracking(); // fix the camera tracking if loading previous save while voring/thigh crushing for example
 

@@ -163,7 +163,7 @@ namespace GTS {
 			//Corrupting any future deserialization
 			RE::FormID CorrectedFormID;  //Load order may have changed. This is the New FormID
 			if (!serde->ResolveFormID(ReadFormID, CorrectedFormID)) {
-				log::warn("Actor FormID {:08X} Not be Resolved. Not Adding to ActorDataMap.", ReadFormID);
+				log::warn("Actor FormID {:08X} could not be resolved. Not adding to ActorDataMap.", ReadFormID);
 				continue;
 			}
 

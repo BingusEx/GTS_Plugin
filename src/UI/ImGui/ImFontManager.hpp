@@ -12,10 +12,6 @@ namespace GTS {
         const std::string _ext = ".ttf";
         const std::string _basePath = R"(Data\SKSE\Plugins\GTSPlugin\Fonts\)";
 
-       /* const std::string _SkyrimGUI_Light = _basePath +"Futura Condensed Light" + _ext;
-        const std::string _SkyrimGUI_Medium = _basePath + "Futura Condensed Medium" + _ext;
-        const std::string _SkyrimGUI_Console = _basePath + "Arial" + _ext;*/
-
         //Jost mimicks futura <- Skyrim Default UI Font
         //OpenSans mimicks Arial <- Skyrim Default UI Font for the console
 

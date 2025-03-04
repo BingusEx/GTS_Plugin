@@ -23,6 +23,8 @@ namespace GTS {
 
 		public:
 		static inline std::atomic_bool ShouldDrawOverTop = false;
+		static inline std::atomic_bool GamePaused = false;
+		static inline float UnPausedGameTime = 1.0f;
 
 		static UIManager& GetSingleton() {
 			static UIManager Instance;

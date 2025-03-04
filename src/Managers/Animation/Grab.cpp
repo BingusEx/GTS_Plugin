@@ -485,7 +485,7 @@ namespace GTS {
 	}
 
 	std::string Grab::DebugName() {
-		return "Grab";
+		return "::Grab";
 	}
 
 	void Grab::DamageActorInHand(Actor* giant, float Damage) {

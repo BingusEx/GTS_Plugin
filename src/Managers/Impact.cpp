@@ -33,7 +33,7 @@ namespace {
 	}
 
 	FootEvent get_foot_kind(Actor* actor, std::string_view tag) {
-		auto profiler = Profilers::Profile("Impact: Get Foot Kind");
+		auto profiler = Profilers::Profile("Impact: GetFootKind");
 		FootEvent foot_kind = FootEvent::Unknown;
 		bool is_jumping = actor ? IsJumping(actor) : false;
 		bool in_air = actor ? actor->IsInMidair() : false;
@@ -58,7 +58,7 @@ namespace {
 	}
 
 	std::vector<NiAVObject*> get_landing_nodes(Actor* actor, const FootEvent& foot_kind) {
-		auto profiler = Profilers::Profile("Impact: Get Landing Nodes");
+		auto profiler = Profilers::Profile("Impact: GetLandingNodes");
 		std::vector<NiAVObject*> results;
 		const std::string_view left_foot = "NPC L Foot [Lft ]";
 		const std::string_view right_foot = "NPC R Foot [Rft ]";
@@ -196,7 +196,7 @@ namespace GTS {
 	void ImpactManager::HookProcessEvent(BGSImpactManager* impact, const BGSFootstepEvent* a_event, BSTEventSource<BGSFootstepEvent>* a_eventSource) {
 		// Applied when Foot Events such as FootScuffLeft/FootScuffRight and FootLeft/FootRight are seen on Actors
 		if (a_event) {
-			auto profiler = Profilers::Profile("Impact: HookProcess");
+			auto profiler = Profilers::Profile("Impact: HookProcessEvent");
 			auto actor = a_event->actor.get().get();
 
 			auto id = a_event->pad04;

@@ -160,7 +160,7 @@ namespace GTS {
 	}
 
 	std::string Headtracking::DebugName() {
-		return "Headtracking";
+		return "::Headtracking";
 	}
 
 	void Headtracking::Update() {

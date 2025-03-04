@@ -11,7 +11,7 @@ namespace {
 
     void GTSGrab_Eat_Start(AnimationEventData& data) {
 		auto otherActor = Grab::GetHeldActor(&data.giant);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		ManageCamera(&data.giant, true, CameraTracking::Grab_Left);
 		if (otherActor) {
 			VoreData.AddTiny(otherActor);
@@ -22,10 +22,10 @@ namespace {
 	void GTSGrab_Eat_OpenMouth(AnimationEventData& data) {
 		auto giant = &data.giant;
 		auto otherActor = Grab::GetHeldActor(giant);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		if (otherActor) {
 			SetBeingEaten(otherActor, true);
-			Vore::GetSingleton().ShrinkOverTime(giant, otherActor, 0.1f);
+			VoreController::GetSingleton().ShrinkOverTime(giant, otherActor, 0.1f);
 		}
 		Task_FacialEmotionTask_OpenMouth(giant, 1.1f, "GrabVoreOpenMouth", 0.3f);
 		StopLHandRumble("GrabVoreL", data.giant);
@@ -33,7 +33,7 @@ namespace {
 
 	void GTSGrab_Eat_Eat(AnimationEventData& data) {
 		auto otherActor = Grab::GetHeldActor(&data.giant);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		if (otherActor) {
 			for (auto& tiny: VoreData.GetVories()) {
 				if (!AllowDevourment()) {
@@ -56,7 +56,7 @@ namespace {
 		auto otherActor = Grab::GetHeldActor(&data.giant);
 		if (otherActor) {
 			SetBeingEaten(otherActor, false);
-			auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+			auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 			for (auto& tiny: VoreData.GetVories()) {
 				VoreData.KillAll();
 			}

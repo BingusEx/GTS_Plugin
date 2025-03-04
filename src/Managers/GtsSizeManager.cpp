@@ -56,7 +56,7 @@ namespace GTS {
 	}
 
 	std::string SizeManager::DebugName() {
-		return "SizeManager";
+		return "::SizeManager";
 	}
 
 	void SizeManager::SetEnchantmentBonus(Actor* actor, float amt) {

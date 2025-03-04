@@ -70,14 +70,15 @@ namespace {
 }
 
 namespace GTS {
-	float Get_Bone_Movement_Speed(Actor* giant, NodeMovementType Type) {
-		auto profiler = Profilers::Profile("NodeMovement");
+
+	float Get_Bone_Movement_Speed(Actor* actor, NodeMovementType type) {
+		auto profiler = Profilers::Profile("MovementForce: GetBoneMovementSpeed");
 		NiAVObject* Node = nullptr;
 
 		float NodeMovementForce = 0.0f;
-		float scale = get_visual_scale(giant);
+		float scale = get_visual_scale(actor);
 		
-		auto Data = Transient::GetSingleton().GetData(giant);
+		auto Data = Transient::GetSingleton().GetData(actor);
 
 		if (Data) {
 
@@ -86,25 +87,25 @@ namespace GTS {
 			NiPoint3& DataCoordinates_LH = Data->POSLastHandL;
 			NiPoint3& DataCoordinates_RH = Data->POSLastHandR;
 
-			switch (Type) {
+			switch (type) {
 				case NodeMovementType::Movement_LeftLeg: {
 					//log::info("-------for Left Leg: ");
-					Node = find_node(giant, "NPC L Foot [Lft ]");
+					Node = find_node(actor, "NPC L Foot [Lft ]");
 					NodeMovementForce = Record_Node_Coordinates(Node, DataCoordinates_LL);
 					break;
 				}
 				case NodeMovementType::Movement_RightLeg: {
 					//log::info("-------for Right Leg: ");
-					Node = find_node(giant, "NPC R Foot [Rft ]");
+					Node = find_node(actor, "NPC R Foot [Rft ]");
 					NodeMovementForce = Record_Node_Coordinates(Node, DataCoordinates_RL);
 					break;
 				}
 				case NodeMovementType::Movement_LeftHand: 
-					Node = find_node(giant, "NPC L Hand [LHnd]");
+					Node = find_node(actor, "NPC L Hand [LHnd]");
 					NodeMovementForce = Record_Node_Coordinates(Node, DataCoordinates_LH);
 				break;
 				case NodeMovementType::Movement_RightHand: 
-					Node = find_node(giant, "NPC R Hand [RHnd]");
+					Node = find_node(actor, "NPC R Hand [RHnd]");
 					NodeMovementForce = Record_Node_Coordinates(Node, DataCoordinates_RH);
 				break;
 				case NodeMovementType::Movement_None:
@@ -123,7 +124,7 @@ namespace GTS {
 	}
 
 	float Get_Bone_Movement_Speed(Actor* giant, DamageSource Source) {
-		auto profiler = Profilers::Profile("ConvertMovement");
+		auto profiler = Profilers::Profile("MovementForce: GetBoneMovementSpeed");
 		NodeMovementType Type = Convert_To_MovementType(Source);
 		/*if (giant->formID == 0x14) {
 			log::info("Returning type: {}", static_cast<int>(Type));

@@ -43,7 +43,7 @@ namespace {
 namespace GTS {
 
 	VoreInformation GetVoreInfo(Actor* giant, Actor* tiny, float growth_mult) {
-		float recorded_scale = Vore::ReadOriginalScale(tiny);
+		float recorded_scale = VoreController::ReadOriginalScale(tiny);
 		float Health_Regeneration = 0.0f; // No hp regen by default
 		float duration = 80.0f; // 80 seconds duration by default
 		float growth = 0.275f; // Default power of gaining size
@@ -172,7 +172,7 @@ namespace GTS {
                 AdjustSizeLimit(0.0260f * multiplier, giant);
                 AdjustMassLimit(0.0106f * multiplier, giant);
             }
-            if (Vore::GetSingleton().GetVoreData(giant).GetTimer() == true) {
+            if (VoreController::GetSingleton().GetVoreData(giant).GetTimer() == true) {
 				Task_FacialEmotionTask_Moan(giant, 1.0f, "Vore", RandomFloat(0.0f, 0.35f));
                 PlayMoanSound(giant, 1.0f); // play timed sound.
             }

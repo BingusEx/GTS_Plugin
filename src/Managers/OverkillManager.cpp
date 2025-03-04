@@ -34,11 +34,11 @@ namespace GTS {
 	}
 
 	std::string OverkillManager::DebugName() {
-		return "OverkillManager";
+		return "::OverkillManager";
 	}
 
 	void OverkillManager::Update() {
-		auto profiler = Profilers::Profile("Overkill: Update");
+		auto profiler = Profilers::Profile("OverkillManager: Update");
 		for (auto &[tinyId, data]: this->data) {
 			auto tiny = TESForm::LookupByID<Actor>(tinyId);
 			auto giantHandle = data.giant;

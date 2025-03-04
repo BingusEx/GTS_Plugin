@@ -22,7 +22,7 @@
 	}
 
 	std::string ColliderManager::DebugName() {
-		return "ColliderManager";
+		return "::ColliderManager";
 	}
 
 	void ColliderManager::Update() {

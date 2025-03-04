@@ -406,11 +406,11 @@ namespace GTS {
 	}
 
 	std::string ContactManager::DebugName() {
-		return "ContactManager";
+		return "::ContactManager";
 	}
 
 	void ContactManager::HavokUpdate() {
-		auto profiler = Profilers::Profile("Other: Contact Update");
+		auto profiler = Profilers::Profile("ContactManager: HavokUpdate");
 		auto playerCharacter = PlayerCharacter::GetSingleton();
 
 		auto cell = playerCharacter->GetParentCell();

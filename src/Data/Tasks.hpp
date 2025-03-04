@@ -151,9 +151,11 @@ namespace GTS {
 
 
 	class TaskManager : public EventListener {
+
 		public:
-			virtual std::string DebugName() {
-				return "TaskManager";
+
+			std::string DebugName() override {
+				return "::TaskManager";
 			}
 
 			static TaskManager& GetSingleton() {

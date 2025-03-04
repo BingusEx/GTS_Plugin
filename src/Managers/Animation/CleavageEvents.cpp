@@ -28,7 +28,7 @@ namespace {
 			multiplier *= 1.15f;
 		}
         float grow_value = 0.08f * multiplier * 0.845f;
-        float original = Vore::ReadOriginalScale(tiny) + 0.875f; // Compensate 
+        float original = VoreController::ReadOriginalScale(tiny) + 0.875f; // Compensate 
         update_target_scale(giant, grow_value * original, SizeEffectType::kGrow);
     }
 
@@ -253,10 +253,10 @@ namespace {
     void GTS_BS_OpenMouth(const AnimationEventData& data) {
         auto giant = &data.giant;
 		auto tiny = Grab::GetHeldActor(giant);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(giant);
 		if (tiny) {
 			SetBeingEaten(tiny, true);
-			Vore::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
+			VoreController::GetSingleton().ShrinkOverTime(giant, tiny, 0.1f);
 		}
 		Task_FacialEmotionTask_OpenMouth(giant, 0.66f, "PrepareVore");
     }
@@ -265,7 +265,7 @@ namespace {
     void GTS_BS_PrepareEat(const AnimationEventData& data) {
         auto tiny = Grab::GetHeldActor(&data.giant);
         ManageCamera(&data.giant, true, CameraTracking::ObjectB);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
         
 		if (tiny) {
 			VoreData.AddTiny(tiny);
@@ -273,7 +273,7 @@ namespace {
     }
     void GTS_BS_Swallow(const AnimationEventData& data) {
         auto tiny = Grab::GetHeldActor(&data.giant);
-		auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+		auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 		if (tiny) {
             Runtime::PlaySoundAtNode("VoreSwallow", &data.giant, 1.0f, 1.0f, "NPC Head [Head]"); // Play sound
 			for (auto& tiny: VoreData.GetVories()) {
@@ -297,7 +297,7 @@ namespace {
 		auto tiny = Grab::GetHeldActor(&data.giant);
 		if (tiny) {
 			SetBeingEaten(tiny, false);
-			auto& VoreData = Vore::GetSingleton().GetVoreData(&data.giant);
+			auto& VoreData = VoreController::GetSingleton().GetVoreData(&data.giant);
 			for (auto& tiny: VoreData.GetVories()) {
 				VoreData.KillAll();
 			}
@@ -319,7 +319,7 @@ namespace {
 
         auto tiny = Grab::GetHeldActor(&data.giant);
 		if (tiny) {
-            Vore::RecordOriginalScale(tiny);
+            VoreController::RecordOriginalScale(tiny);
         }
     }
 

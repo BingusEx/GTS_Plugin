@@ -93,7 +93,7 @@ namespace GTS {
 	}
 
     void PushObjectsUpwards(Actor* giant, const std::vector<NiPoint3>& footPoints, float maxFootDistance, float power, bool IsFoot) {
-		auto profiler = Profilers::Profile("Other: Launch Objects");
+		auto profiler = Profilers::Profile("LaunchObject: PushObjectsUpwards");
 
 		const bool AllowLaunch = Config::GetGameplay().bLaunchObjects;
 
@@ -178,7 +178,7 @@ namespace GTS {
             
     void PushObjectsTowards(Actor* giant, TESObjectREFR* object, NiAVObject* Bone, float power, float radius, bool Kick) {
 
-    	auto profiler = Profilers::Profile("Other: Launch Objects");
+    	auto profiler = Profilers::Profile("LaunchObject: PushObjectsTowards");
 		const bool AllowLaunch = Config::GetGameplay().bLaunchObjects;
 
     	if (!AllowLaunch) {

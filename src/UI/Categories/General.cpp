@@ -40,9 +40,9 @@ namespace GTS {
 
 				if (ImUtil::Button("Manualy Test Animations", T0)) {
 
-					TaskManager::Run("AnimTestTask", [=](auto& progressData) {
+					UIManager::CloseSettings();
 
-						GTS::UIManager::CloseSettings();
+					TaskManager::Run("AnimTestTask", [=](auto& progressData) {
 
 						if (progressData.runtime > 0.2) {
 

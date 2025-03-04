@@ -12,9 +12,8 @@ namespace GTS {
 		}
 
 		std::string DebugName() override {
-			return "AIManager";
+			return "::AIManager";
 		}
-
 
 		Timer BeginNewActionTimer = Timer(3.0f);
 

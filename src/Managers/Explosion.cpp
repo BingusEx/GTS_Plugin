@@ -9,7 +9,7 @@ using namespace GTS;
 
 namespace {
 	void CreateParticle(Actor* actor, NiPoint3 position, float scale) {
-		auto profiler = Profilers::Profile("Explosions: CreateParticle");
+		auto profiler = Profilers::Profile("Explosion: CreateParticle");
 		
 		if (HighHeelManager::IsWearingHH(actor)) {
 			SpawnParticle(actor, 4.60f, "GTS/Effects/Footstep_High_Heel.nif", NiMatrix3(), position, scale * 2.9f, 7, nullptr);
@@ -63,14 +63,14 @@ namespace GTS {
 	}
 
 	std::string ExplosionManager::DebugName() {
-		return "ExplosionManager";
+		return "::ExplosionManager";
 	}
 
 	void ExplosionManager::OnImpact(const Impact& impact) {
 		if (!impact.actor) {
 			return;
 		}
-		auto profiler = Profilers::Profile("Explosions: OnImpact");
+		auto profiler = Profilers::Profile("ExplosionManager: OnImpact");
 		auto actor = impact.actor;
 
 		float scale = impact.scale;

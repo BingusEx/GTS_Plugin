@@ -201,7 +201,7 @@
           "type": "STRING",
           "value": "Release"
         },
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
+        "CMAKE_CXX_FLAGS_RELEASE": "/arch:AVX2 /DNDEBUG /WX /Zi /MP /W1 /permissive- /fp:fast /GL /Gy- /Gm- /Gw /sdl- /GS- /guard:cf- /O2 /Ob3 /Oi /Ot /Oy /fp:except-",
         "GTS_BUILDPRESET": "RelNoDBMaxAVX2"
       }
     }

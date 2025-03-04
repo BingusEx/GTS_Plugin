@@ -24,11 +24,11 @@ namespace GTS {
 	}
 
 	std::string ShrinkToNothingManager::DebugName() {
-		return "ShrinkToNothingManager";
+		return "::ShrinkToNothingManager";
 	}
 
 	void ShrinkToNothingManager::Update() {
-		auto profiler = Profilers::Profile("ShrinkToNothing: Update");
+		auto profiler = Profilers::Profile("ShrinkToNothingManager: Update");
 		for (auto &[tinyId, data]: this->data) {
 			auto tiny = TESForm::LookupByID<Actor>(tinyId);
 			auto giantHandle = data.giant;

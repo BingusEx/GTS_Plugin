@@ -78,7 +78,7 @@ namespace GTS {
 	}
 
 	std::string AnimationManager::DebugName() {
-		return "AnimationManager";
+		return "::AnimationManager";
 	}
 
 	void AnimationManager::DataReady() {

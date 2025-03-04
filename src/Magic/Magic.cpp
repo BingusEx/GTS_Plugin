@@ -1,20 +1,18 @@
 #include "Magic/Magic.hpp"
 
 #include "Magic/Effects/Common.hpp"
-#include "Magic/Effects/absorb_effect.hpp"
+#include "Magic/Effects/Absorb_Effect.hpp"
 #include "Magic/Effects/GrowthSpurt.hpp"
 #include "Magic/Effects/Enchantments/EnchGigantism.hpp"
-#include "Magic/Effects/grow_other.hpp"
-#include "Magic/Effects/growth.hpp"
-#include "Magic/Effects/shrink.hpp"
-#include "Magic/Effects/restore_size.hpp"
-#include "Magic/Effects/restore_size_other.hpp"
-#include "Magic/Effects/shrink_rune.hpp"
-#include "Magic/Effects/shrink_cloak.hpp"
-#include "Magic/Effects/shrink_foe.hpp"
-#include "Magic/Effects/shrink_other.hpp"
-#include "Magic/Effects/slow_grow.hpp"
-#include "Magic/Effects/sword_of_size.hpp"
+#include "Magic/Effects/Grow_Other.hpp"
+#include "Magic/Effects/Growth.hpp"
+#include "Magic/Effects/Shrink.hpp"
+#include "Magic/Effects/Restore_Size.hpp"
+#include "Magic/Effects/Restore_Size_Other.hpp"
+#include "Magic/Effects/Shrink_Foe.hpp"
+#include "Magic/Effects/Shrink_Other.hpp"
+#include "Magic/Effects/Slow_Grow.hpp"
+#include "Magic/Effects/Sword_Of_Size.hpp"
 #include "Magic/Effects/TinyCalamity.hpp"
 #include "Magic/Effects/Potions/MightPotion.hpp"
 #include "Magic/Effects/Potions/GrowthPotion.hpp"
@@ -56,7 +54,7 @@ namespace GTS {
 		}
 	}
 
-	bool Magic::HasDuration()  {
+	bool Magic::HasDuration() const {
 		if (this->activeEffect) {
 			auto spell = this->activeEffect->spell;
 			if (spell) {
@@ -82,6 +80,7 @@ namespace GTS {
 	}
 
 	void Magic::poll() {
+
 		switch (this->state) {
 			case State::Init:
 			{
@@ -159,22 +158,25 @@ namespace GTS {
 	}
 
 	void MagicManager::ProcessActiveEffects(Actor* actor) {
+
 		auto effect_list = actor->AsMagicTarget()->GetActiveEffectList();
+
 		if (!effect_list) {
 			return;
 		}
+
 		for (auto effect: (*effect_list)) {
 			this->numberOfEffects += 1;
-			if (this->active_effects.find(effect) == this->active_effects.end()) {
+			if (!this->active_effects.contains(effect)) {
 				EffectSetting* base_spell = effect->GetBaseObject();
-				Profilers::Start("MagicRuntime");
+				Profilers::Start("MagicManager: MagicRuntime");
 				auto factorySearch = this->factories.find(base_spell);
-				Profilers::Stop("MagicRuntime");
+				Profilers::Stop("MagicManager: MagicRuntime");
 				if (factorySearch != this->factories.end()) {
 					auto &[key, factory] = (*factorySearch);
 					auto magic_effect = factory->MakeNew(effect);
 					if (magic_effect) {
-						this->active_effects.try_emplace(effect, std::move(magic_effect));
+						this->active_effects.try_emplace(effect, magic_effect);
 					}
 				}
 			}
@@ -182,20 +184,22 @@ namespace GTS {
 	}
 
 	std::string MagicManager::DebugName() {
-		return "MagicManager";
+		return "::MagicManager";
 	}
 
 	void MagicManager::Update() {
-		Profilers::Start("MagicLookup");
+
+		Profilers::Start("MagicManager: MagicLookup");
+
 		for (auto actor: find_actors()) {
 			this->ProcessActiveEffects(actor);
 		}
-		Profilers::Stop("MagicLookup");
+
+		Profilers::Stop("MagicManager: MagicLookup");
 
 		for (auto i = this->active_effects.begin(); i != this->active_effects.end();) {
 			this->numberOfOurEffects += 1;
 			auto& magic = (*i);
-
 
 			Profilers::Start(magic.second->GetName());
 			magic.second->poll();
