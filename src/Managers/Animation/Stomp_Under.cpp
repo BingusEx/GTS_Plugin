@@ -1,5 +1,7 @@
 #include "Managers/Animation/Stomp_Under.hpp"
 
+#include "Config/Config.hpp"
+
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Cameras/CamUtil.hpp"
@@ -22,10 +24,11 @@ namespace {
 
     void UnderStomp_CheckForFootGrind(Actor* giant, bool right, FootActionType Type) {
         if (!IsCrawling(giant)) { // There's no anim for Crawling state
-            float PerformChance = 100.0f; // replace it later
-            bool IsPlayer = giant->formID == 0x14;
-            IsPlayer ? PerformChance = 100.0f : PerformChance = 100.0f; // Link it to UI values/toggles later
-            if (RandomBool(PerformChance)) {
+            const float PerformChancePlayer = Config::GetGameplay().ActionSettings.fPlayerUnderstompGrindChance;
+            const float PerformChanceNPC = Config::GetAI().Stomp.fUnderstompGrindProbability;
+        	bool IsPlayer = giant->formID == 0x14;
+
+            if (RandomBool(IsPlayer ? PerformChancePlayer : PerformChanceNPC)) {
                 FootGrindCheck(giant, Radius_Trample, right, Type);
             }
         }

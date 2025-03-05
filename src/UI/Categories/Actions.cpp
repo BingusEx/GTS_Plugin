@@ -153,8 +153,8 @@ namespace GTS {
 
                 const char* T1 = "Modify the placement of actors during cleavage actions.";
 
-                ImUtil::SliderF("Forward/Back", &SGameplay.ActionSettings.f2CleavageOffset.at(0), -10.0f, 10.0f, T1, "%.2f");
-                ImUtil::SliderF("Up/Down", &SGameplay.ActionSettings.f2CleavageOffset.at(1), -10.0f, 10.0f, T1, "%.2f");
+                ImUtil::SliderF("Forward/Back", &SGameplay.ActionSettings.f2CleavageOffset.at(1), -15.0f, 15.0f, T1, "%.2f");
+                ImUtil::SliderF("Up/Down", &SGameplay.ActionSettings.f2CleavageOffset.at(0), -15.0f, 15.0f, T1, "%.2f");
 
                 ImGui::Spacing();
             }
