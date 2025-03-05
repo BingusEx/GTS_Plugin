@@ -167,10 +167,8 @@ namespace {
 	}
 
 	void GTSSandwich_EnableRune(AnimationEventData& data) {
-		auto& sandwichdata = ThighSandwichController::GetSingleton().GetSandwichingData(&data.giant);
-		auto& sizemanager = SizeManager::GetSingleton();
 		ManageCamera(&data.giant, true, CameraTracking::Thigh_Sandwich); // Focus camera on AnimObjectA
-		sandwichdata.EnableRuneTask(&data.giant, false); // Start Growing the Rune
+		SandwichingData::EnableRuneTask(&data.giant, false); // Start Growing the Rune
 	}
 
 	void GTSSandwich_SitStart(AnimationEventData& data) {

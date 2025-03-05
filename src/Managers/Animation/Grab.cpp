@@ -671,6 +671,8 @@ namespace GTS {
 					tinyref->AsActorValueOwner()->RestoreActorValue(ACTOR_VALUE_MODIFIER::kDamage, ActorValue::kStamina, restore);
 				}
 
+				RestoreBreastAttachmentState(giantref, tinyref); // If someone suddenly ragdolls us during breast anims
+
 				Anims_FixAnimationDesync(giantref, tinyref, false);
 
 				float AnimSpeed_GTS = AnimationManager::GetAnimSpeed(giantref);
@@ -731,9 +733,9 @@ namespace GTS {
 		TaskManager::ChangeUpdate(name, UpdateKind::Havok);
 	}
 
-	void Grab::ExitGrabState(Actor* giant) {
-		AnimationManager::StartAnim("GrabAbort", giant); // Abort Grab animation
-		AnimationManager::StartAnim("TinyDied", giant);
+	void Grab::ExitGrabState(Actor* giant) { // Abort Grab animation
+		AnimationManager::StartAnim("GrabAbort", giant); // "GTSBEH_AbortGrab"
+		AnimationManager::StartAnim("TinyDied", giant); // "GTSBEH_TinyDied"
 	}
 
 

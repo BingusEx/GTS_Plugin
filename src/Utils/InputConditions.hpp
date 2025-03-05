@@ -80,6 +80,19 @@ namespace GTS {
 		return false;
 	}
 
+	static bool CleavageDOTCondition() {
+		Actor* target = GetPlayerOrControlled();
+		if (target) {
+			if (Runtime::HasPerkTeam(target, "Breasts_Strangle")) {
+				Actor* tiny = Grab::GetHeldActor(target);
+				if (IsInCleavageState(target) && tiny && IsBetweenBreasts(tiny)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	//---------------------
 	// Swipe
 	//---------------------

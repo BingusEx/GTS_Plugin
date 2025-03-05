@@ -34,6 +34,7 @@ namespace GTS {
 		float ClothRipOffset = -1.0f;
 		float IsNotImmune = 1.0f;
 		float ShrinkUntil = 0.0f;
+		float BreastSizeBuff = 0.0f;
 
 		int PerkLifeForceStacks = 0;
 		int CrushedTinies = 0;
@@ -59,6 +60,7 @@ namespace GTS {
 		bool WasSneaking = false;
 		bool EmotionModifierBusy = false;
 		bool EmotionPhonemeBusy = false;
+		bool ImmuneToBreastOneShot = true;
 
 		NiPoint3 BoundingBoxCache = { 0.0f, 0.0f, 0.0f };
 		NiPoint3 POSLastLegL = { 0.0f, 0.0f, 0.0f };
@@ -78,6 +80,7 @@ namespace GTS {
 		Timer ActionTimer = Timer(0);
 
 		std::vector<Actor*> shrinkies;
+
 
 		explicit TempActorData(Actor* a_Actor) {
 			const auto _BoundValues = get_bound_values(a_Actor);

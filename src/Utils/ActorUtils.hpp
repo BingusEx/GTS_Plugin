@@ -12,89 +12,90 @@ namespace GTS {
 
 	float GetPerkBonus_OnTheEdge(Actor* giant, float amt);
 
-	[[nodiscard]] RE::NiPoint3 RotateAngleAxis(const RE::NiPoint3& vec, const float angle, const RE::NiPoint3& axis);
+	[[nodiscard]] NiPoint3 RotateAngleAxis(const NiPoint3& vec, const float angle, const NiPoint3& axis);
 
-	RE::Actor* GetActorPtr(RE::Actor* actor);
+	Actor* GetActorPtr(Actor* actor);
 
-	RE::Actor* GetActorPtr(RE::Actor& actor);
+	Actor* GetActorPtr(Actor& actor);
 
-	RE::Actor* GetActorPtr(RE::ActorHandle& actor);
+	Actor* GetActorPtr(ActorHandle& actor);
 
-	RE::Actor* GetActorPtr(const RE::ActorHandle& actor);
+	Actor* GetActorPtr(const ActorHandle& actor);
 
-	RE::Actor* GetActorPtr(RE::FormID formId);
+	Actor* GetActorPtr(FormID formId);
 
-	RE::Actor* GetCharContActor(RE::bhkCharacterController* charCont);
+	Actor* GetCharContActor(bhkCharacterController* charCont);
 
-	void Task_AdjustHalfLifeTask(RE::Actor* tiny, float halflife, double revert_after);
+	void Task_AdjustHalfLifeTask(Actor* tiny, float halflife, double revert_after);
 
-	float GetLaunchPower(RE::Actor* giant, float sizeRatio);
+	float GetLaunchPower(Actor* giant, float sizeRatio);
 
-	void StartResetTask(RE::Actor* tiny);
-	void PlayMoanSound(RE::Actor* actor, float volume);
-	void PlayLaughSound(RE::Actor* actor, float volume, int type);
+	void StartResetTask(Actor* tiny);
+	void PlayMoanSound(Actor* actor, float volume);
+	void PlayLaughSound(Actor* actor, float volume, int type);
 
 	// GTS State Bools
-	void Potion_SetMightBonus(RE::Actor* giant, float value, bool add);
-	float Potion_GetMightBonus(RE::Actor* giant);
+	void Potion_SetMightBonus(Actor* giant, float value, bool add);
+	float Potion_GetMightBonus(Actor* giant);
 
-	float Potion_GetSizeMultiplier(RE::Actor* giant);
+	float Potion_GetSizeMultiplier(Actor* giant);
 
-	void Potion_SetShrinkResistance(RE::Actor* giant, float value);
-	float Potion_GetShrinkResistance(RE::Actor* giant);
+	void Potion_ModShrinkResistance(Actor* giant, float value);
+	void Potion_SetShrinkResistance(Actor* giant, float value);
+	float Potion_GetShrinkResistance(Actor* giant);
 
-	void Potion_SetUnderGrowth(RE::Actor* actor, bool set);
-	bool Potion_IsUnderGrowthPotion(RE::Actor* actor);
+	void Potion_SetUnderGrowth(Actor* actor, bool set);
+	bool Potion_IsUnderGrowthPotion(Actor* actor);
 	
-	bool IsInsect(RE::Actor* actor, bool performcheck);
-	bool IsFemale(RE::Actor* a_Actor, bool AllowOverride = false);
-	bool IsDragon(RE::Actor* actor);
-	bool IsGiant(RE::Actor* actor);
-	bool IsMammoth(RE::Actor* actor);
-	bool IsLiving(RE::Actor* actor);
-	bool IsUndead(RE::Actor* actor, bool PerformCheck);
-	bool WasReanimated(RE::Actor* actor);
-	bool IsFlying(RE::Actor* actor);
-	bool IsHostile(RE::Actor* giant, RE::Actor* tiny);
-	bool CanPerformAnimationOn(RE::Actor* giant, RE::Actor* tiny, bool HugCheck);
-	bool IsEssential(RE::Actor* giant, RE::Actor* actor);
-	bool IsHeadtracking(RE::Actor* giant);
-	bool AnimationsInstalled(RE::Actor* giant);
-	bool IsInGodMode(RE::Actor* giant);
+	bool IsInsect(Actor* actor, bool performcheck);
+	bool IsFemale(Actor* a_Actor, bool AllowOverride = false);
+	bool IsDragon(Actor* actor);
+	bool IsGiant(Actor* actor);
+	bool IsMammoth(Actor* actor);
+	bool IsLiving(Actor* actor);
+	bool IsUndead(Actor* actor, bool PerformCheck);
+	bool WasReanimated(Actor* actor);
+	bool IsFlying(Actor* actor);
+	bool IsHostile(Actor* giant, Actor* tiny);
+	bool CanPerformAnimationOn(Actor* giant, Actor* tiny, bool HugCheck);
+	bool IsEssential(Actor* giant, Actor* actor);
+	bool IsHeadtracking(Actor* giant);
+	bool AnimationsInstalled(Actor* giant);
+	bool IsInGodMode(Actor* giant);
 	bool IsFreeCameraEnabled();
 	bool IsDebugEnabled();
-	bool CanDoDamage(RE::Actor* giant, RE::Actor* tiny, bool HoldCheck);
+	bool CanDoDamage(Actor* giant, Actor* tiny, bool HoldCheck);
 
-	void Attachment_SetTargetNode(RE::Actor* giant, AttachToNode Node);
-	AttachToNode Attachment_GetTargetNode(RE::Actor* giant);
+	void Attachment_SetTargetNode(Actor* giant, AttachToNode Node);
+	AttachToNode Attachment_GetTargetNode(Actor* giant);
 
-	void SetBusyFoot(RE::Actor* giant, BusyFoot Foot);
-	BusyFoot GetBusyFoot(RE::Actor* giant);
+	void SetBusyFoot(Actor* giant, BusyFoot Foot);
+	BusyFoot GetBusyFoot(Actor* giant);
 	
-	void ControlAnother(RE::Actor* target, bool reset);
-	RE::Actor* GetPlayerOrControlled();
+	void ControlAnother(Actor* target, bool reset);
+	Actor* GetPlayerOrControlled();
 
-	void RecordSneaking(RE::Actor* actor);
-	void SetSneaking(RE::Actor* actor, bool override_sneak, int enable);
+	void RecordSneaking(Actor* actor);
+	void SetSneaking(Actor* actor, bool override_sneak, int enable);
 
-	void SetWalking(RE::Actor* actor, int enable);
+	void SetWalking(Actor* actor, int enable);
 
 	// Gts Bools end
 
 	// GTS Actor Functions
 	float GetDamageSetting();
-	float GetFallModifier(RE::Actor* giant);
+	float GetFallModifier(Actor* giant);
 
-	std::vector<RE::Actor*> GetMaxActionableTinyCount(RE::Actor* giant, const std::vector<RE::Actor*>& actors);
+	std::vector<Actor*> GetMaxActionableTinyCount(Actor* giant, const std::vector<Actor*>& actors);
 
-	float Ench_Aspect_GetPower(RE::Actor* giant);
-	float Ench_Hunger_GetPower(RE::Actor* giant);
+	float Ench_Aspect_GetPower(Actor* giant);
+	float Ench_Hunger_GetPower(Actor* giant);
 
-	float Perk_GetSprintShrinkReduction(RE::Actor* actor);
+	float Perk_GetSprintShrinkReduction(Actor* actor);
 
-	float GetDamageResistance(RE::Actor* actor);
-	float GetDamageMultiplier(RE::Actor* actor);
-	float Damage_CalculateSizeDamage(RE::Actor* giant, RE::Actor* tiny);
+	float GetDamageResistance(Actor* actor);
+	float GetDamageMultiplier(Actor* actor);
+	float Damage_CalculateSizeDamage(Actor* giant, Actor* tiny);
 
 	float GetSizeDifference(Actor* giant, Actor* tiny, SizeType Type, bool Check_SMT, bool HH);
 	float GetActorGTSWeight(Actor* giant);
@@ -102,6 +103,8 @@ namespace GTS {
 	float GetSizeFromBoundingBox(Actor* tiny);
 	float GetRoomStateScale(Actor* giant);
 	float GetProneAdjustment();
+
+	float GetPerkBonus_OnTheEdge(Actor* giant, float amt);
 
 	void override_actor_scale(Actor* giant, float amt, SizeEffectType type);
 	void update_target_scale(Actor* giant, float amt, SizeEffectType type);
@@ -315,12 +318,12 @@ namespace GTS {
 	void SetLinearImpulse(bhkRigidBody* body, const hkVector4& a_impulse);
 	void SetAngularImpulse(bhkRigidBody* body, const hkVector4& a_impulse);
 
-	std::int16_t GetItemCount(InventoryChanges* changes, RE::TESBoundObject* a_obj);
+	std::int16_t GetItemCount(InventoryChanges* changes, TESBoundObject* a_obj);
 	int GetCombatState(Actor* actor);
 	bool IsMoving(Actor* giant);
 
 	bool IsPlayerFirstPerson(Actor* a_actor);
 
-	void ForEachReferenceInRange_Custom(RE::TESObjectREFR* origin, float radius, std::function<RE::BSContainer::ForEachResult(RE::TESObjectREFR& ref)> callback);
+	void ForEachReferenceInRange_Custom(TESObjectREFR* origin, float radius, std::function<BSContainer::ForEachResult(TESObjectREFR& ref)> callback);
 
 }

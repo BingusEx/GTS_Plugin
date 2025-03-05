@@ -178,6 +178,10 @@ namespace {
             AttemptBreastActionOnTiny("Cleavage_Vore_Tiny");
         }
     }
+
+    void CleavageDOTEvent(const ManagedInputEvent& data) {
+        PassAnimation("Cleavage_DOT_Start", true);
+    }
 }
 
 namespace GTS
@@ -209,6 +213,7 @@ namespace GTS
         InputManager::RegisterInputEvent("CleavageSuffocate", CleavageSuffocateEvent, CleavageCondition);
         InputManager::RegisterInputEvent("CleavageAbsorb", CleavageAbsorbEvent, CleavageCondition);
         InputManager::RegisterInputEvent("CleavageVore", CleavageVoreEvent, CleavageCondition);
+        InputManager::RegisterInputEvent("CleavageDOT", CleavageDOTEvent, CleavageDOTCondition);
 	}
 
 	void Animation_Cleavage::RegisterTriggers() {
@@ -236,5 +241,7 @@ namespace GTS
 
         AnimationManager::RegisterTrigger("Cleavage_Vore_Tiny", "Cleavage", "GTSBEH_T_Boobs_Vore");
         AnimationManager::RegisterTrigger("Cleavage_Vore", "Cleavage", "GTSBEH_Boobs_Vore");
+
+
 	}
 }

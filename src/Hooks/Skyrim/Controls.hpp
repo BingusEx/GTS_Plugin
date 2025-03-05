@@ -13,13 +13,6 @@ namespace GTS {
 		return GTSBusy;
 	}
 
-	inline bool IsGrabAttacking(Actor* actor) {
-		bool Attacking = false;
-		actor->GetGraphVariableBool("GTS_IsGrabAttacking", Attacking);
-
-		return Attacking;
-	}
-
 	inline bool AllowToPerformSneak(RE::IDEvent* id) {
 		bool allow = true;
 		if (id) {

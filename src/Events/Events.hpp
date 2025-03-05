@@ -72,6 +72,12 @@ namespace GTS {
 		kNeutral,
 	};
 
+	enum class FootActionType {
+		Grind_Normal,
+		Grind_UnderStomp,
+		Trample_NormalOrUnder,
+	};
+
 	enum class SizeAttribute {
 		Normal,
 		Sprint,

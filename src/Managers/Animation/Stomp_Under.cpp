@@ -20,14 +20,35 @@ namespace {
 		Rumbling::Once(name, giant, shake_power * smt, 0.0f, node, 1.25f);
 	}
 
+    void UnderStomp_CheckForFootGrind(Actor* giant, bool right, FootActionType Type) {
+        if (!IsCrawling(giant)) { // There's no anim for Crawling state
+            float PerformChance = 100.0f; // replace it later
+            bool IsPlayer = giant->formID == 0x14;
+            IsPlayer ? PerformChance = 100.0f : PerformChance = 100.0f; // Link it to UI values/toggles later
+            if (RandomBool(PerformChance)) {
+                FootGrindCheck(giant, Radius_Trample, right, Type);
+            }
+        }
+    }
+
+
+
+
     void UnderStomp_DoEverything(Actor* giant, float animSpeed, bool right, FootEvent Event, DamageSource Source, std::string_view Node, std::string_view rumble) {
 		float perk = GetPerkBonus_Basics(giant);
 		float SMT = 1.0f;
 		float damage = 1.0f;
+
+        if (giant->IsSneaking()) {
+            damage *= 0.75f;
+        }
+
 		if (HasSMT(giant)) {
 			SMT = 1.75f; // Larger Dust
-			damage = 1.25f;
+			damage *= 1.25f;
 		}
+
+
         DoDamageEffect(giant, Damage_Stomp_Under_Light * damage * perk, Radius_Stomp_Strong, 8, 0.30f, Event, 1.0f, Source, false);
         DoImpactRumble(giant, Node, rumble);
         DoDustExplosion(giant, 1.0f * (SMT), Event, Node);
@@ -59,13 +80,14 @@ namespace {
     void GTS_UnderStomp_CamOffL(AnimationEventData& data) {ManageCamera(&data.giant, false, CameraTracking::L_Foot);}
 
     void GTS_UnderStomp_ImpactR(AnimationEventData& data) {
-		float SavedSpeed = data.animSpeed;
-		UnderStomp_DoEverything(&data.giant, SavedSpeed, true, FootEvent::Right, DamageSource::CrushedRight, RNode, "HeavyStompR");
-	}
-	void GTS_UnderStomp_ImpactL(AnimationEventData& data) {
-		float SavedSpeed = data.animSpeed;
-		UnderStomp_DoEverything(&data.giant, SavedSpeed, false, FootEvent::Left, DamageSource::CrushedLeft, LNode, "HeavyStompL");
-	}
+        UnderStomp_DoEverything(&data.giant, data.animSpeed, true, FootEvent::Right, DamageSource::CrushedRight, RNode, "HeavyStompR");
+        UnderStomp_CheckForFootGrind(&data.giant, true, FootActionType::Grind_UnderStomp);
+    }
+
+    void GTS_UnderStomp_ImpactL(AnimationEventData& data) {
+        UnderStomp_DoEverything(&data.giant, data.animSpeed, false, FootEvent::Left, DamageSource::CrushedLeft, LNode, "HeavyStompL");
+        UnderStomp_CheckForFootGrind(&data.giant, false, FootActionType::Grind_UnderStomp);
+    }
 
 }
 namespace GTS {
@@ -123,5 +145,8 @@ namespace GTS {
 	void AnimationUnderStomp::RegisterTriggers() {
 		AnimationManager::RegisterTrigger("UnderStompRight", "Stomp", "GTSBeh_UnderStomp_StartR");
 		AnimationManager::RegisterTrigger("UnderStompLeft", "Stomp", "GTSBeh_UnderStomp_StartL");
+
+        AnimationManager::RegisterTrigger("UnderGrindR", "Stomp", "GTSBEH_StartUnderGrindR");
+        AnimationManager::RegisterTrigger("UnderGrindL", "Stomp", "GTSBEH_StartUnderGrindL");
 	}
 }

@@ -302,6 +302,10 @@ namespace GTS {
                 .Keys = {"V"},
                 .BlockInput = "Never"
             },
+        	{
+                .Event = "CleavageDOT",
+                .Keys = {"E"},
+            },
 
             //========================================================
             //============ H U G S

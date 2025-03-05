@@ -112,6 +112,7 @@ namespace GTS {
 			static void StartAnim(std::string_view trigger, Actor* giant);
 			// Start the animation WITH an object to carry. We use TESObjectREFR over Actor so that we can pick up anything
 			static void StartAnim(std::string_view trigger, Actor& giant, TESObjectREFR* tiny);
+			static void ResetAnimationSpeedData(Actor* actor);
 			static void StartAnim(std::string_view trigger, Actor* giant, TESObjectREFR* tiny);
 
 			// Advance an animation to the next stage if possible

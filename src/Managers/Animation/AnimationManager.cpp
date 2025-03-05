@@ -10,6 +10,7 @@
 
 #include "Config/Config.hpp"
 
+#include "Managers/Animation/CleavageStrangle.hpp"
 #include "Managers/Animation/Grab_Sneak_Vore.hpp"
 #include "Managers/Animation/Sneak_KneeCrush.hpp"
 #include "Managers/Animation/CleavageEvents.hpp"
@@ -41,6 +42,7 @@
 #include "Managers/Animation/Shrink.hpp"
 #include "Managers/Animation/Kicks.hpp"
 #include "Managers/Animation/Grab.hpp"
+
 
 #include "Managers/Perks/PerkHandler.hpp"
 
@@ -123,6 +125,9 @@ namespace GTS {
 		Animation_Cleavage::RegisterTriggers();
 
 		Animation_CleavageEvents::RegisterEvents();
+
+		Animation_CleavageStrangle::RegisterEvents();
+		Animation_CleavageStrangle::RegisterTriggers();
 
 		Animation_TinyCalamity::RegisterEvents();
 		Animation_TinyCalamity::RegisterTriggers();
@@ -227,7 +232,9 @@ namespace GTS {
 				if (data.canEditAnimSpeed) {
 					data.animSpeed += (bonus*GetAnimationSlowdown(player));
 				}
-				data.animSpeed = std::clamp(data.animSpeed, 0.33f, 3.0f);
+				float min = IsStrangling(player) ? 0.50f : 0.33f;
+				float max = IsStrangling(player) ? 1.75f : 3.0f;
+				data.animSpeed = std::clamp(data.animSpeed, min, max);
 			}
 		} catch (std::out_of_range& e) {}
 	}
@@ -327,6 +334,22 @@ namespace GTS {
 			return;
 		}
 	}
+
+	void AnimationManager::ResetAnimationSpeedData(Actor* actor) {
+		try {
+			auto& me = AnimationManager::GetSingleton();
+			auto& actorData = me.data.at(actor);
+			for (auto& data : actorData | views::values) {
+				data.animSpeed = 1.0f;
+				data.canEditAnimSpeed = false;
+				data.stage = 0;
+
+			}
+		}
+		catch (std::out_of_range&) {}
+	}
+
+
 
 	void AnimationManager::StartAnim(std::string_view trigger, Actor* giant, TESObjectREFR* tiny) {
 		if (giant) {

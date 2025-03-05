@@ -10,9 +10,8 @@ namespace GTS {
 		Vore,
 	};
 
-	void BlockFirstPerson(Actor* actor, bool block);
 	void Task_ApplyAbsorbCooldown(Actor* giant);
-	
+	void RestoreBreastAttachmentState(Actor* giant, Actor* tiny);
 	void Anims_FixAnimationDesync(Actor* giant, Actor* tiny, bool reset);
 	void ForceFollowerAnimation(Actor* giant, FollowerAnimType Type);
 	void Vore_AttachToRightHandTask(Actor* giant, Actor* tiny);
@@ -50,10 +49,10 @@ namespace GTS {
 	float GetPerkBonus_Basics(Actor* Giant);
 	float GetPerkBonus_Thighs(Actor* Giant);
 
-	void DoFootGrind(Actor* giant, Actor* tiny);
+	void DoFootGrind(Actor* giant, Actor* tiny, bool Right);
 	void DoFingerGrind(Actor* giant, Actor* tiny);
 	void FingerGrindCheck(Actor* giant, CrawlEvent kind, bool Right, float radius);
-	void FootGrindCheck(Actor* actor, float radius, bool strong, bool Right);
+	void FootGrindCheck(Actor* actor, float radius, bool Right, FootActionType Type);
 
 	void DoDamageAtPoint_Cooldown(Actor* giant, float radius, float damage, NiAVObject* node, NiPoint3 NodePosition, float random, float bbmult, float crushmult, float pushpower, DamageSource Cause);
 	void ApplyThighDamage(Actor* actor, bool right, bool CooldownCheck, float radius, float damage, float bbmult, float crush_threshold, int random, DamageSource Cause);

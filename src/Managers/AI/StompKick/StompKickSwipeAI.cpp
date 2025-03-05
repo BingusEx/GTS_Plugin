@@ -142,14 +142,18 @@ namespace {
 		}
 	}
 
-	void Do_Tramples(Actor* a_Performer) {
+	void Do_Tramples(Actor* a_Performer, Actor* a_Prey) {
+
+		bool UnderTrample = AnimationUnderStomp::ShouldStompUnder_NPC(a_Performer, GetDistanceBetween(a_Performer, a_Prey));
+		const std::string_view TrampleType_L = UnderTrample ? "UnderTrampleL" : "TrampleL";
+		const std::string_view TrampleType_R = UnderTrample ? "UnderTrampleR" : "TrampleR";
 
 		Utils_UpdateHighHeelBlend(a_Performer, false);
 		if (RandomBool()) {
-			AnimationManager::StartAnim("TrampleL", a_Performer);
+			AnimationManager::StartAnim(TrampleType_L, a_Performer);
 		}
 		else {
-			AnimationManager::StartAnim("TrampleR", a_Performer);
+			AnimationManager::StartAnim(TrampleType_R, a_Performer);
 		}
 	}
 }
@@ -240,7 +244,7 @@ namespace GTS {
 			case 2: {
 
 				if (!IsCrawling(a_Performer)) {
-					Do_Tramples(a_Performer);
+					Do_Tramples(a_Performer, a_Prey);
 				}
 				else {
 					Do_LightStomp(a_Performer, a_Prey);
