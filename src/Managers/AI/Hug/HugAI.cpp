@@ -37,7 +37,7 @@ namespace {
 			return false;
 		}
 
-		if (a_Prey->IsDead()) {
+		if (a_Prey->IsDead() || GetAV(a_Prey, ActorValue::kHealth) < 0.0f) {
 			return false;
 		}
 
@@ -139,11 +139,14 @@ namespace {
 
 	void HugAI_StartLogicTask(Actor* a_Performer, Actor* a_Prey) {
 
+
 		const std::string TaskName = std::format("HugAI_{}", a_Performer->formID);
 		const ActorHandle PerformerHandle = a_Performer->CreateRefHandle();
 		const ActorHandle PreyHandle = a_Prey->CreateRefHandle();
 
 		TaskManager::Run(TaskName, [=](auto& progressData) {
+
+			if (!Plugin::Live()) return false;
 
 			const auto& Settings = Config::GetAI().Hugs;
 

@@ -132,6 +132,9 @@ namespace GTS {
 			if (GiantRef->formID != 0x14) {
 				if (auto AITransientData = Transient::GetSingleton().GetData(GiantRef)) {
 					AITransientData->ActionTimer.UpdateDelta(Config::GetAI().ThighSandwich.fInterval);
+
+					if (!Plugin::Live()) return;
+
 					if (GetPlayerOrControlled()->formID == 0x14 && AITransientData->ActionTimer.ShouldRunFrame()) {
 						ThighSandwichAI_DecideAction(GiantRef, !tinies.empty());
 					}
@@ -171,7 +174,7 @@ namespace GTS {
 				}
 
 				if (this->Suffocate && CanDoDamage(GiantRef, tiny, false)) {
-					float sizedifference = giantScale/tinyScale;
+					sizedifference = giantScale/tinyScale;
 					float damage = Damage_ThighSandwich_DOT * sizedifference * TimeScale();
 					float hp = GetAV(tiny, ActorValue::kHealth);
 					InflictSizeDamage(GiantRef, tiny, damage);
@@ -261,7 +264,7 @@ namespace GTS {
 		});
 
 		if (numberOfPrey == 1) {
-			return Vore_GetMaxVoreCount(pred, preys);
+			return GetMaxActionableTinyCount(pred, preys);
 		}
 		
 		// Reduce vector size

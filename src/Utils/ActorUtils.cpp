@@ -771,7 +771,7 @@ namespace GTS {
 		return fallmod;
 	}
 
-	std::vector<Actor*> Vore_GetMaxVoreCount(Actor* giant, const std::vector<Actor*>& actors) {
+	std::vector<Actor*> GetMaxActionableTinyCount(Actor* giant, const std::vector<Actor*>& actors) {
 		float capacity = 1.0f;
 		std::vector<Actor*> vories = {};
 		if (Runtime::HasPerkTeam(giant, "EnhancedCapacity")) {

@@ -226,6 +226,7 @@ struct AIGrabAction {
     float fThrowProb = 50.0f;
     float fVoreProb = 50.0f;
     float fCrushProb = 50.0f;
+    float fReleaseProb = 10.0f;
 
     // Cleavage (multiple stages) probabilities
     float fCleavageProb = 50.0f;
@@ -233,6 +234,7 @@ struct AIGrabAction {
     float fCleavageAbsorbProb = 50.0f;
     float fCleavageVoreProb = 50.0f;
     float fCleavageSuffocateProb = 50.0f;
+    float fCleavageStopProb = 5.0f;
 
     // Timing
     float fInterval = 2.0f;

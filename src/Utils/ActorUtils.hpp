@@ -85,7 +85,7 @@ namespace GTS {
 	float GetDamageSetting();
 	float GetFallModifier(RE::Actor* giant);
 
-	std::vector<RE::Actor*> Vore_GetMaxVoreCount(RE::Actor* giant, const std::vector<RE::Actor*>& actors);
+	std::vector<RE::Actor*> GetMaxActionableTinyCount(RE::Actor* giant, const std::vector<RE::Actor*>& actors);
 
 	float Ench_Aspect_GetPower(RE::Actor* giant);
 	float Ench_Hunger_GetPower(RE::Actor* giant);

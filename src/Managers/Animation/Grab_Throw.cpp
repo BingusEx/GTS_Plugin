@@ -148,7 +148,7 @@ namespace {
 				auto tiny = tinyHandle.get().get();
 				float health = GetAV(tiny, ActorValue::kHealth);
 				if (health <= 1.0f || tiny->IsDead()) {
-					OverkillManager::GetSingleton().Overkill(giant, tiny);
+					OverkillManager::Overkill(giant, tiny);
 				}
 			});
 		}

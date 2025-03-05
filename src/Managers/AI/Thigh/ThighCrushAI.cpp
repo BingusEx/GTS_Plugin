@@ -17,16 +17,10 @@ namespace {
 		if (a_Performer == a_Prey) {
 			return false;
 		}
-		if (a_Prey->IsDead() && !ALLOW_DEAD) {
+		if ((a_Prey->IsDead() || GetAV(a_Prey, ActorValue::kHealth) < 0.0f) && !ALLOW_DEAD) {
 			return false;
 		}
 		if (IsCrawling(a_Performer) || IsTransitioning(a_Performer) || IsBeingHeld(a_Performer, a_Prey)) {
-			return false;
-		}
-		if (a_Prey->formID == 0x14 && !Config::GetAI().bAllowPlayer) {
-			return false;
-		}
-		if (IsTeammate(a_Prey) && !Config::GetAI().bAllowFollowers) {
 			return false;
 		}
 
@@ -57,6 +51,8 @@ namespace {
 		const double StartTime = Time::WorldTimeElapsed();
 
 		TaskManager::Run(TaskName, [=](auto& progressData) {
+
+			if (!Plugin::Live()) return false;
 
 			const auto& ThighSettings = Config::GetAI().ThighCrush;
 

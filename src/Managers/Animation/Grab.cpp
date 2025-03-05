@@ -82,12 +82,9 @@ namespace {
 		"NPC L Hand [LHnd]",
 	};
 
-	const std::string_view RNode = "NPC R Foot [Rft ]";
-	const std::string_view LNode = "NPC L Foot [Lft ]";
-
 	bool Escaped(Actor* giant, Actor* tiny, float strength) {
-		float tiny_chance = ((RandomInt(0, 100000)) / 100000.0f) * get_visual_scale(tiny);
-		float giant_chance = ((RandomInt(0, 100000)) / 100000.0f) * strength * get_visual_scale(giant);
+		float tiny_chance = ((RandomFloat(0.f, 100000.f)) / 100000.0f) * get_visual_scale(tiny);
+		float giant_chance = ((RandomFloat(0.f, 100000.f)) / 100000.0f) * strength * get_visual_scale(giant);
 		return (tiny_chance > giant_chance);
 	}
 
@@ -323,7 +320,7 @@ namespace {
 
 		std::vector<Actor*> preys = Grabbing.GetGrabTargetsInFront(player, 1);
 		for (auto prey: preys) {
-			Grabbing.StartGrab(player, prey);
+			GrabAnimationController::StartGrab(player, prey);
 		}
 	}
 
@@ -347,8 +344,9 @@ namespace {
 
 	void GrabVoreEvent(const ManagedInputEvent& data) { // Eat everyone in hand
 		Actor* player = GetPlayerOrControlled();
-			auto grabbedActor = Grab::GetHeldActor(player);
-			AnimationManager::StartAnim("GrabEatSomeone", player);
+		if (Grab::GetHeldActor(player)) return;
+
+		AnimationManager::StartAnim("GrabEatSomeone", player);
 	}
 
 	void GrabThrowEvent(const ManagedInputEvent& data) { // Throw everyone away
@@ -384,6 +382,7 @@ namespace {
 		Actor* player = GetPlayerOrControlled();
 		AnimationManager::StartAnim("Breasts_Put", player);
 	}
+
 	void BreastsRemoveEvent(const ManagedInputEvent& data) {
 		Actor* player = GetPlayerOrControlled();
 		AnimationManager::StartAnim("Breasts_Pull", player);
@@ -501,7 +500,7 @@ namespace GTS {
 			float gts_scale = get_visual_scale(giant) * GetSizeFromBoundingBox(giant);
 
 			float sizeDiff = gts_scale/tiny_scale;
-			float power = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 999999.0f);
+			float power = std::clamp(SizeManager::GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 999999.0f);
 			float additionaldamage = 1.0f + sizemanager.GetSizeVulnerability(grabbed);
 			float damage = (Damage * sizeDiff) * power * additionaldamage * additionaldamage;
 			float experience = std::clamp(damage/1600, 0.0f, 0.06f);
@@ -517,7 +516,7 @@ namespace GTS {
 
                 TinyCalamity_ShrinkActor(giant, grabbed, damage * 0.10f * GetDamageSetting());
 
-                SizeHitEffects::GetSingleton().PerformInjuryDebuff(giant, grabbed, damage*0.15f, 6);
+                SizeHitEffects::PerformInjuryDebuff(giant, grabbed, damage*0.15f, 6);
                 InflictSizeDamage(giant, grabbed, damage);
             }
 			
@@ -741,6 +740,7 @@ namespace GTS {
 	void Grab::GrabActor(Actor* giant, TESObjectREFR* tiny, float strength) {
 		Grab::GetSingleton().data.try_emplace(giant, tiny, strength);
 	}
+
 	void Grab::GrabActor(Actor* giant, TESObjectREFR* tiny) {
 		// Default strength 1.0: normal grab for actor of their size
 		//

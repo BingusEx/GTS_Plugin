@@ -178,19 +178,16 @@ namespace GTS {
 		auto preys = find_actors();
 
 		// Sort prey by distance
-		sort(preys.begin(), preys.end(),
-		     [predPos](const Actor* preyA, const Actor* preyB) -> bool
-		{
+		ranges::sort(preys,[predPos](const Actor* preyA, const Actor* preyB) -> bool {
 			float distanceToA = (preyA->GetPosition() - predPos).Length();
 			float distanceToB = (preyB->GetPosition() - predPos).Length();
 			return distanceToA < distanceToB;
 		});
 
 		// Filter out invalid targets
-		preys.erase(std::remove_if(preys.begin(), preys.end(),[pred, this](auto prey)
-		{
+		std::erase_if(preys,[pred, this](auto prey){
 			return !this->CanButtCrush(pred, prey);
-		}), preys.end());
+		});
 
 		// Filter out actors not in front
 		auto actorAngle = pred->data.angle.z;
@@ -199,8 +196,7 @@ namespace GTS {
 
 		NiPoint3 predDir = actorForward;
 		predDir = predDir / predDir.Length();
-		preys.erase(std::remove_if(preys.begin(), preys.end(),[predPos, predDir](auto prey)
-		{
+		std::erase_if(preys,[predPos, predDir](auto prey) {
 			NiPoint3 preyDir = prey->GetPosition() - predPos;
 			if (preyDir.Length() <= 1e-4) {
 				return false;
@@ -208,7 +204,7 @@ namespace GTS {
 			preyDir = preyDir / preyDir.Length();
 			float cosTheta = predDir.Dot(preyDir);
 			return cosTheta <= 0; // 180 degress
-		}), preys.end());
+		});
 
 		// Filter out actors not in a truncated cone
 		// \      x   /
@@ -232,7 +228,7 @@ namespace GTS {
 		}), preys.end());
 
 		if (numberOfPrey == 1) {
-			return Vore_GetMaxVoreCount(pred, preys);
+			return GetMaxActionableTinyCount(pred, preys);
 		}
 
 		// Reduce vector size
@@ -243,7 +239,7 @@ namespace GTS {
 		return preys;
 	}
 
-	bool ButtCrushController::CanButtCrush(Actor* pred, Actor* prey) {
+	bool ButtCrushController::CanButtCrush(Actor* pred, Actor* prey) const {
 		if (pred == prey) {
 			return false;
 		}

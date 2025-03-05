@@ -1,5 +1,7 @@
 #include "Managers/AI/AIManager.hpp"
 
+#include "Grab/GrabAI.hpp"
+
 #include "Hug/HugAI.hpp"
 
 #include "Managers/AttackManager.hpp"
@@ -8,6 +10,7 @@
 #include "Managers/AI/ButtCrush/ButtCrushAI.hpp"
 #include "Managers/AI/Thigh/ThighSandwichAI.hpp"
 #include "Managers/AI/StompKick/StompKickSwipeAI.hpp"
+#include "Managers/Animation/Grab.hpp"
 
 using namespace GTS;
 
@@ -29,7 +32,7 @@ namespace {
 	//Set Reset attack blocking based on if we have a list of prey
 	void HandleAttackBlocking(Actor* a_Performer, const std::vector<Actor*>& a_ValidPreyList) {
 
-		if (a_ValidPreyList.empty()) {
+		if (a_ValidPreyList.empty() && !IsGtsBusy(a_Performer) && !IsTransitioning(a_Performer)) {
 			AttackManager::PreventAttacks(a_Performer, nullptr);
 			return;
 		}
@@ -76,16 +79,16 @@ namespace {
 			return false;
 		}
 
-
 		//Is "Female?"
 		if (IsFemale(a_Actor, true)) {
 
 			const bool HasHP = GetAV(a_Actor, ActorValue::kHealth) > 0;
 			const bool IsVisible = a_Actor->GetAlpha() > 0.0f; //For devourment
 			const bool IsInNormalState = a_Actor->AsActorState()->GetSitSleepState() == SIT_SLEEP_STATE::kNormal;
+			const bool IsHoldingSomeone = Grab::GetHeldActor(a_Actor) != nullptr || IsInCleavageState(a_Actor);
 
 			//Is In combat or do we allow ai outside of combat?
-			if ((a_Actor->IsInCombat() || !a_CombatOnly) && !IsGtsBusy(a_Actor) && HasHP && IsVisible && IsInNormalState) {
+			if ((a_Actor->IsInCombat() || !a_CombatOnly) && !IsGtsBusy(a_Actor) && HasHP && IsVisible && IsInNormalState && !IsHoldingSomeone) {
 
 				//Follower Check
 				if (IsTeammate(a_Actor)) {
@@ -346,7 +349,7 @@ namespace GTS {
 		//----------- GRAB
 
 		if (AISettings.Grab.bEnableAction) {
-			//CanGrab;
+			CanGrab = GrabAI_FilterList(a_Performer, PreyList);
 			if (!CanGrab.empty()) {
 				StartableActions.emplace(ActionType::kGrab, static_cast<int>(AISettings.Grab.fProbability));
 			}
@@ -369,7 +372,6 @@ namespace GTS {
 			}
 		};
 
-		// Merge all vectors
 		CombineActorList(CanVore);
 		CombineActorList(CanStompKickSwipe);
 		CombineActorList(CanThighSandwich);
@@ -378,7 +380,7 @@ namespace GTS {
 		CombineActorList(CanHug);
 		CombineActorList(CanGrab);
 
-		// Now define the const combined vector.
+		//Combined vector
 		const std::vector<Actor*> CombinedList = Temp;
 		HandleAttackBlocking(a_Performer, CombinedList);
 
@@ -405,6 +407,7 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kKicks: {
+
 				logger::trace("AI Starting kKicks Action");
 
 				if (!CanStompKickSwipe.empty()) {
@@ -414,6 +417,7 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kThighS: {
+
 				logger::trace("AI Starting kThighS Action");
 
 				if (!CanThighSandwich.empty()) {
@@ -423,6 +427,7 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kThighC: {
+
 				logger::trace("AI Starting kThighC Action");
 
 				if (!CanThighCrush.empty()) {
@@ -432,6 +437,7 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kButt: {
+
 				logger::trace("AI Starting kButt Action");
 
 				if (!CanButtCrush.empty()) {
@@ -441,6 +447,7 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kHug: {
+
 				logger::trace("AI Starting kHug Action");
 
 				if (!CanHug.empty()) {
@@ -450,7 +457,13 @@ namespace GTS {
 				return;
 			}
 			case ActionType::kGrab: {
+
 				logger::trace("AI Starting kGrab Action");
+
+				if (!CanGrab.empty()) {
+					GrabAI_Start(a_Performer, CanGrab.front());
+				}
+
 				return;
 			}
 			default:{}

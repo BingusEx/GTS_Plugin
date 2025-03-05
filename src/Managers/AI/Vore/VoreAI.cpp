@@ -23,11 +23,7 @@ namespace GTS {
 			return false;
 		}
 
-		if (a_Prey->IsDead() && !ALLOW_DEAD) {
-			return false;
-		}
-
-		if (!a_Prey->Is3DLoaded()) {
+		if ((a_Prey->IsDead() || GetAV(a_Prey, ActorValue::kHealth) < 0.0f) && !ALLOW_DEAD) {
 			return false;
 		}
 
@@ -136,7 +132,7 @@ namespace GTS {
 			return CosineTheta <= cos(VORE_ANGLE * PI / 180.0f);
 		});
 
-		return Vore_GetMaxVoreCount(a_Pred, PreyList);
+		return GetMaxActionableTinyCount(a_Pred, PreyList);
 	}
 
 	void VoreAI_StartVore(Actor* a_Predator, const vector<Actor*>& a_PotentialPrey) {

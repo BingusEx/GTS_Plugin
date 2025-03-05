@@ -22,7 +22,7 @@ namespace {
 			return false;
 		}
 
-		if (a_Prey->IsDead() && !ALLOW_DEAD) {
+		if ((a_Prey->IsDead() || GetAV(a_Prey, ActorValue::kHealth) < 0.0f) && !ALLOW_DEAD) {
 			return false;
 		}
 
@@ -185,7 +185,7 @@ namespace GTS {
 			return CosineTheta <= cos(BUTTCRUSH_ANGLE * PI / 180.0f);
 		});
 
-		return Vore_GetMaxVoreCount(a_Performer, PreyList);
+		return GetMaxActionableTinyCount(a_Performer, PreyList);
 
 	}
 

@@ -23,7 +23,7 @@ namespace {
 	}
 
 	void DelayedGrabTask(Actor* pred, Actor* prey) { // Needed to fix tinies becoming immune to size stuff if animation wasnt started
-		Grab::GetSingleton().GrabActor(pred, prey);
+		Grab::GrabActor(pred, prey);
 
 		std::string taskname = std::format("GrabCheck_{}_{}", pred->formID, prey->formID);
 		ActorHandle giantHandle = pred->CreateRefHandle();
@@ -129,7 +129,7 @@ namespace GTS {
 		}), preys.end());
 
 		if (numberOfPrey == 1) {
-			return Vore_GetMaxVoreCount(pred, preys);
+			return GetMaxActionableTinyCount(pred, preys);
 		}
 
 		// Reduce vector size
@@ -140,7 +140,7 @@ namespace GTS {
 		return preys;
 	}
 
-	bool GrabAnimationController::CanGrab(Actor* pred, Actor* prey) {
+	bool GrabAnimationController::CanGrab(Actor* pred, Actor* prey) const {
 		if (pred == prey) {
 			return false;
 		}

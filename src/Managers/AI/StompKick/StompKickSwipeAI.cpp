@@ -220,7 +220,7 @@ namespace GTS {
 		}).begin(), PreyList.end());
 		// Reduce vector size
 
-		return Vore_GetMaxVoreCount(a_Pred, PreyList);
+		return GetMaxActionableTinyCount(a_Pred, PreyList);
 	}
 
 

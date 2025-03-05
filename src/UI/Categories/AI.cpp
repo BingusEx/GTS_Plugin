@@ -273,17 +273,20 @@ namespace GTS {
         ImUtil_Unique{
 
             const char* T0 = "Enable grab actions.";
-            const char* T1 = "Set the chance for the follower to grab someone if possible.";
-            const char* T2 = "Set the interval at which an attempt is made to do a grab action when the follower is holding someone.";
-            const char* T3 = "Set the chance for the follower to decide to throw the held NPC.";
-            const char* T4 = "Set the chance for the follower to vore the held NPC.";
-            const char* T5 = "Set the chance for the follower to crush the held NPC.";
-            const char* T6 = "Set the chance for the follower to place the held NPC between their breasts.";
+            const char* T1 = "Set the chance for the actor to grab someone if possible.";
+            const char* T2 = "Set the interval at which an attempt is made to do a grab action when the actor is holding someone.";
+            const char* T3 = "Set the chance for the actor to decide to throw the held NPC.";
+            const char* T4 = "Set the chance for the actor to vore the held NPC.";
+            const char* T5 = "Set the chance for the actor to crush the held NPC.";
+            const char* T6 = "Set the chance for the actor to place the held NPC between their breasts.";
 
-            const char* T7 = "If an NPC is between the followers' cleavage, set the chance for an absorb action to start.";
-            const char* T8 = "If an NPC is between the followers' cleavage, set the chance for a vore action to start.";
-            const char* T9 = "If an NPC is between the followers' cleavage, set the chance for a crush attack action to start.";
-            const char* T10 = "If an NPC is between the followers' cleavage, set the chance for a suffocation action to start.";
+            const char* T7 = "If an NPC is between the actor's cleavage, set the chance for an absorb action to start.";
+            const char* T8 = "If an NPC is between the actor's' cleavage, set the chance for a vore action to start.";
+            const char* T9 = "If an NPC is between the actor's' cleavage, set the chance for a crush attack action to start.";
+            const char* T10 = "If an NPC is between the actor's' cleavage, set the chance for a suffocation action to start.";
+
+            const char* T11 = "Set the chance for the actor to be released when grabbed.";
+            const char* T12 = "Set the chance cleavage actions to stop.";
 
             if (ImGui::CollapsingHeader("Grabs")) {
 
@@ -302,15 +305,18 @@ namespace GTS {
                 	ImUtil::SliderF("Chance To Throw",&Settings.Grab.fThrowProb, 0.0f, 100.0f, T3, "%.0f%%");
                     ImUtil::SliderF("Chance To Vore",&Settings.Grab.fVoreProb, 0.0f, 100.0f, T4, "%.0f%%");
                     ImUtil::SliderF("Chance To Crush",&Settings.Grab.fCrushProb, 0.0f, 100.0f, T5, "%.0f%%");
-                    ImUtil::SliderF("Place in Cleavage Chance",&Settings.Grab.fCleavageProb, 0.0f, 100.0f, T6, "%.0f%%");
+                    ImUtil::SliderF("Chance To Release", &Settings.Grab.fReleaseProb, 0.0f, 100.0f, T11, "%.0f%%");
+                   
 
                 	ImGui::Spacing();
 
                     ImGui::Text("Cleavage Actions");
+                    ImUtil::SliderF("Place in Cleavage Chance", &Settings.Grab.fCleavageProb, 0.0f, 100.0f, T6, "%.0f%%");
                     ImUtil::SliderF("Cleavage Absorb Chance",&Settings.Grab.fCleavageAbsorbProb, 0.0f, 100.0f, T7, "%.0f%%");
                     ImUtil::SliderF("Cleavage Vore Chance",&Settings.Grab.fCleavageVoreProb, 0.0f, 100.0f, T8, "%.0f%%");
                     ImUtil::SliderF("Cleavage Crush Chance",&Settings.Grab.fCleavageAttackProb, 0.0f, 100.0f, T9, "%.0f%%");
                     ImUtil::SliderF("Cleavage Suffocate Chance",&Settings.Grab.fCleavageSuffocateProb, 0.0f, 100.0f, T10, "%.0f%%");
+                    ImUtil::SliderF("Cleavage Stop Chance", &Settings.Grab.fCleavageStopProb, 0.0f, 100.0f, T12, "%.0f%%");
 
                     ImGui::EndDisabled();
                 }

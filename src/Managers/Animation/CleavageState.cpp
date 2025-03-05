@@ -69,6 +69,7 @@ namespace {
 
         return hp_reduction;
     }
+
     void AttemptBreastActionOnTiny(const std::string& pass_anim) {
         Actor* player = GetPlayerOrControlled();
         if (IsInCleavageState(player)) {
@@ -78,6 +79,7 @@ namespace {
             }
         }
     }
+
     bool AttemptBreastAction(const std::string& pass_anim, CooldownSource Source, std::string cooldown_msg, const std::string& perk) {
         Actor* player = GetPlayerOrControlled();
         if (IsInCleavageState(player)) {
@@ -119,6 +121,7 @@ namespace {
 
         return false;
     }
+
     bool PassAnimation(const std::string& animation, bool check_cleavage) {
         Actor* player = GetPlayerOrControlled();
         if (player) {
