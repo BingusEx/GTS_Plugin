@@ -97,7 +97,7 @@ namespace GTS {
 					speedup = 3.0f;
 				}
 
-				// Should disable HH?
+				// Should HH be disabled?
 				bool disableHH = DisableHighHeels(actor);
 
 				if (disableHH) {
@@ -150,7 +150,7 @@ namespace GTS {
 		}
 	}
 
-
+	// This seems to be the most expensive HH function so far, not sure how to optimize it properly
 	void HighHeelManager::UpdateHHOffset(Actor* actor) {
 		auto profiler = Profilers::Profile("HHMgr: UpdateHHOffset");
 		auto models = GetModelsForSlot(actor, BGSBipedObjectForm::BipedObjectSlot::kFeet);
@@ -220,10 +220,12 @@ namespace GTS {
 		auto& me = HighHeelManager::GetSingleton();
 		me.data.try_emplace(actor);
 		auto& hhData = me.data[actor];
-		hhData.lastBaseHHOffset = result * npcNodeScale;
+		hhData.lastBaseHHOffset = result * npcNodeScale; // Record hh height that is affected by natural scale for .z offset of model
+		hhData.InitialHeelHeight = result.z; // Record initial hh height for hh damage boost
 	}
 
-	NiPoint3 HighHeelManager::GetBaseHHOffset(Actor* actor) {
+	// Unscaled base .z offset of HH, takes Natural Scale into account
+	NiPoint3 HighHeelManager::GetBaseHHOffset(Actor* actor) {  
 		auto profiler = Profilers::Profile("HHMgr: GetBaseHHOffset");
 		auto& me = HighHeelManager::GetSingleton();
 		me.data.try_emplace(actor);
@@ -231,10 +233,18 @@ namespace GTS {
 		return hhData.lastBaseHHOffset;
 	}
 
-	NiPoint3 HighHeelManager::GetHHOffset(Actor* actor) {
+	NiPoint3 HighHeelManager::GetHHOffset(Actor* actor) { // Scaled .z offset of HH
 		auto profiler = Profilers::Profile("HHMgr: GetHHOffset");
-		auto Scale = get_visual_scale(actor); // used to read Root [Root] only for some reason
+		auto Scale = get_visual_scale(actor);
 		return HighHeelManager::GetBaseHHOffset(actor) * Scale;
+	}
+
+	float HighHeelManager::GetInitialHeelHeight(Actor* actor) { // Get raw heel height, used in damage bonus for HH perk
+		auto profiler = Profilers::Profile("HH: GetInitHeight");
+		auto& me = HighHeelManager::GetSingleton();
+		me.data.try_emplace(actor);
+		auto& hhData = me.data[actor];
+		return hhData.InitialHeelHeight * 0.01f;
 	}
 
 	float HighHeelManager::GetHHMultiplier(Actor* actor) {

@@ -193,10 +193,16 @@ namespace {
 				return true;
 			}
 
+			if (IsTransitioning(performer)) {
+				return IsDisallowed(Form);
+			}
+
 			if (IsThighSandwiching(performer)) { // Disallow anims in these 2 cases 
 				//log::info("Block IsThighSandwiching");
 				return IsDisallowed(Form);
-			} if (IsBetweenBreasts(performer)) {
+			}
+
+			if (IsBetweenBreasts(performer)) {
 				//log::info("Block IsBetweenBreasts");
 				return IsDisallowed(Form);
 			}

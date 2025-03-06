@@ -97,9 +97,9 @@ namespace GTS {
 		if (!caster) {
 			return;
 		}
-		const float GROWTH_1_POWER = 0.00125f;
-		const float GROWTH_2_POWER = 0.00145f;
-		const float GROWTH_3_POWER = 0.00175f;
+		constexpr float GROWTH_1_POWER = 0.00125f;
+		constexpr float GROWTH_2_POWER = 0.00145f;
+		constexpr float GROWTH_3_POWER = 0.00175f;
 
 		auto base_spell = GetBaseEffect();
 

@@ -148,7 +148,6 @@ namespace {
 				return false;
 			}
 
-			const auto& TransientDataGiant = Transient::GetSingleton().GetData(PerformerActor);
 			if (!TransientData) {
 				logger::warn("GrabAI: Transient Bad");
 				return false;
@@ -157,7 +156,6 @@ namespace {
 			TransientData->ActionTimer.UpdateDelta(Config::GetAI().Grab.fInterval);
 			const bool IsDead = PreyActor->IsDead() || PerformerActor->IsDead();
 			const bool IsBusy = IsGrabAttacking(PerformerActor) || IsTransitioning(PerformerActor);
-			const bool IsTeammateOrPlayer = PreyActor->formID == 0x14 || IsTeammate(PreyActor);
 			const bool ValidPrey = Grab::GetHeldActor(PerformerActor) != nullptr || IsInsideCleavage(PreyActor) ;
 
 			if (!IsDead && !IsBusy) {
@@ -216,6 +214,14 @@ namespace {
 						}
 
 					}
+					else if (IsStrangling(PerformerActor)) {
+						//Small Chance to Stop, Basically guaranteed to happen after 30 ShouldRun Calls (100 / 3.333 = ~30)
+						//Shortest Timer is 1.0 sec so after ~30s max Stop DOT.
+						if (RandomBool(3.333f)) {
+							// Spare tiny, return to idle breast loop
+							AnimationManager::StartAnim("Cleavage_DOT_Stop", PerformerActor);
+						}
+					}
 					//IsGtsBusy(PerformerActor) is true when in this state
 					else if (IsInCleavageState(PerformerActor) && IsInsideCleavage(PreyActor)) {
 
@@ -223,9 +229,10 @@ namespace {
 						const int SuffocateChance = static_cast<int>(Settings.fCleavageSuffocateProb);
 						const int EatChance = static_cast<int>(Settings.fCleavageVoreProb);
 						const int AbsorbChance = static_cast<int>(Settings.fCleavageAbsorbProb);
+						const int StrangleChance = static_cast<int>(Settings.fStrangleChance);
 						const int StopChance = static_cast<int>(Settings.fCleavageStopProb);
 
-						switch (RandomIntWeighted({ AttackChance, SuffocateChance, EatChance, AbsorbChance, StopChance, 100 })) {
+						switch (RandomIntWeighted({ AttackChance, SuffocateChance, EatChance, AbsorbChance, StrangleChance, StopChance, 100 })) {
 
 							//Attack
 							case 0: {
@@ -259,7 +266,13 @@ namespace {
 								AnimationManager::StartAnim("Cleavage_Absorb_Tiny", PreyActor);
 								break;
 							}
+							//Strangle
 							case 4: {
+								AnimationManager::StartAnim("Cleavage_DOT_Start", PerformerActor);
+								break;
+							}
+							//Stop
+							case 5: {
 								AnimationManager::StartAnim("Cleavage_ExitState", PerformerActor);
 								break;
 							}
@@ -268,15 +281,20 @@ namespace {
 
 						}
 					}
+					
 				}
 			}
 
-			if (IsDead || !ValidPrey && (!IsGtsBusy(PerformerActor) && !IsTransitioning(PerformerActor))) {
-				logger::info("GrabAI: Prey Dead or Invalid");
-				Grab::CancelGrab(PerformerActor, PreyActor);
-				Grab::GetSingleton().ResetActor(a_Performer);
-				Utils_UpdateHighHeelBlend(PerformerActor, false);
-				return false;
+			bool Attacking = false;
+			PerformerActor->GetGraphVariableBool("GTS_IsGrabAttacking", Attacking);
+			bool CanCancel = (IsDead || !IsVoring(PerformerActor)) && (!Attacking || IsBeingEaten(PreyActor));
+			if (CanCancel) {
+				if (IsDead || !ValidPrey && (!IsGtsBusy(PerformerActor) && !IsTransitioning(PerformerActor))) {
+					logger::info("GrabAI: Prey Dead or Invalid");
+					Grab::CancelGrab(PerformerActor, PreyActor);
+					Utils_UpdateHighHeelBlend(PerformerActor, false);
+					return false;
+				}
 			}
 
 			return true;

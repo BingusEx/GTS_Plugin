@@ -94,7 +94,6 @@ GrowthSpurt2 = "GTS.esp|1E42A5"
 GrowthSpurt3 = "GTS.esp|1E42A6"
 
 # Shrink
-ShrinkPCButton = "GTS.esp|10A6CF"
 RestoreSize = "GTS.esp|005369"
 RestoreSizeNPC = "GTS.esp|00536C"
 ShrinkSpell = "GTS.esp|002850"
@@ -116,13 +115,10 @@ SlowGrowthDual = "GTS.esp|086C8D"
 GrowthSpell = "GTS.esp|0022EB"
 GrowthSpellAdept = "GTS.esp|45D124"
 GrowthSpellExpert = "GTS.esp|45D125"
-GrowPcButton = "GTS.esp|002DB5"
 GrowAlly = "GTS.esp|0058D5"
 GrowAllyAdept = "GTS.esp|452F15"
 GrowAllyExpert = "GTS.esp|452F16"
-GrowAllySizeButton = "GTS.esp|123BE3"
-ShrinkAllySizeButton = "GTS.esp|123BE4"
-CrushGrowthMGEF = "GTS.esp|2028B6"
+
 
 # Absorb
 AbsorbMGEF = "GTS.esp|00B470"
@@ -161,8 +157,6 @@ EffectSizeAmplifyPotion = "GTS.esp|452F1D"
 SizeDrainPotion = "GTS.esp|5B5557"
 ShrinkPoison = "GTS.esp|5B5552"
 
-gtsProtectTiniesMGEF = "GTS.esp|763AD1"
-
 # Alchemy (scalable potions)
 AlchEffectGrowth = "GTS.esp|89D948"
 AlchEffectSize = "GTS.esp|89D94A"
@@ -170,35 +164,14 @@ AlchEffectEssence = "GTS.esp|89D947"
 AlchEffectMight = "GTS.esp|89D946"
 AlchResistShrink = "GTS.esp|89D949"
 
-# Crushing
-FakeCrushEffect = "GTS.esp|271EF9"
-HealthBoost = "GTS.esp|518645"
-
 [SPEL] # Spells ------------------------------------------------------------------------------------------------------------------------------------
 
 #---------- GTS
 GtsVoreFearSpell = "GTS.esp|026D15"
 SmallMassiveThreatSpell = "GTS.esp|1A2566"
-CrushGrowthSpell = "GTS.esp|2028B7"
-TrueAbsorbSpell = "GTS.esp|22B0D6"
-StartVoreFake = "GTS.esp|319056"
-StartVore = "GTS.esp|31905C"
-gtsSizeCloakSpellTiny = "GTS.esp|00CA0A"
-gtsSizeCloakSpellSmall = "GTS.esp|00A9A5"
-gtsSizeCloakSpellMedium = "GTS.esp|00CA07"
-gtsSizeCloakSpellLarge = "GTS.esp|00CA08"
-gtsSizeCloakSpellHuge = "GTS.esp|00CA0C"
-gtsSizeCloakSpellMega = "GTS.esp|00CA0E"
-gtsSizeCloakSpellMassive = "GTS.esp|08BD90"
-gtsSizeCloakSpellGigantic = "GTS.esp|08BD92"
-gtsSizeCloakSpellImpossible = "GTS.esp|08BD94"
-ShrinkToNothingSpell = "GTS.esp|00997A"
-FakeCrushSpell = "GTS.esp|271EF7"
-GtsBleedSpell = "GTS.esp|01CEA2"
-HealthBoost = "GTS.esp|518643"
 ShrinkStorm = "GTS.esp|3C527A"
 ShrinkBolt = "GTS.esp|3C5276"
-gtsProtectTiniesSpell = "GTS.esp|763ACF"
+
 
 #---------- Survival Mode
 Survival_HungerStage0 = "ccQDRSSE001-SurvivalMode.esl|000876"
@@ -299,92 +272,6 @@ draugrexplosion = "GTS.esp|035C80"
 
 [GLOB] # Globals ------------------------------------------------------------------------------------------------------------------------------------
 
-PlayerSizeOverride = "GTS.esp|2028B5" #UNUSED
-FreeLookOnVore = "GTS.esp|281206" #UNUSED
-MultiplyGameModePC = "GTS.esp|47B72B" #UNUSED
-MultiplyGameModeNPC = "GTS.esp|47B72C" #UNUSED
-GtsDecideGrowth = "GTS.esp|15661D" #UNUSED
-sizeLimit = "GTS.esp|2028B4" #UNUSED
-AllowClothTearing = "GTS.esp|30EE55" #UNUSED
-GtsNPCEffectImmunityToggle = "GTS.esp|271EFA" #UNUSED
-GtsPCEffectImmunityToggle = "GTS.esp|4F4F3B" #UNUSED
-ProgressionMultiplier = "GTS.esp|37E46E" #UNUSED
-CrushGrowthRate = "GTS.esp|2028B9" #UNUSED #Named GtsGlobalGrowthRate in esp
-AccurateCellScan = "GTS.esp|1CAD98" #UNUSED
-ChosenGameMode = "GTS.esp|2EB74C" #UNUSED
-GrowthModeRate = "GTS.esp|2028C3" #UNUSED
-ShrinkModeRate = "GTS.esp|2028C4" #UNUSED
-AllowHitGrowth = "GTS.esp|485931" #UNUSED
-AllowHitGrowthNPC = "GTS.esp|47662A" #UNUSED
-AllowMoanSounds = "GTS.esp|48FB32" #UNUSED
-CurseOfGrowthMaxSize = "GTS.esp|499D34" #UNUSED
-RandomGrowthMultiplyPC = "GTS.esp|48592F" #UNUSED
-RandomGrowthMultiplyNPC = "GTS.esp|485930" #UNUSED
-ChosenGameModeNPC = "GTS.esp|2EB747" #UNUSED
-GrowthModeRateNPC = "GTS.esp|2EB74B" #UNUSED
-ShrinkModeRateNPC = "GTS.esp|2EB74A" #UNUSED
-GlobalMaxSizeCalc = "GTS.esp|20CAC5" #UNUSED
-GtsMassBasedSize = "GTS.esp|277005" #UNUSED
-FollowersSizeLimit = "GTS.esp|48082D" #UNUSED
-NPCSizeLimit = "GTS.esp|48082E" #UNUSED
-SelectedSizeFormula = "GTS.esp|277004" #UNUSED
-ProtectEssentials = "GTS.esp|23A3E2" #UNUSED
-EnableGiantSounds = "GTS.esp|26CDF0" #UNUSED
-PCAdditionalEffects = "GTS.esp|3D4586" #UNUSED
-NPCSizeEffects = "GTS.esp|3D4587" #UNUSED
-CrushGrowthStorage = "GTS.esp|3D4588" #UNUSED
-ManualGrowthStorage = "GTS.esp|4162CB" #UNUSED
-BalanceMode = "GTS.esp|42F7D3" #UNUSED
-Cleavage_OffsetY = "GTS.esp|271EFF" #UNUSED
-Cleavage_OffsetZ = "GTS.esp|142206" #UNUSED
-ExtraPotionSize = "GTS.esp|15151C" #UNUSED
-FirstPersonMode = "GTS.esp|2B8D35" #UNUSED
-ProneOffsetFP = "GTS.esp|2C2F38" #UNUSED
-EnableCamera = "GTS.esp|290512" #UNUSED
-CameraMode = "GTS.esp|290513" #UNUSED
-FeetCamera = "GTS.esp|290525" #UNUSED
-usingAutoDistance = "GTS.esp|290524" #UNUSED
-ProneEnabled = "GTS.esp|2C8039" #UNUSED
-MinDistance = "GTS.esp|29051E" #UNUSED
-MaxDistance = "GTS.esp|29051F" #UNUSED
-CameraZoomSpeed = "GTS.esp|290526" #UNUSED
-CameraZoomPrecision = "GTS.esp|290527" #UNUSED
-proneCameraX = "GTS.esp|290510" #UNUSED
-proneCameraY = "GTS.esp|290511" #UNUSED
-proneCombatCameraX = "GTS.esp|290514" #UNUSED
-proneCombatCameraY = "GTS.esp|290515" #UNUSED
-cameraX = "GTS.esp|29051A" #UNUSED
-cameraY = "GTS.esp|29051B" #UNUSED
-combatCameraX = "GTS.esp|29051D" #UNUSED
-combatCameraY = "GTS.esp|29051C" #UNUSED
-proneCameraAlternateX = "GTS.esp|290516" #UNUSED
-proneCameraAlternateY = "GTS.esp|290517" #UNUSED
-proneCombatCameraAlternateX = "GTS.esp|290518" #UNUSED
-proneCombatCameraAlternateY = "GTS.esp|290519" #UNUSED
-cameraAlternateX = "GTS.esp|290520" #UNUSED
-cameraAlternateY = "GTS.esp|290521" #UNUSED
-combatCameraAlternateX = "GTS.esp|290522" #UNUSED
-combatCameraAlternateY = "GTS.esp|290523" #UNUSED
-CalcProne = "GTS.esp|2D733A" #UNUSED
-AllowTimeChange = "GTS.esp|277001" #UNUSED
-bonusHPMultiplier = "GTS.esp|28B408" #UNUSED
-bonusJumpHeightMultiplier = "GTS.esp|28B40A" #UNUSED
-bonusDamageMultiplier = "GTS.esp|28B409" #UNUSED
-bonusSpeedMultiplier = "GTS.esp|28B40B" #UNUSED
-bonusSpeedMax = "GTS.esp|28B40C" #UNUSED
-NormalCameraTarget = "GTS.esp|4B8335" #UNUSED
-AltCameraTarget = "GTS.esp|4B8336" #UNUSED
-EnableColliders = "GTS.esp|42A6D2" #UNUSED
-EnableDebugOverlay = "GTS.esp|42A6D1" #UNUSED
-ConversationCameraComp = "GTS.esp|50933F" #UNUSED
-LevelLimitModifier = "GTS.esp|151516" #UNUSED
-SizeLossModifier = "GTS.esp|1E429E" #UNUSED
-PreciseDamage = "GTS.esp|4F4F3A" #UNUSED
-PreciseDamageOthers = "GTS.esp|513540" #UNUSED
-HostileDamage = "GTS.esp|271EF2" #UNUSED
-bonusCarryWeightMultiplier = "GTS.esp|28B407" #UNUSED
-
-
 #---------- GTS Perk Tree
 OpenGTSSkillMenu = "GTS.esp|1421FF"
 GtsSkillLevel = "GTS.esp|142200"
@@ -407,8 +294,6 @@ Survival_HungerStage5Value = "ccQDRSSE001-SurvivalMode.esl|000805"
 # Toggle
 Survival_ModeEnabled = "ccQDRSSE001-SurvivalMode.esl|000826"
 
-
-
 [QUST] # Quests ------------------------------------------------------------------------------------------------------------------------------------
 
 #---------- GTS
@@ -422,10 +307,6 @@ ManagerQuest = "GTS.esp|000D62"
 FollowerFaction = "Skyrim.esm|05C84E"
 DwarwenAutomatonFaction = "Skyrim.esm|043598"
 DraugrFaction = "Skyrim.esm|02430D"
-
-#---------- GTS
-GtsWasDigested = "GTS.esp|4FF13D"
-GtsWasEaten = "GTS.esp|4FF13C"
 
 #---------- Sexlab
 SexLabAnimatingFaction = "SexLab.esm|00E50F"

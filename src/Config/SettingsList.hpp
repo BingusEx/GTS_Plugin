@@ -235,9 +235,11 @@ struct AIGrabAction {
     float fCleavageVoreProb = 50.0f;
     float fCleavageSuffocateProb = 50.0f;
     float fCleavageStopProb = 5.0f;
+    float fStrangleChance = 50.0f;
 
     // Timing
     float fInterval = 2.0f;
+
 };
 TOML_SERIALIZABLE(AIGrabAction);
 

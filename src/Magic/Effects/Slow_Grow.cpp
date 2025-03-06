@@ -31,6 +31,7 @@ namespace {
 }
 
 namespace GTS {
+
 	std::string SlowGrow::GetName() {
 		return "SlowGrow";
 	}
@@ -60,8 +61,8 @@ namespace GTS {
 	}
 
 	void SlowGrow::OnUpdate() {
-		const float BASE_POWER = 0.000025f; // Default growth over time.
-		const float DUAL_CAST_BONUS = 2.25f;
+		constexpr float BASE_POWER = 0.000025f; // Default growth over time.
+		constexpr float DUAL_CAST_BONUS = 2.25f;
 		auto caster = GetCaster();
 
 		if (caster) {
@@ -94,6 +95,5 @@ namespace GTS {
 		}
 	}
 
-	void SlowGrow::OnFinish() {
-	}
+	void SlowGrow::OnFinish() {}
 }

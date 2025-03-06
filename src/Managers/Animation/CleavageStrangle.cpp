@@ -1,12 +1,11 @@
-#include "managers/animation/Utils/AnimationUtils.hpp"
-#include "managers/animation/AnimationManager.hpp"
-#include "managers/animation/CleavageStrangle.hpp"
-#include "managers/GtsSizeManager.hpp"
-#include "managers/animation/Grab.hpp"
-#include "utils/DifficultyUtils.hpp"
-#include "managers/CrushManager.hpp"
-#include "magic/effects/common.hpp"
-#include "managers/Rumble.hpp"
+#include "Managers/Animation/CleavageStrangle.hpp"
+#include "Managers/Animation/Utils/AnimationUtils.hpp"
+#include "Managers/Animation/AnimationManager.hpp"
+#include "Managers/Animation/Grab.hpp"
+#include "Managers/GtsSizeManager.hpp"
+#include "Managers/Rumble.hpp"
+#include "Magic/Effects/Common.hpp"
+#include "Utils/DifficultyUtils.hpp"
 
 using namespace GTS;
 
@@ -49,7 +48,7 @@ namespace {
                 return false; // end task in that case
             }
 
-            if (!IsStrangling(giantref) && !IsGtsBusy(giantref)) {
+            if (!IsStrangling(giantref)) {
                 return false;
             }
             if (!IsGtsBusy(tinyref)) { // If for some reason Tiny isn't in expected anim
@@ -104,7 +103,7 @@ namespace {
 
             auto& sizemanager = SizeManager::GetSingleton();
 
-            float power = std::clamp(sizemanager.GetSizeAttribute(giantref, SizeAttribute::Normal), 1.0f, 999999.0f);
+            float power = std::clamp(SizeManager::GetSizeAttribute(giantref, SizeAttribute::Normal), 1.0f, 999999.0f);
             float sizeDiff = GetSizeDifference(giantref, tinyref, SizeType::VisualScale, false, false);
             float additionaldamage = 1.0f + sizemanager.GetSizeVulnerability(tinyref);
             float speed = AnimationManager::GetBonusAnimationSpeed(giantref);

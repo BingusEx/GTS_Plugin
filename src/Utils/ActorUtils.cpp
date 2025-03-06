@@ -1436,7 +1436,7 @@ namespace GTS {
 
 		if (actor) {
 			if (Runtime::HasPerkTeam(actor, "hhBonus")) {
-				hh = HighHeelManager::GetBaseHHOffset(actor).Length()/100;
+				hh = HighHeelManager::GetInitialHeelHeight(actor);
 			}
 		} if (multiply) {
 			value = 1.0f + (hh * 5.0f * adjust);
@@ -3401,6 +3401,19 @@ namespace GTS {
 	}
 	
 	void InflictSizeDamage(Actor* attacker, Actor* receiver, float value) {
+
+		if (attacker->formID == 0x14 && IsTeammate(receiver)) {
+			if (Config::GetBalance().bFollowerFriendlyImmunity) {
+				return;
+			}
+		}
+
+		if (receiver->formID == 0x14 && IsTeammate(attacker)) {
+			if (Config::GetBalance().bPlayerFriendlyImmunity) {
+				return;
+			}
+		}
+
 		if (!receiver->IsDead()) {
 			float HpPercentage = GetHealthPercentage(receiver);
 			float difficulty = 2.0f; // taking Legendary Difficulty as a base

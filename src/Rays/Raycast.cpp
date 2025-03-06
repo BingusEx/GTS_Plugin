@@ -7,6 +7,39 @@
 using namespace GTS;
 
 namespace {
+
+	bool FilterCollisionOut(const RE::hkpCollidable& collidable, bool filter = false) {
+		try {
+			// Check if collidable is valid before calling GetShape()
+			auto shape = collidable.GetShape();
+
+			// Extra validation for shape
+			if (shape && shape != nullptr) {
+				auto shapeType = shape->type;
+
+				// Only access userData if it exists
+				if (shape->userData && shape->userData != nullptr) {
+					auto materialID = shape->userData->materialID;
+					log::info("ShapeTypeID: {}, Material: {}",
+						static_cast<std::uint32_t>(shapeType),
+						static_cast<std::uint32_t>(materialID));
+				}
+				else {
+					log::info("ShapeTypeID: {}, No userData available",
+						static_cast<std::uint32_t>(shapeType));
+				}
+			}
+			else {
+				log::info("No valid shape found");
+			}
+
+		}
+		catch (...) {
+			log::info("Exception caught in FilterCollisionOut");
+		}
+		return filter;
+	}
+
 	void CastRayImpl(TESObjectREFR* ref, const NiPoint3& in_origin, const NiPoint3& direction, const float& unit_length, AllRayCollector* collector) {
 		float length = unit_to_meter(unit_length);
 		if (!ref) {
@@ -178,10 +211,11 @@ namespace GTS {
 				// This varient filters out the char ones
 				
 				auto collision_layer = static_cast<COL_LAYER>(hit.rootCollidable->broadPhaseHandle.collisionFilterInfo & 0x7F);
+				//bool FilteredOut = FilterCollisionOut(*hit.rootCollidable);
 				int layer_as_int = static_cast<int>(collision_layer);
 
 				if (collision_layer != COL_LAYER::kCharController && collision_layer != COL_LAYER::kWeapon && 
-					layer_as_int != 56 && layer_as_int != 8) {
+					layer_as_int != 56) {
 					// 8 = kBiped
 					// 56 = Supposedly weapon collisions
 					/*if (ref->formID == 0x14) {
@@ -194,6 +228,6 @@ namespace GTS {
 		}
 
 		success = false;
-		return NiPoint3();
+		return {};
 	}
 }

@@ -344,7 +344,10 @@ namespace {
 
 	void GrabVoreEvent(const ManagedInputEvent& data) { // Eat everyone in hand
 		Actor* player = GetPlayerOrControlled();
-		if (Grab::GetHeldActor(player)) return;
+
+		if (!Grab::GetHeldActor(player)) {
+			return;
+		}
 
 		AnimationManager::StartAnim("GrabEatSomeone", player);
 	}
