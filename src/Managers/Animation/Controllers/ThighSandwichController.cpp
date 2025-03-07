@@ -118,6 +118,7 @@ namespace GTS {
 	}
 
 	void SandwichingData::Update() {
+
 		if (this->giant) {
 			auto GiantRef = this->giant.get().get();
 			bool MoveTinies = this->MoveTinies;
@@ -130,13 +131,14 @@ namespace GTS {
 
 			//If AI
 			if (GiantRef->formID != 0x14) {
+
 				if (auto AITransientData = Transient::GetSingleton().GetData(GiantRef)) {
 					AITransientData->ActionTimer.UpdateDelta(Config::GetAI().ThighSandwich.fInterval);
 
 					if (!Plugin::Live()) return;
 
 					if (GetPlayerOrControlled()->formID == 0x14 && AITransientData->ActionTimer.ShouldRunFrame()) {
-						ThighSandwichAI_DecideAction(GiantRef, !tinies.empty());
+						ThighSandwichAI_DecideAction(GiantRef, tinies.size() > 0);
 					}
 				}
 			}

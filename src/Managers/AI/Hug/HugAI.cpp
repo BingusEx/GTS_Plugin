@@ -171,9 +171,7 @@ namespace {
 			const bool IsBusy = IsHugCrushing(PerformerActor) || IsHugHealing(PerformerActor);
 			const bool GentleAnim = IsTeammate(PreyActor) || PreyActor->formID == 0x14;
 
-			//TODO Check if this fixes/Breaks things
-			// || !IsHugging(PerformerActor)
-			if (!HugShrink::GetHuggiesActor(PerformerActor)) {
+			if (!HugShrink::GetHuggiesActor(PerformerActor) || IsRagdolled(PerformerActor)) {
 				if (!GentleAnim) {
 					PushActorAway(PerformerActor, PreyActor, 1.0f);
 				}
@@ -246,6 +244,10 @@ namespace GTS {
 		}
 
 		if (IsGtsBusy(a_Performer)) {
+			return {};
+		}
+
+		if (GetStaminaPercentage(a_Performer) < 0.25f) {
 			return {};
 		}
 

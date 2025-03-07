@@ -92,7 +92,7 @@ namespace {
 		if (tiny && tiny->Is3DLoaded()) {
 			float sizedifference = get_visual_scale(giant)/ (get_visual_scale(tiny) * GetSizeFromBoundingBox(tiny));
 			float additionaldamage = 1.0f + sizemanager.GetSizeVulnerability(tiny); // Get size damage debuff from enemy
-			float normaldamage = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 999.0f);
+			float normaldamage = std::clamp(SizeManager::GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 999.0f);
 			float damage = Damage_ThighSandwich_Impact * sizedifference * animSpeed * mult * normaldamage * GetPerkBonus_Thighs(giant);
 			if (HasSMT(giant)) {
 				damage *= 1.5f;
@@ -106,10 +106,10 @@ namespace {
 			ModSizeExperience(giant, experience);
 
 			float hp = GetAV(tiny, ActorValue::kHealth);
-			if (damage > hp || hp <= 0) {
+			if (damage > hp || hp <= 0 || tiny->IsDead()) {
 				ModSizeExperience_Crush(giant, tiny, true);
 				
-				CrushManager::GetSingleton().Crush(giant, tiny);
+				CrushManager::Crush(giant, tiny);
 				
 				PrintDeathSource(giant, tiny, DamageSource::ThighSandwiched);
 				AdvanceQuestProgression(giant, tiny, QuestStage::HandCrush, 1.0f, false);

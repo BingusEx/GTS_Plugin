@@ -14,6 +14,9 @@ namespace GTS {
 
 			float experiment = 1.0f;
 
+			//Used for profiling
+			static inline uint32_t LoadedActorCount = 0;
+
 			virtual void DragonSoulAbsorption() override;
 
 			virtual std::string DebugName() override;

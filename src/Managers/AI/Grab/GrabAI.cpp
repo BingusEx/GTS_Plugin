@@ -1,9 +1,6 @@
 #include "Managers/AI/Grab/GrabAI.hpp"
 
 #include "Config/Config.hpp"
-
-#include "Hooks/Skyrim/Controls.hpp"
-
 #include "Managers/Animation/AnimationManager.hpp"
 #include "Managers/Animation/Grab.hpp"
 #include "Managers/Animation/Utils/AnimationUtils.hpp"
@@ -15,6 +12,23 @@ namespace {
 	constexpr float MINIMUM_GRAB_DISTANCE = 85.0f;
 	constexpr float GRAB_ANGLE = 70;
 	constexpr float PI = std::numbers::pi_v<float>;
+
+	void PreventCombat(Actor* a_actor) {
+
+		if (a_actor->AsActorState()->actorState2.weaponState != WEAPON_STATE::kSheathed)
+		a_actor->AsActorState()->actorState2.weaponState = WEAPON_STATE::kWantToSheathe;
+
+		if (auto controller = a_actor->GetActorRuntimeData().combatController) {
+			controller->ignoringCombat = true;
+		}
+	}
+
+	void ResetCombat(Actor* a_actor) {
+		
+		if (auto controller = a_actor->GetActorRuntimeData().combatController) {
+			controller->ignoringCombat = false;
+		}
+	}
 
 	bool CanGrab(Actor* a_Performer, Actor* a_Prey) {
 
@@ -162,6 +176,8 @@ namespace {
 
 				if (TransientData->ActionTimer.ShouldRun()) {
 
+					PreventCombat(PerformerActor);
+
 					if (!IsBetweenBreasts(PreyActor) && !IsInCleavageState(PerformerActor) && !IsInsideCleavage(PreyActor) && !IsGtsBusy(PerformerActor)) {
 
 						const int AttackChance = GrabAI_CanAttack(PerformerActor) ? static_cast<int>(Settings.fCrushProb) : 0;
@@ -169,6 +185,8 @@ namespace {
 						const int EatChance = GrabAI_CanVore(PerformerActor) ? static_cast<int>(Settings.fVoreProb) : 0;
 						const int ReleaseChance = GrabAI_CanRelease(PerformerActor) ? static_cast<int>(Settings.fReleaseProb) : 0;
 						const int CleavageChance = static_cast<int>(Settings.fCleavageProb);
+
+						
 
 						switch (RandomIntWeighted({ AttackChance, ThrowChance, EatChance, ReleaseChance, CleavageChance, 100 })) {
 
@@ -209,12 +227,10 @@ namespace {
 							AnimationManager::StartAnim("Cleavage_EnterState", PerformerActor);
 							AnimationManager::StartAnim("Cleavage_EnterState_Tiny", PreyActor);
 						}
-						else {
-							AnimationManager::StartAnim("Breasts_Pull", PerformerActor);
-						}
 
 					}
 					else if (IsStrangling(PerformerActor)) {
+
 						//Small Chance to Stop, Basically guaranteed to happen after 30 ShouldRun Calls (100 / 3.333 = ~30)
 						//Shortest Timer is 1.0 sec so after ~30s max Stop DOT.
 						if (RandomBool(3.333f)) {
@@ -293,6 +309,7 @@ namespace {
 					logger::info("GrabAI: Prey Dead or Invalid");
 					Grab::CancelGrab(PerformerActor, PreyActor);
 					Utils_UpdateHighHeelBlend(PerformerActor, false);
+					ResetCombat(PerformerActor);
 					return false;
 				}
 			}

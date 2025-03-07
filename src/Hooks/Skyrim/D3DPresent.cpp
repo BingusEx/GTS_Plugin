@@ -1,8 +1,6 @@
 #include "Hooks/Skyrim/D3DPresent.hpp"
 #include "UI/UIManager.hpp"
 
-using namespace GTS;
-
 namespace Hooks {
 
 	//Win32 Window Messages
@@ -75,10 +73,9 @@ namespace Hooks {
 
 	};
 
-
 	void Hook_Renderer::Hook(Trampoline& trampoline) {
-		//Credits to ershin for the hooks here
 
+		//Credits to ershin for the hooks here
 		const REL::Relocation<uintptr_t> registerWindowHook{ REL::VariantID(75591, 77226, 0xDC4B90) };  // D71F00, DA3850, DC4B90
 		const REL::Relocation<uintptr_t> created3d11Hook{ REL::VariantID(75595, 77226, 0xDC5530) };     // D72810, DA3850, DC5530
 		const REL::Relocation<uintptr_t> presentHook{ REL::VariantID(75461, 77246, 0xDBBDD0) };         // D6A2B0, DA5BE0, DBBDD0
@@ -90,7 +87,7 @@ namespace Hooks {
 		logger::info("Hooked CreateD3DAndSwapChain");
 
 		_Present = trampoline.write_call<5>(presentHook.address() + REL::VariantOffset(0x9, 0x9, 0x15).offset(), Present);
-		//logger::info("Hooked DXGISwapchain Present");
+		logger::info("Hooked DXGISwapchain Present");
 
 		//Updating earlier in the render pass allows us to auto hide everything when
 		//skyrim is doing its fade to black

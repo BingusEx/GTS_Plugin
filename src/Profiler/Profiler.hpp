@@ -21,19 +21,12 @@ namespace GTS {
 
 		public:
 			explicit Profiler(std::string_view name);
-
 			void Start();
-
 			void Stop();
-
 			void Reset();
-
 			double Elapsed() const;
-
 			bool IsRunning() const;
-
 			double RunningTime() const;
-
 			std::string GetName();
 
 			static inline bool ProfilerEnabled = false;
@@ -55,7 +48,6 @@ namespace GTS {
 
 			static void Start(std::string_view name);
 			static void Stop(std::string_view name);
-			static void ReportText();
 			static void DisplayReport();
 
 		private:

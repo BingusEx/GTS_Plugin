@@ -1,5 +1,7 @@
 #include "Hooks/Skyrim/PreventAnimations.hpp"
 
+#include "Managers/Animation/Grab.hpp"
+
 using namespace GTS;
 
 namespace {
@@ -103,22 +105,22 @@ namespace {
 		switch (idle) {
 			case KillMoveFrontSideRoot:
 				KillMove = true;
-			break;	
+				break;	
 			case KillMoveDragonToNPC:
 				KillMove = true;
-			break;
+				break;
 			case KillMoveRootDragonFlight:
 				KillMove = true;
-			break;
+				break;
 			case KillMoveBackSideRoot:
 				KillMove = true;
-			break;
+				break;
 			case KillMoveFrontSideRoot00:
 				KillMove = true;
-			break;
+				break;
 			case KillMoveBackSideRoot00:
 				KillMove = true;
-			break;
+				break;
 		}
 
 		if (KillMove) {
@@ -151,31 +153,41 @@ namespace {
 			case DefaultSheathe:
 				//log::info("Block DefaultSheathe");
 				return true;
-			break;	
 			case JumpRoot:
 				//log::info("Block JumpRoot");
 				return true;
-			break;	
 			case NonMountedDraw:
 				//log::info("Block NonMountedDraw");
 				return true;
-			break;	
 			case NonMountedForceEquip:
 				//log::info("Block NonMountedForceEquip");
 				return true;
-			break;	
 			case JumpStandingStart:
 				//log::info("Block JumpStandingStart");
 				return true;	
-			break;	
 			case JumpDirectionalStart:
 				//log::info("Block JumpDirectionalStart");
 				return true;	
-			break;
-			return false;
 		}
 		return false;
 	}
+
+	bool DisallowWeaponDrawWhenAIGrabbing(FormID idle, Actor* performer) {
+		switch (idle) {
+			case NonMountedDraw:
+			case DrawMagic:
+			case DefaultDrawWeapon: {
+				if (performer->formID != 0x14 && Grab::GetHeldActor(performer) != nullptr) {
+					return true;
+				}
+				break;
+			}
+			default: {}
+		}
+		return false;
+	}
+
+	
 
 	bool BlockAnimation(TESIdleForm* idle, ConditionCheckParams* params) {
 		if (!idle) {
@@ -188,8 +200,6 @@ namespace {
 
 		if (performer) {
 			if (PreventKillMove(Form, params, performer, params->targetRef)) {
-				//log::info("KILLMOVE PREVENTED");
-				//log::info("Block PreventKillMove");
 				return true;
 			}
 
@@ -210,6 +220,10 @@ namespace {
 			if (PreventJumpFall(Form, performer)) {
 				//log::info("Block PreventJumpFall");
 				return true; // Disable fall down anim for GTS so it won't look off/annoying at large scales
+			}
+
+			if (DisallowWeaponDrawWhenAIGrabbing(Form, performer)) {
+				return true;
 			}
 
 			if (performer->formID != 0x14 && PreventSprinting(Form, performer)) {

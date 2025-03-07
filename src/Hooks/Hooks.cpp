@@ -8,6 +8,7 @@
 #include "Hooks/Skyrim/HeadTracking.hpp"
 #include "Hooks/Skyrim/PlayerCamera.hpp"
 #include "Hooks/Skyrim/MagicTarget.hpp"
+#include "Hooks/Skyrim/Detection.hpp"
 #include "Hooks/Skyrim/Projectiles.hpp"
 #include "Hooks/Skyrim/CameraState.hpp"
 #include "Hooks/Skyrim/D3DPresent.hpp"
@@ -88,6 +89,7 @@ namespace Hooks
 		Hook_PreventAnimations::Hook(SKSETrampoline);
 		Hook_RaceMenu::Hook(SKSETrampoline);
 		Hook_Console::Hook(SKSETrampoline);
+		Hook_Detection::Hook(SKSETrampoline);
 
 		HookCameraStates();
 		InstallControls();

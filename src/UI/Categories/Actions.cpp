@@ -43,8 +43,15 @@ namespace GTS {
 
         ImUtil_Unique{
 
-            const char* T1 = "Replace sneaking with crawling for the player only.\n(Save specific setting)";
-            const char* T2 = "Replace sneaking with crawling for followers.\n(Save specific setting)";
+            const char* T1 = "Replace sneaking with crawling for the player only.\n(Save specific setting)\n"
+							 "Note: If sneak/crawl transitions are off you wont automatically switch between crawl/sneak states.";
+
+        	const char* T2 = "Replace sneaking with crawling for followers.\n(Save specific setting)\n"
+							 "Note: If sneak / crawl transitions are off you wont automatically switch between crawl / sneak states.";
+
+            const char* T3 = "This mod introduces new subtle transition animations when entering/exiting sneak or crawl states.\n"
+							 "This toggle disables/enables them.\n";
+
 
             if (ImGui::CollapsingHeader("Sneaking/Crawling", ImUtil::HeaderFlagsDefaultOpen)) {
                 auto& Persi = Persistent::GetSingleton();
@@ -65,9 +72,9 @@ namespace GTS {
                 ImGui::SameLine();
                 ImUtil::CheckBox("Follower Crawling", &Persi.EnableCrawlFollower.value, T2, FollowersBusy);
 
-                ImUtil::CheckBox("Player Sneak Transitions", &SGameplay.ActionSettings.bSneakTransitions, T2);
+                ImUtil::CheckBox("Player Sneak Transitions", &SGameplay.ActionSettings.bSneakTransitions, T3);
                 ImGui::SameLine();
-                ImUtil::CheckBox("Follower Sneak Transitions", &SGameplay.ActionSettings.bSneakTransitionsOther, T2);
+                ImUtil::CheckBox("Follower Sneak Transitions", &SGameplay.ActionSettings.bSneakTransitionsOther, T3);
 
                 ImGui::Spacing();
             }
@@ -78,11 +85,8 @@ namespace GTS {
         	const char* T0 = "Increase/lower the chance to start a foot grinding animation when doing understomps.";
 
         	const char* T1 = "When enabled:\n"
-        					 "Replaces the light stomp animations made by SonderBain with different\n"
+        					 "Replaces the light, non understomp stomp animations made by SonderBain with different\n"
         					 "versions made by NickNack.";
-
-        	const char* T2 = "This mod introduces new subtle transition animations when entering/exiting sneak or crawl states.\n"
-        					 "This toggle disables/enables them.";
 
             const char* T3 = "Toggle whether actions like kicks ragdoll the player, if done by followers";
            
@@ -92,7 +96,7 @@ namespace GTS {
                ImUtil::SliderF("Foot Grind On Understomp Chance", &SGameplay.ActionSettings.fPlayerUnderstompGrindChance, 0.0f, 100.0f, T0, "%.0f%%");
                ImUtil::CheckBox("Alternative Stomp Player", &SGameplay.ActionSettings.bStompAlternative, T1);
                ImGui::SameLine();
-               ImUtil::CheckBox("Alternative Stomp NPCs", &SGameplay.ActionSettings.bStomAlternativeOther, T2);
+               ImUtil::CheckBox("Alternative Stomp NPCs", &SGameplay.ActionSettings.bStomAlternativeOther, T1);
                ImUtil::CheckBox("Follower Kicks Affect Player", &SGameplay.ActionSettings.bEnablePlayerPushBack, T3);
                ImGui::Spacing();
            }

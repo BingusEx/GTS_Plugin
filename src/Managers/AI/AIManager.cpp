@@ -37,6 +37,8 @@ namespace {
 			return;
 		}
 
+		if (a_ValidPreyList.empty()) return;
+
 		auto PredPos = a_Performer->GetPosition();
 		auto PreyList = a_ValidPreyList;
 
@@ -46,6 +48,7 @@ namespace {
 			float DistToB = (a_PreyB->GetPosition() - PredPos).Length();
 			return DistToA < DistToB;
 		});
+
 
 		//Disable attack based on the closest valid prey actor
 		AttackManager::PreventAttacks(a_Performer, PreyList.front());

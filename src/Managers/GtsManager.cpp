@@ -456,11 +456,16 @@ void GtsManager::Update() {
 	FixActorFade();
 	UpdateCameraINIs();
 
-	for (auto actor: find_actors()) {
+	const auto& ActorList = find_actors();
+
+	if (Profiler::ProfilerEnabled) {
+		//Used for profiling
+		GtsManager::LoadedActorCount = ActorList.size();
+	}
+
+	for (auto actor : ActorList) {
 
 		if (actor) {
-
-
 
 			if (actor->formID == 0x14 || IsTeammate(actor)) {
 

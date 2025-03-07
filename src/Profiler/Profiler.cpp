@@ -1,5 +1,8 @@
 
 #include "Profiler/Profiler.hpp"
+
+#include "Managers/GtsManager.hpp"
+
 #include "UI/DearImGui/imgui.h"
 #include "UI/ImGui/ImFontManager.hpp"
 
@@ -89,47 +92,6 @@ namespace GTS {
 		return false;
 	}
 
-	void Profilers::ReportText() {
-
-		for (auto& [name, profiler]: Profilers::GetSingleton().profilers) {
-			if (profiler.IsRunning()) {
-				log::warn("The profiler {} is still running", name);
-			}
-		}
-
-		std::string report = "Reporting Profilers:";
-		report += fmt::format("\n|{:20}|", "Name");
-		report += fmt::format("{:15s}|",                        "Seconds");
-		report += fmt::format("{:15s}|",                        "% OurCode");
-		report += fmt::format("{:15s}|",                        "s per frame");
-		report += fmt::format("{:15s}|",                        "% of frame");
-		report += "\n------------------------------------------------------------------------------------------------";
-
-		static std::uint64_t last_report_frame = 0;
-		static double last_report_time = 0.0;
-		std::uint64_t current_report_frame = Time::FramesElapsed();
-		double current_report_time = Time::WorldTimeElapsed();
-		double total_time = current_report_time - last_report_time;
-
-		double total = Profilers::GetSingleton().totalTime.Elapsed();
-		for (auto& [name, profiler]: Profilers::GetSingleton().profilers) {
-			double elapsed = profiler.Elapsed();
-			double spf = elapsed / (current_report_frame - last_report_frame);
-			double time_percent = elapsed/total_time*100.0;
-			std::string shortenedName = name;
-			if (shortenedName.length() > 19) {
-				shortenedName = shortenedName.substr(0, 18) + "…";
-			}
-			report += std::format("\n {:20}:					{:15.3f}|{:14.1f}%|{:15.3f}|{:14.3f}%", shortenedName, elapsed, elapsed*100.0f/total, spf, time_percent);
-			profiler.Reset();
-		}
-		log::info("{}", report);
-
-		Profilers::GetSingleton().totalTime.Reset();
-
-		last_report_frame = current_report_frame;
-		last_report_time = current_report_time;
-	}
 
     void Profilers::DisplayReport() {
 
@@ -141,7 +103,11 @@ namespace GTS {
 
 			double sTotalTime = Instance.totalTime.Elapsed();
 			ImGui::Text("Total DLL Time: %.3fms", sTotalTime * 1000);
+			ImGui::SameLine();
 			ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
+
+			ImGui::Text("Find_Actors: %d", GtsManager::LoadedActorCount);
+
             if (ImGui::BeginTable("ProfilerTable", 4, ImGuiTableFlags_Borders | ImGuiTableFlags_HighlightHoveredColumn | ImGuiTableFlags_Sortable | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_NoSavedSettings | ImGuiTableFlags_SizingFixedFit)) {
 
                 ImGui::TableSetupColumn("Profiler", ImGuiTableColumnFlags_DefaultSort | ImGuiTableColumnFlags_WidthStretch);
@@ -151,7 +117,6 @@ namespace GTS {
 
                 ImGui::TableHeadersRow();
 
-                static std::uint64_t Frame_LastReport = 0;
                 static double Time_LastReport = 0.0;
                 std::uint64_t Frame_CurrentReport = Time::FramesElapsed();
                 double Time_CurrentReport = Time::WorldTimeElapsed();
@@ -248,7 +213,6 @@ namespace GTS {
 
                 // Reset total time tracking for the next report
                 Instance.totalTime.Reset();
-                Frame_LastReport = Frame_CurrentReport;
                 Time_LastReport = Time_CurrentReport;
             }
         }
