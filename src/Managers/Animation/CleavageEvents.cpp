@@ -23,6 +23,44 @@ using namespace GTS;
 
 namespace {
 
+    void Task_FixTinyAnimation(Actor* aGiant) {
+
+        const std::string TaskName = std::format("FixTinyCleavageTask_{}", aGiant->formID);
+        auto Tiny = Grab::GetHeldActor(aGiant);
+
+        if (!Tiny) {
+            return;
+        }
+
+        const ActorHandle TinyHandle = Tiny->CreateRefHandle();
+        const ActorHandle GiantHandle = aGiant->CreateRefHandle();
+
+		TaskManager::Run(TaskName, [=](auto& progressData) {
+
+	        const auto TinyActor = TinyHandle.get().get();
+	        const auto GiantActor = GiantHandle.get().get();
+
+	        if (!TinyActor || !GiantActor) {
+	            return false;
+	        }
+
+	        const bool InCleavage = IsInCleavageState(GiantActor);
+	        if (InCleavage) {
+	            return true;
+	        }
+
+	        if (IsHostile(GiantActor, TinyActor)) {
+	            AnimationManager::StartAnim("Breasts_Idle_Unwilling", TinyActor);
+	        }
+	        else {
+	            AnimationManager::StartAnim("Breasts_Idle_Willing", TinyActor);
+	        }
+
+	        return false;
+
+        });
+    }
+
     void Absorb_GrowInSize(Actor* giant, Actor* tiny, float multiplier) {
         if (Runtime::HasPerkTeam(giant, "HugCrush_Greed")) {
 			multiplier *= 1.15f;
@@ -81,6 +119,7 @@ namespace {
             }
         }
     }
+
     void SuffocateTinyFor(Actor* giant, Actor* tiny, float DamageMult, float Shrink, float StaminaDrain) {
         float TotalHP = GetMaxAV(tiny, ActorValue::kHealth);
         float CurrentHP = GetAV(tiny, ActorValue::kHealth);
@@ -161,7 +200,7 @@ namespace {
 			float gts_scale = get_visual_scale(giant) * GetSizeFromBoundingBox(giant);
 
 			float sizeDiff = gts_scale/tiny_scale;
-			float power = std::clamp(sizemanager.GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 1000000.0f);
+			float power = std::clamp(SizeManager::GetSizeAttribute(giant, SizeAttribute::Normal), 1.0f, 1000000.0f);
 			float additionaldamage = 1.0f + sizemanager.GetSizeVulnerability(tiny);
 			float damage = (Damage_Breast_Squish * damage_mult) * power * additionaldamage * additionaldamage * sizeDiff;
 			float experience = std::clamp(damage/1600, 0.0f, 0.06f);
@@ -178,7 +217,7 @@ namespace {
 
                 TinyCalamity_ShrinkActor(giant, tiny, damage * 0.20f * GetDamageSetting());
 
-                SizeHitEffects::GetSingleton().PerformInjuryDebuff(giant, tiny, damage * 0.15f, 6);
+                SizeHitEffects::PerformInjuryDebuff(giant, tiny, damage * 0.15f, 6);
                 if (!IsTeammate(tiny) || IsHostile(giant, tiny)) {
                     InflictSizeDamage(giant, tiny, damage);
                     DamageAV(tiny, ActorValue::kStamina, damage * 0.25f);
@@ -201,8 +240,13 @@ namespace {
 
     ///=================================================================== Camera
 
-    void GTS_BS_CamOn(const AnimationEventData& data) {ManageCamera(&data.giant, true, CameraTracking::Breasts_02);}
-    void GTS_BS_CamOff(const AnimationEventData& data) {ManageCamera(&data.giant, false, CameraTracking::Breasts_02);}
+    void GTS_BS_CamOn(const AnimationEventData& data) {
+	    ManageCamera(&data.giant, true, CameraTracking::Breasts_02);
+    }
+
+    void GTS_BS_CamOff(const AnimationEventData& data) {
+	    ManageCamera(&data.giant, false, CameraTracking::Breasts_02);
+    }
 
     ///===================================================================
 
@@ -587,12 +631,29 @@ namespace {
         Grab::Release(giant);
     }
 
+    void GTS_BS_ResetTiny(const AnimationEventData& data) {
+        auto Tiny = Grab::GetHeldActor(&data.giant);
+        if (!Tiny) {
+            return;
+        }
+        if (IsHostile(&data.giant, Tiny)) {
+            AnimationManager::StartAnim("Breasts_Idle_Unwilling", Tiny);
+        }
+        else {
+            AnimationManager::StartAnim("Breasts_Idle_Willing", Tiny);
+        }
+
+    }
+
     ///===================================================================
 }
 
 namespace GTS
 {
 	void Animation_CleavageEvents::RegisterEvents() {
+
+
+
 		AnimationManager::RegisterEvent("GTS_BS_CamOn", "Cleavage", GTS_BS_CamOn);
         AnimationManager::RegisterEvent("GTS_BS_CamOff", "Cleavage", GTS_BS_CamOff);
 
@@ -624,6 +685,7 @@ namespace GTS
 
         AnimationManager::RegisterEvent("GTS_BS_SwitchToObjectB", "Cleavage", GTS_BS_SwitchToObjectB);
         AnimationManager::RegisterEvent("GTS_BS_SwitchToCleavage", "Cleavage", GTS_BS_SwitchToCleavage);
+        AnimationManager::RegisterEvent("GTS_BS_ResetTiny", "Cleavage", GTS_BS_ResetTiny);
 
         AnimationManager::RegisterEvent("GTS_BS_Shake", "Cleavage", GTS_BS_Shake);
         AnimationManager::RegisterEvent("GTS_BS_HandsLand", "Cleavage", GTS_BS_HandsLand);

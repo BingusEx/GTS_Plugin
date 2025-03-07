@@ -171,7 +171,9 @@ namespace {
 			const bool IsBusy = IsHugCrushing(PerformerActor) || IsHugHealing(PerformerActor);
 			const bool GentleAnim = IsTeammate(PreyActor) || PreyActor->formID == 0x14;
 
-			if (!HugShrink::GetHuggiesActor(PerformerActor) || !IsHugging(PerformerActor)) {
+			//TODO Check if this fixes/Breaks things
+			// || !IsHugging(PerformerActor)
+			if (!HugShrink::GetHuggiesActor(PerformerActor)) {
 				if (!GentleAnim) {
 					PushActorAway(PerformerActor, PreyActor, 1.0f);
 				}

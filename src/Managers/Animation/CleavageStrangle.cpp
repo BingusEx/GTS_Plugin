@@ -76,8 +76,6 @@ namespace {
         float damage_Setting = GetDifficultyMultiplier(giant, tiny);
         float threshold = 0.075f;
 
-        float ticks = 0.0f;
-
         if (!IsTeammate(tiny)) {
             StartCombat(tiny, giant);
             Attacked(tiny, giant); // force combat
@@ -141,7 +139,7 @@ namespace {
             }
             // All good try another frame
             return true;
-            });
+        });
     }
 
     void GTS_BS_StartDOT(AnimationEventData& data) {
