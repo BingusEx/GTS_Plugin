@@ -2,8 +2,11 @@
 
 using namespace GTS;
 
-namespace {
+// This file is outdated and doesn't work as expected, so all functions just return 1.0f for now 
+// Needs rework
 
+namespace {
+	/*
 	NodeMovementType Convert_To_MovementType(DamageSource Source) {
 
 		NodeMovementType Type = NodeMovementType::Movement_None;
@@ -67,11 +70,16 @@ namespace {
 		
 		return NodeMovementForce;
 	}
+	*/
 }
 
 namespace GTS {
 
 	float Get_Bone_Movement_Speed(Actor* actor, NodeMovementType type) {
+
+		return 1.0f;
+
+		/*
 		auto profiler = Profilers::Profile("MovementForce: GetBoneMovementSpeed");
 		NiAVObject* Node = nullptr;
 
@@ -120,15 +128,24 @@ namespace GTS {
 			//log::info("Clamped movement force: {}", NodeMovementForce_Clamped);
 			return NodeMovementForce_Clamped;
 		}
+
 		return 0.0f;
+		*/
 	}
 
 	float Get_Bone_Movement_Speed(Actor* giant, DamageSource Source) {
+		return 1.0f;
+
+		/*
 		auto profiler = Profilers::Profile("MovementForce: GetBoneMovementSpeed");
 		NodeMovementType Type = Convert_To_MovementType(Source);
-		/*if (giant->formID == 0x14) {
-			log::info("Returning type: {}", static_cast<int>(Type));
-		}*/
+
+		//if (giant->formID == 0x14) {
+		//	log::info("Returning type: {}", static_cast<int>(Type));
+		//}
+
+
 		return Get_Bone_Movement_Speed(giant, Type);
+		*/
 	}
 }
