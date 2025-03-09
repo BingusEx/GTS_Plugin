@@ -157,9 +157,9 @@ namespace GTS {
 						if (Teammate) {
 							value *= 0.2f;
 						}
-						auto GtsSkillLevel = Runtime::GetGlobal("GtsSkillLevel");
-						auto GtsSkillRatio = Runtime::GetGlobal("GtsSkillRatio");
-						auto GtsSkillProgress = Runtime::GetGlobal("GtsSkillProgress");
+						auto GtsSkillLevel = Runtime::GetGlobal("GTSSkillLevel");
+						auto GtsSkillRatio = Runtime::GetGlobal("GTSSkillRatio");
+						auto GtsSkillProgress = Runtime::GetGlobal("GTSSkillProgress");
 						
 						if (GtsSkillLevel) {
 

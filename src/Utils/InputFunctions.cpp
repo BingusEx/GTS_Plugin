@@ -438,7 +438,7 @@ namespace {
 			return;
 		}
 
-		Runtime::SetFloat("OpenGTSSkillMenu", 1.0);
+		Runtime::SetFloat("GTSSkillMenu", 1.0);
 	}
 
 }

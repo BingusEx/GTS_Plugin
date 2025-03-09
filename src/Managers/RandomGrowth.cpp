@@ -34,13 +34,16 @@ namespace {
 
 	bool ShouldGrow(Actor* actor) {
 
-		if (SizeManager::BalancedMode()) {
-			return false; // Disable effect in Balance Mode
-		}
+		const bool BalancedMode = SizeManager::BalancedMode();
+		const int BalanceModeMult = BalancedMode ? 2 : 1;
 
 		float MultiplySlider = Config::GetGameplay().GamemodePlayer.fRandomGrowthDelay;
 		if (IsTeammate(actor)) {
 			MultiplySlider = Config::GetGameplay().GamemodeFollower.fRandomGrowthDelay;
+		}
+
+		if (BalancedMode) {
+			MultiplySlider = 1.0f;
 		}
 
 		if (!Runtime::HasPerkTeam(actor, "RandomGrowth") || MultiplySlider <= 0.0f) {
@@ -59,7 +62,7 @@ namespace {
 		float Requirement = (300.0f * MultiplySlider) / Gigantism; // Doubles random in Balance Mode
 		Requirement *= Get_size_penalty(actor);
 
-		int random = RandomInt(1, static_cast<int>(round(Requirement)));
+		const int random = RandomInt(1, static_cast<int>(round(Requirement)) * BalanceModeMult);
 		constexpr int chance = 1;
 		if (random <= chance) {
 			return true;

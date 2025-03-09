@@ -301,13 +301,14 @@ GTSExplosionFootstep = "GTS.esp|035C81"
 GTSExplosionDraugr = "GTS.esp|035C80"
 
 # Globals -----------------------------------------------------------------------------
-[GLOB] 
+[GLOB]
+
 # Skill Menu
-OpenGTSSkillMenu = "GTS.esp|1421FF"
-GtsSkillLevel = "GTS.esp|142200"
-GtsSkillRatio = "GTS.esp|142202"
-GtsSkillProgress = "GTS.esp|142201"
-GtsSkillPerkPoints = "GTS.esp|2352E1" 
+GTSSkillMenu = "GTS.esp|1421FF"
+GTSSkillLevel = "GTS.esp|142200"
+GTSSkillRatio = "GTS.esp|142202"
+GTSSkillProgress = "GTS.esp|142201"
+GTSSkillPerkPoints = "GTS.esp|2352E1" 
 
 # Utility
 GTSUtilEnableDialogue = "GTS.esp|277000"

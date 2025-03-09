@@ -1990,7 +1990,7 @@ namespace GTS {
 
 		const auto _Level = static_cast<int>(std::round(a_Level));
 
-		auto GtsSkillPerkPoints = Runtime::GetGlobal("GtsSkillPerkPoints");
+		auto GtsSkillPerkPoints = Runtime::GetGlobal("GTSSkillPerkPoints");
 
 		if (!GtsSkillPerkPoints) {
 			return;
@@ -2920,7 +2920,7 @@ namespace GTS {
 
 	float GetGtsSkillLevel(Actor* giant) {
 		if (giant->formID == 0x14) {
-			auto GtsSkillLevel = Runtime::GetGlobal("GtsSkillLevel");
+			auto GtsSkillLevel = Runtime::GetGlobal("GTSSkillLevel");
 			return GtsSkillLevel->value;
 		} else {
 			float Alteration = std::clamp(GetAV(giant, ActorValue::kAlteration), 1.0f, 100.0f);

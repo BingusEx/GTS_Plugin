@@ -370,7 +370,7 @@ namespace {
 		}
 
 		if (Runtime::HasPerk(a_Actor,"ExpandedGrowth")) { //SizeManipulation 2
-			BonusSize += Runtime::GetFloat("GtsSkillLevel") * 0.0165f;
+			BonusSize += Runtime::GetFloat("GTSSkillLevel") * 0.0165f;
 		}
 
 		if (Runtime::HasPerk(a_Actor,"SizeManipulation")) { //SizeManipulation 1
