@@ -16,10 +16,11 @@ namespace Hooks{
 			}
 		}
 
-		if (a_target) {
-			//Scale the detection value based on the target's scale
-			a_detectionValue = static_cast<int32_t>(static_cast<float>(a_detectionValue) * get_visual_scale(a_target));
-		}
+		//Doesn't work
+		//if (a_target) {
+		//	//Scale the detection value based on the target's scale
+		//	a_detectionValue = static_cast<int32_t>(static_cast<float>(a_detectionValue) * get_visual_scale(a_target));
+		//}
 
 		return _Detection(a_source, a_target, a_detectionValue, a_unk04, a_unk05, a_unk06, a_pos, a_unk08, a_unk09, a_unk10);
 	}
