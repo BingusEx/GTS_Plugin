@@ -11,7 +11,7 @@ namespace {
 
     void BuffAttributes(Actor* giant) {
 		if (giant) {
-			if (Runtime::HasPerk(giant, "SoulVorePerk")) { // Permamently increases random AV after eating someone
+			if (Runtime::HasPerk(giant, "GTSPerkFullAssimilation")) { // Permamently increases random AV after eating someone
 				float TotalMod = 0.33f;
 				int Boost = RandomInt(0, 2);
 				if (Boost == 0) {
@@ -26,15 +26,15 @@ namespace {
 	}
 
     void UpdateVoreValues(Actor* giant, Actor* tiny, float& Health_Regeneration, float& growth, float& duration) { // Updates values 
-        if (Runtime::HasPerkTeam(giant, "VorePerk")) {
+        if (Runtime::HasPerkTeam(giant, "GTSPerkVoreAbility")) {
 			Health_Regeneration = GetMaxAV(tiny, ActorValue::kHealth) * 0.2f; // Default hp/sp regen
 		}
-		if (Runtime::HasPerkTeam(giant, "Gluttony")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkVoreHeal")) {
 			Health_Regeneration = GetMaxAV(tiny, ActorValue::kHealth) * 0.8f; // 4 times stronger hp/sp regen
 			duration *= 0.5f; // 50% faster vore, means -50% duration
             growth *= 2.0f; // but 100% more growth
 		}
-		if (Runtime::HasPerkTeam(giant, "AdditionalGrowth")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkAdditionalGrowth")) {
 			growth *= 1.25f; // 25% stronger growth
 		}
     }
@@ -92,7 +92,7 @@ namespace GTS {
     void VoreMessage_SwallowedAbsorbing(Actor* pred, Actor* prey) {
 		if (pred) {
 			int random = RandomInt(0, 3);
-			if (!prey->IsDead() && !Runtime::HasPerk(pred, "SoulVorePerk") || random <= 1) {
+			if (!prey->IsDead() && !Runtime::HasPerk(pred, "GTSPerkFullAssimilation") || random <= 1) {
 				Cprint("{} was Swallowed and is now being slowly absorbed by {}", prey->GetDisplayFullName(), pred->GetDisplayFullName());
 			} else if (random == 2) {
 				Cprint("{} is now absorbing {}", pred->GetDisplayFullName(), prey->GetDisplayFullName());
@@ -105,11 +105,11 @@ namespace GTS {
 	void VoreMessage_Absorbed(Actor* pred, std::string_view prey) {
 		if (pred) {
 			int random = RandomInt(0, 3);
-			if (!Runtime::HasPerk(pred, "SoulVorePerk") || random == 0) {
+			if (!Runtime::HasPerk(pred, "GTSPerkFullAssimilation") || random == 0) {
 				Cprint("{} was absorbed by {}", prey, pred->GetDisplayFullName());
-			} else if (Runtime::HasPerk(pred, "SoulVorePerk") && random == 1) {
+			} else if (Runtime::HasPerk(pred, "GTSPerkFullAssimilation") && random == 1) {
 				Cprint("{} became one with {}", prey, pred->GetDisplayFullName());
-			} else if (Runtime::HasPerk(pred, "SoulVorePerk") && random >= 2) {
+			} else if (Runtime::HasPerk(pred, "GTSPerkFullAssimilation") && random >= 2) {
 				Cprint("{} was greedily devoured by {}", prey, pred->GetDisplayFullName());
 			} else {
 				Cprint("{} was absorbed by {}", prey, pred->GetDisplayFullName());

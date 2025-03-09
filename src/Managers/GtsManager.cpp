@@ -92,7 +92,7 @@ namespace {
 	void UpdateFalling() {
 		Actor* player = PlayerCharacter::GetSingleton(); 
 		if (player && player->IsInMidair()) {
-			if (Runtime::HasPerkTeam(player, "MightyLegs")) {
+			if (Runtime::HasPerkTeam(player, "GTSPerkCruelFall")) {
 				auto charCont = player->GetCharController();
 				if (charCont) {
 					auto transient = Transient::GetSingleton().GetData(player);
@@ -365,15 +365,15 @@ namespace {
 	float GetSizeFromPerks(RE::Actor* a_Actor) {
 		float BonusSize = 0.0f;
 
-		if (Runtime::HasPerk(a_Actor,"TrueGiantess")) { //SizeManipulation 3
+		if (Runtime::HasPerk(a_Actor,"GTSPerkSizeManipulation3")) { //SizeManipulation 3
 			BonusSize += static_cast<float>(a_Actor->GetLevel()) * 0.0330f;
 		}
 
-		if (Runtime::HasPerk(a_Actor,"ExpandedGrowth")) { //SizeManipulation 2
+		if (Runtime::HasPerk(a_Actor,"GTSPerkSizeManipulation2")) { //SizeManipulation 2
 			BonusSize += Runtime::GetFloat("GTSSkillLevel") * 0.0165f;
 		}
 
-		if (Runtime::HasPerk(a_Actor,"SizeManipulation")) { //SizeManipulation 1
+		if (Runtime::HasPerk(a_Actor,"GTSPerkSizeManipulation1")) { //SizeManipulation 1
 			BonusSize += 0.135f;
 		}
 
@@ -400,7 +400,7 @@ namespace {
 		float QuestMult = 0.10f + static_cast<float>(Stage - 20) / 10.f * 0.04f;
 		if (Stage >= 80) QuestMult = 0.60f;
 
-		if (Runtime::HasPerk(a_Actor,"ColossalGrowth")) { //Total Size Control Perk
+		if (Runtime::HasPerk(a_Actor,"GTSPerkColossalGrowth")) { //Total Size Control Perk
 
 			if (!Config::GetBalance().bBalanceMode) {
 				const float SizeOverride = Config::GetBalance().fMaxPlayerSizeOverride;
@@ -457,8 +457,8 @@ namespace {
 
 			const auto& PlayerCharacter = PlayerCharacter::GetSingleton();
 
-			if (!Runtime::HasPerk(PlayerCharacter, "TalkToActor")) {
-				Runtime::AddPerk(PlayerCharacter, "TalkToActor");
+			if (!Runtime::HasPerk(PlayerCharacter, "GTSUtilTalkToActor")) {
+				Runtime::AddPerk(PlayerCharacter, "GTSUtilTalkToActor");
 			}
 		}
 

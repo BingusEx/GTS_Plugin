@@ -27,7 +27,7 @@ namespace GTS {
 	}
 
 	inline bool CanBendLifeless(Actor* giant) {
-		bool allow = Runtime::HasPerkTeam(giant, "BendLifeless");
+		bool allow = Runtime::HasPerkTeam(giant, "GTSPerkBendTheLifeless");
 		return allow;
 	}
 
@@ -97,7 +97,7 @@ namespace GTS {
 	}
 
 	inline void AdjustSizeReserve(Actor* giant, float value) {
-		if (!Runtime::HasPerk(giant, "SizeReserve")) {
+		if (!Runtime::HasPerk(giant, "GTSPerkSizeReserve")) {
 			return;
 		}
 		auto Cache = Persistent::GetSingleton().GetData(giant);
@@ -225,7 +225,7 @@ namespace GTS {
 
 				auto GlobalSizeLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
 
-				if (Runtime::HasPerk(caster, "ColossalGrowth")) {
+				if (Runtime::HasPerk(caster, "GTSPerkColossalGrowth")) {
 					GlobalSizeLimit = 1000000.0f;
 				}
 
@@ -367,9 +367,9 @@ namespace GTS {
 	}
 
 	inline void TransferSize(Actor* caster, Actor* target, bool dual_casting, float power, float transfer_effeciency, bool smt, ShrinkSource source) {
-		const float BASE_POWER = 0.0005f;
-		const float DUAL_CAST_BONUS = 2.0f;
-		const float SMT_BONUS = 1.25f;
+		constexpr float BASE_POWER = 0.0005f;
+		constexpr float DUAL_CAST_BONUS = 2.0f;
+		constexpr float SMT_BONUS = 1.25f;
 		float PERK_BONUS = 1.0f;
 
 		if (IsEssential(caster, target)) {
@@ -391,10 +391,10 @@ namespace GTS {
 			power *= SMT_BONUS;
 		}
 
-		if (Runtime::HasPerkTeam(caster, "FastShrink")) {
+		if (Runtime::HasPerkTeam(caster, "GTSPerkShrinkAdept")) {
 			PERK_BONUS += 0.15f;
 		}
-		if (Runtime::HasPerkTeam(caster, "LethalShrink")) {
+		if (Runtime::HasPerkTeam(caster, "GTSPerkShrinkExpert")) {
 			PERK_BONUS += 0.35f;
 		}
 

@@ -66,7 +66,7 @@ namespace GTS {
 
 	void HighHeelManager::OnAddPerk(const AddPerkEvent& evt) {
 		//log::info("Add Perk fired");
-		if (evt.perk == Runtime::GetPerk("hhBonus")) {
+		if (evt.perk == Runtime::GetPerk("GTSPerkHighHeels")) {
 			for (auto actor: find_actors()) {
 				if (actor) {
 					this->data.try_emplace(actor);

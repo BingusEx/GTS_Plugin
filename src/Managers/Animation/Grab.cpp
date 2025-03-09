@@ -237,8 +237,8 @@ namespace {
 		giant->SetGraphVariableInt("GTS_Storing_Tiny", 0);
 		giant->SetGraphVariableInt("GTS_Grab_State", 0);
 		AnimationManager::StartAnim("TinyDied", giant);
-		DrainStamina(giant, "GrabAttack", "DestructionBasics", false, 0.75f);
-		DrainStamina(giant, "GrabThrow", "DestructionBasics", false, 1.25f);
+		DrainStamina(giant, "GrabAttack", "GTSPerkDestructionBasics", false, 0.75f);
+		DrainStamina(giant, "GrabThrow", "GTSPerkDestructionBasics", false, 1.25f);
 		ManageCamera(&data.giant, false, CameraTracking::Grab_Left);
 		Grab::DetachActorTask(giant);
 		Grab::Release(giant);
@@ -259,8 +259,8 @@ namespace {
 		giant->SetGraphVariableInt("GTS_Grab_State", 0);
 
 		AnimationManager::StartAnim("TinyDied", giant);
-		DrainStamina(giant, "GrabAttack", "DestructionBasics", false, 0.75f);
-		DrainStamina(giant, "GrabThrow", "DestructionBasics", false, 1.25f);
+		DrainStamina(giant, "GrabAttack", "GTSPerkDestructionBasics", false, 0.75f);
+		DrainStamina(giant, "GrabThrow", "GTSPerkDestructionBasics", false, 1.25f);
 		ManageCamera(&data.giant, false, CameraTracking::Grab_Left);
 		Grab::DetachActorTask(giant);
 		Grab::Release(giant);
@@ -332,7 +332,7 @@ namespace {
 	void GrabAttackEvent(const ManagedInputEvent& data) { // Attack everyone in your hand
 		Actor* player = GetPlayerOrControlled();
 			float WasteStamina = 20.0f;
-			if (Runtime::HasPerk(player, "DestructionBasics")) {
+			if (Runtime::HasPerk(player, "GTSPerkDestructionBasics")) {
 				WasteStamina *= 0.65f;
 			}
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {
@@ -355,7 +355,7 @@ namespace {
 	void GrabThrowEvent(const ManagedInputEvent& data) { // Throw everyone away
 		Actor* player = GetPlayerOrControlled();
 			float WasteStamina = 40.0f;
-			if (Runtime::HasPerk(player, "DestructionBasics")) {
+			if (Runtime::HasPerk(player, "GTSPerkDestructionBasics")) {
 				WasteStamina *= 0.65f;
 			}
 			if (GetAV(player, ActorValue::kStamina) > WasteStamina) {
@@ -512,7 +512,7 @@ namespace GTS {
 			}
 
             if (CanDoDamage(giant, grabbed, false)) {
-                if (Runtime::HasPerkTeam(giant, "GrowingPressure")) {
+                if (Runtime::HasPerkTeam(giant, "GTSPerkGrowingPressure")) {
                     auto& sizemanager = SizeManager::GetSingleton();
                     sizemanager.ModSizeVulnerability(grabbed, damage * 0.0010f);
                 }
@@ -793,7 +793,7 @@ namespace GTS {
 			giantref->SetGraphVariableInt("GTS_GrabbedTiny", 0); // Tell behaviors 'we have nothing in our hands'. A must.
 			giantref->SetGraphVariableInt("GTS_Grab_State", 0);
 			giantref->SetGraphVariableInt("GTS_Storing_Tiny", 0);
-			DrainStamina(giantref, "GrabAttack", "DestructionBasics", false, 0.75f);
+			DrainStamina(giantref, "GrabAttack", "GTSPerkDestructionBasics", false, 0.75f);
 			Grab::ExitGrabState(giantref);
 			ManageCamera(giantref, false, CameraTracking::Grab_Left); // Disable any camera edits
 			Grab::DetachActorTask(giantref);

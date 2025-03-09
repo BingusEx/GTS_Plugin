@@ -64,9 +64,9 @@ namespace {
 
 		if (EnableCrushGrowth && !HasSMT(caster)) {
 
-			if (Runtime::HasPerkTeam(caster, "GrowthDesirePerk") && EnableCrushGrowth) {
+			if (Runtime::HasPerkTeam(caster, "GTSPerkGrowthDesire") && EnableCrushGrowth) {
 				float Rate = (0.00016f * get_visual_scale(target)) * 120 * power;
-				if (Runtime::HasPerkTeam(caster, "AdditionalGrowth")) {
+				if (Runtime::HasPerkTeam(caster, "GTSPerkAdditionalGrowth")) {
 					Rate *= 2.0f;
 				}
 				CrushGrow(caster, 0, Rate * SizeSteal_GetPower(caster, target));

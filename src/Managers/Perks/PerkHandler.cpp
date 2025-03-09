@@ -16,19 +16,19 @@ namespace {
 
     void ManageSpellPerks(const AddPerkEvent& evt) {
         if (evt.actor->formID == 0x14) {
-            if (evt.perk == Runtime::GetPerk("ColossalGrowth")) {
+            if (evt.perk == Runtime::GetPerk("GTSPerkColossalGrowth")) {
                 PrintMessageBox("You've learned to rapidly change the size of yourelf and your followers, as well as unlocked an ability to set size limit to any value. To change it, Open the settings and go to the balance page.");
             }
-            if (evt.perk == Runtime::GetPerk("GrowthDesirePerkAug")) {
+            if (evt.perk == Runtime::GetPerk("GTSPerkGrowthDesireAug")) {
                 PrintMessageBox("You're now able to grow and shrink yourself manually at will. By default, press L.Shift + 1 or 2. You can affect followers by pressing L.Shift + Left Arrow + Arrow Up, and can also affect self by pressing Left Arrow + Arrow Up");
             }
-            if (evt.perk == Runtime::GetPerk("FastShrink") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkBolt")) {
+            if (evt.perk == Runtime::GetPerk("GTSPerkShrinkAdept") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkBolt")) {
                 Runtime::AddSpell(evt.actor, "GTSSpellShrinkBolt");
             }
-            if (evt.perk == Runtime::GetPerk("LethalShrink") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkStorm")) {
+            if (evt.perk == Runtime::GetPerk("GTSPerkShrinkExpert") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkStorm")) {
                 Runtime::AddSpell(evt.actor, "GTSSpellShrinkStorm");
             }
-            if (evt.perk == Runtime::GetPerk("CalamityPerk")) {
+            if (evt.perk == Runtime::GetPerk("GTSPerkTinyCalamity")) {
                 AddCalamityPerk();
             }
         }
@@ -40,7 +40,7 @@ namespace {
             if (actor->formID == 0x14 || IsTeammate(actor)) {
                 auto data = Transient::GetSingleton().GetActorData(actor);
                 if (data) {
-                    if (evt.perk == Runtime::GetPerk("Acceleration")) {
+                    if (evt.perk == Runtime::GetPerk("GTSPerkAcceleration")) {
                         data->PerkBonusSpeed = Perk_Acceleration_GetBonus(actor);
                     }
                 }
@@ -49,7 +49,7 @@ namespace {
     }
 
     void Perks_UpdateAccelerationPerk(TempActorData* data, Actor* giant) {
-        if (data && Runtime::HasPerkTeam(giant, "Acceleration")) {
+        if (data && Runtime::HasPerkTeam(giant, "GTSPerkAcceleration")) {
             data->PerkBonusSpeed = Perk_Acceleration_GetBonus(giant);
         }
     }
@@ -99,7 +99,7 @@ namespace {
 
     void Perks_UpdateLifeForceAbsorptionPerk(TempActorData* data, Actor* giant) {
         if (giant) {
-            if (Runtime::HasPerkTeam(giant, "LifeAbsorption")) {
+            if (Runtime::HasPerkTeam(giant, "GTSPerkLifeAbsorption")) {
                 int stack_limit = 25;
                 if (data) {
                     if (data->PerkLifeForceStacks < stack_limit) {
@@ -146,10 +146,10 @@ namespace GTS {
             if (actor->formID == 0x14 || IsTeammate(actor)) {
                 auto data = Transient::GetSingleton().GetActorData(actor);
                 if (data) {
-                    if (evt.perk == Runtime::GetPerk("Acceleration")) {
+                    if (evt.perk == Runtime::GetPerk("GTSPerkAcceleration")) {
                         data->PerkBonusSpeed = 1.0f;
                     }
-                    if (evt.perk == Runtime::GetPerk("LifeAbsorption")) {
+                    if (evt.perk == Runtime::GetPerk("GTSPerkLifeAbsorption")) {
                         data->PerkLifeForceStolen = 0.0f;
                         data->PerkLifeForceStacks = 0;
                     }

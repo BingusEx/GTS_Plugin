@@ -26,7 +26,7 @@ namespace {
 		int growth_roll = static_cast<int>(GetGrowthType(giant));
 		float multiplier = 1.0f;
 
-		if (Runtime::HasPerkTeam(giant, "RandomGrowthTerror")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkRandomGrowthTerror")) {
 			multiplier = 1.3f;
 		}
 
@@ -132,7 +132,7 @@ namespace {
 		PlayMoanSound(giant, 1.0f);
 		Task_FacialEmotionTask_Moan(giant, 1.75f, "RandomGrow");
 
-		if (Runtime::HasPerkTeam(giant, "RandomGrowthTerror")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkRandomGrowthTerror")) {
 			for (auto tiny: find_actors()) {
 				if (tiny && tiny != giant) {
 					if (IsHostile(giant, tiny) || IsHostile(tiny, giant)) {

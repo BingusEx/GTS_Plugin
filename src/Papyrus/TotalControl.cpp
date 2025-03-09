@@ -12,7 +12,7 @@ namespace {
 	void GrowTeammate(StaticFunctionTag*, float power) {
 		auto casterRef = PlayerCharacter::GetSingleton();
 		if (casterRef) {
-			if (Runtime::HasPerkTeam(casterRef, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(casterRef, "GTSPerkGrowthDesireAug")) {
 				for (auto targetRef: FindTeammates()) {
 					if (targetRef) {
 						float falloff = 0.11f * get_visual_scale(targetRef);
@@ -62,7 +62,7 @@ namespace {
 	void ShrinkTeammate(StaticFunctionTag*, float power) {
 		auto casterRef = PlayerCharacter::GetSingleton();
 		if (casterRef) {
-			if (Runtime::HasPerkTeam(casterRef, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(casterRef, "GTSPerkGrowthDesireAug")) {
 				for (auto targetRef: FindTeammates()) {
 					if (targetRef) {
 						float scale = get_visual_scale(targetRef);
@@ -113,7 +113,7 @@ namespace {
 	void GrowPlayer(StaticFunctionTag*, float power) {
 		auto casterRef = PlayerCharacter::GetSingleton();
 		if (casterRef) {
-			if (Runtime::HasPerkTeam(casterRef, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(casterRef, "GTSPerkGrowthDesireAug")) {
 				float scale = get_visual_scale(casterRef);
 				float Volume = std::clamp(scale * 0.20f, 0.20f, 1.0f);
 
@@ -159,7 +159,7 @@ namespace {
 	void ShrinkPlayer(StaticFunctionTag*, float power) {
 		auto casterRef = PlayerCharacter::GetSingleton();
 		if (casterRef) {
-			if (Runtime::HasPerkTeam(casterRef, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(casterRef, "GTSPerkGrowthDesireAug")) {
 				float scale = get_visual_scale(casterRef);
 				float Volume = std::clamp(scale * 0.10f, 0.10f, 1.0f);
 				float falloff = 0.11f * scale;
@@ -206,7 +206,7 @@ namespace {
 	void CallRapidGrowth(StaticFunctionTag*, float amt, float halflife) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (player) {
-			if (Runtime::HasPerkTeam(player, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(player, "GTSPerkGrowthDesireAug")) {
 				float target = get_target_scale(player);
 				float max_scale = get_max_scale(player);// * get_natural_scale(player);
 				if (target >= max_scale) {
@@ -222,7 +222,7 @@ namespace {
 	void CallRapidShrink(StaticFunctionTag*, float amt, float halflife) {
 		auto player = PlayerCharacter::GetSingleton();
 		if (player) {
-			if (Runtime::HasPerkTeam(player, "GrowthDesirePerkAug")) {
+			if (Runtime::HasPerkTeam(player, "GTSPerkGrowthDesireAug")) {
 				float target = get_target_scale(player);
 				if (target <= Minimum_Actor_Scale) {
 					NotifyWithSound(player, "You can't shrink any further");

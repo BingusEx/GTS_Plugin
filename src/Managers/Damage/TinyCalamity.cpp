@@ -49,7 +49,7 @@ namespace {
     }
 
     void RefreshDuration(Actor* giant) {
-        if (Runtime::HasPerk(giant, "NoSpeedLoss")) {
+        if (Runtime::HasPerk(giant, "GTSPerkTinyCalamityAug")) {
             AttributeManager::GetSingleton().OverrideSMTBonus(0.75f); // Reduce speed after crush
         } else {
             AttributeManager::OverrideSMTBonus(0.35f); // Reduce more speed after crush
@@ -90,7 +90,7 @@ namespace {
 namespace GTS {
     bool TinyCalamity_WrathfulCalamity(Actor* giant) {
         bool perform = false;
-        if (Runtime::HasPerkTeam(giant, "WrathfulCalamity") && HasSMT(giant) && !giant->IsSneaking()) {
+        if (Runtime::HasPerkTeam(giant, "GTSPerkTinyCalamityRage") && HasSMT(giant) && !giant->IsSneaking()) {
 
             float threshold = 0.25f;
             float level_bonus = std::clamp(GetGtsSkillLevel(giant) - 70.0f, 0.0f, 0.30f);
@@ -153,7 +153,7 @@ namespace GTS {
     void TinyCalamity_ShrinkActor(Actor* giant, Actor* tiny, float shrink) {
         auto profiler = Profilers::Profile("TinyCalamity: ShrinkActor");
         if (HasSMT(giant)) {
-            bool HasPerk = Runtime::HasPerk(giant, "LifeSteal");
+            bool HasPerk = Runtime::HasPerk(giant, "GTSPerkTinyCalamitySizeSteal");
             float limit = Minimum_Actor_Scale;
             if (HasPerk) {
 				DamageAV(giant, ActorValue::kHealth, -shrink * 1.25f);
@@ -236,7 +236,7 @@ namespace GTS {
         giant->SetGraphVariableFloat("GiantessScale", 1.0f); // Needed to allow Stagger to play, else it won't work
 
         int Random = RandomInt(1, 4);
-		if (Random >= 4 && !IsActionOnCooldown(giant, CooldownSource::Emotion_Moan_Crush) && Runtime::HasPerk(giant, "GrowthDesirePerk")) {
+		if (Random >= 4 && !IsActionOnCooldown(giant, CooldownSource::Emotion_Moan_Crush) && Runtime::HasPerk(giant, "GTSPerkGrowthDesire")) {
 			PlayMoanSound(giant, 1.0f);
 		}
 
@@ -383,7 +383,7 @@ namespace GTS {
         // SMT Active and sprinting
 		if (giant->AsActorState()->IsSprinting() && HasSMT(giant)) {
 
-			if (Runtime::HasPerk(giant, "NoSpeedLoss")) {
+			if (Runtime::HasPerk(giant, "GTSPerkTinyCalamityAug")) {
 				speed = 1.25f;
                 decay = 1.5f;
 				cap = 1.10f;

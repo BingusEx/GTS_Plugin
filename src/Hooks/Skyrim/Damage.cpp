@@ -133,7 +133,7 @@ namespace GTS {
 			a_damage *= GetDifficultyMultiplier(attacker, receiver); // Take difficulty into account
 
 			if (a_damage > GetAV(receiver, ActorValue::kHealth)) {
-				if (Runtime::HasPerk(receiver, "HealthGate")) {
+				if (Runtime::HasPerk(receiver, "GTSPerkHealthGate")) {
 					if (!IsActionOnCooldown(receiver, CooldownSource::Action_HealthGate)) {
 						ApplyActionCooldown(receiver, CooldownSource::Action_HealthGate);
 						float maxhp = GetMaxAV(receiver, ActorValue::kHealth);
@@ -173,7 +173,7 @@ namespace GTS {
 				}
 			}
 		}
-		if (Runtime::HasPerk(receiver, "DarkArts_Max") && GetHealthPercentage(receiver) <= 0.40f) {
+		if (Runtime::HasPerk(receiver, "GTSPerkDarkArtsAug4") && GetHealthPercentage(receiver) <= 0.40f) {
 			bool OnCooldown = IsActionOnCooldown(receiver, CooldownSource::Misc_ShrinkOutburst_Forced);
 			if (!OnCooldown) {
 				ApplyActionCooldown(receiver, CooldownSource::Misc_ShrinkOutburst_Forced);
@@ -189,10 +189,10 @@ namespace GTS {
 			int growthtype = 0;
 			receiver->GetGraphVariableInt("GTS_Growth_Roll", growthtype);
 			if (growthtype > 0) {
-				if (Runtime::HasPerk(receiver, "RandomGrowthAug")) {
+				if (Runtime::HasPerk(receiver, "GTSPerkRandomGrowthAug")) {
 					reduction -= 0.6f;
 				}
-				if (Runtime::HasPerk(receiver, "RandomGrowthTerror")) {
+				if (Runtime::HasPerk(receiver, "GTSPerkRandomGrowthTerror")) {
 					reduction -= 0.25f;
 				}
 			}
@@ -203,10 +203,10 @@ namespace GTS {
 	float HugDamageResistance(Actor* receiver) {
 		float reduction = 1.0f;
 		if (HugShrink::GetHuggiesActor(receiver)) {
-			if (Runtime::HasPerk(receiver, "HugCrush_ToughGrip")) {
+			if (Runtime::HasPerk(receiver, "GTSPerkHugsToughGrip")) {
 				reduction -= 0.25f; // 25% resistance
 			}
-			if (Runtime::HasPerk(receiver, "HugCrush_HugsOfDeath")) {
+			if (Runtime::HasPerk(receiver, "GTSPerkHugsOfDeath")) {
 				reduction -= 0.35f; // 35% additional resistance
 			}
 		}

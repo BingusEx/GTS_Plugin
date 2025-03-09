@@ -356,10 +356,10 @@ namespace GTS
 
 	float AnimationBoobCrush::GetBoobCrushDamage(Actor* actor) {
 		float damage = 1.0f;
-		if (Runtime::HasPerkTeam(actor, "ButtCrush_KillerBooty")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkButtCrush")) {
 			damage += 0.30f;
 		}
-		if (Runtime::HasPerkTeam(actor, "ButtCrush_UnstableGrowth")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkButtCrushAug3")) {
 			damage += 0.70f;
 		}
 		return damage;

@@ -392,7 +392,7 @@ namespace GTS {
 
 
 	bool IsGrowthSpurtActive(Actor* actor) {
-		if (!Runtime::HasPerkTeam(actor, "GrowthOfStrength")) {
+		if (!Runtime::HasPerkTeam(actor, "GTSPerkGrowthAug1")) {
 			return false;
 		}
 		if (HasGrowthSpurt(actor)) {

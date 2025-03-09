@@ -18,7 +18,7 @@ namespace {
 
 	float GetLaunchThreshold(Actor* giant) {
 		float threshold = 8.0f;
-		if (Runtime::HasPerkTeam(giant, "RumblingFeet")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkRumblingFeet")) {
 			threshold *= 0.75f;
 		}
 		return threshold;
@@ -89,7 +89,7 @@ namespace GTS {
 
 		float startpower = Push_Actor_Upwards * highheel * (1.0f + Potion_GetMightBonus(giant)); // determines default power of launching someone
 		
-		if (Runtime::HasPerkTeam(giant, "RumblingFeet")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkRumblingFeet")) {
 			startpower *= 1.25f;
 		}
 
@@ -111,7 +111,7 @@ namespace GTS {
 			if (sizeRatio > threshold) {
 				if (force >= 0.10f) {
 					float power = (1.0f * launch_power) / Adjustment;
-					if (Runtime::HasPerkTeam(giant, "DisastrousTremor")) {
+					if (Runtime::HasPerkTeam(giant, "GTSPerkDisastrousTremmor")) {
 						DamageMult *= 2.0f;
 						OwnsPerk = true;
 						power *= 1.5f;
@@ -119,7 +119,7 @@ namespace GTS {
 
 					ApplyActionCooldown(tiny, CooldownSource::Damage_Launch);
 
-					if (Runtime::HasPerkTeam(giant, "LaunchDamage") && CanDoDamage(giant, tiny, true)) {
+					if (Runtime::HasPerkTeam(giant, "GTSPerkDeadlyRumble") && CanDoDamage(giant, tiny, true)) {
 						float damage = LAUNCH_DAMAGE * sizeRatio * force * DamageMult * highheel;
 						InflictSizeDamage(giant, tiny, damage);
 						if (OwnsPerk) { // Apply only when we have DisastrousTremor perk

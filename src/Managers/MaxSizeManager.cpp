@@ -11,7 +11,7 @@ namespace {
     float get_endless_height(Actor* actor) {
 		float endless = 0.0f;
 
-		if (Runtime::HasPerk(actor, "ColossalGrowth")) {
+		if (Runtime::HasPerk(actor, "GTSPerkColossalGrowth")) {
 			endless = DEFAULT_MAX;
 		}
 

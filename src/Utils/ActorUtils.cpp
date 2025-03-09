@@ -539,7 +539,7 @@ namespace GTS {
 		bool hostile = IsHostile(giant, tiny);
 		bool essential = IsEssential_WithIcons(giant, tiny); // Teammate check is also done here, spawns icons
 		bool no_protection = Config::GetAI().bAllowFollowers;
-		bool Ignore_Protection = (HugCheck && giant->formID == 0x14 && Runtime::HasPerk(giant, "HugCrush_LovingEmbrace"));
+		bool Ignore_Protection = (HugCheck && giant->formID == 0x14 && Runtime::HasPerk(giant, "GTSPerkHugsLovingEmbrace"));
 		bool allow_teammate = (giant->formID != 0x14 && no_protection && IsTeammate(tiny) && IsTeammate(giant));
 
 		if (IsFlying(tiny)) {
@@ -768,7 +768,7 @@ namespace GTS {
 	std::vector<Actor*> GetMaxActionableTinyCount(Actor* giant, const std::vector<Actor*>& actors) {
 		float capacity = 1.0f;
 		std::vector<Actor*> vories = {};
-		if (Runtime::HasPerkTeam(giant, "EnhancedCapacity")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkMassActions")) {
 			capacity = 3.0f * get_visual_scale(giant);
 			if (HasSMT(giant)) {
 				capacity *= 3.0f;
@@ -801,7 +801,7 @@ namespace GTS {
 
 	float Perk_GetSprintShrinkReduction(Actor* actor) {
 		float resistance = 1.0f;
-		if (actor->AsActorState()->IsSprinting() && Runtime::HasPerkTeam(actor, "QuickApproach")) {
+		if (actor->AsActorState()->IsSprinting() && Runtime::HasPerkTeam(actor, "GTSPerkSprintDamageMult1")) {
 			resistance -= 0.20f;
 		}
 		return resistance;
@@ -992,7 +992,7 @@ namespace GTS {
 
 										float iconScale = std::clamp(tinyScale, 1.0f, 9999.0f) * 2.4f;
 										bool Ally = !IsHostile(giant, otherActor) && IsTeammate(otherActor);
-										bool HasLovingEmbrace = Runtime::HasPerkTeam(giant, "HugCrush_LovingEmbrace");
+										bool HasLovingEmbrace = Runtime::HasPerkTeam(giant, "GTSPerkHugsLovingEmbrace");
 										bool Healing = IsHugHealing(giant);
 
 										NiPoint3 Position = node->world.translate;
@@ -1016,7 +1016,7 @@ namespace GTS {
 											SpawnParticle(otherActor, 3.00f, "GTS/UI/Icon_LovingEmbrace.nif", NiMatrix3(), Position, iconScale, 7, node);
 										} else if (huggedActor && huggedActor == otherActor && !IsHugCrushing(giant) && !Healing) {
 											bool LowHealth = (GetHealthPercentage(huggedActor) < GetHugCrushThreshold(giant, otherActor, true));
-											bool ForceCrush = Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles");
+											bool ForceCrush = Runtime::HasPerkTeam(giant, "GTSPerkHugMightyCuddles");
 											float Stamina = GetStaminaPercentage(giant);
 											if (HasSMT(giant) || LowHealth || (ForceCrush && Stamina > 0.75f)) {
 												SpawnParticle(otherActor, 3.00f, "GTS/UI/Icon_Hug_Crush.nif", NiMatrix3(), Position, iconScale, 7, node); // Spawn 'can be hug crushed'
@@ -1060,7 +1060,7 @@ namespace GTS {
 	float GetPerkBonus_OnTheEdge(Actor* giant, float amt) {
 		// When health is < 60%, empower growth by up to 50%. Max value at 10% health.
 		float bonus = 1.0f;
-		bool perk = Runtime::HasPerkTeam(giant, "OnTheEdge");
+		bool perk = Runtime::HasPerkTeam(giant, "GTSPerkOnTheEdge");
 		if (perk) {
 			float hpFactor = std::clamp(GetHealthPercentage(giant) + 0.4f, 0.5f, 1.0f);
 			bonus = (amt > 0.0f) ? (2.0f - hpFactor) : hpFactor;
@@ -1235,7 +1235,7 @@ namespace GTS {
 
 	void DecreaseShoutCooldown(Actor* giant) {
 		auto process = giant->GetActorRuntimeData().currentProcess;
-		if (giant->formID == 0x14 && process && Runtime::HasPerk(giant, "EternalCalamity")) {
+		if (giant->formID == 0x14 && process && Runtime::HasPerk(giant, "GTSPerkTinyCalamityRefresh")) {
 			auto high = process->high;
 			float by = 0.90f;
 			if (high) {
@@ -1435,7 +1435,7 @@ namespace GTS {
 		float hh = 0.0f;
 
 		if (actor) {
-			if (Runtime::HasPerkTeam(actor, "hhBonus")) {
+			if (Runtime::HasPerkTeam(actor, "GTSPerkHighHeels")) {
 				hh = HighHeelManager::GetInitialHeelHeight(actor);
 			}
 		} if (multiply) {
@@ -1839,7 +1839,7 @@ namespace GTS {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool IsGrowthSpurtActive(Actor* actor) {
-		if (!Runtime::HasPerkTeam(actor, "GrowthOfStrength")) {
+		if (!Runtime::HasPerkTeam(actor, "GTSPerkGrowthAug1")) {
 			return false;
 		}
 		if (HasGrowthSpurt(actor)) {
@@ -2013,7 +2013,7 @@ namespace GTS {
 	}
 
 	void AddStolenAttributes(Actor* giant, float value) {
-		if (giant->formID == 0x14 && Runtime::HasPerk(giant, "SizeConversion")) {
+		if (giant->formID == 0x14 && Runtime::HasPerk(giant, "GTSPerkSizeConversion")) {
 			auto attributes = Persistent::GetSingleton().GetData(giant);
 			if (attributes) {
 				attributes->stolen_attributes += value;
@@ -2079,7 +2079,7 @@ namespace GTS {
 	}
 
 	void DistributeStolenAttributes(Actor* giant, float value) {
-		if (value > 0 && giant->formID == 0x14 && Runtime::HasPerk(giant, "SizeConversion")) { // Permamently increases random AV after shrinking and stuff
+		if (value > 0 && giant->formID == 0x14 && Runtime::HasPerk(giant, "GTSPerkSizeConversion")) { // Permamently increases random AV after shrinking and stuff
 			float scale = std::clamp(get_visual_scale(giant), 0.01f, 1000000.0f);
 			float modifier = Config::GetGameplay().fSizeConvLevelCap;
 			float Storage = GetStolenAttributes(giant);
@@ -2129,10 +2129,10 @@ namespace GTS {
 
 	float GetButtCrushCost(Actor* actor, bool DoomOnly) {
 		float cost = 1.0f;
-		if (!DoomOnly && Runtime::HasPerkTeam(actor, "ButtCrush_KillerBooty")) {
+		if (!DoomOnly && Runtime::HasPerkTeam(actor, "GTSPerkButtCrush")) {
 			cost -= 0.15f;
 		}
-		if (Runtime::HasPerkTeam(actor, "ButtCrush_LoomingDoom")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkButtCrushAug4")) {
 			cost -= 0.25f;
 		}
 		cost *= Perk_GetCostReduction(actor);
@@ -2143,14 +2143,14 @@ namespace GTS {
 		float cost = 1.0f;
 		float reduction_1 = 0.0f;
 		float reduction_2 = 1.0f;
-		if (Runtime::HasPerkTeam(giant, "SkilledGTS")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkExperiencedGiantess")) {
 			reduction_1 += std::clamp(GetGtsSkillLevel(giant) * 0.0035f, 0.0f, 0.35f);
 		}
 		if (giant->formID == 0x14 && HasGrowthSpurt(giant)) {
-			if (Runtime::HasPerkTeam(giant, "GrowthOfStrength")) {
+			if (Runtime::HasPerkTeam(giant, "GTSPerkGrowthAug1")) {
 				reduction_2 -= 0.10f;
 			} 
-			if (Runtime::HasPerk(giant, "ExtraGrowth")) {
+			if (Runtime::HasPerk(giant, "GTSPerkExtraGrowth1")) {
 				reduction_2 -= 0.30f;
 			}
 		}
@@ -2517,8 +2517,8 @@ namespace GTS {
 		if (IsEssential_WithIcons(giant, tiny)) { // Protect followers/essentials
 			return;
 		}
-		bool DarkArts1 = Runtime::HasPerk(giant, "DarkArts_Aug");
-		bool DarkArts2 = Runtime::HasPerk(giant, "DarkArts_Aug2");
+		bool DarkArts1 = Runtime::HasPerk(giant, "GTSPerkDarkArtsAug1");
+		bool DarkArts2 = Runtime::HasPerk(giant, "GTSPerkDarkArtsAug2");
 
 		float shrinkpower = (shrink * 0.35f) * (1.0f + (GetGtsSkillLevel(giant) * 0.005f)) * CalcEffeciency(giant, tiny);
 
@@ -2566,7 +2566,7 @@ namespace GTS {
 		float radius = 1.0f;
 
 		float explosion = 0.75f;
-		bool DarkArts1 = Runtime::HasPerk(giant, "DarkArts_Aug");
+		bool DarkArts1 = Runtime::HasPerk(giant, "GTSPerkDarkArtsAug1");
 		if (WasHit) {
 			radius *= 1.4f;
 			shrink += 0.20f;
@@ -2938,7 +2938,7 @@ namespace GTS {
 
 		Actor* player = PlayerCharacter::GetSingleton();
 
-		if (!Runtime::HasPerk(player, "MightOfDragons")) {
+		if (!Runtime::HasPerk(player, "GTSPerkMightOfDragons")) {
 			return;
 		}
 
@@ -2980,7 +2980,7 @@ namespace GTS {
 
 	void AddSMTDuration(Actor* actor, float duration, bool perk_check) {
 		if (HasSMT(actor)) {
-			if (!perk_check || Runtime::HasPerk(actor, "EternalCalamity")) {
+			if (!perk_check || Runtime::HasPerk(actor, "GTSPerkTinyCalamityRefresh")) {
 				auto transient = Transient::GetSingleton().GetData(actor);
 				if (transient) {
 					transient->SMTBonusDuration += duration;

@@ -286,7 +286,7 @@ namespace {
 		Actor* player = GetPlayerOrControlled();
 
 		
-		if (Runtime::HasPerk(player, "ButtCrush_NoEscape")) {
+		if (Runtime::HasPerk(player, "GTSPerkButtCrushAug1")) {
 			auto& ButtCrush = ButtCrushController::GetSingleton();
 
 			std::vector<Actor*> preys = ButtCrush.GetButtCrushTargets(player, 1);
@@ -294,11 +294,11 @@ namespace {
 				ButtCrushController::StartButtCrush(player, prey); // attaches actors to AnimObjectB
 			} 
 			return;
-		} else if (CanDoButtCrush(player, true) && !Runtime::HasPerk(player, "ButtCrush_NoEscape")) {
+		} else if (CanDoButtCrush(player, true) && !Runtime::HasPerk(player, "GTSPerkButtCrushAug1")) {
 			float WasteStamina = 100.0f * GetButtCrushCost(player, false);
 			DamageAV(player, ActorValue::kStamina, WasteStamina);
 			AnimationManager::StartAnim("ButtCrush_StartFast", player);
-		} else if (!CanDoButtCrush(player, false) && !Runtime::HasPerk(player, "ButtCrush_NoEscape")) {
+		} else if (!CanDoButtCrush(player, false) && !Runtime::HasPerk(player, "GTSPerkButtCrushAug1")) {
 			ButtCrushController::ButtCrush_OnCooldownMessage(player);
 		}
 	}

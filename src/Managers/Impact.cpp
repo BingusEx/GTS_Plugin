@@ -133,7 +133,7 @@ namespace {
 		if (actor->AsActorState()->IsSprinting()) {
 			launch *= 1.150f;
 			radius *= 1.175f;
-			if (Runtime::HasPerkTeam(actor, "DevastatingSprint")) {
+			if (Runtime::HasPerkTeam(actor, "GTSPerkSprintDamageMult2")) {
 				launch *= 1.250f;
 				radius *= 1.275f;
 			}

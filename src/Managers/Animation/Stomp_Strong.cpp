@@ -120,7 +120,7 @@ namespace {
 				DoImpactRumble(giantref, Node, rumble);
 				DoDustExplosion(giantref, 1.33f * (SMT + (animSpeed * 0.05f)), Event, Node);
 
-				DrainStamina(giantref, "StaminaDrain_StrongStomp", "DestructionBasics", false, 3.4f);
+				DrainStamina(giantref, "StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", false, 3.4f);
 
 				DoFootstepSound(giantref, SMT + (animSpeed/10), Event, Node);
 
@@ -155,7 +155,7 @@ namespace {
 			data.animSpeed += GetRandomBoost()/3;
 		}
 		ManageCamera(giant, true, CameraTracking::R_Foot);
-		DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "DestructionBasics", true, 3.4f);
+		DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", true, 3.4f);
 
 		SetBusyFoot(&data.giant, BusyFoot::RightFoot);
 	}
@@ -168,7 +168,7 @@ namespace {
 			data.animSpeed += GetRandomBoost()/3;
 		}
 		ManageCamera(giant, true, CameraTracking::L_Foot);
-		DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "DestructionBasics", true, 3.4f);
+		DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", true, 3.4f);
 
 		SetBusyFoot(&data.giant, BusyFoot::LeftFoot);
 	}

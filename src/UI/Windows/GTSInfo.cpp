@@ -156,7 +156,7 @@ namespace GTS {
                 }
 
                 // On The Edge
-                if (Runtime::HasPerk(a_Actor, "OnTheEdge") && hasFlag(a_featureFlags, GTSInfoFeatures::kOnTheEdge)) {
+                if (Runtime::HasPerk(a_Actor, "GTSPerkOnTheEdge") && hasFlag(a_featureFlags, GTSInfoFeatures::kOnTheEdge)) {
                     ImGui::TableNextRow();
                     ImGui::TableSetColumnIndex(0);
                     ImGui::TextUnformatted("On The Edge:");
@@ -166,7 +166,7 @@ namespace GTS {
                 }
 
                 // Size Reserve
-                if (Runtime::HasPerk(a_Actor, "SizeReserve") && hasFlag(a_featureFlags, GTSInfoFeatures::kSizeReserve)) {
+                if (Runtime::HasPerk(a_Actor, "GTSPerkSizeReserve") && hasFlag(a_featureFlags, GTSInfoFeatures::kSizeReserve)) {
                     ImGui::TableNextRow();
                     ImGui::TableSetColumnIndex(0);
                     ImGui::TextUnformatted("Size Reserve:");
@@ -241,7 +241,7 @@ namespace GTS {
             }
 
             // Stolen Attributes for Size Conversion perk
-            if (Runtime::HasPerk(a_Actor, "SizeConversion") && hasFlag(a_featureFlags, GTSInfoFeatures::kStolenAttributes)) {
+            if (Runtime::HasPerk(a_Actor, "GTSPerkSizeConversion") && hasFlag(a_featureFlags, GTSInfoFeatures::kStolenAttributes)) {
                 ImGui::TableNextRow();
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextUnformatted("Stored Attributes:");
@@ -250,7 +250,7 @@ namespace GTS {
             }
 
             // Soul Vore perk data
-            if (Runtime::HasPerk(a_Actor, "SoulVorePerk")) {
+            if (Runtime::HasPerk(a_Actor, "GTSPerkFullAssimilation")) {
                 // Stolen Health
                 if (hasFlag(a_featureFlags, GTSInfoFeatures::kStolenHealth)) {
                     ImGui::TableNextRow();

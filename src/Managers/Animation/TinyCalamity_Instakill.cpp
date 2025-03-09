@@ -182,7 +182,7 @@ namespace {
 		DoDustExplosion(giant, dust + (animSpeed * 0.05f), Event, Node);
 		DoFootstepSound(giant, 1.0f, Event, Node);
 		
-		DrainStamina(giant, "StaminaDrain_Stomp", "DestructionBasics", false, 1.8f); // cancel stamina drain
+		DrainStamina(giant, "StaminaDrain_Stomp", "GTSPerkDestructionBasics", false, 1.8f); // cancel stamina drain
 
 		DelayedLaunch(giant, 0.90f * perk, 2.2f, Event);
 

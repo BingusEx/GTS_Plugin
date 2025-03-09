@@ -265,7 +265,7 @@ namespace GTS {
 	void UpdateFriendlyHugs(Actor* giant, Actor* tiny, bool force) {
 		bool hostile = IsHostile(tiny, giant);
 		bool teammate = IsTeammate(tiny) || tiny->formID == 0x14;
-		bool perk = Runtime::HasPerkTeam(giant, "HugCrush_LovingEmbrace");
+		bool perk = Runtime::HasPerkTeam(giant, "GTSPerkHugsLovingEmbrace");
 
 		if (perk && !hostile && teammate && !force) {
 			tiny->SetGraphVariableBool("GTS_IsFollower", true);
@@ -522,7 +522,7 @@ namespace GTS {
 
 	void GrabStaminaDrain(Actor* giant, Actor* tiny, float sizedifference) {
 		float WasteMult = 1.0f;
-		if (Runtime::HasPerkTeam(giant, "DestructionBasics")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkDestructionBasics")) {
 			WasteMult *= 0.65f;
 		}
 		WasteMult *= Perk_GetCostReduction(giant);
@@ -608,7 +608,7 @@ namespace GTS {
 
 	float GetWasteMult(Actor* giant) {
 		float WasteMult = 1.0f;
-		if (Runtime::HasPerk(giant, "DestructionBasics")) {
+		if (Runtime::HasPerk(giant, "GTSPerkDestructionBasics")) {
 			WasteMult *= 0.65f;
 		}
 		WasteMult *= Perk_GetCostReduction(giant);
@@ -616,7 +616,7 @@ namespace GTS {
 	}
 
 	float GetPerkBonus_Basics(Actor* Giant) {
-		if (Runtime::HasPerkTeam(Giant, "DestructionBasics")) {
+		if (Runtime::HasPerkTeam(Giant, "GTSPerkDestructionBasics")) {
 			return 1.25f;
 		} else {
 			return 1.0f;
@@ -624,7 +624,7 @@ namespace GTS {
 	}
 
 	float GetPerkBonus_Thighs(Actor* Giant) {
-		if (Runtime::HasPerkTeam(Giant, "KillerThighs")) {
+		if (Runtime::HasPerkTeam(Giant, "GTSPerkThighAbilities")) {
 			return 1.25f;
 		} else {
 			return 1.0f;
@@ -1717,10 +1717,10 @@ namespace GTS {
 
 	float GetHugStealRate(Actor* actor) {
 		float steal = 0.18f;
-		if (Runtime::HasPerkTeam(actor, "HugCrush_ToughGrip")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkHugsToughGrip")) {
 			steal += 0.072f;
 		}
-		if (Runtime::HasPerkTeam(actor, "HugCrush")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkHugs")) {
 			steal *= 1.35f;
 		}
 		return steal;
@@ -1728,10 +1728,10 @@ namespace GTS {
 
 	float GetHugShrinkThreshold(Actor* actor) {
 		float threshold = 2.5f;
-		if (Runtime::HasPerkTeam(actor, "HugCrush")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkHugs")) {
 			threshold *= 1.25f;
 		}
-		if (Runtime::HasPerkTeam(actor, "HugCrush_Greed")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkHugsGreed")) {
 			threshold *= 1.35f;
 		}
 		if (HasGrowthSpurt(actor)) {
@@ -1742,10 +1742,10 @@ namespace GTS {
 
 	float GetHugCrushThreshold(Actor* giant, Actor* tiny, bool check_size) {
 		float hp = 0.12f;
-		if (Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkHugMightyCuddles")) {
 			hp += 0.08f;
 		}
-		if (Runtime::HasPerkTeam(giant, "HugCrush_HugsOfDeath")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkHugsOfDeath")) {
 			hp += 0.10f;
 		}
 

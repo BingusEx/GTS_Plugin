@@ -20,7 +20,7 @@ using namespace GTS;
 namespace {
 
 	bool CanHugCrush(Actor* giant, Actor* huggedActor) {
-		bool ForceCrush = Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles");
+		bool ForceCrush = Runtime::HasPerkTeam(giant, "GTSPerkHugMightyCuddles");
 		float staminapercent = GetStaminaPercentage(giant);
 		float stamina = GetAV(giant, ActorValue::kStamina);
 		if (ForceCrush && staminapercent >= 0.75f) {
@@ -44,7 +44,7 @@ namespace {
 
 	void ShrinkPulse_GainSize(Actor* giant, Actor* tiny, bool task) {
 		float increase = 1.0f;
-		if (Runtime::HasPerkTeam(giant, "HugCrush_Greed")) {
+		if (Runtime::HasPerkTeam(giant, "GTSPerkHugsGreed")) {
 			increase = 1.15f;
 		}
 
@@ -391,7 +391,7 @@ namespace {
 				return;
 			}
 
-			if (Runtime::HasPerkTeam(player, "HugCrush_LovingEmbrace")) {
+			if (Runtime::HasPerkTeam(player, "GTSPerkHugsLovingEmbrace")) {
 				if (!IsHostile(huggedActor, player) && (IsTeammate(huggedActor) || huggedActor->formID == 0x14)) {
 					StartHealingAnimation(player, huggedActor);
 					return;
@@ -472,7 +472,7 @@ namespace GTS {
 			
 			float stamina = 0.35f;
 			float shrink = 14.0f;
-			if (Runtime::HasPerkTeam(giantref, "HugCrush_Greed")) {
+			if (Runtime::HasPerkTeam(giantref, "GTSPerkHugsGreed")) {
 				shrink *= 1.25f;
 				stamina *= 0.75f;
 			}

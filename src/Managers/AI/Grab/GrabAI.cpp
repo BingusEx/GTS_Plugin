@@ -67,7 +67,7 @@ namespace {
 	bool GrabAI_CanAttack(Actor* a_Performer) { // Attack everyone in your hand
 
 		float WasteStamina = 20.0f;
-		if (Runtime::HasPerk(a_Performer, "DestructionBasics")) {
+		if (Runtime::HasPerk(a_Performer, "GTSPerkDestructionBasics")) {
 			WasteStamina *= 0.65f;
 		}
 
@@ -82,7 +82,7 @@ namespace {
 	bool GrabAI_CanThrow(Actor* a_Performer) { // Throw everyone away
 		
 		float WasteStamina = 40.0f;
-		if (Runtime::HasPerk(a_Performer, "DestructionBasics")) {
+		if (Runtime::HasPerk(a_Performer, "GTSPerkDestructionBasics")) {
 			WasteStamina *= 0.65f;
 		}
 
@@ -96,7 +96,7 @@ namespace {
 	bool GrabAI_CanVore(Actor* a_Performer) { // Throw everyone away
 
 		float WasteStamina = 10.0f;
-		if (Runtime::HasPerk(a_Performer, "DestructionBasics")) {
+		if (Runtime::HasPerk(a_Performer, "GTSPerkDestructionBasics")) {
 			WasteStamina *= 0.65f;
 		}
 

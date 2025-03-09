@@ -17,10 +17,10 @@ namespace {
 		auto transient = Transient::GetSingleton().GetData(tiny);
 		if (transient) {
 			float slow = 0.75f;
-			if (Runtime::HasPerkTeam(giant, "FastShrink")) {
+			if (Runtime::HasPerkTeam(giant, "GTSPerkShrinkAdept")) {
 				slow += 0.05f;
 			}
-			if (Runtime::HasPerkTeam(giant, "LethalShrink")) {
+			if (Runtime::HasPerkTeam(giant, "GTSPerkShrinkExpert")) {
 				slow += 0.05f;
 			}
 			transient->MovementSlowdown = slow;

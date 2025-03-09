@@ -220,84 +220,101 @@ Survival_HungerStage4 = "ccQDRSSE001-SurvivalMode.esl|000886"
 Survival_HungerStage5 = "ccQDRSSE001-SurvivalMode.esl|000885"
 
 # Perks ----------------------------------------------------------------------
-[PERK] 
-Acceleration = "GTS.esp|87F342"
-AdditionalGrowth = "GTS.esp|151518"
-BendLifeless = "GTS.esp|7913D9"
-Breasts_Absorb = "GTS.esp|856B39"
-Breasts_Intro = "GTS.esp|898845"
-Breasts_Mastery = "GTS.esp|856B3B"
-Breasts_Predominance = "GTS.esp|856B3D"
-Breasts_Strangle = "GTS.esp|8ACC4C"
-Breasts_Suffocate = "GTS.esp|856B3A"
-Breasts_Vore = "GTS.esp|856B38"
-ButtCrush_GrowingDisaster = "GTS.esp|5FC367"
-ButtCrush_KillerBooty = "GTS.esp|5FC366"
-ButtCrush_LoomingDoom = "GTS.esp|5FC369"
-ButtCrush_NoEscape = "GTS.esp|5FC36A"
-ButtCrush_UnstableGrowth = "GTS.esp|5FC368"
-CalamityPerk = "GTS.esp|18E161"
-ColossalGrowth = "GTS.esp|128CF7"
-Cruelty = "GTS.esp|128CF8"
-DarkArts = "GTS.esp|64319B"
-DarkArts_Aug = "GTS.esp|64319C"
-DarkArts_Aug2 = "GTS.esp|64319D"
-DarkArts_Aug3 = "GTS.esp|19D462"
-DarkArts_Max = "GTS.esp|63E09A"
-DestructionBasics = "GTS.esp|587C4A"
-DevastatingSprint = "GTS.esp|123BEB"
-DisastrousTremor = "GTS.esp|61FA97"
-EnhancedCapacity = "GTS.esp|462228"
-EternalCalamity = "GTS.esp|5ED064"
-ExtraGrowth = "GTS.esp|332563"
-ExtraGrowthMax = "GTS.esp|397972"
-FastShrink = "GTS.esp|16081F"
-Gluttony = "GTS.esp|33C764"
-GrowingPressure = "GTS.esp|1E93A9"
-GrowthDesirePerk = "GTS.esp|128CF6"
-GrowthDesirePerkAug = "GTS.esp|829231"
-GrowthOfStrength = "GTS.esp|151519"
-GrowthOnHitPerk = "GTS.esp|30EE52"
-HealthGate = "GTS.esp|4E0B39"
-HealthRegenPerk = "GTS.esp|18E160"
-hhBonus = "GTS.esp|271EF1"
-HugCrush = "GTS.esp|60656E"
-HugCrush_Greed = "GTS.esp|606571"
-HugCrush_HugsOfDeath = "GTS.esp|629C98"
-HugCrush_LovingEmbrace = "GTS.esp|7598CE"
-HugCrush_MightyCuddles = "GTS.esp|60656F"
-HugCrush_ToughGrip = "GTS.esp|606570"
-KillerThighs = "GTS.esp|587C4B"
-LaunchDamage = "GTS.esp|2496E9"
-LethalShrink = "GTS.esp|160820"
-LifeAbsorption = "GTS.esp|87F341"
-LifeSteal = "GTS.esp|2496E8"
-MightOfDragons = "GTS.esp|67FDAC"
-MightOfGiants = "GTS.esp|6AD6B1"
-MightyLegs = "GTS.esp|123BE9"
-NoSpeedLoss = "GTS.esp|2E663B"
-OnTheEdge = "GTS.esp|4399E3"
-QuickApproach = "GTS.esp|123BEA"
-RandomGrowth = "GTS.esp|35AD69"
-RandomGrowthAug = "GTS.esp|865E3E"
-RandomGrowthTerror = "GTS.esp|865E3F"
-RavagingInjuries = "GTS.esp|128CF5"
-RealCruelty = "GTS.esp|142205"
-RumblingFeet = "GTS.esp|1CAD91"
-ShrinkingGaze = "GTS.esp|889543"
-SizeConversion = "GTS.esp|610774"
-SizeReserve = "GTS.esp|4204CE"
-SizeReserveAug = "GTS.esp|4C7638"
-SizeReserveAug2 = "GTS.esp|4255D0"
-SkilledGTS = "GTS.esp|61A996"
-SoulVorePerk = "GTS.esp|33C765"
-StaggerImmunity = "GTS.esp|0AA3B2"
-TrueGiantess = "GTS.esp|128CF4"
-VorePerk = "GTS.esp|355C68"
-WrathfulCalamity = "GTS.esp|856B3C"
-SizeManipulation = "GTS.esp|128CF2"
-ExpandedGrowth = "GTS.esp|128CF3"
-TalkToActor = "GTS.esp|5F7265"
+[PERK]
+GTSPerkAcceleration = "GTS.esp|87F342"          # Acceleration (75)
+GTSPerkAdditionalGrowth = "GTS.esp|151518"      # Additional Growth (80)
+GTSPerkBendTheLifeless = "GTS.esp|7913D9"       # Bend The Lifeless (60)
+
+GTSPerkBreastsAbsorb = "GTS.esp|856B39"         # Alluring Softness (50)
+GTSPerkBreastsIntro = "GTS.esp|898845"          # Personal Approach (15)
+GTSPerkBreastsMastery1 = "GTS.esp|856B3B"       # Cleavage Mastery (40)
+GTSPerkBreastsMastery2 = "GTS.esp|856B3D"       # Predominance (60)
+GTSPerkBreastsStrangle = "GTS.esp|8ACC4C"       # Succulent Strangle (25)
+GTSPerkBreastsSuffocation = "GTS.esp|856B3A"    # Breathtaking Bust (25)
+GTSPerkBreastsVore = "GTS.esp|856B38"           # Nimble Vore (35)
+
+GTSPerkButtCrush = "GTS.esp|5FC366"             # Deadly Body (15)
+GTSPerkButtCrushAug1 = "GTS.esp|5FC36A"         # No Escape (25)
+GTSPerkButtCrushAug2 = "GTS.esp|5FC367"         # Growing Disaster (35)
+GTSPerkButtCrushAug3 = "GTS.esp|5FC368"         # Horrendous Growth (60)
+GTSPerkButtCrushAug4 = "GTS.esp|5FC369"         # Looming Doom (100)
+
+GTSPerkHugs = "GTS.esp|60656E"                  # Gentle Hugs (25)
+GTSPerkHugsGreed = "GTS.esp|606571"             # Thirsty Cuddles (40)
+GTSPerkHugsOfDeath = "GTS.esp|629C98"           # Hugs Of Death (90)
+GTSPerkHugsLovingEmbrace = "GTS.esp|7598CE"     # Loving Embrace (50)
+GTSPerkHugMightyCuddles = "GTS.esp|60656F"      # Mighty Cuddles (80)
+GTSPerkHugsToughGrip = "GTS.esp|606570"         # Full Concentration (50)
+
+GTSPerkDarkArts = "GTS.esp|64319B"              # Shrink Outburst (15)
+GTSPerkDarkArtsAug1 = "GTS.esp|64319C"          # Empowered Shrink (30)
+GTSPerkDarkArtsAug2 = "GTS.esp|64319D"          # Additional Burst (50)
+GTSPerkDarkArtsAug3 = "GTS.esp|19D462"          # Burst Resistance (60)
+GTSPerkDarkArtsAug4 = "GTS.esp|63E09A"          # Pressured Outburst (80)
+
+GTSPerkTinyCalamity = "GTS.esp|18E161"          # Tiny Calamity (65)
+GTSPerkTinyCalamityRefresh = "GTS.esp|5ED064"   # Eternal Calamity (80)
+GTSPerkTinyCalamityAug = "GTS.esp|2E663B"       # Approaching Disaster (90)
+GTSPerkTinyCalamitySizeSteal = "GTS.esp|2496E8" # Life Steal (85)
+GTSPerkTinyCalamityRage = "GTS.esp|856B3C"      # Wrathful Calamity (70)
+
+GTSPerkRandomGrowth = "GTS.esp|35AD69"          # Pleasurable Growth (65)
+GTSPerkRandomGrowthAug = "GTS.esp|865E3E"       # Breaching Growth (75)
+GTSPerkRandomGrowthTerror = "GTS.esp|865E3F"    # Terrifying Growth (85)
+
+GTSPerkSizeReserve = "GTS.esp|4204CE"           # Size Reserve (50)
+GTSPerkSizeReserveAug1 = "GTS.esp|4C7638"       # Critical Reserve (60)
+GTSPerkSizeReserveAug2 = "GTS.esp|4255D0"       # Healing Reserve (65)
+
+GTSPerkSizeManipulation1 = "GTS.esp|128CF2"     # Size Manipulation (10)
+GTSPerkSizeManipulation2 = "GTS.esp|128CF3"     # Expanded Growth (35)
+GTSPerkSizeManipulation3 = "GTS.esp|128CF4"     # Adapting To Growth (70)
+
+GTSPerkCruelty = "GTS.esp|128CF8"               # Strengthened Might (20)
+GTSPerkRealCruelty = "GTS.esp|142205"           # Cruelty (80)
+
+GTSPerkVoreAbility = "GTS.esp|355C68"           # Effortless Vore (15)
+GTSPerkVoreHeal = "GTS.esp|33C764"              # Voracious Vore (60)
+
+GTSPerkSprintDamageMult1 = "GTS.esp|123BEA"     # Quick Approach (25)
+GTSPerkSprintDamageMult2 = "GTS.esp|123BEB"     # Devastating Sprint (60)
+
+GTSPerkExtraGrowth1 = "GTS.esp|332563"          # Strong Spurt (50)
+GTSPerkExtraGrowth2 = "GTS.esp|397972"          # True Growth (60)
+
+GTSPerkShrinkAdept = "GTS.esp|16081F"           # Shrink Adept (35)
+GTSPerkShrinkExpert = "GTS.esp|160820"          # Shrink Expert (50)
+
+GTSPerkGrowthDesire = "GTS.esp|128CF6"          # Growth Desire (60)
+GTSPerkGrowthDesireAug = "GTS.esp|829231"       # Manual Growth (85)
+
+GTSPerkGrowthAug1 = "GTS.esp|151519"            # Growth Of Strength (30)
+GTSPerkGrowthAug2 = "GTS.esp|18E160"            # Growing Regeneration (40)
+
+GTSPerkMightOfDragons = "GTS.esp|67FDAC"        # Might Of Dragons (40)
+GTSPerkMightOfGiants = "GTS.esp|6AD6B1"         # Might Of Giants (Quest)  
+
+GTSPerkGrowingPressure = "GTS.esp|1E93A9"       # Growing Pressure (75)
+GTSPerkDisastrousTremmor = "GTS.esp|61FA97"     # Disastrous Tremor (100)
+GTSPerkMassActions = "GTS.esp|462228"           # Enhanced Capacity (65)
+GTSPerkDestructionBasics = "GTS.esp|587C4A"     # Destruction Basics (10)
+GTSPerkHitGrowth = "GTS.esp|30EE52"             # Hit Growth (50)
+GTSPerkHealthGate = "GTS.esp|4E0B39"            # Second Wind (55)
+GTSPerkHighHeels = "GTS.esp|271EF1"             # Heels Of Destruction (50)
+GTSPerkThighAbilities = "GTS.esp|587C4B"        # Killer Thighs (10)
+GTSPerkDeadlyRumble = "GTS.esp|2496E9"          # Deadly Rumble (90)
+GTSPerkLifeAbsorption = "GTS.esp|87F341"        # Life Absorption (75)
+GTSPerkCruelFall = "GTS.esp|123BE9"             # Puissant Fall (25)
+GTSPerkOnTheEdge = "GTS.esp|4399E3"             # On The Edge (65)
+GTSPerkRavagingInjuries = "GTS.esp|128CF5"      # Ravaging Injuries (40)
+GTSPerkColossalGrowth = "GTS.esp|128CF7"        # Colossal Growth (100)
+GTSPerkRumblingFeet = "GTS.esp|1CAD91"          # Overwhelming Steps (65)
+GTSPerkShrinkingGaze = "GTS.esp|889543"         # Shrinking Gaze (90)
+GTSPerkSizeConversion = "GTS.esp|610774"        # Size Conversion (50)
+GTSPerkFullAssimilation = "GTS.esp|33C765"      # Full Assimilation (80)
+GTSPerkExperiencedGiantess = "GTS.esp|61A996"   # Experienced Giantess (60)
+
+GTSUtilTalkToActor = "GTS.esp|5F7265"           # TalkToActorWhenSneaking (Internal)
 
 # Explosions --------------------------------------------------------------------------
 [EXPL] 

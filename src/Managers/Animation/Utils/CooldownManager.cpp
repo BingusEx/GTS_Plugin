@@ -60,7 +60,7 @@ namespace {
             break;   
         }
 
-        if (Runtime::HasPerk(giant, "Breasts_Mastery")) {
+        if (Runtime::HasPerk(giant, "GTSPerkBreastsMastery1")) {
             float level = GetGtsSkillLevel(giant) - 40.0f; // Start past level 40
             mastery = std::clamp(level * 0.01f, 0.0f, 0.6f);
         }
@@ -77,8 +77,8 @@ namespace {
     }
 
     float Calculate_ButtCrushTimer(Actor* actor) {
-		bool lvl70 = Runtime::HasPerk(actor, "ButtCrush_UnstableGrowth");
-		bool lvl100 = Runtime::HasPerk(actor, "ButtCrush_LoomingDoom");
+		bool lvl70 = Runtime::HasPerk(actor, "GTSPerkButtCrushAug3");
+		bool lvl100 = Runtime::HasPerk(actor, "GTSPerkButtCrushAug4");
 		float reduction = 1.0f;
 		if (lvl100) { // 15% reduction
 			reduction -= 0.15f;
@@ -96,8 +96,8 @@ namespace {
     }
 
     float Calculate_ShrinkOutbirstTimer(Actor* actor) {
-        bool DarkArts3 = Runtime::HasPerk(actor, "DarkArts_Aug3");
-        bool HealthRegen = Runtime::HasPerk(actor, "HealthRegenPerk");
+        bool DarkArts3 = Runtime::HasPerk(actor, "GTSPerkDarkArtsAug3");
+        bool HealthRegen = Runtime::HasPerk(actor, "GTSPerkGrowthAug2");
         float reduction = 1.0f;
         if (DarkArts3) {
             reduction = 0.7f;

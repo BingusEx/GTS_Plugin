@@ -14,7 +14,7 @@ namespace {
 	float Get_Breach_Threshold(Actor* actor) {
 		float threshold = 1.65f;
 
-		if (Runtime::HasPerkTeam(actor, "RandomGrowthTerror")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkRandomGrowthTerror")) {
 			threshold = 1.60f;
 		}
 
@@ -46,7 +46,7 @@ namespace {
 			MultiplySlider = 1.0f;
 		}
 
-		if (!Runtime::HasPerkTeam(actor, "RandomGrowth") || MultiplySlider <= 0.0f) {
+		if (!Runtime::HasPerkTeam(actor, "GTSPerkRandomGrowth") || MultiplySlider <= 0.0f) {
 			return false;
 		}
 
@@ -99,7 +99,7 @@ namespace GTS {
 								float base_power = ((0.00750f * TotalPower * 25) * SpellEfficiency);  // The power of it
 								float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
 
-								if (Runtime::HasPerkTeam(actor, "RandomGrowthAug") && TotalPower >= Get_Breach_Threshold(actor) && !IsGtsBusy(actor)) {
+								if (Runtime::HasPerkTeam(actor, "GTSPerkRandomGrowthAug") && TotalPower >= Get_Breach_Threshold(actor) && !IsGtsBusy(actor)) {
 									AnimationManager::StartAnim("StartRandomGrowth", actor);
 								} else {
 									if (!IsGrowing(actor)) {

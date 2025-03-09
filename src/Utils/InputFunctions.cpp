@@ -100,7 +100,7 @@ namespace {
 	}
 
 	void regenerate_health(Actor* giant, float value) {
-		if (Runtime::HasPerk(giant, "SizeReserveAug2")) {
+		if (Runtime::HasPerk(giant, "GTSPerkSizeReserveAug2")) {
 			float maxhp = GetMaxAV(giant, ActorValue::kHealth);
 			float regenerate = maxhp * 0.25f * value; // 25% of health
 
@@ -229,7 +229,7 @@ namespace {
 				if (!Attacking) {
 					float duration = data.Duration();
 					
-					if (duration >= 1.2f && Runtime::HasPerk(player, "SizeReserve")) {
+					if (duration >= 1.2f && Runtime::HasPerk(player, "GTSPerkSizeReserve")) {
 						bool ShouldPrevent = get_target_scale(player) >= 1.49f && HasSMT(player); // So we don't waste it on Calamity that shrinks player back
 						if (!ShouldPrevent) {
 							bool HandsBusy = Grab::GetHeldActor(player);
@@ -266,7 +266,7 @@ namespace {
 		auto player = PlayerCharacter::GetSingleton();
 		auto Cache = Persistent::GetSingleton().GetData(player);
 		if (Cache) {
-			if (Runtime::HasPerk(player, "SizeReserve")) {
+			if (Runtime::HasPerk(player, "GTSPerkSizeReserve")) {
 				float gigantism = 1.0f + Ench_Aspect_GetPower(player);
 				float Value = Cache->SizeReserve * gigantism;
 				Notify("Size Reserve: {:.2f}", Value);
@@ -286,8 +286,8 @@ namespace {
 
 		auto player = PlayerCharacter::GetSingleton();
 
-		bool DarkArts2 = Runtime::HasPerk(player, "DarkArts_Aug2");
-		bool DarkArts3 = Runtime::HasPerk(player, "DarkArts_Aug3");
+		bool DarkArts2 = Runtime::HasPerk(player, "GTSPerkDarkArtsAug2");
+		bool DarkArts3 = Runtime::HasPerk(player, "GTSPerkDarkArtsAug3");
 
 		float gigantism = 1.0f + Ench_Aspect_GetPower(player);
 

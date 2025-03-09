@@ -62,7 +62,7 @@ namespace {
     }
 
     void Absorb_GrowInSize(Actor* giant, Actor* tiny, float multiplier) {
-        if (Runtime::HasPerkTeam(giant, "HugCrush_Greed")) {
+        if (Runtime::HasPerkTeam(giant, "GTSPerkHugsGreed")) {
 			multiplier *= 1.15f;
 		}
         float grow_value = 0.08f * multiplier * 0.845f;
@@ -76,7 +76,7 @@ namespace {
         if (tiny) {
             KillActor(giant, tiny);
             PerkHandler::UpdatePerkValues(giant, PerkUpdate::Perk_LifeForceAbsorption);
-            DrainStamina(giant, "GrabAttack", "DestructionBasics", false, 0.75f);
+            DrainStamina(giant, "GrabAttack", "GTSPerkDestructionBasics", false, 0.75f);
             tiny->SetGraphVariableBool("GTSBEH_T_InStorage", false);
             SetBetweenBreasts(tiny, false);
             SetBeingEaten(tiny, false);
@@ -94,7 +94,7 @@ namespace {
         float Percent = GetMaxAV(giant, Attribute);
         float value = Percent * percentage;
 
-        if (Runtime::HasPerk(giant, "Breasts_Predominance")) {
+        if (Runtime::HasPerk(giant, "GTSPerkBreastsMastery2")) {
             value *= 1.5f;
         }
 
@@ -210,7 +210,7 @@ namespace {
 			}
 
             if (CanDoDamage(giant, tiny, false)) {
-                if (Runtime::HasPerkTeam(giant, "GrowingPressure")) {
+                if (Runtime::HasPerkTeam(giant, "GTSPerkGrowingPressure")) {
                     auto& sizemanager = SizeManager::GetSingleton();
                     sizemanager.ModSizeVulnerability(tiny, damage * 0.0010f);
                 }
@@ -623,7 +623,7 @@ namespace {
             SetBeingHeld(tiny, false);
         }
 
-        DrainStamina(giant, "GrabAttack", "DestructionBasics", false, 0.75f);
+        DrainStamina(giant, "GrabAttack", "GTSPerkDestructionBasics", false, 0.75f);
         giant->SetGraphVariableInt("GTS_GrabbedTiny", 0); // Tell behaviors 'we have nothing in our hands'. A must.
         giant->SetGraphVariableInt("GTS_Grab_State", 0);
         giant->SetGraphVariableInt("GTS_Storing_Tiny", 0);

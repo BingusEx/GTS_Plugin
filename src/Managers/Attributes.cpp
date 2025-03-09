@@ -45,25 +45,25 @@ namespace {
 		float ExpectedFallDamage = 1.0f;
 
 		///Normal Damage
-		if (Runtime::HasPerkTeam(actor, "Cruelty")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkCruelty")) {
 			ExpectedGlobalDamage += 0.15f/BalanceModeDiv;
 		}
-		if (Runtime::HasPerkTeam(actor, "RealCruelty")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkRealCruelty")) {
 			ExpectedGlobalDamage += 0.35f/BalanceModeDiv;
 		}
 		if (IsGrowthSpurtActive(actor)) {
 			ExpectedGlobalDamage *= (1.0f + (0.35f/BalanceModeDiv));
 		}
-		if (Runtime::HasPerkTeam(actor, "MightOfGiants")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkMightOfGiants")) {
 			ExpectedGlobalDamage *= 1.15f; // +15% damage
 		}
 
 		///Sprint Damage
-		if (Runtime::HasPerkTeam(actor, "QuickApproach")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkSprintDamageMult1")) {
 			ExpectedSprintDamage += 0.25f/BalanceModeDiv;
 		}
 		///Fall Damage
-		if (Runtime::HasPerkTeam(actor, "MightyLegs")) {
+		if (Runtime::HasPerkTeam(actor, "GTSPerkCruelFall")) {
 			ExpectedFallDamage += 0.3f/BalanceModeDiv;
 		}
 		///Buff by enchantment
@@ -153,7 +153,7 @@ namespace GTS {
 					if (HasSMT(actor)) {
 						scale += 1.0f;
 					}
-					if (actor->AsActorState()->IsSprinting() && Runtime::HasPerk(actor, "QuickApproach")) {
+					if (actor->AsActorState()->IsSprinting() && Runtime::HasPerk(actor, "GTSPerkSprintDamageMult1")) {
 						scale *= 1.30f;
 					}
 				}

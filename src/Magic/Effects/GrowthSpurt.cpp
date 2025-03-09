@@ -37,10 +37,10 @@ namespace {
 		float bonus = 1.0f;
 		float basic = 0.0f;
 		
-		if (Runtime::HasPerk(giant, "ExtraGrowth")) {
+		if (Runtime::HasPerk(giant, "GTSPerkExtraGrowth1")) {
 			basic += 0.50f;
 		}
-		if (Runtime::HasPerk(giant, "ExtraGrowthMax")) {
+		if (Runtime::HasPerk(giant, "GTSPerkExtraGrowth2")) {
 			float perkbonus = 1.0f + ((GetGtsSkillLevel(giant) * 0.015f) + (giant->GetLevel() * 0.030f));
 			basic *= perkbonus;
 		}
@@ -67,7 +67,7 @@ namespace {
 	void GrowthSpurt_RegenerateAttributes(Actor* caster) {
 		float HpRegen = GetMaxAV(caster, ActorValue::kHealth) * 0.00020f;
 		
-		if (Runtime::HasPerk(caster, "HealthRegenPerk")) {
+		if (Runtime::HasPerk(caster, "GTSPerkGrowthAug2")) {
 			HpRegen *= 2.0f;
 		}
 

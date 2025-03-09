@@ -179,7 +179,7 @@ namespace {
 namespace GTS {
 
 	void StartShrinkingGaze(Actor* giant) {
-		if (Runtime::HasPerk(giant, "ShrinkingGaze") && giant->formID == 0x14) {
+		if (Runtime::HasPerk(giant, "GTSPerkShrinkingGaze") && giant->formID == 0x14) {
 			Task_ShrinkingGazeTask(giant);
 		}
 	}

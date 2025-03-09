@@ -7,10 +7,10 @@
 namespace {
 
 
-    const std::string CollossalGrowthPerk = "ColossalGrowth"; //AKA GtsTotalSizeControl
-    const std::string PleasurableGrowthPerk = "RandomGrowth"; //AKA GtsCrushGrowthAug
-    const std::string CrushGrowthAugmetationPerk = "GrowthDesirePerk";
-    const std::string GrowOnHitPerk = "GrowthOnHitPerk";
+    const std::string CollossalGrowthPerk = "GTSPerkColossalGrowth"; //AKA GtsTotalSizeControl
+    const std::string PleasurableGrowthPerk = "GTSPerkRandomGrowth"; //AKA GtsCrushGrowthAug
+    const std::string CrushGrowthAugmetationPerk = "GTSPerkGrowthDesire";
+    const std::string GrowOnHitPerk = "GTSPerkHitGrowth";
 
 }
 

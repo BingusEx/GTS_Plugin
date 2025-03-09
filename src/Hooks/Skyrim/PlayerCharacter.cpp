@@ -31,7 +31,7 @@ namespace Hooks {
 	void Hook_PlayerCharacter::HandleHealthDamage(PlayerCharacter* a_this, Actor* a_attacker, float a_damage) {
 		if (a_attacker) {
 			SizeHitEffects::GetSingleton().ApplyEverything(a_attacker, a_this, a_damage); // Apply bonus damage, overkill, stagger resistance
-			if (Runtime::HasPerkTeam(a_this, "SizeReserveAug")) { // Size Reserve Augmentation
+			if (Runtime::HasPerkTeam(a_this, "GTSPerkSizeReserveAug1")) { // Size Reserve Augmentation
 				auto Cache = Persistent::GetSingleton().GetData(a_this);
 				if (Cache) {
 					Cache->SizeReserve += -a_damage/3000;

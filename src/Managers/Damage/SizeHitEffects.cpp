@@ -34,7 +34,7 @@ namespace {
 
 	bool Hit_ShouldGrow(Actor* receiver) {
 		bool GrowthEnabled = Config::GetGameplay().bEnableGrowthOnHit;
-		bool HasPerk = Runtime::HasPerkTeam(receiver, "GrowthOnHitPerk");
+		bool HasPerk = Runtime::HasPerkTeam(receiver, "GTSPerkHitGrowth");
 		bool Teammate = IsTeammate(receiver) && IsFemale(receiver, true);
 		bool IsPlayer = receiver->formID == 0x14;
 		
@@ -48,7 +48,7 @@ namespace {
 
 	bool Hit_ShouldShrink(Actor* receiver) {
 		
-		const bool HasPerk = Runtime::HasPerk(receiver, "GrowthOnHitPerk");
+		const bool HasPerk = Runtime::HasPerk(receiver, "GTSPerkHitGrowth");
 		const bool BalanceMode = SizeManager::BalancedMode();
 
 		if (BalanceMode && receiver->formID == 0x14 && !HasPerk) {
@@ -105,13 +105,13 @@ namespace {
 	void DropTinyChance(Actor* receiver, float damage, float scale) {
 		static Timer DropTimer = Timer(0.33); // Check once per .33 sec
 		float bonus = 1.0f;
-		if (Runtime::HasPerkTeam(receiver, "HugCrush_HugsOfDeath")) {
+		if (Runtime::HasPerkTeam(receiver, "GTSPerkHugsOfDeath")) {
 			return; // Full immunity
 		}
-		if (Runtime::HasPerkTeam(receiver, "HugCrush_Greed")) {
+		if (Runtime::HasPerkTeam(receiver, "GTSPerkHugsGreed")) {
 			bonus = 4.0f; // 4 times bigger damage threshold to cancel hugs
 		}
-		if (Runtime::HasPerkTeam(receiver, "HugCrush_ToughGrip")) {
+		if (Runtime::HasPerkTeam(receiver, "GTSPerkHugsToughGrip")) {
 			float GetHP = GetHealthPercentage(receiver);
 			if (GetHP >= 0.85f) {
 				return; // Drop only if hp is < 85%
@@ -238,10 +238,10 @@ namespace GTS {
 	}
 
 	void SizeHitEffects::PerformInjuryDebuff(Actor* giant, Actor* tiny, float damage, int random) { // Used as a debuff
-		if (!tiny->IsDead() && Runtime::HasPerkTeam(giant, "RavagingInjuries")) {
+		if (!tiny->IsDead() && Runtime::HasPerkTeam(giant, "GTSPerkRavagingInjuries")) {
 			if (random > 0) {
 
-				if (Runtime::HasPerkTeam(giant, "DevastatingSprint") && giant->AsActorState()->IsSprinting() && !IsGtsBusy(giant)) {
+				if (Runtime::HasPerkTeam(giant, "GTSPerkSprintDamageMult2") && giant->AsActorState()->IsSprinting() && !IsGtsBusy(giant)) {
 					damage *= 3.0f;
 					random = 1; // always apply
 				}

@@ -354,7 +354,7 @@ namespace GTS {
 			wastestamina = 30; // Less tamina drain for non Player
 		}
 
-		if (!Runtime::HasPerkTeam(pred, "VorePerk")) { // Damage stamina if we don't have perk
+		if (!Runtime::HasPerkTeam(pred, "GTSPerkVoreAbility")) { // Damage stamina if we don't have perk
 			if (staminacheck < wastestamina) {
 				Notify("{} is too tired for vore.", pred->GetDisplayFullName());
 				DamageAV(prey, ActorValue::kHealth, 3 * sizedifference);

@@ -45,7 +45,7 @@ namespace {
 				DoImpactRumble(giantref, Node, rumble);
 				DoDustExplosion(giantref, 1.0f * (SMT), Event, Node);
 
-				DrainStamina(giantref,"StaminaDrain_StrongStomp", "DestructionBasics", false, 5.1f); // 13.5 * 5.1
+				DrainStamina(giantref,"StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", false, 5.1f); // 13.5 * 5.1
 
 				DoFootstepSound(giantref, SMT, Event, Node);
 
@@ -62,13 +62,13 @@ namespace {
 	}
 
     void GTS_UnderStomp_CamOn_StrongR(AnimationEventData& data) {
-        DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "DestructionBasics", true, 5.1f);
+        DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", true, 5.1f);
         ManageCamera(&data.giant, true, CameraTracking::R_Foot);
 		SetBusyFoot(&data.giant, BusyFoot::RightFoot);
     }
 
     void GTS_UnderStomp_CamOn_StrongL(AnimationEventData& data) {
-        DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "DestructionBasics", true, 5.1f);
+        DrainStamina(&data.giant, "StaminaDrain_StrongStomp", "GTSPerkDestructionBasics", true, 5.1f);
         ManageCamera(&data.giant, true, CameraTracking::L_Foot);
 		SetBusyFoot(&data.giant, BusyFoot::LeftFoot);
     }

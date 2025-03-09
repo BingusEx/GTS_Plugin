@@ -31,7 +31,7 @@ namespace {
 	}
 
 	void AdjustCalamityDuration(Actor* caster, ActiveEffect* Effect) {
-		if (Runtime::HasPerkTeam(caster, "LifeSteal")) {
+		if (Runtime::HasPerkTeam(caster, "GTSPerkTinyCalamitySizeSteal")) {
 			if (Effect) {
 				float level = GetGtsSkillLevel(caster) - 85.0f;
 				float extra = std::clamp(level, 0.0f, 15.0f) * 2.0f;

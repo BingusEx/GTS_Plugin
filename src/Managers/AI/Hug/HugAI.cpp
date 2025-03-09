@@ -97,7 +97,7 @@ namespace {
 		const float StaminaPercentage = GetStaminaPercentage(a_Performer);
 		const float HPCrushThreshold = GetHugCrushThreshold(a_Performer, a_Prey, true);
 		const bool HasLowHP = HealthPercentage <= HPCrushThreshold;
-		const bool StaminaCheck = Runtime::HasPerkTeam(a_Performer, "HugCrush_MightyCuddles") && StaminaPercentage >= 0.75f;
+		const bool StaminaCheck = Runtime::HasPerkTeam(a_Performer, "GTSPerkHugMightyCuddles") && StaminaPercentage >= 0.75f;
 		const auto& Settings = Config::GetAI().Hugs;
 		const bool Teammate = IsTeammate(a_Prey) || a_Prey->formID == 0x14;
 		const bool Hostile = IsHostile(a_Performer, a_Prey) || IsHostile(a_Prey, a_Performer);
@@ -121,7 +121,7 @@ namespace {
 
 	bool HugAI_CanHeal(Actor* a_Performer, Actor* a_Prey) {
 		const bool Teammate = IsTeammate(a_Performer) && (IsTeammate(a_Prey) || a_Prey->formID == 0x14);
-		const bool HasPerk = Runtime::HasPerkTeam(a_Performer, "HugCrush_LovingEmbrace");
+		const bool HasPerk = Runtime::HasPerkTeam(a_Performer, "GTSPerkHugsLovingEmbrace");
 		const bool Hostile = IsHostile(a_Performer, a_Prey) || IsHostile(a_Prey, a_Performer);
 		const bool CanStartHeal = Config::GetAI().Hugs.fHealProb > 0.01f;
 		

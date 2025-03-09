@@ -49,7 +49,7 @@ namespace {
 	};
 
     bool CanForceAction(Actor* giant, Actor* huggedActor, std::string pass_anim) {
-        bool ForceCrush = Runtime::HasPerkTeam(giant, "HugCrush_MightyCuddles");
+        bool ForceCrush = Runtime::HasPerkTeam(giant, "GTSPerkHugMightyCuddles");
         float staminapercent = GetStaminaPercentage(giant);
         float stamina = GetAV(giant, ActorValue::kStamina);
         if (ForceCrush && staminapercent >= 0.50f) {
@@ -62,7 +62,7 @@ namespace {
 
     float GetMasteryReduction(Actor* giant) {
         float hp_reduction = 0.0f;
-        if (Runtime::HasPerk(giant, "Breasts_Predominance")) {
+        if (Runtime::HasPerk(giant, "GTSPerkBreastsMastery2")) {
             float level = GetGtsSkillLevel(giant) - 60.0f;
             hp_reduction = std::clamp(level * 0.015f, 0.0f, 0.6f);
         }
@@ -140,7 +140,7 @@ namespace {
         PassAnimation("Cleavage_EnterState", false);
         AttemptBreastActionOnTiny("Cleavage_EnterState_Tiny");
 
-        if (giant->formID == 0x14 && Runtime::HasPerkTeam(giant, "Breasts_Intro") && Grab::GetHeldActor(giant)) {
+        if (giant->formID == 0x14 && Runtime::HasPerkTeam(giant, "GTSPerkBreastsIntro") && Grab::GetHeldActor(giant)) {
             auto Camera = PlayerCamera::GetSingleton();
             bool Sheathed = Camera->isWeapSheathed;
             if (!Sheathed) {
@@ -164,17 +164,17 @@ namespace {
         }
     }
     void CleavageSuffocateEvent(const ManagedInputEvent& data) {
-        if (AttemptBreastAction("Cleavage_Suffocate", CooldownSource::Action_Breasts_Suffocate, "Suffocation", "Breasts_Suffocate")) {
+        if (AttemptBreastAction("Cleavage_Suffocate", CooldownSource::Action_Breasts_Suffocate, "Suffocation", "GTSPerkBreastsSuffocation")) {
             AttemptBreastActionOnTiny("Cleavage_Suffocate_Tiny");
         }
     }
     void CleavageAbsorbEvent(const ManagedInputEvent& data) {
-        if (AttemptBreastAction("Cleavage_Absorb", CooldownSource::Action_Breasts_Absorb, "Absorption", "Breasts_Absorb")) {
+        if (AttemptBreastAction("Cleavage_Absorb", CooldownSource::Action_Breasts_Absorb, "Absorption", "GTSPerkBreastsAbsorb")) {
             AttemptBreastActionOnTiny("Cleavage_Absorb_Tiny");
         }
     }
     void CleavageVoreEvent(const ManagedInputEvent& data) {
-        if (AttemptBreastAction("Cleavage_Vore", CooldownSource::Action_Breasts_Vore, "Vore", "Breasts_Vore")) {
+        if (AttemptBreastAction("Cleavage_Vore", CooldownSource::Action_Breasts_Vore, "Vore", "GTSPerkBreastsVore")) {
             AttemptBreastActionOnTiny("Cleavage_Vore_Tiny");
         }
     }
