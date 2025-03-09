@@ -53,17 +53,22 @@ namespace GTS {
 
 		if (!AllowDevourment()) {
 
-			for (auto& [key, tinyref]: this->tinies) {
+			for (auto& tinyref : this->tinies | views::values) {
 				auto tiny = tinyref.get().get();
 				auto giantref = this->giant;
 				SetBeingHeld(tiny, false);
 				AddSMTDuration(giantref.get().get(), 6.0f);
+
+				//bool = Silent; True = mute death, false = no mute
+				const auto& MuteVore = Config::GetAudio().bMuteVoreDeathScreams;
+
 				if (tiny->formID != 0x14) {
-					KillActor(giantref.get().get(), tiny, true);
+					KillActor(giantref.get().get(), tiny, MuteVore);
 					PerkHandler::UpdatePerkValues(giantref.get().get(), PerkUpdate::Perk_LifeForceAbsorption);
-				} else if (tiny->formID == 0x14) {
+				}
+				else if (tiny->formID == 0x14) {
 					InflictSizeDamage(giantref.get().get(), tiny, 900000);
-					KillActor(giantref.get().get(), tiny);
+					KillActor(giantref.get().get(), tiny, MuteVore);
 					TriggerScreenBlood(50);
 					tiny->SetAlpha(0.0f); // Player can't be disintegrated: simply nothing happens. So we Just make player Invisible instead.
 				}

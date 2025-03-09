@@ -321,7 +321,9 @@ struct SettingsAudio {
     // Voice settings
     bool bSlowGrowMoans = true;
     bool bEnableVoiceOverride = true;
+    bool bMuteVoreDeathScreams = true;
     float fMaxVoiceFrequency = 1.0f;
+
 };
 TOML_SERIALIZABLE(SettingsAudio);
 
