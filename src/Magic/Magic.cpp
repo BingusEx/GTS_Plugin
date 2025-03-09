@@ -260,8 +260,8 @@ namespace GTS {
 		RegisterMagic<ShrinkFoe>("ShrinkEnemy");
 		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOE");
 		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOEMast");
-		RegisterMagic<ShrinkFoe>("ShrinkBolt");
-		RegisterMagic<ShrinkFoe>("ShrinkStorm");
+		RegisterMagic<ShrinkFoe>("GTSSpellShrinkBolt");
+		RegisterMagic<ShrinkFoe>("GTSSpellShrinkStorm");
 
 		RegisterMagic<Gigantism>("EnchGigantism");
 

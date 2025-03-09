@@ -59,12 +59,12 @@ namespace GTS {
 			// ShrinkEnemyAOEMast
 			this->power = SHRINK_AOE_MASTER_POWER;
 			this->efficiency = SHRINK_AOE_MASTER_EFFIC;
-		} else if (base_spell == Runtime::GetMagicEffect("ShrinkBolt")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSSpellShrinkBolt")) {
 			// ShrinkBolt
 			this->power = SHRINK_BOLT_POWER;
 			this->efficiency = SHRINK_BOLT_EFFIC;
 			this->time_mult = 0.2f;
-		} else if (base_spell == Runtime::GetMagicEffect("ShrinkStorm")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSSpellShrinkStorm")) {
 			// ShrinkBolt
 			this->power = SHRINK_STORM_POWER;
 			this->efficiency = SHRINK_STORM_EFFIC;

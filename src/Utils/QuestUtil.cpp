@@ -83,7 +83,27 @@ namespace {
 	};
 
 	const std::vector<std::string> AllSpells {
-
+		"GTSSpellAbsorb",
+		"GTSSpellGrowAlly",
+		"GTSSpellGrowAllyAdept",
+		"GTSSpellGrowAllyExpert",
+		"GTSSpellGrowth",
+		"GTSSpellGrowthAdept",
+		"GTSSpellGrowthExpert",
+		"GTSSpellRestoreSize",
+		"GTSSpellRestoreSizeOther",
+		"GTSSpellShrink",
+		"GTSSpellShrinkAlly",
+		"GTSSpellShrinkAllyAdept",
+		"GTSSpellShrinkAllyExpert",
+		"GTSSpellShrinkBolt",
+		"GTSSpellShrinkEnemy",
+		"GTSSpellShrinkEnemyAOE",
+		"GTSSpellShrinkEnemyAOEMastery",
+		"GTSSpellShrinkStorm",
+		"GTSSpellShrinkToNothing",
+		"GTSSpellSlowGrowth",
+		"GTSSpellTrueAbsorb"
 	};
 }
 

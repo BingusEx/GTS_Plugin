@@ -29,7 +29,7 @@ namespace {
 		}
 
 		if (voreFearRoll <= 0) {
-			Runtime::CastSpell(actor, actor, "GtsVoreFearSpell");
+			Runtime::CastSpell(actor, actor, "GTSSpellFear");
 		}
 	}
 
@@ -42,7 +42,7 @@ namespace {
 		}
 		int FearChance = RandomInt(0, MaxValue);
 		if (FearChance <= 0) {
-			Runtime::CastSpell(giant, giant, "GtsVoreFearSpell");
+			Runtime::CastSpell(giant, giant, "GTSSpellFear");
 			// Should cast fear
 		}
 	}
@@ -176,7 +176,7 @@ namespace GTS {
 							SpawnParticle(tiny, 0.60f, "GTS/Damage/Crush.nif", root->world.rotate, root->world.translate, currentSize * 2.5f, 7, root);
 							SpawnParticle(tiny, 1.20f, "GTS/Damage/ShrinkOrCrush.nif", NiMatrix3(), root->world.translate, currentSize * 25, 7, root);
 						}
-						Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4,"BloodExplosion");
+						Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4,"GTSExplosionBlood");
 						Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSet", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, false);
 					}
 				}

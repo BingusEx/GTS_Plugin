@@ -304,7 +304,7 @@ namespace GTS {
 					SpawnParticle(tiny, 1.20f, "GTS/Damage/Explode.nif", NiMatrix3(), root->world.translate, 2.0f, 7, root);
 					SpawnParticle(tiny, 1.20f, "GTS/Damage/ShrinkOrCrush.nif", NiMatrix3(), root->world.translate, get_visual_scale(tiny) * 10, 7, root);
 				}
-				Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4, "BloodExplosion");
+				Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4, "GTSExplosionBlood");
 				Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSetVoreMedium", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
 			} else {
 				Runtime::PlaySound("SKSoundBloodGush", tiny, 1.0f, 0.5f);
@@ -1410,7 +1410,7 @@ namespace GTS {
 
 				Grow(giantref, 0, 0.016f * (1 + random));
 
-				Runtime::CastSpell(giantref, giantref, "GtsVoreFearSpell");
+				Runtime::CastSpell(giantref, giantref, "GTSSpellFear");
 
 				SpawnCustomParticle(giantref, ParticleType::Blue, NiPoint3(), "NPC COM [COM ]", get_visual_scale(giantref));
 				Task_FacialEmotionTask_Moan(giantref, 2.0f, "Absorb");

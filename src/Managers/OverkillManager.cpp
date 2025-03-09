@@ -22,7 +22,7 @@ namespace {
                 }
             }
             Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSet", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
-            Runtime::CreateExplosion(tiny, get_visual_scale(tiny) * 0.5f, "BloodExplosion");
+            Runtime::CreateExplosion(tiny, get_visual_scale(tiny) * 0.5f, "GTSExplosionBlood");
         }
     }
 }

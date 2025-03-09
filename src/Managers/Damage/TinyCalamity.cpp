@@ -22,7 +22,7 @@ namespace {
     void ScareEnemies(Actor* giant)  {
 		int FearChance = RandomInt(0, 2);
 		if (FearChance <= 0) {
-			Runtime::CastSpell(giant, giant, "GtsVoreFearSpell");
+			Runtime::CastSpell(giant, giant, "GTSSpellFear");
 		}
 	}
 
@@ -44,7 +44,7 @@ namespace {
             Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSet", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
             Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSet", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
             Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSet", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
-            Runtime::CreateExplosion(tiny, get_visual_scale(tiny) * 0.5f, "BloodExplosion");
+            Runtime::CreateExplosion(tiny, get_visual_scale(tiny) * 0.5f, "GTSExplosionBlood");
         }
     }
 
@@ -52,7 +52,7 @@ namespace {
         if (Runtime::HasPerk(giant, "NoSpeedLoss")) {
             AttributeManager::GetSingleton().OverrideSMTBonus(0.75f); // Reduce speed after crush
         } else {
-            AttributeManager::GetSingleton().OverrideSMTBonus(0.35f); // Reduce more speed after crush
+            AttributeManager::OverrideSMTBonus(0.35f); // Reduce more speed after crush
         }
     }
 

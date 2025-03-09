@@ -22,11 +22,11 @@ namespace {
             if (evt.perk == Runtime::GetPerk("GrowthDesirePerkAug")) {
                 PrintMessageBox("You're now able to grow and shrink yourself manually at will. By default, press L.Shift + 1 or 2. You can affect followers by pressing L.Shift + Left Arrow + Arrow Up, and can also affect self by pressing Left Arrow + Arrow Up");
             }
-            if (evt.perk == Runtime::GetPerk("FastShrink") && !Runtime::HasSpell(evt.actor, "ShrinkBolt")) {
-                Runtime::AddSpell(evt.actor, "ShrinkBolt");
+            if (evt.perk == Runtime::GetPerk("FastShrink") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkBolt")) {
+                Runtime::AddSpell(evt.actor, "GTSSpellShrinkBolt");
             }
-            if (evt.perk == Runtime::GetPerk("LethalShrink") && !Runtime::HasSpell(evt.actor, "ShrinkStorm")) {
-                Runtime::AddSpell(evt.actor, "ShrinkStorm");
+            if (evt.perk == Runtime::GetPerk("LethalShrink") && !Runtime::HasSpell(evt.actor, "GTSSpellShrinkStorm")) {
+                Runtime::AddSpell(evt.actor, "GTSSpellShrinkStorm");
             }
             if (evt.perk == Runtime::GetPerk("CalamityPerk")) {
                 AddCalamityPerk();
