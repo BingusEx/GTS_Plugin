@@ -206,22 +206,22 @@ namespace GTS {
 		std::string name = std::format("{} remains", actor->GetDisplayFullName());
 
 		if (IsMechanical(actor)) {
-			container = "Dropbox_Mechanical";
+			container = "GTSDropboxMechanical";
 		} else if (Cause == DamageSource::Vored) { // Always spawn soul on vore
-			container = "Dropbox_Soul";
+			container = "GTSDropboxSoul";
 			name = std::format("{} Soul Remains", actor->GetDisplayFullName());
 			soul = true;
 		} else if (LessGore()) { // Always Spawn soul if Less Gore is on
-			container = "Dropbox_Soul";
+			container = "GTSDropboxSoul";
 			name = std::format("Crushed Soul of {} ", actor->GetDisplayFullName());
 			soul = true;
 		} else if (IsInsect(actor, false)) {
-			container = "Dropbox_Bug";
+			container = "GTSDropboxInsect";
 			name = std::format("Remains of {}", actor->GetDisplayFullName());
 		} else if (IsLiving(actor)) {
-			container = "Dropbox"; // spawn normal dropbox
+			container = "GTSDropboxGore"; // spawn normal dropbox
 		} else {
-			container = "Dropbox_Undead";
+			container = "GTSDropboxUndead";
 		}
 
 

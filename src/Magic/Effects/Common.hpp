@@ -148,7 +148,7 @@ namespace GTS {
 
 	inline void ModSizeExperience(Actor* Caster, float value) { // Adjust Matter Of Size skill
 		if (value > 0) {
-			auto progressionQuest = Runtime::GetQuest("MainQuest");
+			auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 			if (progressionQuest) {
 				auto queststage = progressionQuest->GetCurrentStageID();
 				if (queststage >= 10) {

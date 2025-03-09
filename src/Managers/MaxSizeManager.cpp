@@ -70,7 +70,7 @@ namespace GTS {
 			}
 
             const float NaturalScale = get_natural_scale(actor, true);
-            const float QuestStage = Runtime::GetStage("MainQuest");
+            const float QuestStage = Runtime::GetStage("GTSQuestProgression");
             const float BaseLimit = Persistent::GetSingleton().GTSGlobalSizeLimit.value;
             const float NPCLimit = Config::GetBalance().fMaxOtherSize;
 			const bool IsMassBased = Config::GetBalance().sSizeMode == "kMassBased"; // Should DLL use mass based formula for Player?

@@ -470,7 +470,7 @@ namespace GTS {
 		if (Runtime::HasKeyword(actor, "DragonKeyword")) {
 			return true;
 		}
-		if (Runtime::IsRace(actor, "dragonRace")) {
+		if (Runtime::IsRace(actor, "DragonRace")) {
 			return true;
 		} 
 		return false;
@@ -1411,7 +1411,7 @@ namespace GTS {
 
 	void CompleteDragonQuest(Actor* tiny, ParticleType Type, bool dead) {
 		auto pc = PlayerCharacter::GetSingleton();
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 		if (progressionQuest) {
 			auto stage = progressionQuest->GetCurrentStageID();
 			if (stage == 80) {
@@ -1905,12 +1905,12 @@ namespace GTS {
 	}
 
 	bool IsBlacklisted(Actor* actor) {
-		bool blacklist = Runtime::HasKeyword(actor, "BlackListKeyword");
+		bool blacklist = Runtime::HasKeyword(actor, "GTSKeywordBlackListActor");
 		return blacklist;
 	}
 
 	bool IsGtsTeammate(Actor* actor) {
-		return Runtime::HasKeyword(actor, "CountAsFollower");
+		return Runtime::HasKeyword(actor, "GTSKeywordCountAsFollower");
 	}
 
 	void ResetCameraTracking() {
@@ -1922,7 +1922,7 @@ namespace GTS {
 	}
 
 	void CallDevourment(Actor* a_Pred, Actor* a_Prey) {
-		auto ProxyQuest = Runtime::GetQuest("ProxyQuest");
+		auto ProxyQuest = Runtime::GetQuest("GTSQuestProxy");
 		const auto& AllowEndo = Config::GetGameplay().ActionSettings.bDVDoEndoOnTeam;
 		bool DoEndo = false;
 
@@ -1964,14 +1964,14 @@ namespace GTS {
 	}
 
 	void CallVampire() {
-		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProxy");
 		if (progressionQuest) {
 			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_SatisfyVampire");
 		}
 	}
 
 	void AddCalamityPerk() {
-		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProxy");
 		if (progressionQuest) {
 			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_AddCalamityShout");
 		}
@@ -1980,7 +1980,7 @@ namespace GTS {
 
 	//Unused
 	void RemoveCalamityPerk() {
-		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProxy");
 		if (progressionQuest) {
 			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_RemoveCalamityShout");
 		}
@@ -3200,7 +3200,7 @@ namespace GTS {
 		if (giant->formID != 0x14) {
 			return true;
 		} else {
-			auto progressionQuest = Runtime::GetQuest("MainQuest");
+			auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 			if (progressionQuest) {
 				auto queststage = progressionQuest->GetCurrentStageID();
 
@@ -3231,7 +3231,7 @@ namespace GTS {
 
 	void AdvanceQuestProgression(Actor* giant, Actor* tiny, QuestStage stage, float value, bool vore) {
 		if (giant->formID == 0x14) { // Player Only
-			auto progressionQuest = Runtime::GetQuest("MainQuest");
+			auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 
 			auto& Persistent = Persistent::GetSingleton();
 

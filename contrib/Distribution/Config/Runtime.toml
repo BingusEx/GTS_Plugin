@@ -302,35 +302,27 @@ GTSExplosionDraugr = "GTS.esp|035C80"
 
 # Globals -----------------------------------------------------------------------------
 [GLOB]
-
-# Skill Menu
 GTSSkillMenu = "GTS.esp|1421FF"
 GTSSkillLevel = "GTS.esp|142200"
 GTSSkillRatio = "GTS.esp|142202"
 GTSSkillProgress = "GTS.esp|142201"
 GTSSkillPerkPoints = "GTS.esp|2352E1" 
-
-# Utility
 GTSUtilEnableDialogue = "GTS.esp|277000"
 
-# Survival Values
+# Survival Mode
 Survival_HungerNeedMaxValue = "ccQDRSSE001-SurvivalMode.esl|00080C"
 Survival_HungerNeedValue = "ccQDRSSE001-SurvivalMode.esl|00081A"
-
-# Survival stages
 Survival_HungerStage1Value = "ccQDRSSE001-SurvivalMode.esl|000806"
 Survival_HungerStage2Value = "ccQDRSSE001-SurvivalMode.esl|000802"
 Survival_HungerStage3Value = "ccQDRSSE001-SurvivalMode.esl|000803"
 Survival_HungerStage4Value = "ccQDRSSE001-SurvivalMode.esl|000804"
 Survival_HungerStage5Value = "ccQDRSSE001-SurvivalMode.esl|000805"
-
-# Toggle
 Survival_ModeEnabled = "ccQDRSSE001-SurvivalMode.esl|000826"
 
 # Quests -------------------------------------------------------------------------------
 [QUST] 
-MainQuest = "GTS.esp|005E3A"
-ProxyQuest = "GTS.esp|8C104D"
+GTSQuestProgression = "GTS.esp|005E3A"
+GTSQuestProxy = "GTS.esp|8C104D"
 
 # Factions -----------------------------------------------------------------------------
 [FACT]
@@ -341,14 +333,14 @@ SexLabAnimatingFaction = "SexLab.esm|00E50F"
 
 # Impacts ------------------------------------------------------------------------------
 [IDPS] 
-GtsBloodSprayImpactSet = "GTS.esp|01CEA7"
-GtsBloodSprayImpactSetVore = "GTS.esp|024578"
-GtsBloodSprayImpactSetVoreMedium = "GTS.esp|024579"
-GtsBloodSprayImpactSetVoreSmallest = "GTS.esp|02457A"
+GTSBloodSprayImpactSet = "GTS.esp|01CEA7"
+GTSBloodSprayImpactSetVore = "GTS.esp|024578"
+GTSBloodSprayImpactSetVoreMedium = "GTS.esp|024579"
+GTSBloodSprayImpactSetVoreSmallest = "GTS.esp|02457A"
 
 # Races --------------------------------------------------------------------------------
 [RACE] 
-dragonRace = "Skyrim.esm|012E82"
+DragonRace = "Skyrim.esm|012E82"
 FrostbiteSpiderRace = "Skyrim.esm|0131F8"
 FrostbiteSpiderRaceGiant = "Skyrim.esm|04E507"
 FrostbiteSpiderRaceLarge = "Skyrim.esm|053477"
@@ -365,8 +357,9 @@ GiantRace = "Skyrim.esm|0131F9"
 
 # Keywords -----------------------------------------------------------------------------
 [KYWD]
-BlackListKeyword = "GTS.esp|6A85AF"
-CountAsFollower = "GTS.esp|88E644"
+GTSKeywordBlackListActor = "GTS.esp|6A85AF"
+GTSKeywordCountAsFollower = "GTS.esp|88E644"
+
 UndeadKeyword = "Skyrim.esm|013796"
 DwemerKeyword = "Skyrim.esm|01397A"
 DragonKeyword = "Skyrim.esm|035D59"
@@ -379,12 +372,12 @@ ActorTypeNPC = "Skyrim.esm|013794"
 
 # Container ----------------------------------------------------------------------------
 [CONT] 
-Dropbox = "GTS.esp|6AD6B0"
-Dropbox_Undead = "GTS.esp|6BC9BC"
-Dropbox_Mechanical = "GTS.esp|6C1ABE"
-Dropbox_Soul = "GTS.esp|6C1ABD"
-Dropbox_Bug = "GTS.esp|6C1ABF"
+GTSDropboxGore = "GTS.esp|6AD6B0"
+GTSDropboxUndead = "GTS.esp|6BC9BC"
+GTSDropboxMechanical = "GTS.esp|6C1ABE"
+GTSDropboxSoul = "GTS.esp|6C1ABD"
+GTSDropboxInsect = "GTS.esp|6C1ABF"
 
 # Leveled List Item --------------------------------------------------------------------
 [LVLI] 
-LootList_Master = "GTS.esp|7C3DFB"
+GTSLootListMaster = "GTS.esp|7C3DFB"

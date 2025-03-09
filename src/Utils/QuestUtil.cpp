@@ -112,14 +112,14 @@ namespace GTS {
 
 	void SkipProgressionQuest() {
 
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 		if (progressionQuest) {
 			CallFunctionOn(progressionQuest, "GTSProgressionQuest", "Proxy_SkipQuest");
 		}
 	}
 
 	bool ProgressionQuestCompleted() {
-		auto Quest = Runtime::GetQuest("MainQuest");
+		auto Quest = Runtime::GetQuest("GTSQuestProgression");
 
 		if (Quest) {
 			return Quest->GetCurrentStageID() >= 200;
@@ -150,7 +150,7 @@ namespace GTS {
 	}
 
 	void GiveAllShoutsToPlayer() {
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		auto progressionQuest = Runtime::GetQuest("GTSQuestProgression");
 		if (progressionQuest) {
 			CallFunctionOn(progressionQuest, "GTSProgressionQuest", "Proxy_GetAllShouts");
 			Notify("All shouts have been given.");

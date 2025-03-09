@@ -423,7 +423,7 @@ namespace GTS {
 		float BaseShrinkRate = 0.0f;
 		float BonusShrink = 7.4f;
 		float BonusGrowth = 1.0f;
-		uint16_t QuestStage = Runtime::GetStage("MainQuest");
+		uint16_t QuestStage = Runtime::GetStage("GTSQuestProgression");
 
 		const bool BalanceModeEnabled = Config::GetBalance().bBalanceMode;
 

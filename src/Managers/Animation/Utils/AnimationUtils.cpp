@@ -305,7 +305,7 @@ namespace GTS {
 					SpawnParticle(tiny, 1.20f, "GTS/Damage/ShrinkOrCrush.nif", NiMatrix3(), root->world.translate, get_visual_scale(tiny) * 10, 7, root);
 				}
 				Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4, "GTSExplosionBlood");
-				Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSetVoreMedium", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
+				Runtime::PlayImpactEffect(tiny, "GTSBloodSprayImpactSetVoreMedium", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
 			} else {
 				Runtime::PlaySound("SKSoundBloodGush", tiny, 1.0f, 0.5f);
 			}

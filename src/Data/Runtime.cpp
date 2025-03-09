@@ -68,7 +68,8 @@ namespace GTS {
 		BSISoundDescriptor* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().sounds.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("sond", tag)) {
 				log::warn("Sound: {} not found", tag);
@@ -134,7 +135,8 @@ namespace GTS {
 					soundHandle.Play();
 				}
 			}
-		} else {
+		}
+		else {
 			log::error("Could not build sound");
 		}
 	}
@@ -175,7 +177,8 @@ namespace GTS {
 			soundHandle.SetVolume(volume * falloff);
 			soundHandle.SetObjectToFollow(&node);
 			soundHandle.Play();
-		} else {
+		}
+		else {
 			log::error("Could not build sound");
 		}
 	}
@@ -197,7 +200,8 @@ namespace GTS {
 			soundHandle.SetVolume(volume);
 			soundHandle.SetObjectToFollow(&node);
 			soundHandle.Play();
-		} else {
+		}
+		else {
 			log::error("Could not build sound");
 		}
 	}
@@ -207,7 +211,8 @@ namespace GTS {
 		EffectSetting* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().spellEffects.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			if (!Runtime::Logged("mgef", tag)) {
 				log::warn("MagicEffect: {} not found", tag);
 			}
@@ -227,9 +232,10 @@ namespace GTS {
 		auto data = Runtime::GetMagicEffect(tag);
 		if (data) {
 			return actor->AsMagicTarget()->HasMagicEffect(data);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	// Spells
@@ -237,7 +243,8 @@ namespace GTS {
 		SpellItem* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().spells.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			if (!Runtime::Logged("spel", tag)) {
 				log::warn("Spell: {} not found", tag);
 			}
@@ -271,9 +278,10 @@ namespace GTS {
 		auto data = Runtime::GetSpell(tag);
 		if (data) {
 			return actor->HasSpell(data);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	void Runtime::CastSpell(Actor* caster, Actor* target, const std::string_view& tag) {
@@ -288,7 +296,8 @@ namespace GTS {
 		BGSPerk* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().perks.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("perk", tag)) {
 				log::warn("Perk: {} not found", tag);
@@ -322,9 +331,10 @@ namespace GTS {
 		auto data = Runtime::GetPerk(tag);
 		if (data) {
 			return actor->HasPerk(data);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	// Explosion
@@ -332,7 +342,8 @@ namespace GTS {
 		BGSExplosion* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().explosions.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("expl", tag)) {
 				log::warn("Explosion: {} not found", tag);
@@ -388,7 +399,8 @@ namespace GTS {
 		TESGlobal* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().globals.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("glob", tag)) {
 				log::warn("Global: {} not found", tag);
@@ -405,9 +417,10 @@ namespace GTS {
 		auto data = GetGlobal(tag);
 		if (data) {
 			return fabs(data->value - 0.0f) > 1e-4;
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	void Runtime::SetBool(const std::string_view& tag, const bool& value) {
@@ -415,7 +428,8 @@ namespace GTS {
 		if (data) {
 			if (value) {
 				data->value = 1.0f;
-			} else {
+			}
+			else {
 				data->value = 0.0f;
 			}
 		}
@@ -429,9 +443,10 @@ namespace GTS {
 		auto data = GetGlobal(tag);
 		if (data) {
 			return static_cast<int>(data->value);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	void Runtime::SetInt(const std::string_view& tag, const int& value) {
@@ -449,9 +464,10 @@ namespace GTS {
 		auto data = GetGlobal(tag);
 		if (data) {
 			return data->value;
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	void Runtime::SetFloat(const std::string_view& tag, const float& value) {
@@ -466,7 +482,8 @@ namespace GTS {
 		TESQuest* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().quests.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("qust", tag)) {
 				log::warn("Quest: {} not found", tag);
@@ -483,9 +500,10 @@ namespace GTS {
 		auto data = GetQuest(tag);
 		if (data) {
 			return data->GetCurrentStageID();
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	// Factions
@@ -493,7 +511,8 @@ namespace GTS {
 		TESFaction* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().factions.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 		}
 		return data;
@@ -508,9 +527,10 @@ namespace GTS {
 		auto data = GetFaction(tag);
 		if (data) {
 			return actor->IsInFaction(data);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	// Impacts
@@ -518,7 +538,8 @@ namespace GTS {
 		BGSImpactDataSet* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().impacts.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("impc", tag)) {
 				log::warn("ImpactEffect: {} not found", tag);
@@ -539,7 +560,8 @@ namespace GTS {
 		TESRace* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().races.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("impc", tag)) {
 				log::warn("Race: {} not found", tag);
@@ -551,9 +573,10 @@ namespace GTS {
 		auto data = GetRace(tag);
 		if (data) {
 			return actor->GetRace() == data;
-		} else {
-			return false;
 		}
+
+		return false;
+		
 	}
 
 	// Keywords
@@ -561,7 +584,8 @@ namespace GTS {
 		BGSKeyword* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().keywords.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("kywd", tag)) {
 				log::warn("Keyword: {} not found", tag);
@@ -573,9 +597,10 @@ namespace GTS {
 		auto data = GetKeyword(tag);
 		if (data) {
 			return actor->HasKeyword(data);
-		} else {
-			return false;
 		}
+
+		return false;
+		
 	}
 
 	// Items
@@ -583,7 +608,8 @@ namespace GTS {
 		TESLevItem* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().levelitems.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("cont", tag)) {
 				log::warn("Item: {} not found", tag);
@@ -597,7 +623,8 @@ namespace GTS {
 		TESObjectCONT* data = nullptr;
 		try {
 			data = Runtime::GetSingleton().containers.at(std::string(tag)).data;
-		}  catch (const std::out_of_range& oor) {
+		}
+		catch (const std::out_of_range& oor) {
 			data = nullptr;
 			if (!Runtime::Logged("cont", tag)) {
 				log::warn("Container: {} not found", tag);
@@ -627,10 +654,12 @@ namespace GTS {
 			if (!instance_ptr) {
 				return nullptr;
 			}
+
 			TESObjectREFR* instance = instance_ptr.get();
 			if (!instance) {
 				return nullptr;
 			}
+
 			instance->SetPosition(pos);
 			instance->data.angle.x = 0;
 			instance->data.angle.y = 0;
@@ -647,10 +676,12 @@ namespace GTS {
 			if (!instance_ptr) {
 				return nullptr;
 			}
+
 			TESObjectREFR* instance = instance_ptr.get();
 			if (!instance) {
 				return nullptr;
 			}
+
 			instance->SetPosition(pos);
 			instance->data.angle.x = 0;
 			instance->data.angle.y = 0;
@@ -666,15 +697,18 @@ namespace GTS {
 	}
 
 	bool Runtime::HasMagicEffectTeamOr(Actor* actor, const std::string_view& tag, const bool& default_value) {
+
 		if (Runtime::HasMagicEffectOr(actor, tag, default_value)) {
 			return true;
 		}
+
 		if (IsTeammate(actor)) {
 			auto player = PlayerCharacter::GetSingleton();
 			return Runtime::HasMagicEffectOr(player, tag, default_value);
-		} else {
-			return false;
 		}
+
+		return false;
+		
 	}
 
 	bool Runtime::HasSpellTeam(Actor* actor, const std::string_view& tag) {
@@ -682,15 +716,18 @@ namespace GTS {
 	}
 
 	bool Runtime::HasSpellTeamOr(Actor* actor, const std::string_view& tag, const bool& default_value) {
+
 		if (Runtime::HasSpellTeam(actor, tag)) {
 			return true;
 		}
+
 		if (IsTeammate(actor)) {
 			auto player = PlayerCharacter::GetSingleton();
 			return Runtime::HasSpellTeamOr(player, tag, default_value);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	bool Runtime::HasPerkTeam(Actor* actor, const std::string_view& tag) {
@@ -698,21 +735,24 @@ namespace GTS {
 	}
 
 	bool Runtime::HasPerkTeamOr(Actor* actor, const std::string_view& tag, const bool& default_value) {
+
 		if (Runtime::HasPerk(actor, tag)) {
 			return true;
 		}
+
 		if (IsTeammate(actor)) {
 			auto player = PlayerCharacter::GetSingleton();
 			return Runtime::HasPerkOr(player, tag, default_value);
-		} else {
-			return default_value;
 		}
+
+		return default_value;
+		
 	}
 
 	bool Runtime::Logged(const std::string_view& catagory, const std::string_view& key) {
 		auto& m = Runtime::GetSingleton().logged;
 		std::string logKey = std::format("{}::{}", catagory, key);
-		bool shouldLog = !(m.find(logKey) == m.end());
+		bool shouldLog = m.find(logKey) != m.end();
 		m.emplace(logKey);
 		return shouldLog;
 	}

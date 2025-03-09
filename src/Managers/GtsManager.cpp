@@ -385,7 +385,7 @@ namespace {
 		const float LevelBonus = 1.0f + GetGtsSkillLevel(a_Actor) * 0.006f;
 		const float Essence = Persistent::GetSingleton().GTSExtraPotionSize.value;
 
-		const auto Quest = Runtime::GetQuest("MainQuest");
+		const auto Quest = Runtime::GetQuest("GTSQuestProgression");
 		if (!Quest) {
 			return 1.0f;
 		}

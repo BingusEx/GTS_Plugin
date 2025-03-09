@@ -455,11 +455,11 @@ namespace GTS {
 	}
 
 	bool IsBlacklisted(Actor* actor) {
-		bool blacklist = Runtime::HasKeyword(actor, "BlackListKeyword");
+		bool blacklist = Runtime::HasKeyword(actor, "GTSKeywordBlackListActor");
 		return blacklist;
 	}
 
 	bool IsGtsTeammate(Actor* actor) {
-		return Runtime::HasKeyword(actor, "CountAsFollower");
+		return Runtime::HasKeyword(actor, "GTSKeywordCountAsFollower");
 	}*/
 }

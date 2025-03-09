@@ -154,7 +154,7 @@ namespace GTS {
     }
 
     std::vector<TESLevItem*> SelectItemsFromPool(ChestType type) {
-        TESLevItem* LootList_Master = Runtime::GetLeveledItem("LootList_Master");
+        TESLevItem* LootList_Master = Runtime::GetLeveledItem("GTSLootListMaster");
         // Loot probability is configured inside LootList in the esp
 
         
