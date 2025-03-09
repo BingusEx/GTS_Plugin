@@ -223,6 +223,7 @@ namespace GTS {
 	        const char* T0 = "Automatically complete this mod's quest.";
 			const char* T1 = "Get all of the mod's spells";
 	        const char* T2 = "Instantly complete the perk tree.";
+			const char* T3 = "Get all of the mod's shouts";
 
 	        if (ImGui::CollapsingHeader("Skip Progression")) {
 
@@ -242,7 +243,13 @@ namespace GTS {
 
 	            if (ImUtil::Button("Get All Perks",T2, !Complete)) {
 					GiveAllPerksToPlayer();
-	            } 
+	            }
+
+				ImGui::SameLine();
+
+				if (ImUtil::Button("Get All Shouts", T3, !Complete)) {
+					GiveAllShoutsToPlayer();
+				}
 	        }
 	    }
 
