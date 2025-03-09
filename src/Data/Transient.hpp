@@ -61,6 +61,7 @@ namespace GTS {
 		bool EmotionModifierBusy = false;
 		bool EmotionPhonemeBusy = false;
 		bool ImmuneToBreastOneShot = true;
+		bool IsSlowGrowing = false;
 
 		NiPoint3 BoundingBoxCache = { 0.0f, 0.0f, 0.0f };
 		NiPoint3 POSLastLegL = { 0.0f, 0.0f, 0.0f };

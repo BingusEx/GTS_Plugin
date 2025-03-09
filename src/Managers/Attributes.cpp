@@ -36,9 +36,9 @@ namespace {
 		float BalanceModeDiv = SizeManager::BalancedMode() ? 2.0f : 1.0f;
 		float gigantism = 1.0f + (Ench_Aspect_GetPower(actor) * 0.30f);
 
-		float BaseGlobalDamage = SizeManager::GetSingleton().GetSizeAttribute(actor, SizeAttribute::Normal);
-		float BaseSprintDamage = SizeManager::GetSingleton().GetSizeAttribute(actor, SizeAttribute::Sprint);
-		float BaseFallDamage = SizeManager::GetSingleton().GetSizeAttribute(actor, SizeAttribute::JumpFall);
+		float BaseGlobalDamage = SizeManager::GetSizeAttribute(actor, SizeAttribute::Normal);
+		float BaseSprintDamage = SizeManager::GetSizeAttribute(actor, SizeAttribute::Sprint);
+		float BaseFallDamage = SizeManager::GetSizeAttribute(actor, SizeAttribute::JumpFall);
 
 		float ExpectedGlobalDamage = 1.0f;
 		float ExpectedSprintDamage = 1.0f;

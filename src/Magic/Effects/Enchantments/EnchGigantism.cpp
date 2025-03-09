@@ -16,6 +16,12 @@ namespace GTS {
 		this->magnitude = GetActiveEffect()->magnitude;
 		float GigantismPower = this->magnitude;
 		SizeManager::GetSingleton().ModEnchantmentBonus(caster, GigantismPower);
+
+		if (!Persistent::GetSingleton().MSGSeenAspectOfGTS.value) {
+			PrintMessageBox(AOGGuide);
+			Persistent::GetSingleton().MSGSeenAspectOfGTS.value = true;
+		}
+
 	}
 
 	void Gigantism::OnFinish() {

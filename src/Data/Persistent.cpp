@@ -59,6 +59,11 @@ namespace GTS {
 			Persistent.VoreCount.Load(serde, RecordType, RecordVersion, RecordSize);
 			Persistent.GiantCount.Load(serde, RecordType, RecordVersion, RecordSize);
 
+			// ---- Ability Info
+			Persistent.MSGSeenTinyCamity.Load(serde, RecordType, RecordVersion, RecordSize);
+			Persistent.MSGSeenGrowthSpurt.Load(serde, RecordType, RecordVersion, RecordSize);
+			Persistent.MSGSeenAspectOfGTS.Load(serde, RecordType, RecordVersion, RecordSize);
+
 		}
 
 	}
@@ -91,6 +96,11 @@ namespace GTS {
 		Persistent.HandCrushed.Save(serde);
 		Persistent.VoreCount.Save(serde);
 		Persistent.GiantCount.Save(serde);
+
+		// ---- Ability Info
+		Persistent.MSGSeenTinyCamity.Save(serde);
+		Persistent.MSGSeenGrowthSpurt.Save(serde);
+		Persistent.MSGSeenAspectOfGTS.Save(serde);
 	}
 	
 	//-----------------

@@ -78,7 +78,8 @@ namespace {
 		"VorePerk",
 		"WrathfulCalamity",
 		"SizeManipulation",
-		"ExpandedGrowth"
+		"ExpandedGrowth",
+		"Breasts_Strangle"
 	};
 
 	const std::vector<std::string> AllSpells {
@@ -91,7 +92,10 @@ namespace GTS {
 
 	void SkipProgressionQuest() {
 
-		//Todo Call Papyrus Proxy Function
+		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		if (progressionQuest) {
+			CallFunctionOn(progressionQuest, "GTSProgressionQuest", "Proxy_SkipQuest");
+		}
 	}
 
 	bool ProgressionQuestCompleted() {
@@ -112,7 +116,7 @@ namespace GTS {
 			Runtime::AddPerk(Player, Perk);
 		}
 
-		Notify("All Perks Have been given.");
+		Notify("All perks have been given.");
 	}
 
 	void GiveAllSpellsToPlayer() {
@@ -122,6 +126,15 @@ namespace GTS {
 			Runtime::AddSpell(Player, Perk);
 		}
 
-		Notify("All Spells Have been given.");
+		Notify("All spells have been given.");
+	}
+
+	void GiveAllShoutsToPlayer() {
+		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		if (progressionQuest) {
+			CallFunctionOn(progressionQuest, "GTSProgressionQuest", "Proxy_GetAllShouts");
+			Notify("All shouts have been given.");
+		}
+
 	}
 }

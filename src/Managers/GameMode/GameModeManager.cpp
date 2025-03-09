@@ -181,7 +181,7 @@ namespace {
 			}
 
 			Rumbling::Once("CurseOfGrowth", a_Actor, GrowthPower * 20, 0.10f);
-			Runtime::PlaySoundAtNode("growthSound", a_Actor, GrowthPower * 2, 1.0f, "NPC Pelvis [Pelv]");
+			Runtime::PlaySoundAtNode("GTSSoundGrowth", a_Actor, GrowthPower * 2, 1.0f, "NPC Pelvis [Pelv]");
 
 			//If the Growth event would make the actor larger than the target scale set it to target scale.
 			if (a_CurrentTargetScale + GrowthPower >= CurseTargetScale) {
@@ -258,7 +258,7 @@ namespace {
 			}
 
 			update_target_scale(a_Actor, GrowthPower, SizeEffectType::kGrow);
-			Runtime::PlaySoundAtNode("growthSound", a_Actor, GrowthPower * 2.0f, 1.0f, "NPC Pelvis [Pelv]");
+			Runtime::PlaySoundAtNode("GTSSoundGrowth", a_Actor, GrowthPower * 2.0f, 1.0f, "NPC Pelvis [Pelv]");
 		}
 	}
 
@@ -308,7 +308,7 @@ namespace {
 
 				float ModAmmount = (0.025f * (RandomFloat(1, 4.5) * a_CurrentTargetScale));
 
-				Runtime::PlaySoundAtNode("shrinkSound", a_Actor, ModAmmount * 2.0f, 1.0, "NPC Pelvis [Pelv]");
+				Runtime::PlaySoundAtNode("GTSSoundShrink", a_Actor, ModAmmount * 2.0f, 1.0, "NPC Pelvis [Pelv]");
 
 				if (a_CurrentTargetScale + ModAmmount < CurseTargetScale) {
 					set_target_scale(a_Actor, CurseTargetScale);

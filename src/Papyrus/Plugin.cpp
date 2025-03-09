@@ -9,7 +9,7 @@ using namespace RE::BSScript;
 
 namespace {
 
-	constexpr std::string_view PapyrusClass = "GtsPlugin";
+	constexpr std::string_view PapyrusClass = "GTSPlugin";
 
 	void ResetQuestProgression(StaticFunctionTag*) {
 		ResetQuest();

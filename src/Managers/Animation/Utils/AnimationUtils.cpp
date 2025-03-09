@@ -290,7 +290,7 @@ namespace GTS {
 			return;
 		}
 
-		std::string sound = "ShrinkToNothingSound";
+		std::string sound = "GTSSoundShrinkToNothing";
 		Runtime::PlaySoundAtNode(sound, giant, 1.0f, 1.0f, "NPC Spine2 [Spn2]");
 
 		if (!IsLiving(tiny)) {
@@ -307,7 +307,7 @@ namespace GTS {
 				Runtime::CreateExplosion(tiny, get_visual_scale(tiny)/4, "BloodExplosion");
 				Runtime::PlayImpactEffect(tiny, "GtsBloodSprayImpactSetVoreMedium", "NPC Root [Root]", NiPoint3{0, 0, -1}, 512, false, true);
 			} else {
-				Runtime::PlaySound("BloodGushSound", tiny, 1.0f, 0.5f);
+				Runtime::PlaySound("SKSoundBloodGush", tiny, 1.0f, 0.5f);
 			}
 		}
 
@@ -572,7 +572,7 @@ namespace GTS {
 					SpawnParticle(giant, 25.0f, "GTS/Damage/Explode.nif", hand->world.rotate, hand->world.translate, get_visual_scale(grabbedActor) * 3* mult, 4, hand);
 					SpawnParticle(giant, 25.0f, "GTS/Damage/Crush.nif", hand->world.rotate, hand->world.translate, get_visual_scale(grabbedActor) * 3 *  mult, 4, hand);
 				} else if (LessGore()) {
-					Runtime::PlaySound("BloodGushSound", grabbedActor, 1.0f, 0.5f);
+					Runtime::PlaySound("SKSoundBloodGush", grabbedActor, 1.0f, 0.5f);
 				}
 			} else {
 				SpawnDustParticle(giant, grabbedActor, "NPC L Hand [LHnd]", dustmult);
@@ -1038,7 +1038,7 @@ namespace GTS {
 
 								auto node = find_node(giant, GetDeathNodeName(Cause));
 								if (node) {
-									Runtime::PlaySoundAtNode("SwingImpact", giant, Volume, 1.0f, node); // play swing impact sound
+									Runtime::PlaySoundAtNode("GTSSoundSwingImpact", giant, Volume, 1.0f, node); // play swing impact sound
 									ApplyShakeAtPoint(giant, 1.8f * pushpower * audio, node->world.translate, 0.0f);
 								}
 

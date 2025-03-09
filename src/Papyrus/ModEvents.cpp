@@ -5,7 +5,7 @@ using namespace GTS;
 using namespace RE::BSScript;
 
 namespace {
-	constexpr std::string_view PapyrusClass = "GtsEvent";
+	constexpr std::string_view PapyrusClass = "GTSEvent";
 
 	void RegisterOnFootstep(StaticFunctionTag*, TESForm* form) {
 		if (!form) {

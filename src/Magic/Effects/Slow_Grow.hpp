@@ -17,10 +17,12 @@ namespace GTS {
 
 			virtual void OnFinish() override;
 
+			void Task_SlowGrowTask(Actor* caster);
 			virtual std::string GetName() override;
 		private:
 			bool IsDual = false;
 			Timer timer = Timer(2.33); // Run every 2.33s or as soon as we can
 			Timer MoanTimer = Timer(6.00);
+
 	};
 }

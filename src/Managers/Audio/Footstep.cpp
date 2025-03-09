@@ -360,9 +360,9 @@ namespace GTS {
 		if (scale > 1.25f) {
 			float volume = 0.14f * bonus * (scale - 1.10f) * animspeed;
 			if (volume > 0.05f) {
-				Runtime::PlaySoundAtNode("HeavyStompSound", giant, volume, 1.0f, feet);
-				Runtime::PlaySoundAtNode("xlFootstep", giant, volume, 1.0f, feet);
-				Runtime::PlaySoundAtNode("xlRumble", giant, volume, 1.0f, feet);
+				Runtime::PlaySoundAtNode("GTSSoundHeavyStomp", giant, volume, 1.0f, feet);
+				Runtime::PlaySoundAtNode("GTSSoundFootstep_XL", giant, volume, 1.0f, feet);
+				Runtime::PlaySoundAtNode("GTSSoundRumble", giant, volume, 1.0f, feet);
 			}
 		}
 	}

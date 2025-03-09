@@ -30,7 +30,7 @@ namespace {
 			if (!BlockSound) {
 				float Volume = std::clamp(get_visual_scale(targetref) * 0.1f, 0.15f, 1.0f);
 				ApplyActionCooldown(targetref, CooldownSource::Misc_RevertSound);
-				//Runtime::PlaySound("shrinkSound", targetref, Volume, 1.0f);
+				//Runtime::PlaySound("GTSSoundShrink", targetref, Volume, 1.0f);
 			}
 
 			Rumbling::Once("RestoreSizeOther", targetref, 0.6f, 0.05f);
@@ -58,7 +58,7 @@ namespace GTS {
 			return;
 		}
 		//float Volume = std::clamp(get_visual_scale(target) * 0.1f, 0.15f, 1.0f);
-		//Runtime::PlaySound("shrinkSound", target, Volume, 1.0f);
+		//Runtime::PlaySound("GTSSoundShrink", target, Volume, 1.0f);
 
 		Task_RestoreSizeTask(caster, target, DualCasted());
 	}

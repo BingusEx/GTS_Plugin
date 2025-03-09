@@ -172,7 +172,7 @@ namespace GTS {
 
 		PlayMoanSound(a_actor, 0.7f);
 		Task_FacialEmotionTask_Moan(a_actor, 1.0f, "RipCloth");
-		Runtime::PlaySound("ClothTearSound", a_actor, 0.7f, 1.0f);
+		Runtime::PlaySound("GTSSoundRipClothes", a_actor, 0.7f, 1.0f);
 		Rumbling::Once("ClothManager", a_actor, Rumble_Misc_TearClothes, 0.075f);
 	}
 
@@ -211,7 +211,7 @@ namespace GTS {
 		if (Ripped) {
 			PlayMoanSound(a_actor, 1.0f);
 			Task_FacialEmotionTask_Moan(a_actor, 1.0f, "RipCloth");
-			Runtime::PlaySound("ClothTearSound", a_actor, 1.0f, 1.0f);
+			Runtime::PlaySound("GTSSoundRipClothes", a_actor, 1.0f, 1.0f);
 			Rumbling::Once("ClothManager", a_actor, Rumble_Misc_TearAllClothes, 0.095f);
 		}
 	}

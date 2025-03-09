@@ -16,7 +16,7 @@ namespace {
 
 			Rumbling::Once("GrowthPotion", giant, 2.0f, 0.05f);
 
-			Runtime::PlaySoundAtNode_FallOff("growthSound", giant, Volume, 1.0f, "NPC Pelvis [Pelv]", falloff);
+			Runtime::PlaySoundAtNode_FallOff("GTSSoundGrowth", giant, Volume, 1.0f, "NPC Pelvis [Pelv]", falloff);
 		}
 	}
 

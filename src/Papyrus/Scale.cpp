@@ -4,7 +4,7 @@ using namespace GTS;
 using namespace RE::BSScript;
 
 namespace {
-	constexpr std::string_view PapyrusClass = "GtsScale";
+	constexpr std::string_view PapyrusClass = "GTSScale";
 
 	bool SetScale(StaticFunctionTag*, Actor* actor, float scale) {
 		bool result = false;

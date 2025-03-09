@@ -107,7 +107,7 @@ namespace {
 			StaggerActor_Around(giantref, 48.0f, false);
 
 			auto node = find_node(giantref, "NPC Root [Root]");
-			Runtime::PlaySoundAtNode("Magic_BreakTinyProtection", giantref, 1.0f, 1.0f, "NPC COM [COM ]");
+			Runtime::PlaySoundAtNode("GTSSoundMagicBreak", giantref, 1.0f, 1.0f, "NPC COM [COM ]");
 			
 			if (node) {
 				NiPoint3 position = node->world.translate;
@@ -331,7 +331,7 @@ namespace GTS {
 	void PlayMoanSound(Actor* actor, float volume) {
 		if (IsFemale(actor) && IsHuman(actor)) {
 			float falloff = 0.125f * get_visual_scale(actor);
-			Runtime::PlaySoundAtNode_FallOff("MoanSound", actor, volume, 1.0f, "NPC Head [Head]", falloff);
+			Runtime::PlaySoundAtNode_FallOff("GTSSoundMoan", actor, volume, 1.0f, "NPC Head [Head]", falloff);
 		}
 	}
 
@@ -339,9 +339,9 @@ namespace GTS {
 		float falloff = 0.125f * get_visual_scale(actor);
 		if (IsFemale(actor) && IsHuman(actor)) {
 			if (type == 2) {
-				Runtime::PlaySoundAtNode_FallOff("LaughSound_Type2", actor, volume, 1.0f, "NPC Head [Head]", falloff);
+				Runtime::PlaySoundAtNode_FallOff("GTSSoundLaugh2", actor, volume, 1.0f, "NPC Head [Head]", falloff);
 			} else {
-				Runtime::PlaySoundAtNode_FallOff("LaughSound_Type1", actor, volume, 1.0f, "NPC Head [Head]", falloff);
+				Runtime::PlaySoundAtNode_FallOff("GTSSoundLaugh1", actor, volume, 1.0f, "NPC Head [Head]", falloff);
 			}
 		}
 	}
@@ -1361,26 +1361,26 @@ namespace GTS {
 		return results;
 	}
 
-	void PushActorAway(Actor* source, Actor* receiver, float afKnockBackForce) {
+	void PushActorAway(Actor* source_act, Actor* receiver, float force) {
 		// Force < 1.0 can introduce weird sliding issues to Actors, not recommended to pass force < 1.0
 		if (receiver->IsDead() || IsBeingKilledWithMagic(receiver)) {
 			return;
 		}
 
-		if (afKnockBackForce <= 1.0f) {
-			afKnockBackForce = 1.0f;
+		if (force <= 1.0f) {
+			force = 1.0f;
 		} 
 
-		if (source) {
-			auto ai = source->GetActorRuntimeData().currentProcess;
+		if (source_act) {
+			auto ai = source_act->GetActorRuntimeData().currentProcess;
 			if (ai) {
 				if (receiver->Is3DLoaded()) {
-					if (source->Is3DLoaded()) {
-						NiPoint3 direction = receiver->GetPosition() - source->GetPosition();
+					if (source_act->Is3DLoaded()) {
+						NiPoint3 direction = receiver->GetPosition() - source_act->GetPosition();
 						direction = direction / direction.Length();
 						typedef void (*DefPushActorAway)(AIProcess *ai, Actor* actor, NiPoint3& direction, float force);
 						REL::Relocation<DefPushActorAway> RealPushActorAway{ RELOCATION_ID(38858, 39895) };
-						RealPushActorAway(ai, receiver, direction, afKnockBackForce);
+						RealPushActorAway(ai, receiver, direction, force);
 					}
 				}
 			}
@@ -1921,17 +1921,17 @@ namespace GTS {
 		}
 	}
 
-	void CallDevourment(Actor* giant, Actor* tiny) {
-		auto ProgressionQuest = Runtime::GetQuest("MainQuest");
+	void CallDevourment(Actor* a_Pred, Actor* a_Prey) {
+		auto ProxyQuest = Runtime::GetQuest("ProxyQuest");
 		const auto& AllowEndo = Config::GetGameplay().ActionSettings.bDVDoEndoOnTeam;
 		bool DoEndo = false;
 
-		if (AllowEndo && (IsTeammate(giant) || giant->formID == 0x14 && IsTeammate(tiny) || tiny->formID == 0x14)) {
+		if (AllowEndo && ((IsTeammate(a_Pred) || a_Pred->formID == 0x14) && (IsTeammate(a_Prey) || a_Prey->formID == 0x14))) {
 			DoEndo = true;
 		}
 
-		if (ProgressionQuest) {
-			CallFunctionOn(ProgressionQuest, "gtsProgressionQuest", "Devourment", giant, tiny, DoEndo);
+		if (ProxyQuest) {
+			CallFunctionOn(ProxyQuest, "GTSProxy", "Proxy_DevourmentForceSwallow", a_Pred, a_Prey, DoEndo);
 		}
 	}
 
@@ -1964,23 +1964,25 @@ namespace GTS {
 	}
 
 	void CallVampire() {
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
 		if (progressionQuest) {
-			CallFunctionOn(progressionQuest, "gtsProgressionQuest", "SatisfyVampire");
-		}
-	}
-
-	void CallHelpMessage() {
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
-		if (progressionQuest) {
-			CallFunctionOn(progressionQuest, "gtsProgressionQuest", "TrueGiantessMessage");
+			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_SatisfyVampire");
 		}
 	}
 
 	void AddCalamityPerk() {
-		auto progressionQuest = Runtime::GetQuest("MainQuest");
+		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
 		if (progressionQuest) {
-			CallFunctionOn(progressionQuest, "gtsProgressionQuest", "AddCalamityPerk");
+			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_AddCalamityShout");
+		}
+	}
+
+
+	//Unused
+	void RemoveCalamityPerk() {
+		auto progressionQuest = Runtime::GetQuest("ProxyQuest");
+		if (progressionQuest) {
+			CallFunctionOn(progressionQuest, "GTSProxy", "Proxy_RemoveCalamityShout");
 		}
 	}
 
@@ -2579,7 +2581,7 @@ namespace GTS {
 		const float BASE_DISTANCE = 84.0f;
 		float CheckDistance = BASE_DISTANCE*giantScale*gigantism*radius;
 
-		Runtime::PlaySoundAtNode("ShrinkOutburstSound", giant, explosion, 1.0f, "NPC Pelvis [Pelv]");
+		Runtime::PlaySoundAtNode("GTSSoundShrinkOutburst", giant, explosion, 1.0f, "NPC Pelvis [Pelv]");
 		Rumbling::For("ShrinkOutburst", giant, Rumble_Misc_ShrinkOutburst, 0.15f, "NPC COM [COM ]", 0.60f, 0.0f);
 
 		SpawnParticle(giant, 6.00f, "GTS/Shouts/ShrinkOutburst.nif", NiMatrix3(), NodePosition, giantScale*explosion*3.0f, 7, nullptr); // Spawn effect
@@ -2625,7 +2627,7 @@ namespace GTS {
 				float scale = get_visual_scale(actor);
 
 				SpawnCustomParticle(actor, ParticleType::Red, NiPoint3(), "NPC Root [Root]", scale * 1.15f);
-				Runtime::PlaySoundAtNode("Magic_ProtectTinies", actor, 1.0f, 1.0f, "NPC COM [COM ]");
+				Runtime::PlaySoundAtNode("GTSSoundMagicProctectTinies", actor, 1.0f, 1.0f, "NPC COM [COM ]");
 
 				std::string name_com = std::format("Protect_{}", actor->formID);
 				std::string name_root = std::format("Protect_Root_{}", actor->formID);
@@ -2686,7 +2688,7 @@ namespace GTS {
 			static Timer Cooldown = Timer(1.2);
 			if (Cooldown.ShouldRun()) {
 				float falloff = 0.13f * get_visual_scale(actor);
-				Runtime::PlaySoundAtNode_FallOff("VoreSound_Fail", actor, 0.4f, 1.0f, "NPC COM [COM ]", falloff);
+				Runtime::PlaySoundAtNode_FallOff("GTSSoundFail", actor, 0.4f, 1.0f, "NPC COM [COM ]", falloff);
 				Notify(message);
 			}
 		}

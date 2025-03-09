@@ -385,7 +385,7 @@ namespace {
 		const float LevelBonus = 1.0f + GetGtsSkillLevel(a_Actor) * 0.006f;
 		const float Essence = Persistent::GetSingleton().GTSExtraPotionSize.value;
 
-		const auto Quest = Runtime::GetQuest("MainQuest"); // <------ ProgressionQuest
+		const auto Quest = Runtime::GetQuest("MainQuest");
 		if (!Quest) {
 			return 1.0f;
 		}
@@ -415,12 +415,54 @@ namespace {
 
 	}
 
+	//Ported From Papyrus
 	void UpdateGlobalSizeLimit() {
 		if (const auto Player = PlayerCharacter::GetSingleton()) {
 			Persistent::GetSingleton().GTSGlobalSizeLimit.value = GetExpectedMaxSize(Player);
 		}
 	}
 
+	//Ported From Papyrus
+	void ApplyTalkToActor() {
+
+		static Timer ApplyTalkTimer = Timer(1.0f);
+
+		if (ApplyTalkTimer.ShouldRun()) {
+
+			if (const auto& UtilEnableDialogue = Runtime::GetGlobal("GTSUtilEnableDialogue")) {
+
+				const auto& PlayerCharacter = PlayerCharacter::GetSingleton();
+
+				if (get_visual_scale(PlayerCharacter) < 1.2f) {
+					UtilEnableDialogue->value = 0.0f;
+					return;
+				}
+
+				if (PlayerCharacter->IsSneaking() && UtilEnableDialogue->value < 1.0f) {
+					Runtime::GetFloat("GTSUtilEnableDialogue");
+					UtilEnableDialogue->value = 1.0f;
+				}
+				else if (!PlayerCharacter->IsSneaking() && UtilEnableDialogue->value >= 1.0f) {
+					UtilEnableDialogue->value = 0.0f;
+				}
+			}
+		}
+	}
+
+	//Ported From Papyrus
+	void CheckTalkPerk() {
+
+		static Timer PerkCheckTimer = Timer(30.0f);
+		if (PerkCheckTimer.ShouldRun()) {
+
+			const auto& PlayerCharacter = PlayerCharacter::GetSingleton();
+
+			if (!Runtime::HasPerk(PlayerCharacter, "TalkToActor")) {
+				Runtime::AddPerk(PlayerCharacter, "TalkToActor");
+			}
+		}
+
+	}
 }
 
 GtsManager& GtsManager::GetSingleton() noexcept {
@@ -455,12 +497,15 @@ void GtsManager::Update() {
 	ShiftAudioFrequency();
 	FixActorFade();
 	UpdateCameraINIs();
+	CheckTalkPerk();
+	ApplyTalkToActor();
+
 
 	const auto& ActorList = find_actors();
 
 	if (Profiler::ProfilerEnabled) {
 		//Used for profiling
-		GtsManager::LoadedActorCount = ActorList.size();
+		GtsManager::LoadedActorCount = static_cast<uint32_t>(ActorList.size());
 	}
 
 	for (auto actor : ActorList) {

@@ -121,7 +121,7 @@ namespace {
 		Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
 		static Timer timergrowth = Timer(2.00);
 		if (timergrowth.ShouldRun()) {
-			Runtime::PlaySoundAtNode("growthSound", player, Volume, 1.0f, "NPC Pelvis [Pelv]");
+			Runtime::PlaySoundAtNode("GTSSoundGrowth", player, Volume, 1.0f, "NPC Pelvis [Pelv]");
 		}
 	}
 
@@ -143,7 +143,7 @@ namespace {
 		Rumbling::Once("ColossalGrowth", player, 0.15f, 0.05f);
 		static Timer timergrowth = Timer(2.00);
 		if (timergrowth.ShouldRun()) {
-			Runtime::PlaySound("shrinkSound", player, Volume, 1.0f);
+			Runtime::PlaySound("GTSSoundShrink", player, Volume, 1.0f);
 		}
 	}
 
@@ -165,7 +165,7 @@ namespace {
 				Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
 				static Timer timergrowth = Timer(2.00);
 				if (timergrowth.ShouldRun()) {
-					Runtime::PlaySoundAtNode("growthSound", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
+					Runtime::PlaySoundAtNode("GTSSoundGrowth", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
 				}
 			}
 		}
@@ -189,7 +189,7 @@ namespace {
 				Rumbling::Once("TotalControlOther", actor, 0.15f, 0.05f);
 				static Timer timergrowth = Timer(2.00);
 				if (timergrowth.ShouldRun()) {
-					Runtime::PlaySound("shrinkSound", actor, Volume, 1.0f);
+					Runtime::PlaySound("GTSSoundShrink", actor, Volume, 1.0f);
 				}
 			} 
 		}
@@ -239,7 +239,7 @@ namespace {
 								float Volume = std::clamp(get_visual_scale(player) * Cache->SizeReserve/10.0f, 0.10f, 2.0f);
 								static Timer timergrowth = Timer(3.00);
 								if (timergrowth.ShouldRunFrame()) {
-									Runtime::PlaySoundAtNode("growthSound", player, Cache->SizeReserve/50 * duration, 1.0f, "NPC Pelvis [Pelv]");
+									Runtime::PlaySoundAtNode("GTSSoundGrowth", player, Cache->SizeReserve/50 * duration, 1.0f, "NPC Pelvis [Pelv]");
 									Task_FacialEmotionTask_Moan(player, 2.0f, "SizeReserve");
 									PlayMoanSound(player, Volume);
 								}

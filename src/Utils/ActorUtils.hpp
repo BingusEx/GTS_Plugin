@@ -221,11 +221,11 @@ namespace GTS {
     bool IsGtsTeammate(Actor* actor);
 
 	void ResetCameraTracking();
-	void CallDevourment(Actor* giant, Actor* tiny);
+	void CallDevourment(Actor* a_Pred, Actor* a_Prey);
 	void GainWeight(Actor* giant, float value);
 	void CallVampire();
-	void CallHelpMessage();
 	void AddCalamityPerk();
+	void RemoveCalamityPerk();
 	void AddPerkPoints(float a_Level);
 
 	void AddStolenAttributes(Actor* giant, float value);

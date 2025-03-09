@@ -9,4 +9,6 @@ namespace GTS {
 	bool ProgressionQuestCompleted();
 
 	void GiveAllSpellsToPlayer();
+
+	void GiveAllShoutsToPlayer();
 }

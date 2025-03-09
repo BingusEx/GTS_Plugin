@@ -135,6 +135,12 @@ namespace GTS {
 			BasicRecord<float, 'QVRR'> VoreCount = 0.0f;
 			BasicRecord<float, 'QGCR'> GiantCount = 0.0f;
 
+			// ---- Guide Messages Seen
+			BasicRecord<bool, 'MSTC'> MSGSeenTinyCamity = false;
+			BasicRecord<bool, 'MSGS'> MSGSeenGrowthSpurt = false;
+			BasicRecord<bool, 'MSAG'> MSGSeenAspectOfGTS = false;
+
+
 		private:
 
 			Persistent() = default;

@@ -49,9 +49,15 @@ namespace GTS {
 	}
 
 	void TinyCalamity::OnStart() {
+
+		if (!Persistent::GetSingleton().MSGSeenTinyCamity.value) {
+			PrintMessageBox(TinyCalamityMessage);
+			Persistent::GetSingleton().MSGSeenTinyCamity.value = true;
+		}
+
 		auto caster = GetCaster();
 		if (caster) {
-			Runtime::PlaySoundAtNode("TinyCalamitySound", caster, 1.0f, 1.0f, "NPC COM [COM ]");
+			Runtime::PlaySoundAtNode("GTSSoundTinyCalamity", caster, 1.0f, 1.0f, "NPC COM [COM ]");
 			AdjustCalamityDuration(caster, GetActiveEffect());
 			auto node = find_node(caster, "NPC Root [Root]");
 			StartShrinkingGaze(caster);
@@ -65,11 +71,11 @@ namespace GTS {
 				Rumbling::For("TinyCalamity", caster, 4.0f, 0.14f, "NPC COM [COM ]", 0.10f, 0.0f);
 			}
 		}
+
 	}
 
 	void TinyCalamity::OnUpdate() {
-		const float BASE_POWER = 0.00035f;
-		const float DUAL_CAST_BONUS = 2.0f;
+
 		auto caster = GetCaster();
 		if (!caster) {
 			return;
@@ -78,8 +84,6 @@ namespace GTS {
 		float CasterScale = get_target_scale(caster);
 		float bonus = GetSMTBonus(caster);
 		float penalty = GetSMTPenalty(caster);
-
-		float naturalscale = get_natural_scale(caster);
 
 		if (bonus > 0.5f) {
 			GetActiveEffect()->duration += bonus;

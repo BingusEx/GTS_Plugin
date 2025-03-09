@@ -113,7 +113,7 @@ namespace {
 				ApplyActionCooldown(giant, CooldownSource::Misc_GrowthSound);
 
 				float Volume = std::clamp(get_visual_scale(actor)/8.0f, 0.20f, 1.0f);
-				Runtime::PlaySoundAtNode("growthSound", actor, Volume * gain, 1.0f, "NPC Pelvis [Pelv]");
+				Runtime::PlaySoundAtNode("GTSSoundGrowth", actor, Volume * gain, 1.0f, "NPC Pelvis [Pelv]");
 			}
 			
 			if (!IsGrowing(giant) || elapsed > 1.8f && gain < 0.0f) {

@@ -53,7 +53,7 @@ namespace {
 		SpawnParticle(otherActor, 6.00f, "GTS/Effects/TinyCalamity.nif", NiMatrix3(), otherActor->GetPosition(), tiny_size * 4.5f, 7, nullptr); 
 		SpawnCustomParticle(otherActor, ParticleType::Red, otherActor->GetPosition(), "NPC Root [Root]", tiny_size);
 
-		Runtime::PlaySoundAtNode("Magic_ProtectTinies", otherActor, 0.5f, 0.5f, "NPC Root [Root]");
+		Runtime::PlaySoundAtNode("GTSSoundMagicProctectTinies", otherActor, 0.5f, 0.5f, "NPC Root [Root]");
 
 		InflictSizeDamage(giant, otherActor, GetAV(otherActor, ActorValue::kHealth) * 0.015f);
 		AddSMTDuration(giant, stare_threshold * 0.75f, false);
@@ -134,7 +134,7 @@ namespace {
 												} else {
 													if (!IsActionOnCooldown(otherActor, CooldownSource::Misc_ShrinkParticle_Gaze)) {
 														SpawnParticle(otherActor, 6.00f, "GTS/Effects/TinyCalamity.nif", NiMatrix3(), otherActor->GetPosition(), tiny_size * 4.5f, 7, nullptr); 
-														Runtime::PlaySoundAtNode("Magic_ProtectTinies", otherActor, 0.5f, 0.5f, "NPC Root [Root]");
+														Runtime::PlaySoundAtNode("GTSSoundMagicProctectTinies", otherActor, 0.5f, 0.5f, "NPC Root [Root]");
 														ApplyActionCooldown(otherActor, CooldownSource::Misc_ShrinkParticle_Gaze);
 													}
 													AdjustMassLimit(0.0075f, giant);

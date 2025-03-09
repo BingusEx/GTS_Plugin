@@ -4,7 +4,7 @@ using namespace GTS;
 using namespace RE::BSScript;
 
 namespace {
-	constexpr std::string_view PapyrusClass = "GtsHeight";
+	constexpr std::string_view PapyrusClass = "GTSHeight";
 
 	// Target Scales
 	void SetTargetHeight(StaticFunctionTag*, Actor* actor, float height) {

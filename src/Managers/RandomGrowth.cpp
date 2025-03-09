@@ -34,6 +34,10 @@ namespace {
 
 	bool ShouldGrow(Actor* actor) {
 
+		if (SizeManager::BalancedMode()) {
+			return false; // Disable effect in Balance Mode
+		}
+
 		float MultiplySlider = Config::GetGameplay().GamemodePlayer.fRandomGrowthDelay;
 		if (IsTeammate(actor)) {
 			MultiplySlider = Config::GetGameplay().GamemodeFollower.fRandomGrowthDelay;
@@ -51,20 +55,18 @@ namespace {
 			return false; // Disallow random groth during Tiny Calamity
 		}
 
-		if (SizeManager::BalancedMode()) {
-			MultiplySlider = 1.0f; // Disable effect in Balance Mode, so slider is always 1.0
-		}
-
-		float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
-		int Requirement = static_cast<int>((300 * MultiplySlider * SizeManager::GetSingleton().BalancedMode()) / Gigantism); // Doubles random in Balance Mode
+		const float Gigantism = 1.0f + Ench_Aspect_GetPower(actor);
+		float Requirement = (300.0f * MultiplySlider) / Gigantism; // Doubles random in Balance Mode
 		Requirement *= Get_size_penalty(actor);
-		int random = RandomInt(1, Requirement);
-		int chance = 1;
+
+		int random = RandomInt(1, static_cast<int>(round(Requirement)));
+		constexpr int chance = 1;
 		if (random <= chance) {
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
+		
 	}
 }
 
@@ -107,8 +109,8 @@ namespace GTS {
 											PlayMoanSound(actor, 1.0f);
 											Task_FacialEmotionTask_Moan(actor, 0.8f, "RandomGrow");
 										}
-										Runtime::PlaySoundAtNode("xlRumble", actor, base_power, 1.0f, "NPC COM [COM ]");
-										Runtime::PlaySoundAtNode("growthSound", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
+										Runtime::PlaySoundAtNode("GTSSoundRumble", actor, base_power, 1.0f, "NPC COM [COM ]");
+										Runtime::PlaySoundAtNode("GTSSoundGrowth", actor, Volume, 1.0f, "NPC Pelvis [Pelv]");
 
 										TaskManager::RunFor(name, 0.40f * TotalPower, [=](auto& progressData) {
 											if (!gianthandle) {
