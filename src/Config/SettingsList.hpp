@@ -177,7 +177,7 @@ TOML_SERIALIZABLE(AIStatefullAction);
 struct AIHugAction {
     // Basic toggle and overall probability
     bool bEnableAction = true;
-    float fProbability = 50.0f;
+    float fProbability = 35.0f;
 
     // Conditions
     bool bStopIfCantShrink = true;
@@ -185,19 +185,19 @@ struct AIHugAction {
     bool bKillFollowersOrPlayer = false;
     
     // Outcome probabilities
-    float fHealProb = 50.0f;
-    float fShrinkProb = 50.0f;
-    float fKillProb = 50.0f;
+    float fHealProb = 30.0f;
+    float fShrinkProb = 100.0f;
+    float fKillProb = 30.0f;
 
     // Timing
-    float fInterval = 4.0f;
+    float fInterval = 1.5f;
 };
 TOML_SERIALIZABLE(AIHugAction);
 
 struct AIStompAction {
     bool bEnableAction = true;
-    float fProbability = 20.0f;
-    float fUnderstompGrindProbability = 20.0f;
+    float fProbability = 33.0f;
+    float fUnderstompGrindProbability = 40.0f;
 };
 TOML_SERIALIZABLE(AIStompAction);
 
@@ -209,8 +209,8 @@ struct AIButtAction {
     // Different probabilities for variations of the action
     float fFastProb = 50.0f;
     float fButtCrushTypeProb = 50.0f;
-    float fGrowProb = 80.0f;
-    float fCrushProb = 20.0f;
+    float fGrowProb = 35.0f;
+    float fCrushProb = 35.0f;
 
     // Timing and limit
     float fInterval = 2.0f;
@@ -220,25 +220,25 @@ TOML_SERIALIZABLE(AIButtAction);
 // Complex action: Grab
 struct AIGrabAction {
     bool bEnableAction = true;
-    float fProbability = 10.0f;
+    float fProbability = 33.0f;
 
     // Different attack types
-    float fThrowProb = 50.0f;
+    float fThrowProb = 33.0f;
     float fVoreProb = 50.0f;
     float fCrushProb = 50.0f;
-    float fReleaseProb = 10.0f;
+    float fReleaseProb = 0.0f;
 
     // Cleavage (multiple stages) probabilities
-    float fCleavageProb = 50.0f;
-    float fCleavageAttackProb = 50.0f;
-    float fCleavageAbsorbProb = 50.0f;
-    float fCleavageVoreProb = 50.0f;
-    float fCleavageSuffocateProb = 50.0f;
-    float fCleavageStopProb = 5.0f;
-    float fStrangleChance = 50.0f;
+    float fCleavageProb = 65.0f;
+    float fCleavageAttackProb = 35.0f;
+    float fCleavageAbsorbProb = 35.0f;
+    float fCleavageVoreProb = 35.0f;
+    float fCleavageSuffocateProb = 35.0f;
+    float fCleavageStopProb = 0.0f;
+    float fStrangleChance = 35.0f;
 
     // Timing
-    float fInterval = 2.0f;
+    float fInterval = 1.5f;
 
 };
 TOML_SERIALIZABLE(AIGrabAction);
@@ -474,12 +474,12 @@ struct SettingsAI {
     float fMasterTimer = 3.0f;
 
     // Stateless Actions
-    AIStatelessAction Vore = { .bEnableAction = true, .fProbability = 20.0f };
-    AIStatelessAction KickSwipe = { .bEnableAction = true, .fProbability = 20.0f };
+    AIStatelessAction Vore = { .bEnableAction = true, .fProbability = 33.0f };
+    AIStatelessAction KickSwipe = { .bEnableAction = true, .fProbability = 25.0f };
 
     // Statefull Actions
-    AIStatefullAction ThighCrush = { .bEnableAction = true, .fProbability = 20.0f };
-    AIStatefullAction ThighSandwich = { .bEnableAction = true, .fProbability = 20.0f };
+    AIStatefullAction ThighCrush = { .bEnableAction = true, .fProbability = 15.0f, .fInterval = 1.0f };
+    AIStatefullAction ThighSandwich = { .bEnableAction = true, .fProbability = 20.0f, .fInterval = 1.5f };
 
     // Complex Actions
     AIStompAction Stomp = {};
