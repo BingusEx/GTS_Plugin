@@ -42,7 +42,7 @@ namespace {
 			MultiplySlider = Config::GetGameplay().GamemodeFollower.fRandomGrowthDelay;
 		}
 
-		if (BalancedMode) {
+		if (BalancedMode && MultiplySlider > 0.0f) {
 			MultiplySlider = 1.0f;
 		}
 

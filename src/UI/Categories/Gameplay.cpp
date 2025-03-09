@@ -88,7 +88,6 @@ namespace GTS {
 
             if (ImGui::CollapsingHeader("Perk Settings", ImUtil::HeaderFlagsDefaultOpen)) {
 
-                // TODO Add Perk References
                 const bool PerkCondCrush = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CrushGrowthAugmetationPerk);
                 const bool PerkCondHit = Runtime::HasPerk(PlayerCharacter::GetSingleton(), GrowOnHitPerk);
                 const bool PerkCondAtribCap = Runtime::HasPerk(PlayerCharacter::GetSingleton(), CrushGrowthAugmetationPerk);;
@@ -167,27 +166,22 @@ namespace GTS {
 
         ImUtil_Unique{
 
-            bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), PleasurableGrowthPerk);
-
-            const char* Reason;
-
-            if (Config::GetBalance().bBalanceMode) {
-                Reason = "Balance Mode Active";
-                HasPerk = false;
-            }
-            else {
-                Reason = "Requires \"Pleasurable Growth\" Perk";
-            }
+            const bool HasPerk = Runtime::HasPerk(PlayerCharacter::GetSingleton(), PleasurableGrowthPerk);
+            const bool BalancedMode = Config::GetBalance().bBalanceMode;
+        	const char* Reason = "Requires \"Pleasurable Growth\" Perk";
 
             if (ImUtil::ConditionalHeader("Random Growth", Reason, HasPerk)) {
 
                 const char* T1 = "Change how often the random growth should trigger.\n"
                                  "Lower values = More often.\n"
                                  "Higher values = Less often.\n"
-                                 "Set to 0.0 to disable it entirely.";
+                                 "Set to 0.0 to disable it entirely.\n"
+								 "Note: If Balance Mode is enabled the multiplier is locked to 1.0x. It can still be disabled however by setting it to 0.0";
 
-                const char* Fmt1 = Settings.GamemodePlayer.fRandomGrowthDelay != 0.0f ? "%.2fx" : "Disabled";
-                const char* Fmt2 = Settings.GamemodeFollower.fRandomGrowthDelay != 0.0f ? "%.2fx" : "Disabled";
+                const char* FmtBalance = BalancedMode ? "Balance Mode (1.0x)" : "%.2fx";
+
+                const char* Fmt1 = Settings.GamemodePlayer.fRandomGrowthDelay != 0.0f ? FmtBalance : "Disabled";
+                const char* Fmt2 = Settings.GamemodeFollower.fRandomGrowthDelay != 0.0f ? FmtBalance : "Disabled";
 
                 ImUtil::SliderF("Growth Delay Player", &Settings.GamemodePlayer.fRandomGrowthDelay, 0.00f, 4.0f, T1, Fmt1);
                 ImUtil::SliderF("Growth Delay Followers", &Settings.GamemodeFollower.fRandomGrowthDelay, 0.00f, 4.0f, T1, Fmt2);
