@@ -1,4 +1,4 @@
-scriptName GtsPlugin hidden
+scriptName GTSPlugin hidden
 
 ; Internal methods for papyrus -> dll interop.
 

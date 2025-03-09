@@ -1,5 +1,4 @@
-scriptName GtsScale hidden
-
+scriptName GTSScale hidden
 
 ; Directly set the actor's scale
 

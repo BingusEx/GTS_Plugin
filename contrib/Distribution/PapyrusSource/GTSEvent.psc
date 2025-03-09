@@ -1,4 +1,4 @@
-scriptName GtsEvent hidden
+scriptName GTSEvent hidden
 
 ; OnFootstep event
 ;

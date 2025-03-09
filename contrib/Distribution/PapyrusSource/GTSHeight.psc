@@ -1,4 +1,4 @@
-scriptName GtsHeight hidden
+scriptName GTSHeight hidden
 
 ; Target Height
 ;

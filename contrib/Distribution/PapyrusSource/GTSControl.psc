@@ -1,4 +1,4 @@
-scriptName GtsControl hidden
+scriptName GTSControl hidden
 
 ; Grow TeamMate
 Function GrowTeammate(Float afPower) global native
