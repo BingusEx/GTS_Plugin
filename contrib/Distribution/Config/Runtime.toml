@@ -97,82 +97,87 @@ SKSoundBloodGush = "Skyrim.esm|10F78C"
 
 # Magic Effects -------------------------------------------------------------
 [MGEF] 
-TinyCalamity = "GTS.esp|1A2568"
+GTSEffectTinyCalamity = "GTS.esp|1A2568"
 
 # Spurt
-GrowthSpurt1 = "GTS.esp|007928"
-GrowthSpurt2 = "GTS.esp|1E42A5"
-GrowthSpurt3 = "GTS.esp|1E42A6"
+GTSEffectGrowthSpurt1 = "GTS.esp|007928"
+GTSEffectGrowthSpurt2 = "GTS.esp|1E42A5"
+GTSEffectGrowthSpurt3 = "GTS.esp|1E42A6"
+
+# Restore
+GTSEffectRestoreSize = "GTS.esp|005369"
+GTSEffectRestoreSizeOther = "GTS.esp|00536C"
 
 # Shrink
-RestoreSize = "GTS.esp|005369"
-RestoreSizeNPC = "GTS.esp|00536C"
-ShrinkSpell = "GTS.esp|002850"
-ShrinkAlly = "GTS.esp|0058D1"
-ShrinkAllyAdept = "GTS.esp|452F17"
-ShrinkAllyExpert = "GTS.esp|452F18"
-ShrinkEnemy = "GTS.esp|00387B"
-ShrinkEnemyAOE = "GTS.esp|0DCDC5"
-ShrinkEnemyAOEMast = "GTS.esp|0DCDCA"
-ShrinkBolt = "GTS.esp|3C5278"
-ShrinkStorm = "GTS.esp|3C527C"
+GTSEffectShrink = "GTS.esp|002850"
+GTSEffectShrinkAlly = "GTS.esp|0058D1"
+GTSEffectShrinkAllyAdept = "GTS.esp|452F17"
+GTSEffectShrinkAllyExpert = "GTS.esp|452F18"
+GTSEffectShrinkEnemy = "GTS.esp|00387B"
+GTSEffectShrinkEnemyAOE = "GTS.esp|0DCDC5"
+GTSEffectShrinkOtherAOEMastery = "GTS.esp|0DCDCA"
+GTSEffectShrinkBolt = "GTS.esp|3C5278"
+GTSEffectShrinkStorm = "GTS.esp|3C527C"
+GTSEffectShrinkToNothing = "GTS.esp|009979"
+
+# Enchants
+GTSEnchSwordAbsorbSize = "GTS.esp|00FA9E"
+GTSEnchGigantism = "GTS.esp|3EDAC5"
 
 # Grow
-SwordEnchant = "GTS.esp|00FA9E"
-EnchGigantism = "GTS.esp|3EDAC5"
-ShrinkToNothing = "GTS.esp|009979"
-SlowGrowth = "GTS.esp|019C3D"
-SlowGrowthDual = "GTS.esp|086C8D"
-GrowthSpell = "GTS.esp|0022EB"
-GrowthSpellAdept = "GTS.esp|45D124"
-GrowthSpellExpert = "GTS.esp|45D125"
-GrowAlly = "GTS.esp|0058D5"
-GrowAllyAdept = "GTS.esp|452F15"
-GrowAllyExpert = "GTS.esp|452F16"
+GTSEffectSlowGrowth = "GTS.esp|019C3D"
+GTSEffectSlowGrowthDual = "GTS.esp|086C8D"
+GTSEffectGrowth = "GTS.esp|0022EB"
+GTSEffectGrowthAdept = "GTS.esp|45D124"
+GTSEffectGrowthExpert = "GTS.esp|45D125"
+GTSEffectGrowAlly = "GTS.esp|0058D5"
+GTSEffectGrowAllyAdept = "GTS.esp|452F15"
+GTSEffectGrowAllyExpert = "GTS.esp|452F16"
 
 # Absorb
-AbsorbMGEF = "GTS.esp|00B470"
-TrueAbsorb = "GTS.esp|22B0D5"
+GTSEffectAbsorb = "GTS.esp|00B470"
+GTSEffectAbsorbTrue = "GTS.esp|22B0D5"
 
 # Potions
-EffectGrowthPotionWeak = "GTS.esp|3D4582"
-EffectGrowthPotionNormal = "GTS.esp|7C8F02"
-EffectGrowthPotionStrong = "GTS.esp|7C8F03"
-EffectGrowthPotionExtreme = "GTS.esp|7C8F04"
+GTSPotionEffectGrowthWeak = "GTS.esp|3D4582"
+GTSPotionEffectGrowthNormal = "GTS.esp|7C8F02"
+GTSPotionEffectGrowthStrong = "GTS.esp|7C8F03"
+GTSPotionEffectGrowthExtreme = "GTS.esp|7C8F04"
 
-EffectMightPotionWeak = "GTS.esp|7D8215"
-EffectMightPotionNormal = "GTS.esp|7D8216"
-EffectMightPotionStrong = "GTS.esp|7D8217"
-EffectMightPotionExtreme = "GTS.esp|7D8218"
+GTSPotionEffectMightWeak = "GTS.esp|7D8215"
+GTSPotionEffectMightNormal = "GTS.esp|7D8216"
+GTSPotionEffectMightStrong = "GTS.esp|7D8217"
+GTSPotionEffectMightExtreme = "GTS.esp|7D8218"
 
-SizeMasteryPotionBasic = "GTS.esp|7CE013"
+GTSPotionEffectEssenceWeak = "GTS.esp|7EC62B"
+GTSPotionEffectEssenceNormal = "GTS.esp|7EC62C"
+GTSPotionEffectEssenceStrong = "GTS.esp|7EC62D"
+GTSPotionEffectEssenceExtreme = "GTS.esp|7EC62E"
 
-EffectEssencePotionWeak = "GTS.esp|7EC62B"
-EffectEssencePotionNormal = "GTS.esp|7EC62C"
-EffectEssencePotionStrong = "GTS.esp|7EC62D"
-EffectEssencePotionExtreme = "GTS.esp|7EC62E"
+GTSPotionEffectResistShrinkWeak = "GTS.esp|3D4583"
+GTSPotionEffectResistShrinkNormal = "GTS.esp|7C8F09"
+GTSPotionEffectResistShrinkStrong = "GTS.esp|7C8F0A"
+GTSPotionEffectResistShrinkExtreme = "GTS.esp|7C8F0B"
 
-ResistShrinkPotionWeak = "GTS.esp|3D4583"
-ResistShrinkPotionNormal = "GTS.esp|7C8F09"
-ResistShrinkPotionStrong = "GTS.esp|7C8F0A"
-ResistShrinkPotionExtreme = "GTS.esp|7C8F0B"
+GTSPotionEffectSizeLimitWeak = "GTS.esp|3E38BB"
+GTSPotionEffectSizeLimitNormal = "GTS.esp|3E38BC"
+GTSPotionEffectSizeLimitStrong = "GTS.esp|3E38BD"
+GTSPotionEffectSizeLimitExtreme = "GTS.esp|3E38C0"
 
-EffectSizePotionWeak = "GTS.esp|3E38BB"
-EffectSizePotionNormal = "GTS.esp|3E38BC"
-EffectSizePotionStrong = "GTS.esp|3E38BD"
-EffectSizePotionExtreme = "GTS.esp|3E38C0"
+GTSPotionEffectSizeExperienceBasic = "GTS.esp|7CE013"
+GTSPotionEffectSizeHunger = "GTS.esp|42F7D6"
+GTSPotionEffectSizeAmplify = "GTS.esp|452F1D"
 
-EffectSizeHungerPotion = "GTS.esp|42F7D6"
-EffectSizeAmplifyPotion = "GTS.esp|452F1D"
-SizeDrainPotion = "GTS.esp|5B5557"
-ShrinkPoison = "GTS.esp|5B5552"
+# Poison
+GTSPoisonEffectShrinking = "GTS.esp|5B5557"
+GTSPotionEffectSizeDrain = "GTS.esp|5B5552"
 
 # Scalable potions
-AlchEffectGrowth = "GTS.esp|89D948"
-AlchEffectSize = "GTS.esp|89D94A"
-AlchEffectEssence = "GTS.esp|89D947"
-AlchEffectMight = "GTS.esp|89D946"
-AlchResistShrink = "GTS.esp|89D949"
+GTSAlchEffectGrowth = "GTS.esp|89D948"
+GTSAlchEffectSizeLimit = "GTS.esp|89D94A"
+GTSAlchEffectEssence = "GTS.esp|89D947"
+GTSAlchEffectMight = "GTS.esp|89D946"
+GTSAlchEffectResistShrink = "GTS.esp|89D949"
 
 [SPEL] # Spells ------------------------------------------------------------------------
 

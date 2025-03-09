@@ -31,15 +31,15 @@ namespace GTS {
 
 		auto base_spell = GetBaseEffect();
 
-		if (base_spell == Runtime::GetMagicEffect("EffectGrowthPotionWeak")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectGrowthWeak")) {
 			this->power = 1.0f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectGrowthPotionNormal")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectGrowthNormal")) {
 			this->power = 1.5f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectGrowthPotionStrong")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectGrowthStrong")) {
 			this->power = 2.0f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectGrowthPotionExtreme")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectGrowthExtreme")) {
 			this->power = 2.5f;
-		} else if (base_spell == Runtime::GetMagicEffect("AlchEffectGrowth")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSAlchEffectGrowth")) {
 			RecordPotionMagnitude(GetActiveEffect(), this->power, 1.0f);
 		}
 	}

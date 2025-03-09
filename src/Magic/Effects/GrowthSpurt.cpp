@@ -110,13 +110,13 @@ namespace GTS {
 		auto base_spell = GetBaseEffect();
 
 		
-		if (base_spell == Runtime::GetMagicEffect("GrowthSpurt1")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSEffectGrowthSpurt1")) {
 			this->power = GROWTH_1_POWER * Get_Perk_Bonus(caster);
 			this->grow_limit = Get_Growth_Limit(caster, 1);
-		} else if (base_spell == Runtime::GetMagicEffect("GrowthSpurt2")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectGrowthSpurt2")) {
 			this->power = GROWTH_2_POWER * Get_Perk_Bonus(caster);
 			this->grow_limit = Get_Growth_Limit(caster, 2);
-		} else if (base_spell == Runtime::GetMagicEffect("GrowthSpurt3")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectGrowthSpurt3")) {
 			this->power = GROWTH_3_POWER * Get_Perk_Bonus(caster);
 			this->grow_limit = Get_Growth_Limit(caster, 3);
 		}
@@ -132,7 +132,7 @@ namespace GTS {
 		GrowthSpurt_RegenerateAttributes(caster);
 
 		if (scale < limit && scale < MaxSize) {
-			if (Runtime::HasMagicEffect(caster, "EffectSizeAmplifyPotion")) {
+			if (Runtime::HasMagicEffect(caster, "GTSPotionEffectSizeAmplify")) {
 				bonus = get_visual_scale(caster) * 0.25f + 0.75f;
 			}
 			DoGrowth(caster, this->power * bonus);

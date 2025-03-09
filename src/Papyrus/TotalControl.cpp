@@ -42,7 +42,7 @@ namespace {
 							float magicka = std::clamp(GetMagikaPercentage(caster), 0.05f, 1.0f);
 
 							float bonus = 1.0f;
-							if (Runtime::HasMagicEffect(caster, "EffectSizeAmplifyPotion")) {
+							if (Runtime::HasMagicEffect(caster, "GTSPotionEffectSizeAmplify")) {
 								bonus = target_scale * 0.25f + 0.75f;
 							}
 
@@ -93,7 +93,7 @@ namespace {
 							float magicka = std::clamp(GetMagikaPercentage(caster), 0.05f, 1.0f);
 
 							float bonus = 1.0f;
-							if (Runtime::HasMagicEffect(caster, "EffectSizeAmplifyPotion")) {
+							if (Runtime::HasMagicEffect(caster, "GTSPotionEffectSizeAmplify")) {
 								bonus = target_scale * 0.25f + 0.75f;
 							}
 
@@ -138,7 +138,7 @@ namespace {
 					float target_scale = get_target_scale(caster);
 
 					float bonus = 1.0f;
-					if (Runtime::HasMagicEffect(caster, "EffectSizeAmplifyPotion")) {
+					if (Runtime::HasMagicEffect(caster, "GTSPotionEffectSizeAmplify")) {
 						bonus = target_scale * 0.25f + 0.75f;
 					}
 
@@ -185,7 +185,7 @@ namespace {
 					float stamina = std::clamp(GetStaminaPercentage(caster), 0.05f, 1.0f);
 
 					float bonus = 1.0f;
-					if (Runtime::HasMagicEffect(caster, "EffectSizeAmplifyPotion")) {
+					if (Runtime::HasMagicEffect(caster, "GTSPotionEffectSizeAmplify")) {
 						bonus = target_scale * 0.25f + 0.75f;
 					}
 

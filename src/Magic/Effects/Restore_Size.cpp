@@ -44,7 +44,7 @@ namespace {
 
 namespace GTS {
 	std::string RestoreSize::GetName() {
-		return "RestoreSize";
+		return "::RestoreSize";
 	}
 
 	void RestoreSize::OnStart() {

@@ -68,7 +68,7 @@ namespace GTS {
 				Runtime::PlaySoundAtNode("GTSSoundGrowth", CasterActor, Volume, 1.0f, "NPC Pelvis [Pelv]");
 			}
 
-			if (Runtime::HasMagicEffect(CasterActor, "EffectSizeAmplifyPotion")) {
+			if (Runtime::HasMagicEffect(CasterActor, "GTSPotionEffectSizeAmplify")) {
 				bonus = get_visual_scale(CasterActor) * 0.25f + 0.75f;
 			}
 
@@ -94,10 +94,10 @@ namespace GTS {
 
 		auto base_spell = GetBaseEffect();
 
-		if (base_spell == Runtime::GetMagicEffect("SlowGrowth")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSEffectSlowGrowth")) {
 			this->IsDual = false;
 		}
-		if (base_spell == Runtime::GetMagicEffect("SlowGrowthDual")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSEffectSlowGrowthDual")) {
 			this->IsDual = true;
 		}
 	}

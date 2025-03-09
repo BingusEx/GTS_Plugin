@@ -444,7 +444,7 @@ namespace GTS {
 		float bbscale = GetSizeFromBoundingBox(target);
 		float target_scale = get_target_scale(target);
 
-		if (target_scale <= SHRINK_TO_NOTHING_SCALE / bbscale && !Runtime::HasMagicEffect(target, "ShrinkToNothing")) {
+		if (target_scale <= SHRINK_TO_NOTHING_SCALE / bbscale && !Runtime::HasMagicEffect(target, "GTSEffectShrinkToNothing")) {
 
 			set_target_scale(target, SHRINK_TO_NOTHING_SCALE / bbscale);
 

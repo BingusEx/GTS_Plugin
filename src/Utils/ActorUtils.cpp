@@ -1849,9 +1849,9 @@ namespace GTS {
 	}
 
 	bool HasGrowthSpurt(Actor* actor) {
-		bool Growth1 = Runtime::HasMagicEffect(actor, "GrowthSpurt1");
-		bool Growth2 = Runtime::HasMagicEffect(actor, "GrowthSpurt2");
-		bool Growth3 = Runtime::HasMagicEffect(actor, "GrowthSpurt3");
+		bool Growth1 = Runtime::HasMagicEffect(actor, "GTSEffectGrowthSpurt1");
+		bool Growth2 = Runtime::HasMagicEffect(actor, "GTSEffectGrowthSpurt2");
+		bool Growth3 = Runtime::HasMagicEffect(actor, "GTSEffectGrowthSpurt3");
 		if (Growth1 || Growth2 || Growth3) {
 			return true;
 		} else {
@@ -2677,7 +2677,7 @@ namespace GTS {
 	}
 
 	bool HasSMT(Actor* giant) {
-		if (Runtime::HasMagicEffect(giant, "TinyCalamity")) {
+		if (Runtime::HasMagicEffect(giant, "GTSEffectTinyCalamity")) {
 			return true;
 		}
 		return false;

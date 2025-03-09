@@ -49,22 +49,22 @@ namespace GTS {
 
 		auto base_spell = GetBaseEffect();
 
-		if (base_spell == Runtime::GetMagicEffect("ShrinkEnemy")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSEffectShrinkEnemy")) {
 			this->power = SHRINK_POWER;
 			this->efficiency = SHRINK_EFFIC;
-		} else if (base_spell == Runtime::GetMagicEffect("ShrinkEnemyAOE")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectShrinkEnemyAOE")) {
 			this->power = SHRINK_AOE_POWER;
 			this->efficiency = SHRINK_AOE_EFFIC;
-		} else if (base_spell == Runtime::GetMagicEffect("ShrinkEnemyAOEMast")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectShrinkOtherAOEMastery")) {
 			// ShrinkEnemyAOEMast
 			this->power = SHRINK_AOE_MASTER_POWER;
 			this->efficiency = SHRINK_AOE_MASTER_EFFIC;
-		} else if (base_spell == Runtime::GetMagicEffect("GTSSpellShrinkBolt")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectShrinkBolt")) {
 			// ShrinkBolt
 			this->power = SHRINK_BOLT_POWER;
 			this->efficiency = SHRINK_BOLT_EFFIC;
 			this->time_mult = 0.2f;
-		} else if (base_spell == Runtime::GetMagicEffect("GTSSpellShrinkStorm")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSEffectShrinkStorm")) {
 			// ShrinkBolt
 			this->power = SHRINK_STORM_POWER;
 			this->efficiency = SHRINK_STORM_EFFIC;

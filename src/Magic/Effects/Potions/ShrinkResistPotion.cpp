@@ -23,15 +23,15 @@ namespace GTS {
 
 		auto base_spell = GetBaseEffect();
 
-		if (base_spell == Runtime::GetMagicEffect("ResistShrinkPotionWeak")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectResistShrinkWeak")) {
 			this->Resistance = 0.2f;
-		} else if (base_spell == Runtime::GetMagicEffect("ResistShrinkPotionNormal")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectResistShrinkNormal")) {
 			this->Resistance = 0.4f;
-		} else if (base_spell == Runtime::GetMagicEffect("ResistShrinkPotionStrong")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectResistShrinkStrong")) {
 			this->Resistance = 0.6f;
-		} else if (base_spell == Runtime::GetMagicEffect("ResistShrinkPotionExtreme")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectResistShrinkExtreme")) {
 			this->Resistance = 0.8f;
-		} else if (base_spell == Runtime::GetMagicEffect("AlchResistShrink")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSAlchEffectResistShrink")) {
 			RecordPotionMagnitude(GetActiveEffect(), this->Resistance, 0.8f);
 		}
 	}

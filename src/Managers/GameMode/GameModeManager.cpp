@@ -482,7 +482,7 @@ namespace GTS {
 
 			if (actor->formID == 0x14) {
 
-				if (Runtime::HasMagicEffect(PlayerCharacter::GetSingleton(), "EffectSizeAmplifyPotion")) {
+				if (Runtime::HasMagicEffect(PlayerCharacter::GetSingleton(), "GTSPotionEffectSizeAmplify")) {
 					BonusGrowth = CurrentScale * 0.25f + 0.75f;
 				}
 
@@ -492,7 +492,7 @@ namespace GTS {
 			}
 			else if (IsTeammate(actor)) {
 
-				if (Runtime::HasMagicEffect(actor, "EffectSizeAmplifyPotion")) {
+				if (Runtime::HasMagicEffect(actor, "GTSPotionEffectSizeAmplify")) {
 					BonusGrowth = CurrentScale * 0.25f + 0.75f;
 				}
 				GameMode = StringToEnum<SelectedGameMode>(Settings.GamemodeFollower.sGameMode);

@@ -220,74 +220,75 @@ namespace GTS {
 
 		// Potions
 		
-		RegisterMagic<SizeHunger>("EffectSizeHungerPotion");
+		RegisterMagic<SizeHunger>("GTSPotionEffectSizeHunger");
 
-		RegisterMagic<MaxSizePotion>("EffectSizePotionWeak");
-		RegisterMagic<MaxSizePotion>("EffectSizePotionNormal");
-		RegisterMagic<MaxSizePotion>("EffectSizePotionStrong");
-		RegisterMagic<MaxSizePotion>("EffectSizePotionExtreme");
-		RegisterMagic<MaxSizePotion>("AlchEffectSize");
+		RegisterMagic<MaxSizePotion>("GTSPotionEffectSizeLimitWeak");
+		RegisterMagic<MaxSizePotion>("GTSPotionEffectSizeLimitNormal");
+		RegisterMagic<MaxSizePotion>("GTSPotionEffectSizeLimitStrong");
+		RegisterMagic<MaxSizePotion>("GTSPotionEffectSizeLimitExtreme");
+		RegisterMagic<MaxSizePotion>("GTSAlchEffectSizeLimit");
 
-		RegisterMagic<MightPotion>("EffectMightPotionWeak");
-		RegisterMagic<MightPotion>("EffectMightPotionNormal");
-		RegisterMagic<MightPotion>("EffectMightPotionStrong");
-		RegisterMagic<MightPotion>("EffectMightPotionExtreme");
-		RegisterMagic<MightPotion>("AlchEffectMight");
+		RegisterMagic<MightPotion>("GTSPotionEffectMightWeak");
+		RegisterMagic<MightPotion>("GTSPotionEffectMightNormal");
+		RegisterMagic<MightPotion>("GTSPotionEffectMightStrong");
+		RegisterMagic<MightPotion>("GTSPotionEffectMightExtreme");
+		RegisterMagic<MightPotion>("GTSAlchEffectMight");
 
-		RegisterMagic<ExperiencePotion>("SizeMasteryPotionBasic");
+		RegisterMagic<ExperiencePotion>("GTSPotionEffectSizeExperienceBasic");
 
-		RegisterMagic<EssencePotion>("EffectEssencePotionWeak");
-		RegisterMagic<EssencePotion>("EffectEssencePotionNormal");
-		RegisterMagic<EssencePotion>("EffectEssencePotionStrong");
-		RegisterMagic<EssencePotion>("EffectEssencePotionExtreme");
-		RegisterMagic<EssencePotion>("AlchEffectEssence");
+		RegisterMagic<EssencePotion>("GTSPotionEffectEssenceWeak");
+		RegisterMagic<EssencePotion>("GTSPotionEffectEssenceNormal");
+		RegisterMagic<EssencePotion>("GTSPotionEffectEssenceStrong");
+		RegisterMagic<EssencePotion>("GTSPotionEffectEssenceExtreme");
+		RegisterMagic<EssencePotion>("GTSAlchEffectEssence");
 
-		RegisterMagic<ShrinkResistPotion>("ResistShrinkPotionWeak");
-		RegisterMagic<ShrinkResistPotion>("ResistShrinkPotionNormal");
-		RegisterMagic<ShrinkResistPotion>("ResistShrinkPotionStrong");
-		RegisterMagic<ShrinkResistPotion>("ResistShrinkPotionExtreme");
-		RegisterMagic<ShrinkResistPotion>("AlchResistShrink");
+		RegisterMagic<ShrinkResistPotion>("GTSPotionEffectResistShrinkWeak");
+		RegisterMagic<ShrinkResistPotion>("GTSPotionEffectResistShrinkNormal");
+		RegisterMagic<ShrinkResistPotion>("GTSPotionEffectResistShrinkStrong");
+		RegisterMagic<ShrinkResistPotion>("GTSPotionEffectResistShrinkExtreme");
+		RegisterMagic<ShrinkResistPotion>("GTSAlchEffectResistShrink");
 
-		RegisterMagic<GrowthPotion>("EffectGrowthPotionWeak");
-		RegisterMagic<GrowthPotion>("EffectGrowthPotionNormal");
-		RegisterMagic<GrowthPotion>("EffectGrowthPotionStrong");
-		RegisterMagic<GrowthPotion>("EffectGrowthPotionExtreme");
-		RegisterMagic<GrowthPotion>("AlchEffectGrowth");
+		RegisterMagic<GrowthPotion>("GTSPotionEffectGrowthWeak");
+		RegisterMagic<GrowthPotion>("GTSPotionEffectGrowthNormal");
+		RegisterMagic<GrowthPotion>("GTSPotionEffectGrowthStrong");
+		RegisterMagic<GrowthPotion>("GTSPotionEffectGrowthExtreme");
+		RegisterMagic<GrowthPotion>("GTSAlchEffectGrowth");
 
-		RegisterMagic<ShrinkPotion>("SizeDrainPotion");
-		RegisterMagic<Shrink_Poison>("ShrinkPoison");
+		RegisterMagic<ShrinkPotion>("GTSPoisonEffectShrinking");
+		RegisterMagic<Shrink_Poison>("GTSPotionEffectSizeDrain");
 
-		RegisterMagic<ShrinkFoe>("ShrinkEnemy");
-		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOE");
-		RegisterMagic<ShrinkFoe>("ShrinkEnemyAOEMast");
-		RegisterMagic<ShrinkFoe>("GTSSpellShrinkBolt");
-		RegisterMagic<ShrinkFoe>("GTSSpellShrinkStorm");
+		RegisterMagic<ShrinkFoe>("GTSEffectShrinkEnemy");
+		RegisterMagic<ShrinkFoe>("GTSEffectShrinkEnemyAOE");
+		RegisterMagic<ShrinkFoe>("GTSEffectShrinkOtherAOEMastery");
+		RegisterMagic<ShrinkFoe>("GTSEffectShrinkBolt");
+		RegisterMagic<ShrinkFoe>("GTSEffectShrinkStorm");
 
-		RegisterMagic<Gigantism>("EnchGigantism");
+		RegisterMagic<Gigantism>("GTSEnchGigantism");
+		RegisterMagic<SwordOfSize>("GTSEnchSwordAbsorbSize");
 
-		RegisterMagic<SwordOfSize>("SwordEnchant");
-		RegisterMagic<SlowGrow>("SlowGrowth");
-		RegisterMagic<SlowGrow>("SlowGrowthDual");
-		RegisterMagic<TinyCalamity>("TinyCalamity");
-		RegisterMagic<Growth>("GrowthSpell");
-		RegisterMagic<Growth>("GrowthSpellAdept");
-		RegisterMagic<Growth>("GrowthSpellExpert");
-		RegisterMagic<Shrink>("ShrinkSpell");
-		RegisterMagic<GrowOther>("GrowAlly");
-		RegisterMagic<GrowOther>("GrowAllyAdept");
-		RegisterMagic<GrowOther>("GrowAllyExpert");
+		RegisterMagic<SlowGrow>("GTSEffectSlowGrowth");
+		RegisterMagic<SlowGrow>("GTSEffectSlowGrowthDual");
+		RegisterMagic<TinyCalamity>("GTSEffectTinyCalamity");
+		RegisterMagic<Growth>("GTSEffectGrowth");
+		RegisterMagic<Growth>("GTSEffectGrowthAdept");
+		RegisterMagic<Growth>("GTSEffectGrowthExpert");
+		RegisterMagic<Shrink>("GTSEffectShrink");
+		RegisterMagic<GrowOther>("GTSEffectGrowAlly");
+		RegisterMagic<GrowOther>("GTSEffectGrowAllyAdept");
+		RegisterMagic<GrowOther>("GTSEffectGrowAllyExpert");
 
-		RegisterMagic<ShrinkOther>("ShrinkAlly");
-		RegisterMagic<ShrinkOther>("ShrinkAllyAdept");
-		RegisterMagic<ShrinkOther>("ShrinkAllyExpert");
-		RegisterMagic<RestoreSize>("RestoreSize");
-		RegisterMagic<RestoreSizeOther>("RestoreSizeNPC");
-		//RegisterMagic<ShrinkRune>("ShrinkRuneEffect");
-		//RegisterMagic<ShrinkCloak>("ShrinkCloakEffect");
-		RegisterMagic<Absorb>("AbsorbMGEF");
-		RegisterMagic<Absorb>("TrueAbsorb");
-		RegisterMagic<GrowthSpurt>("GrowthSpurt1");
-		RegisterMagic<GrowthSpurt>("GrowthSpurt2");
-		RegisterMagic<GrowthSpurt>("GrowthSpurt3");
+		RegisterMagic<ShrinkOther>("GTSEffectShrinkAlly");
+		RegisterMagic<ShrinkOther>("GTSEffectShrinkAllyAdept");
+		RegisterMagic<ShrinkOther>("GTSEffectShrinkAllyExpert");
+
+		RegisterMagic<RestoreSize>("GTSEffectRestoreSize");
+		RegisterMagic<RestoreSizeOther>("GTSEffectRestoreSizeOther");
+
+		RegisterMagic<Absorb>("GTSEffectAbsorb");
+		RegisterMagic<Absorb>("GTSEffectAbsorbTrue");
+
+		RegisterMagic<GrowthSpurt>("GTSEffectGrowthSpurt1");
+		RegisterMagic<GrowthSpurt>("GTSEffectGrowthSpurt2");
+		RegisterMagic<GrowthSpurt>("GTSEffectGrowthSpurt3");
 	}
 }

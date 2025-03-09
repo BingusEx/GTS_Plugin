@@ -45,7 +45,7 @@ namespace {
 namespace GTS {
 
 	std::string TinyCalamity::GetName() {
-		return "TinyCalamity";
+		return "::TinyCalamity";
 	}
 
 	void TinyCalamity::OnStart() {
@@ -68,7 +68,7 @@ namespace GTS {
 				TinyCalamityExplosion(caster, 84);
 
 				SpawnParticle(caster, 6.00f, "GTS/Effects/TinyCalamity.nif", NiMatrix3(), position, scale * 3.0f, 7, nullptr); // Spawn
-				Rumbling::For("TinyCalamity", caster, 4.0f, 0.14f, "NPC COM [COM ]", 0.10f, 0.0f);
+				Rumbling::For("TinyCalamityRumble", caster, 4.0f, 0.14f, "NPC COM [COM ]", 0.10f, 0.0f);
 			}
 		}
 

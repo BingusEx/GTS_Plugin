@@ -47,15 +47,15 @@ namespace GTS {
 
 		auto base_spell = GetBaseEffect();
 
-		if (base_spell == Runtime::GetMagicEffect("EffectEssencePotionWeak")) {
+		if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectEssenceWeak")) {
 			this->power = 0.02f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectEssencePotionNormal")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectEssenceNormal")) {
 			this->power = 0.04f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectEssencePotionStrong")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectEssenceStrong")) {
 			this->power = 0.06f;
-		} else if (base_spell == Runtime::GetMagicEffect("EffectEssencePotionExtreme")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSPotionEffectEssenceExtreme")) {
 			this->power = 0.08f; 
-		} else if (base_spell == Runtime::GetMagicEffect("AlchEffectEssence")) {
+		} else if (base_spell == Runtime::GetMagicEffect("GTSAlchEffectEssence")) {
 			RecordPotionMagnitude(GetActiveEffect(), this->power, 0.08f);
 		}
 	}
