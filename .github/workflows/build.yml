@@ -77,10 +77,7 @@ jobs:
         if: steps.build_first.outcome == 'failure'
         run: |
           Write-Host "First build attempt failed. Cleaning and reconfiguring..."
-          if (Test-Path "build") {
-            Remove-Item -Recurse -Force "build"
-            Write-Host "Removed build directory"
-          }
+          if (Test-Path "build") { Remove-Item -Recurse -Force "build" }
           cmake --preset config-release --fresh
         shell: pwsh
 
@@ -166,7 +163,7 @@ jobs:
           git tag "$tag"
           git push origin "$tag"
 
-      - name: Create/Update GitHub Release and upload artifact files
+      - name: Upload built distribution zips to the release
         if: steps.ver.outputs.changed == 'true'
         shell: bash
         env:
@@ -174,17 +171,17 @@ jobs:
         run: |
           set -euo pipefail
           tag="v${{ steps.ver.outputs.new_version }}"
-          title="$tag"
 
           shopt -s nullglob
-          files=(dist/*)
+          files=(dist/[dD]istribution-*)
           if (( ${#files[@]} == 0 )); then
-            echo "No files found in dist/. Nothing to upload."
+            echo "No dist/distribution-* files found. Contents of dist/:"
+            ls -la dist || true
             exit 1
           fi
 
           if gh release view "$tag" >/dev/null 2>&1; then
             gh release upload "$tag" "${files[@]}" --clobber
           else
-            gh release create "$tag" "${files[@]}" --title "$title" --generate-notes
+            gh release create "$tag" "${files[@]}" --title "$tag" --generate-notes
           fi
