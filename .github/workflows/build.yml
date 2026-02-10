@@ -32,6 +32,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Setup MSVC Environment
@@ -88,100 +89,62 @@ jobs:
           configurePreset: config-release
           buildPreset: build-release
 
-      - name: Upload Distribution Package
+      - name: Upload Distribution Package (artifact)
         uses: actions/upload-artifact@v4
         with:
           name: distribution-package
           path: distribution/Package-*
 
-  release:
-    name: Create GitHub Release if CMake version changed
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    steps:
-      - name: Checkout (full history for tags)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Detect version change in CMakeLists.txt
         id: ver
-        shell: bash
+        if: github.event_name == 'push'
+        shell: pwsh
         run: |
-          set -euo pipefail
-
-          extract_version () {
-            grep -oE 'VERSION[[:space:]]+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$1" \
-              | head -n1 | awk '{print $2}'
+          function Extract-Version([string]$text) {
+            if ($text -match 'VERSION\s+(\d+\.\d+\.\d+\.\d+)') { return $Matches[1] }
+            return $null
           }
 
-          new_ver="$(extract_version CMakeLists.txt || true)"
-          if [[ -z "${new_ver}" ]]; then
-            echo "Could not extract 4-part version from CMakeLists.txt (expected 'VERSION X.Y.Z.W')."
-            exit 1
-          fi
+          $newText = Get-Content -Raw CMakeLists.txt
+          $newVer = Extract-Version $newText
+          if (-not $newVer) { throw "Could not extract version (expected VERSION X.Y.Z.W)." }
 
-          before="${{ github.event.before }}"
-          old_ver=""
-          if [[ "$before" != "0000000000000000000000000000000000000000" ]]; then
-            if git show "$before:CMakeLists.txt" > /tmp/CMakeLists.txt.before 2>/dev/null; then
-              old_ver="$(extract_version /tmp/CMakeLists.txt.before || true)"
-            fi
-          fi
+          $oldVer = ""
+          if ($env:GITHUB_EVENT_BEFORE -and $env:GITHUB_EVENT_BEFORE -ne "0000000000000000000000000000000000000000") {
+            try {
+              $oldText = git show "$env:GITHUB_EVENT_BEFORE`:CMakeLists.txt" 2>$null
+              $oldVer = Extract-Version $oldText
+            } catch {}
+          }
 
-          echo "old_version=${old_ver}" >> "$GITHUB_OUTPUT"
-          echo "new_version=${new_ver}" >> "$GITHUB_OUTPUT"
+          "new_version=$newVer" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          if ($newVer -ne $oldVer) { "changed=true" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8 }
+          else { "changed=false" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8 }
+        env:
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
 
-          if [[ "${new_ver}" != "${old_ver}" ]]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Stop if version did not change
-        if: steps.ver.outputs.changed != 'true'
-        run: echo "Version unchanged; skipping release."
-
-      - name: Download build artifact
-        if: steps.ver.outputs.changed == 'true'
-        uses: actions/download-artifact@v4
-        with:
-          name: distribution-package
-          path: dist
-
-      - name: Create tag (if missing)
-        if: steps.ver.outputs.changed == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          tag="v${{ steps.ver.outputs.new_version }}"
-          if git rev-parse "$tag" >/dev/null 2>&1; then
-            echo "Tag $tag already exists."
-            exit 0
-          fi
-          git tag "$tag"
-          git push origin "$tag"
-
-      - name: Upload built distribution zips to the release
-        if: steps.ver.outputs.changed == 'true'
-        shell: bash
+      - name: Create/Update GitHub Release (no explicit tag step)
+        if: github.event_name == 'push' && steps.ver.outputs.changed == 'true'
+        shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
-          tag="v${{ steps.ver.outputs.new_version }}"
+          $tag = "v${{ steps.ver.outputs.new_version }}"
 
-          shopt -s nullglob
-          files=(dist/Package-Release/[dD]istribution-*)
-          if (( ${#files[@]} == 0 )); then
-            echo "No dist/distribution-* files found. Contents of dist/:"
-            ls -la dist || true
-            exit 1
-          fi
+          $files = Get-ChildItem -Path "dist\Package-*" -ErrorAction SilentlyContinue
+          if (-not $files) {
+            $files = Get-ChildItem -Path "dist\Package-*" -ErrorAction SilentlyContinue
+          }
 
-          if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" "${files[@]}" --clobber
-          else
-            gh release create "$tag" "${files[@]}" --title "$tag" --generate-notes
-          fi
+          if (-not $files) { $files = Get-ChildItem -Path "distribution\Package-*" -ErrorAction SilentlyContinue }
+
+          if (-not $files) { throw "No Package-* found to upload." }
+
+          $paths = $files | ForEach-Object { $_.FullName }
+
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag $paths --clobber
+          } else {
+            gh release create $tag $paths --title $tag --generate-notes
+          }
