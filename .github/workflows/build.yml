@@ -173,7 +173,7 @@ jobs:
           tag="v${{ steps.ver.outputs.new_version }}"
 
           shopt -s nullglob
-          files=(dist/[dD]istribution-*)
+          files=(dist/Package-Release/[dD]istribution-*)
           if (( ${#files[@]} == 0 )); then
             echo "No dist/distribution-* files found. Contents of dist/:"
             ls -la dist || true
