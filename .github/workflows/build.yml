@@ -17,9 +17,14 @@ on:
       - 'vcpkg.json'
       - '.github/workflows/build.yml'
   workflow_dispatch: {}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-2025
@@ -34,7 +39,6 @@ jobs:
         with:
           arch: 'x64'
 
-      # Cache vcpkg dependencies
       - name: Cache vcpkg
         uses: actions/cache@v4
         with:
@@ -45,7 +49,6 @@ jobs:
           restore-keys: |
             vcpkg-${{ runner.os }}-
 
-      # Cache CMake build directory
       - name: Cache CMake build
         uses: actions/cache@v4
         with:
@@ -62,7 +65,6 @@ jobs:
         env:
           VCPKG_BINARY_SOURCES: 'clear;files,~/AppData/Local/vcpkg,readwrite'
 
-      # First build attempt
       - name: Build (First Attempt)
         id: build_first
         uses: lukka/run-cmake@v10
@@ -71,7 +73,6 @@ jobs:
           configurePreset: config-release
           buildPreset: build-release
 
-      # Clean and retry if first attempt failed
       - name: Clean and reconfigure on failure
         if: steps.build_first.outcome == 'failure'
         run: |
@@ -83,7 +84,6 @@ jobs:
           cmake --preset config-release --fresh
         shell: pwsh
 
-      # Second build attempt after clean
       - name: Build (Retry After Clean)
         if: steps.build_first.outcome == 'failure'
         uses: lukka/run-cmake@v10
@@ -96,3 +96,87 @@ jobs:
         with:
           name: distribution-package
           path: distribution/Package-*
+
+  release:
+    name: Create GitHub Release if CMake version changed
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout (full history for tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect version change in CMakeLists.txt
+        id: ver
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          extract_version () {
+            # Accept 4-part versions after a VERSION token, e.g. VERSION 3.5.0.0
+            grep -oE 'VERSION[[:space:]]+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$1" \
+              | head -n1 | awk '{print $2}'
+          }
+
+          new_ver="$(extract_version CMakeLists.txt || true)"
+          if [[ -z "${new_ver}" ]]; then
+            echo "Could not extract 4-part version from CMakeLists.txt (expected 'VERSION X.Y.Z.W')."
+            exit 1
+          fi
+
+          before="${{ github.event.before }}"
+          old_ver=""
+          if [[ "$before" != "0000000000000000000000000000000000000000" ]]; then
+            if git show "$before:CMakeLists.txt" > /tmp/CMakeLists.txt.before 2>/dev/null; then
+              old_ver="$(extract_version /tmp/CMakeLists.txt.before || true)"
+            fi
+          fi
+
+          echo "old_version=${old_ver}" >> "$GITHUB_OUTPUT"
+          echo "new_version=${new_ver}" >> "$GITHUB_OUTPUT"
+
+          if [[ "${new_ver}" != "${old_ver}" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Stop if version did not change
+        if: steps.ver.outputs.changed != 'true'
+        run: echo "Version unchanged; skipping release."
+
+      - name: Download build artifact
+        if: steps.ver.outputs.changed == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: distribution-package
+          path: dist
+
+      - name: Create tag (if missing)
+        if: steps.ver.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v${{ steps.ver.outputs.new_version }}"
+
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists."
+            exit 0
+          fi
+
+          git tag "$tag"
+          git push origin "$tag"
+
+      - name: Create GitHub Release + upload assets
+        if: steps.ver.outputs.changed == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.ver.outputs.new_version }}
+          name: v${{ steps.ver.outputs.new_version }}
+          generate_release_notes: true
+          files: |
+            dist/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
